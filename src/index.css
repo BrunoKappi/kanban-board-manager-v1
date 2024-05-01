@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: rgb(254, 254, 254);
+    --background-dark: rgb(43, 44, 55);
+    --background-dark-dialog: rgba(11, 11, 11, 1);
+    --foreground: rgb(130, 143, 163);
+    --foreground-light: rgba(75, 85, 99, 1);
+
+    --card: rgba(248, 250, 252, 1);
+    --card-foreground: rgba(10, 10, 10, 1);
+    --card-foreground-light: rgba(75, 85, 99, 1);
+
+    --popover: rgba(248, 250, 252, 1);
+    --popover-foreground: rgb(130, 143, 163);
+    --popover-foregroun-light: rgba(75, 85, 99, 1);
+
+    --primary: #2b5aa6;
+    --primary-foreground: rgba(248, 250, 252, 1);
+    --primary-dark: rgba(0, 0, 0, 0.15);
+    --primary-semi-transparent: rgba(37, 79, 152, 0.1);
+
+    --secondary: rgba(0, 121, 239);
+    --secondary-dark: rgba(0, 0, 0, 0.15);
+    --secondary-foreground: rgba(248, 250, 252, 1);
+
+    --muted: rgba(241, 245, 249, 1);
+    --muted-foreground: rgba(100, 116, 139, 1);
+
+    --accent: rgba(241, 245, 249, 1);
+    --accent-foreground: rgba(15, 23, 42, 1);
+    --accent-foreground-light: rgba(75, 85, 99, 1);
+
+    --destructive: #bd1206;
+    --destructive-semi-transparent: rgba(239, 68, 68, 0.1);
+    --destructive-foreground: rgba(248, 250, 252, 1);
+
+    --warning: rgba(245, 158, 11, 1);
+    --warning-foreground: rgba(248, 250, 252, 1);
+
+    --border: rgb(207, 208, 208);
+    --border-dark: rgb(62, 63, 78);
+    --input: rgb(207, 208, 208);
+    --ring: rgba(15, 23, 42, 1);
+
+    --radius: 0.5em;
+
+    /* Utility Colors */
+
+    --overlay: rgba(0, 0, 0, 0.05);
+    --overlay-dark: rgba(0, 0, 0, 0.13);
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
