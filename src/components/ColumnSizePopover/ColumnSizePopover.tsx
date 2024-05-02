@@ -8,10 +8,13 @@ import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { SetCardWidth } from "@/Config/Store/CardWidth/CardWidth";
 import { useSelector } from "react-redux";
+import Show from "@/lib/Show";
 
-type Props = {};
+type Props = {
+  Mode?: string;
+};
 
-export default function ColumnSizePopover({}: Props) {
+export default function ColumnSizePopover({ Mode = "Default" }: Props) {
   const [open, setOpen] = useState(false);
   const CardWidth = useSelector((state: any) => state.CardWidth);
 
@@ -25,13 +28,21 @@ export default function ColumnSizePopover({}: Props) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
-        <Tooltip text="Card width">
-          <Button onClick={() => setOpen(true)} variant="ghost" size="icon">
-            <Columns2 />
-          </Button>
-        </Tooltip>
+        <Show if={Mode === "Default"}>
+          <Tooltip text="Card width">
+            <Button onClick={() => setOpen(true)} variant="ghost" size="icon">
+              <Columns2 />
+            </Button>
+          </Tooltip>
+        </Show>
+        <Show if={Mode === "List"}>
+          <ListOption className="w-full bg-red flex-grow">
+            <Columns2 className="size-5" />
+            Card Width
+          </ListOption>
+        </Show>
       </PopoverTrigger>
-      <PopoverContent className="w-56 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
+      <PopoverContent side={`${Mode === "Default" ? "bottom" : "right"}`} className="w-56 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList className="gap-0 py-0">
           <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent">
             <span>Card Width</span>

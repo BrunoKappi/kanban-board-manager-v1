@@ -7,6 +7,7 @@ import { BoardModal } from "../BoardModal/BoardModal";
 import Tooltip from "../Tooltip/Tooltip";
 import { ListOption } from "../ListOption/ListOption";
 import DuplicateBoard from "./DuplicateBoard";
+import ColumnSizePopover from "../ColumnSizePopover/ColumnSizePopover";
 
 type Props = {};
 
@@ -22,11 +23,12 @@ export default function BoardOptionsPopover({}: Props) {
           </Tooltip>
         </div>
       </PopoverTrigger>
-      <PopoverContent className="w-56 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
-        <PopOverList>
-          <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent">
+      <PopoverContent className="w-56 mr-10 p-0 py-4 bg-background  flex flex-col items-stretch justify-start dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
+        <PopOverList className="flex flex-col items-stretch">
+          <ListOption className="flex flex-row justify-center items-stretch mb-2 cursor-default hover:bg-transparent">
             <span>Board Options</span>
           </ListOption>
+          <ColumnSizePopover Mode="List" />
           <BoardModal SetExternalOpen={setOpen} />
           <DuplicateBoard SetExternalOpen={setOpen} />
           <DeleteBoard SetExternalOpen={setOpen} />

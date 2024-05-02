@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const ThemeSlice = createSlice({
   name: "Theme",
-  initialState: localStorage.getItem("Kanban-Theme") || 'Light',
+  initialState: localStorage.getItem("Kanban-Theme") || 'Dark',
   reducers: {
     Toggle: (state) => {
       return (state = state === "Light" ? "Dark" : "Light");

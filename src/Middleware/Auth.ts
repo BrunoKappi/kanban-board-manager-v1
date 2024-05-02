@@ -42,8 +42,8 @@ export const MIDDLEWARE_LoginWithGoogle = ({ setOpen, setError }: MIDDLEWARE_Log
       //@ts-ignore
       store.dispatch(SetCardModalCard({}));
     })
-    .catch((error) => {
-      console.log(error);
+    .catch(() => {
+      //console.log(error);
       setError("Something went wrong, try with Email and Password");
       setTimeout(() => {
         setError("");
