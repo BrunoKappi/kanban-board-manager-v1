@@ -18,6 +18,7 @@ export const HandleDuplicateCard = (ColumnIndex: number, CardIndex: number, Colu
   var NewCard: any = { ...NewCards[CardIndex] };
 
   NewCard.CardId = v4();
+  NewCard.CardTitle = NewCard.CardTitle + "_Copy";
   NewCard.CreatedAt = moment().valueOf();
   NewCard.LastEditedAt = moment().valueOf();
 
@@ -29,7 +30,6 @@ export const HandleDuplicateCard = (ColumnIndex: number, CardIndex: number, Colu
   NewColumns[NewColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
-
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };

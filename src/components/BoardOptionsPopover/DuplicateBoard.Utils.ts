@@ -1,3 +1,4 @@
+import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import store from "@/Config/Store/Store";
 import { MIDDLEWARE_AddBoard } from "@/Middleware/AddData";
 import { v4 } from "uuid";
@@ -8,5 +9,7 @@ export const DuplicateBoardFn = () => {
   NewBoard.BoardId = v4();
   NewBoard.BoardName = NewBoard.BoardName + "_Copy";
 
-  MIDDLEWARE_AddBoard(NewBoard,()=>{});
+  //@ts-ignore
+  store.dispatch(SetCardModalCard({}));
+  MIDDLEWARE_AddBoard(NewBoard, () => {});
 };
