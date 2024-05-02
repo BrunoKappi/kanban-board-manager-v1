@@ -38,7 +38,7 @@ export default function ToggleLogin({ className }: any) {
             FIREBASE_CreateBoardList(NewBoardListItem);
           }
         })
-        .catch((Error) => console.log(Error));
+        .catch(() => {});
     }
   };
 

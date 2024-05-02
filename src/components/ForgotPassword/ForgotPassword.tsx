@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { FIREBASE_LoginWithEmailPassword, FIREBASE_LoginWithGoogle } from "@/Config/Firebase/Auth";
+import { FIREBASE_LoginWithEmailPassword } from "@/Config/Firebase/Auth";
 import { LogIn } from "lucide-react";
 import { useState } from "react";
 import { Input } from "../ui/input";
@@ -13,9 +13,7 @@ export function ForgotPassword() {
   const handleLogin = async () => {
     if (!email || !password) return;
     FIREBASE_LoginWithEmailPassword(email, password)
-      .then((response) => {
-        console.log(response);
-      })
+      .then(() => {})
       .catch(() => {
         setError("Email or password incorrect");
         setTimeout(() => {

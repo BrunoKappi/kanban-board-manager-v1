@@ -76,8 +76,6 @@ export const HandleEditBoard = (BoardName: string, BoardColumns: any[], BoardDes
     Columns: [...NewColumns],
   };
 
-  console.log("EDITED BOARD", NewBoard);
-
   MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
@@ -107,6 +105,4 @@ export const HandleDragColumns = (Result: DropResult, Columns: any, setBoardColu
   const NewColumns = moveObjectInArray(Columns, SourceIndex, DestinationIndex);
 
   setBoardColumns(NewColumns);
-
-  console.log(Result, moveObjectInArray(Columns, SourceIndex, DestinationIndex));
 };

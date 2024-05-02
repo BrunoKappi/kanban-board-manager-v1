@@ -128,5 +128,4 @@ export const HandleDragColumns = (Result: DropResult, Columns: any, setBoardColu
 
   setBoardColumns(NewColumns);
 
-  console.log(Result, moveObjectInArray(Columns, SourceIndex, DestinationIndex));
 };

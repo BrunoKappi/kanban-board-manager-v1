@@ -11,11 +11,11 @@ export const DefaultBoardCardModals = [
 ];
 
 export const HandleToggleTask = (Index: number, Setter: any, Tasks: any) => {
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
   const Current = Tasks.map((task: any) => ({ ...task })); // Cria uma cópia profunda de cada objeto dentro do array Tasks
@@ -29,7 +29,7 @@ export const HandleToggleTask = (Index: number, Setter: any, Tasks: any) => {
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 
@@ -38,12 +38,12 @@ export const HandleToggleTask = (Index: number, Setter: any, Tasks: any) => {
 };
 
 export const HandleDeleteTask = (Index: number, Setter: any, Tasks: any) => {
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
   const CardMode: string = store.getState().CardModal.Mode;
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
   var NewTasks = [...Tasks];
@@ -59,7 +59,7 @@ export const HandleDeleteTask = (Index: number, Setter: any, Tasks: any) => {
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 
@@ -74,12 +74,12 @@ export const HandleChangeTaskTitle = (Value: string, Index: number, Setter: any,
 };
 
 export const HandleAddTask = (Setter: any, Tasks: any) => {
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
   const CardMode: string = store.getState().CardModal.Mode;
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
 
@@ -102,7 +102,7 @@ export const HandleAddTask = (Setter: any, Tasks: any) => {
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 
@@ -127,11 +127,11 @@ function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: numb
 export const HandleDragTasks = (Result: DropResult, Tasks: any, setCardTasks: (Tasks: any) => void) => {
   if (!Result.destination) return;
 
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
   var NewBoard: any = { ...store.getState().Board };
   let NewColumns: any = [...NewBoard.Columns];
-  let NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  let NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   let NewCards: any = [...NewColumn.Cards];
   let NewCard: any = { ...NewCards[CardIndex] };
 
@@ -147,7 +147,7 @@ export const HandleDragTasks = (Result: DropResult, Tasks: any, setCardTasks: (T
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 
@@ -160,12 +160,12 @@ export const HandleSaveBoard = (NewBoard: any) => {
 };
 
 export const HandleChangeCardTitle = (Title: string) => {
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
   const CardMode: string = store.getState().CardModal.Mode;
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
 
@@ -177,7 +177,7 @@ export const HandleChangeCardTitle = (Title: string) => {
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 
@@ -187,12 +187,12 @@ export const HandleChangeCardTitle = (Title: string) => {
 };
 
 export const HandleChangeCardNotes = (Title: string) => {
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
   const CardMode: string = store.getState().CardModal.Mode;
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
 
@@ -204,7 +204,7 @@ export const HandleChangeCardNotes = (Title: string) => {
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 
@@ -219,13 +219,13 @@ export const SetCardModalTitle = (Title: string) => {
 };
 
 export const HandleChangeCardColumn = (ColumnId: string) => {
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
 
   const CardMode: string = store.getState().CardModal.Mode;
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
 
   var NewCard: any = { ...NewCards[CardIndex] };
@@ -250,12 +250,12 @@ export const HandleChangeCardColumn = (ColumnId: string) => {
 };
 
 export const HandleChangeCardDesc = (Desc: string) => {
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
   const CardMode: string = store.getState().CardModal.Mode;
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
 
@@ -267,7 +267,7 @@ export const HandleChangeCardDesc = (Desc: string) => {
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 
@@ -275,12 +275,12 @@ export const HandleChangeCardDesc = (Desc: string) => {
 };
 
 export const HandleSaveTasks = (Tasks: any) => {
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
   const CardMode: string = store.getState().CardModal.Mode;
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
   const NewTasks = [...Tasks];
@@ -292,7 +292,7 @@ export const HandleSaveTasks = (Tasks: any) => {
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 
@@ -309,13 +309,13 @@ export const HandleCreateCard = (CardTitle: string, CardDesc: string, Tasks: any
     return;
   }
 
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardMode: string = store.getState().CardModal.Mode;
   //@ts-ignore
   const CurrentCardTags: string[] = [...(store.getState().CardModal?.Card?.Tags || [])];
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = {};
 
@@ -332,7 +332,7 @@ export const HandleCreateCard = (CardTitle: string, CardDesc: string, Tasks: any
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 

@@ -30,7 +30,6 @@ export const HandleDuplicateCard = (ColumnIndex: number, CardIndex: number, Colu
 
   NewBoard.Columns = [...NewColumns];
 
-  console.log(NewBoard);
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };

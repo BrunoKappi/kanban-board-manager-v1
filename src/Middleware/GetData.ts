@@ -32,7 +32,7 @@ export const GetBoardList = async () => {
   else {
     if (localStorage.getItem(`Kanban-BoardList`)) {
       const List = JSON.parse(localStorage.getItem(`Kanban-BoardList`) || "");
-      console.log(List);
+
       store.dispatch(SetBoardList(List));
       store.dispatch(SetSelectedBoard([...List].sort(OrderBoards)[0]?.BoardId || "NA"));
       return List;

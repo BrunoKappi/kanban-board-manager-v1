@@ -5,7 +5,7 @@ import store from "../Store/Store";
 import { SetUser, UserType } from "../Store/User/User";
 
 const onAuthStateChangedHandler = (AuthCurrentUser: User) => {
-  console.log("FIREBASE AuthChanged", AuthCurrentUser ? AuthCurrentUser : "FIREBASE Auth Vazio");
+  //console.log("FIREBASE AuthChanged", AuthCurrentUser ? AuthCurrentUser : "FIREBASE Auth Vazio");
 
   const User: UserType = {
     displayName: AuthCurrentUser?.displayName || "Guest",

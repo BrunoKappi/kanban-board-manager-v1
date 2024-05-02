@@ -6,6 +6,7 @@ import DeleteBoard from "./DeleteBoard";
 import { BoardModal } from "../BoardModal/BoardModal";
 import Tooltip from "../Tooltip/Tooltip";
 import { ListOption } from "../ListOption/ListOption";
+import DuplicateBoard from "./DuplicateBoard";
 
 type Props = {};
 
@@ -26,8 +27,9 @@ export default function BoardOptionsPopover({}: Props) {
           <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent">
             <span>Board Options</span>
           </ListOption>
-          <DeleteBoard SetExternalOpen={setOpen} />
           <BoardModal SetExternalOpen={setOpen} />
+          <DuplicateBoard SetExternalOpen={setOpen} />
+          <DeleteBoard SetExternalOpen={setOpen} />
         </PopOverList>
       </PopoverContent>
     </Popover>

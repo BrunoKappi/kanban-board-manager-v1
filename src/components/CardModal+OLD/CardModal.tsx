@@ -17,11 +17,11 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 type Props = {
   Card: any;
   Column: any;
-  ColumIndex: number;
+  ColumnIndex: number;
   CardIndex: number;
 };
 
-const CardModal = ({ Card, Column, ColumIndex, CardIndex }: Props) => {
+const CardModal = ({ Card, Column, ColumnIndex, CardIndex }: Props) => {
   const [open, setOpen] = useState(false);
   const [Reorder] = useState(false);
   const [FocusOn, setFocusOn] = useState(0);
@@ -36,7 +36,6 @@ const CardModal = ({ Card, Column, ColumIndex, CardIndex }: Props) => {
 
     //@ts-ignore
     if (!!Board?.BoardId && !State) {
-      console.log(Board);
       HandleSaveBoard(Board);
     }
   };
@@ -54,7 +53,7 @@ const CardModal = ({ Card, Column, ColumIndex, CardIndex }: Props) => {
 
         <h2 className="mt-5 text-lg">Tasks</h2>
 
-        <DragDropContext onDragEnd={(Result) => HandleDragTasks(Result, CardTasks, setCardTasks, Column, ColumIndex, CardIndex, setBoard)}>
+        <DragDropContext onDragEnd={(Result) => HandleDragTasks(Result, CardTasks, setCardTasks, Column, ColumnIndex, CardIndex, setBoard)}>
           <Droppable droppableId={v4()} key={v4()}>
             {(provided: any) => {
               return (

@@ -67,12 +67,12 @@ function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: numb
   return newArr;
 }
 
-export const HandleDragTasks = (Result: DropResult, Tasks: any, setCardTasks: (Tasks: any) => void, Column: any, ColumIndex: number, CardIndex: number, setBoard: any) => {
+export const HandleDragTasks = (Result: DropResult, Tasks: any, setCardTasks: (Tasks: any) => void, Column: any, ColumnIndex: number, CardIndex: number, setBoard: any) => {
   if (!Result.destination) return;
 
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
 
@@ -108,70 +108,3 @@ export const HandleSaveBoard = (NewBoard: any) => {
   MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
-// export const HandleEditBoard = (BoardName: string, BoardCardModals: any[], BoardDesc: string, setMessage: (message: string) => void, Board: any) => {
-//   if (!BoardName) {
-//     setMessage("Board Name is empty");
-//     setTimeout(() => {
-//       setMessage("");
-//     }, 3000);
-//     return;
-//   }
-
-//   if (BoardCardModals.length === 0) {
-//     setMessage("Add at least one CardModal");
-//     setTimeout(() => {
-//       setMessage("");
-//     }, 3000);
-//     return;
-//   }
-
-//   const NewCardModals = BoardCardModals.map((CardModal: any) => {
-//     return {
-//       ...CardModal,
-//       LastEditedAt: moment().valueOf(),
-//     };
-//   });
-
-//   const NewBoard = {
-//     ...Board,
-//     BoardName: BoardName,
-//     BoardCardModalsQtd: BoardCardModals.length,
-//     Description: BoardDesc || "",
-//     LastEditedAt: moment().valueOf(),
-//     CardModals: [...NewCardModals],
-//   };
-
-//   console.log("EDITED BOARD", NewBoard);
-
-//   MIDDLEWARE_UpdateBoard(NewBoard);
-// };
-
-// function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: number) {
-//   // Verifica se os índices estão dentro dos limites do array
-//   if (sourceIndex < 0 || sourceIndex >= arr.length || destinationIndex < 0 || destinationIndex > arr.length) {
-//     throw new Error("Índices estão fora dos limites do array.");
-//   }
-
-//   // Faz uma cópia profunda do array original para não modificar o original
-//   const newArr = arr.map((obj: any) => ({ ...obj }));
-
-//   // Remove o objeto do sourceIndex
-//   const [removedObject] = newArr.splice(sourceIndex, 1);
-
-//   // Insere o objeto no destinationIndex
-//   newArr.splice(destinationIndex, 0, removedObject);
-
-//   return newArr;
-// }
-
-// export const HandleDragCardModals = (Result: DropResult, CardModals: any, setBoardCardModals: (CardModals: any) => void) => {
-//   if (!Result.destination) return;
-
-//   const DestinationIndex = Result.destination.index;
-//   const SourceIndex = Result.source.index;
-//   const NewCardModals = moveObjectInArray(CardModals, SourceIndex, DestinationIndex);
-
-//   setBoardCardModals(NewCardModals);
-
-//   console.log(Result, moveObjectInArray(CardModals, SourceIndex, DestinationIndex));
-// };

@@ -5,7 +5,7 @@ import { HandleDrag } from "./Board.Utils";
 import Show from "@/lib/Show";
 import { BoardProps } from "./Board.Types";
 import Status from "../Status/Status";
-
+import BoardImage from "@/Assets/Board.svg";
 import BoardColumnOptions from "../BoardColumn/BoardColumnOptions";
 import Tooltip from "../Tooltip/Tooltip";
 import CardModal from "../CardModal/CardModal";
@@ -21,8 +21,8 @@ export const Board = ({ Board }: BoardProps) => {
           }}
         >
           <Show if={!!Board.BoardId}>
-            {Board?.Columns?.filter((Colum) => Colum.Visible).map((Column: any, ColumIndex) => (
-              <BoardColumn Column={Column} ColumIndex={ColumIndex} />
+            {Board?.Columns?.filter((Colum) => Colum.Visible).map((Column: any, ColumnIndex) => (
+              <BoardColumn Column={Column} ColumnIndex={ColumnIndex} />
             ))}
           </Show>
         </DragDropContext>
@@ -57,7 +57,10 @@ export const Board = ({ Board }: BoardProps) => {
       </Show>
 
       <Show if={!Board.BoardId}>
-        <div className="w-full text-center font-semibold text-2xl">No Boards yet</div>
+        <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-5">
+          <h1 className=" text-4xl font-semibold">No Boards Yet</h1>
+          <img src={BoardImage} alt="" className="size-[80%] md:size-[50%] max-w-96" />
+        </div>
       </Show>
     </div>
   );

@@ -11,9 +11,7 @@ function Login() {
 
   const handleLogin = async () => {
     FIREBASE_LoginWithEmailPassword(email, password)
-      .then((response) => {
-        console.log(response);
-      })
+      .then(() => {})
       .catch((Error) => {
         setError(Error.code);
       });

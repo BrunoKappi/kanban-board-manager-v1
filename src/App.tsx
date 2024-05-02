@@ -4,17 +4,25 @@ import Content from "./components/Content/Content";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import { FIREBASE_GetDocBoards } from "./Config/Firebase/Firestore";
 import { useDispatch } from "react-redux";
 import { GetInitialState, SetBoards } from "./Config/Store/Boards/Boards";
 import { GetPanelSize } from "./lib/utils";
 import { GetBoardList } from "./Middleware/GetData";
+import Lost from "./Assets/Lost.svg";
 
 function App() {
   const User = useSelector((state: any) => state.User);
   const SidebarState = useSelector((state: any) => state.Sidebar);
   const [Screen, setScreen] = useState(window.innerWidth);
+  const Theme = useSelector((state: any) => state.Theme);
+
+  if (Theme === "Dark") {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
 
   const dispatch = useDispatch();
 
@@ -79,7 +87,18 @@ function App() {
       <Routes>
         <Route path="/" element={GetElement()} />
 
-        <Route path="*" element={<h1>NOT FOUND</h1>} />
+        <Route
+          path="*"
+          element={
+            <div className="flex flex-col justify-center items-center h-dvh w-dvw bg-background dark:bg-background-dark">
+              <img className="size-72" src={Lost}></img>
+              <h1 className=" text-4xl font-semibold">Page not Found</h1>
+              <Link className="mt-5 hover:underline" to={"/"}>
+                Back to Home
+              </Link>
+            </div>
+          }
+        />
       </Routes>
     </main>
   );

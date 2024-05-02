@@ -4,11 +4,11 @@ import { TagType } from "@/Data/Types";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 
 export const HandleCardTagToggle = (BorardTag: TagType) => {
-  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
 
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...store.getState().CardModal.Card };
   //@ts-ignore
@@ -30,14 +30,14 @@ export const HandleCardTagToggle = (BorardTag: TagType) => {
 
   NewColumn.Cards = [...NewCards];
 
-  NewColumns[ColumIndex] = { ...NewColumn };
+  NewColumns[ColumnIndex] = { ...NewColumn };
 
   NewBoard.Columns = [...NewColumns];
 
   //@ts-ignore
   store.dispatch(SetCardModalCardTags(NewCardTags));
 
-  console.log(NewCardTags);
+  
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };

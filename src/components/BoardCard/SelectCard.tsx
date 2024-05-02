@@ -7,17 +7,17 @@ import { useSelector } from "react-redux";
 
 type Props = {
   CardIndex: number;
-  ColumIndex: number;
+  ColumnIndex: number;
   Card: any;
   Column: any;
 };
 
-export default function SelectCard({ CardIndex, ColumIndex, Card, Column }: Props) {
+export default function SelectCard({ CardIndex, ColumnIndex, Card, Column }: Props) {
   const Board = useSelector((state: any) => state.Board);
   const dispatch = useDispatch();
 
   const HandleSelectCard = () => {
-    var NewColumnIndex = ColumIndex;
+    var NewColumnIndex = ColumnIndex;
 
     Board?.Columns?.forEach((element: any, index: number) => {
       if (element.ColumId === Column.ColumId) NewColumnIndex = index;

@@ -15,8 +15,7 @@ type MIDDLEWARE_LoginProps = {
 
 export const MIDDLEWARE_Login = ({ email, password, setOpen, setError }: MIDDLEWARE_LoginProps) => {
   FIREBASE_LoginWithEmailPassword(email, password)
-    .then((response) => {
-      console.log(response);
+    .then(() => {
       setOpen(false);
     })
     .catch(() => {

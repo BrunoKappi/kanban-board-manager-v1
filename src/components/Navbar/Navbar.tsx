@@ -1,5 +1,5 @@
-import { ChevronDownIcon, Save, X } from "lucide-react";
-import { Button } from "../ui/button";
+import { X } from "lucide-react";
+
 import Tooltip from "../Tooltip/Tooltip";
 import { useSelector } from "react-redux";
 import ToggleSidebar from "../ToggleSidebar/ToggleSidebar";
@@ -14,6 +14,7 @@ import Show from "@/lib/Show";
 import ColumnSizePopover from "../ColumnSizePopover/ColumnSizePopover";
 import SearchBar from "../SearchBar/SearchBar";
 import BoardListPopover from "../BoardListPopover/BoardListPopover";
+import { AddBoardItem } from "../BoardListPopover/AddBoardItem";
 
 const Navbar = ({ Board }: NavbarProps) => {
   const [BoardName, setBoardName] = useState(Board?.BoardName);
@@ -44,17 +45,19 @@ const Navbar = ({ Board }: NavbarProps) => {
   return (
     <div className="min-h-14 flex-wrap md:flex-row resize-y flex-shrink-0 flex flex-col items-start justify-between md:items-start md:justify-between px-5 py-5 pt-7 pl-10 gap-5 pr-10">
       <div className="flex flex-row gap-5 items-center justify-start">
-        {Sidebar === "Closed" && <ToggleSidebar />}
+        {Sidebar === "Closed" && Screen > 768 && <ToggleSidebar />}
 
-        {!Editing && Screen > 768 && (
+        {!Editing && Screen > 768 && !!Board.BoardId && (
           <Tooltip text="Double click to edit Board name">
-            <span className="dark:text-accent text-accent-foreground min-w-72 bg-slate-400/10 dark:bg-slate-400/5 rounded-full px-5 py-2 font-medium text-xl select-none cursor-pointer truncate line-clamp-1 max-w-72" onDoubleClick={HandleStartEditing}>
-              {Board?.BoardName}
+            <span className="dark:text-accent text-accent-foreground min-w-72 bg-slate-400/10 dark:bg-slate-400/5 rounded-full px-5 py-2 font-medium text-xl select-none cursor-pointer  line-clamp-1 max-w-72 truncate text-ellipsis" onDoubleClick={HandleStartEditing}>
+              <span className="max-w-full truncate">{Board?.BoardName}</span>
             </span>
           </Tooltip>
         )}
 
-        {!Editing && Screen <= 768 && <BoardListPopover Board={Board} />}
+        {!Editing && Screen <= 768 && !!Board.BoardId && <BoardListPopover Board={Board} />}
+
+        {!Board.BoardId && <AddBoardItem className=" rounded-full" />}
 
         {Editing && (
           <form className="flex flex-row items-center justify-start gap-2 bg-slate-400/10 dark:bg-slate-400/5 rounded-full px-5 py-2 dark:text-accent text-accent-foreground font-medium text-xl " onSubmit={HandleChangeBoardName}>
@@ -72,9 +75,15 @@ const Navbar = ({ Board }: NavbarProps) => {
           <BoardOptionsPopover />
         </Show>
       </div>
-      <SearchBar />
+
+      <Show if={!!Board?.BoardId}>
+        <SearchBar />
+      </Show>
+
       <div className="flex flex-row gap-4 items-center justify-center flex-wrap">
-        <ColumnSizePopover />
+        <Show if={!!Board.BoardName}>
+          <ColumnSizePopover />
+        </Show>
         <ToggleTheme />
         <UserPopover />
       </div>

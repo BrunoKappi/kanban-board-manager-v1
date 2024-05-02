@@ -9,7 +9,6 @@ const InitialState = [...Boards];
 export const GetInitialState = () => {
   if (localStorage.getItem("Kanban-Boards")) {
     const BoardsLocal = JSON.parse(localStorage.getItem("Kanban-Boards") || "");
-    console.log(BoardsLocal);
     return BoardsLocal?.length > 0 ? BoardsLocal : InitialState;
   } else {
     return InitialState;

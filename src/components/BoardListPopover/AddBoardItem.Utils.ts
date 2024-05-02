@@ -90,7 +90,7 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
         TagName: "My Tag 2",
         TagColor: "red",
       },
-      { 
+      {
         TagId: v4(),
         TagName: "My Tag 3",
         TagColor: "blue",
@@ -127,6 +127,4 @@ export const HandleDragColumns = (Result: DropResult, Columns: any, setBoardColu
   const NewColumns = moveObjectInArray(Columns, SourceIndex, DestinationIndex);
 
   setBoardColumns(NewColumns);
-
-  console.log(Result, moveObjectInArray(Columns, SourceIndex, DestinationIndex));
 };

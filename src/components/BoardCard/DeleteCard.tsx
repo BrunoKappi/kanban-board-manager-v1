@@ -9,16 +9,16 @@ import { HandleDeleteCard } from "./DeleteCard.Utils";
 
 type Props = {
   CardIndex: number;
-  ColumIndex: number;
+  ColumnIndex: number;
   Column: any;
 };
 
-export default function DeleteCard({ CardIndex, ColumIndex, Column }: Props) {
+export default function DeleteCard({ CardIndex, ColumnIndex, Column }: Props) {
   const [open, setOpen] = useState(false);
 
   const HandleDeleteCardn = () => {
     setOpen(false);
-    HandleDeleteCard(ColumIndex, CardIndex, Column);
+    HandleDeleteCard(ColumnIndex, CardIndex, Column);
   };
 
   return (

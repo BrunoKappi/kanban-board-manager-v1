@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { DefaultCardToAdd } from "./BoardAddCard.Utils";
 
 type Props = {
-  ColumIndex: number;
+  ColumnIndex: number;
 };
 
-export default function BoardAddCard({ ColumIndex }: Props) {
+export default function BoardAddCard({ ColumnIndex }: Props) {
   const dispatch = useDispatch();
 
   const HandleAddCard = () => {
@@ -15,7 +15,7 @@ export default function BoardAddCard({ ColumIndex }: Props) {
     //@ts-ignore
     dispatch(SetCardModalCardIndex(2));
     //@ts-ignore
-    dispatch(SetCardModalColumnIndex(ColumIndex));
+    dispatch(SetCardModalColumnIndex(ColumnIndex));
     //@ts-ignore
     dispatch(
       //@ts-ignore

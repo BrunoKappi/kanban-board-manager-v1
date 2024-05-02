@@ -13,10 +13,10 @@ import { CardType, TagType } from "@/Data/Types";
 
 type Props = {
   Column: any;
-  ColumIndex: number;
+  ColumnIndex: number;
 };
 
-export default function BoardColumn({ Column, ColumIndex }: Props) {
+export default function BoardColumn({ Column, ColumnIndex }: Props) {
   const [Cards, setCards] = useState([...Column.Cards]);
   const CardWidth = useSelector((state: any) => state.CardWidth);
   const TagsToFilter = useSelector((state: any) => state.TagsFilter);
@@ -44,9 +44,7 @@ export default function BoardColumn({ Column, ColumIndex }: Props) {
         Card.Tags.map((CardTag) => {
           let Tag: any = Board?.Tags?.find((BoardTag: TagType) => BoardTag.TagId === CardTag);
           if (Tag) {
-            console.log("TAG ACHADA", Tag?.TagName,SearchFilter.toLowerCase());
             if (Tag?.TagName.toLowerCase().includes(SearchFilter.toLowerCase())) {
-              
               CardTags = true;
             }
           }
@@ -96,12 +94,12 @@ export default function BoardColumn({ Column, ColumIndex }: Props) {
 
             <div className="flex flex-col gap-2 py-2">
               {Cards.filter(FilterCards).map((Card: any, CardIndex) => {
-                return <BoardCard ColumIndex={ColumIndex} Column={Column} CardIndex={CardIndex} Card={Card} Index={CardIndex} key={uuid()} />;
+                return <BoardCard ColumnIndex={ColumnIndex} Column={Column} CardIndex={CardIndex} Card={Card} Index={CardIndex} key={uuid()} />;
               })}
 
               {provided.placeholder}
 
-              <BoardAddCard ColumIndex={ColumIndex} />
+              <BoardAddCard ColumnIndex={ColumnIndex} />
             </div>
           </div>
         );

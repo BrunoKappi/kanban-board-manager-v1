@@ -10,16 +10,16 @@ type Props = {
   Card: any;
   Index: number;
   CardIndex: number;
-  ColumIndex: number;
+  ColumnIndex: number;
   Column: any;
 };
 
-export default function BoardCard({ Card, Index, ColumIndex, CardIndex, Column }: Props) {
+export default function BoardCard({ Card, Index, ColumnIndex, CardIndex, Column }: Props) {
   const Board = useSelector((state: any) => state.Board);
   const dispatch = useDispatch();
 
   const HandleSelectCard = () => {
-    var NewColumnIndex = ColumIndex;
+    var NewColumnIndex = ColumnIndex;
 
     Board?.Columns?.forEach((element: any, index: number) => {
       if (element.ColumId === Column.ColumId) NewColumnIndex = index;
@@ -47,7 +47,7 @@ export default function BoardCard({ Card, Index, ColumIndex, CardIndex, Column }
               })}
             </div>
             <span className=" group line-clamp-2 select-none text-sm">{Card.CardTitle}</span>
-            <BoardCardOptions Card={Card} CardIndex={CardIndex} ColumIndex={ColumIndex} Column={Column} />
+            <BoardCardOptions Card={Card} CardIndex={CardIndex} ColumnIndex={ColumnIndex} Column={Column} />
           </div>
         );
       }}

@@ -4,13 +4,13 @@ import { HandleDuplicateCard } from "./DuplicateCard.Utils";
 
 type Props = {
   CardIndex: number;
-  ColumIndex: number;
+  ColumnIndex: number;
   Column: any;
 };
 
-export default function DuplicateCard({ CardIndex, ColumIndex, Column }: Props) {
+export default function DuplicateCard({ CardIndex, ColumnIndex, Column }: Props) {
   const DuplicateCard = () => {
-    HandleDuplicateCard(ColumIndex, CardIndex, Column);
+    HandleDuplicateCard(ColumnIndex, CardIndex, Column);
   };
   return (
     <ListOption className="flex flex-row items-center justify-start" onClick={DuplicateCard}>

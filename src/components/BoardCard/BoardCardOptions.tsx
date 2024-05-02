@@ -11,11 +11,11 @@ import SelectCard from "./SelectCard";
 type Props = {
   Card: any;
   CardIndex: number;
-  ColumIndex: number;
+  ColumnIndex: number;
   Column: any;
 };
 
-export default function BoardCardOptions({ Card, CardIndex, ColumIndex, Column }: Props) {
+export default function BoardCardOptions({ Card, CardIndex, ColumnIndex, Column }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -33,9 +33,9 @@ export default function BoardCardOptions({ Card, CardIndex, ColumIndex, Column }
       </PopoverTrigger>
       <PopoverContent className="w-56 p-0 bg-background  dark:bg-background-dark dark:border-border-dark select-none overflow-hidden" alignOffset={0} side="right" sideOffset={100}>
         <PopOverList className="flex flex-col justify-start items-start py-2 gap-0" onClick={(event) => event.stopPropagation()}>
-          <SelectCard Column={Column} CardIndex={CardIndex} ColumIndex={ColumIndex} Card={Card} />
-          <DuplicateCard Column={Column} CardIndex={CardIndex} ColumIndex={ColumIndex} />
-          <DeleteCard Column={Column} CardIndex={CardIndex} ColumIndex={ColumIndex} />
+          <SelectCard Column={Column} CardIndex={CardIndex} ColumnIndex={ColumnIndex} Card={Card} />
+          <DuplicateCard Column={Column} CardIndex={CardIndex} ColumnIndex={ColumnIndex} />
+          <DeleteCard Column={Column} CardIndex={CardIndex} ColumnIndex={ColumnIndex} />
         </PopOverList>
       </PopoverContent>
     </Popover>

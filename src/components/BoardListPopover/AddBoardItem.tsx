@@ -11,8 +11,9 @@ import Tooltip from "../Tooltip/Tooltip";
 import Show from "@/lib/Show";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 } from "uuid";
+import { cn } from "@/lib/utils";
 
-export function AddBoardItem() {
+export function AddBoardItem({ className }: { className?: any }) {
   const [open, setOpen] = useState(false);
   const [Reorder] = useState(false);
   const [BoardName, setBoardName] = useState("");
@@ -25,7 +26,7 @@ export function AddBoardItem() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="flex flex-row justify-start items-center gap-2  w-full px-3 py-2  text-primary  cursor-pointer hover:bg-primary hover:text-primary-foreground">
+        <div className={cn("flex flex-row justify-start items-center gap-2  w-full px-3 py-2  text-primary  cursor-pointer hover:bg-primary hover:text-primary-foreground", className)}>
           <Columns3 className="size-5 flex-shrink-0" />
           <span className="truncate text-sm">+ Create Board</span>
         </div>
