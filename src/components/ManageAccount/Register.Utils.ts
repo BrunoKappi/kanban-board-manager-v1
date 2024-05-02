@@ -1,4 +1,4 @@
-import { MIDDLEWARE_Register } from "@/Middleware/Auth";
+import { MIDDLEWARE_LoginWithGoogle, MIDDLEWARE_Register } from "@/Middleware/Auth";
 
 export function getKeysWithSubstring(substring: string) {
   const keys = [];
@@ -38,4 +38,14 @@ type RegisterFnProps = {
 
 export const RegisterFn = async ({ email, password, setOpen, setError, setMessage }: RegisterFnProps) => {
   MIDDLEWARE_Register({ email, password, setOpen, setError, setMessage });
+};
+
+
+type LoginGoogleFnProps = {
+  setOpen: (mode: boolean) => void;
+  setError: (error: string) => void;
+};
+
+export const RegisterWithGoogleFn = async ({ setOpen, setError }: LoginGoogleFnProps) => {
+  MIDDLEWARE_LoginWithGoogle({ setOpen, setError });
 };

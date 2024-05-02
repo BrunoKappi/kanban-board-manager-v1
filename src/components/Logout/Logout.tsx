@@ -8,7 +8,8 @@ type Props = {
 
 export default function Logout({ setOpen }: Props) {
   const handleLogout = () => {
-    localStorage.clear();
+    //localStorage.clear();
+    localStorage.setItem(`Kanban-BoardList`, JSON.stringify([]));
     FIREBASE_Logout();
     setOpen(false);
   };

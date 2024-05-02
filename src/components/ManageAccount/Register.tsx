@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { UserRound } from "lucide-react";
-import { RegisterFn } from "./Register.Utils";
+import { RegisterFn, RegisterWithGoogleFn } from "./Register.Utils";
+import Google from "@/Assets/Google.svg";
 
 type RegisterProps = {
   setMode: (mode: string) => void;
@@ -28,11 +29,19 @@ export default function Register({ setMode, setOpen }: RegisterProps) {
     }
   };
 
+  const handleLoginWithGoogle = () => {
+    RegisterWithGoogleFn({ setOpen, setError });
+  };
+
   return (
     <form className="flex gap-3 flex-col justify-start items-start w-full " onSubmit={handleRegister}>
       <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <Input type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+      <div className="px-3 py-2 border w-full rounded-md flex flex-row items-center justify-center gap-2 cursor-pointer hover:bg-overlay dark:hover:bg-overlay-dark dark:border-border-dark" onClick={handleLoginWithGoogle}>
+        <img src={Google} alt="" className="size-6" />
+        Register with Google
+      </div>
       {error && <p className="text-red-500">{error}</p>}
       {Message && <p className="dark:text-accent text-accent-foreground">{Message}</p>}
       <span className=" cursor-pointer hover:underline mt-5" onClick={() => setMode("Login")}>

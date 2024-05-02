@@ -1,5 +1,5 @@
 import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
-import { FIREBASE_LoginWithEmailPassword, FIREBASE_RegisterUserEmailPassword, FIREBASE_SendEMailResetPassword } from "@/Config/Firebase/Auth";
+import { FIREBASE_LoginWithEmailPassword, FIREBASE_LoginWithGoogle, FIREBASE_RegisterUserEmailPassword, FIREBASE_SendEMailResetPassword } from "@/Config/Firebase/Auth";
 import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList } from "@/Config/Firebase/Firestore";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { ExampleBoard1 } from "@/Data/ExampleBoard1";
@@ -20,6 +20,25 @@ export const MIDDLEWARE_Login = ({ email, password, setOpen, setError }: MIDDLEW
     })
     .catch(() => {
       setError("Email or password incorrect");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+    });
+};
+
+type MIDDLEWARE_LoginGoogleProps = {
+  setOpen: (mode: boolean) => void;
+  setError: (error: string) => void;
+};
+
+export const MIDDLEWARE_LoginWithGoogle = ({ setOpen, setError }: MIDDLEWARE_LoginGoogleProps) => {
+  FIREBASE_LoginWithGoogle()
+    .then(() => {
+      setOpen(false);
+    })
+    .catch((error) => {
+      console.log(error)
+      setError("Something went wrong");
       setTimeout(() => {
         setError("");
       }, 3000);

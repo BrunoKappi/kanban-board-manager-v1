@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { LoginFn } from "./Login.Utils";
+import { LoginFn, LoginWithGoogleFn } from "./Login.Utils";
+import Google from "@/Assets/Google.svg";
 
 type LoginProps = {
   setMode: (mode: string) => void;
@@ -18,10 +19,18 @@ export default function Login({ setMode, setOpen }: LoginProps) {
     if (!email || !password) return;
     LoginFn({ email, password, setOpen, setError });
   };
+
+  const handleLoginWithGoogle = () => {
+    LoginWithGoogleFn({ setOpen, setError });
+  };
   return (
     <form className="flex gap-3 flex-col justify-start items-start w-full " onSubmit={handleLogin}>
       <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <div className="px-3 py-2 border w-full rounded-md flex flex-row items-center justify-center gap-2 cursor-pointer hover:bg-overlay dark:hover:bg-overlay-dark dark:border-border-dark" onClick={handleLoginWithGoogle}>
+        <img src={Google} alt="" className="size-6" />
+        Login with Google
+      </div>
       {error && <p className="text-red-500">{error}</p>}
       <span className=" cursor-pointer hover:underline mt-5" onClick={() => setMode("Forgot")}>
         Forgot Password?
