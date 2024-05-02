@@ -13,6 +13,7 @@ import { HandleAddTask, HandleChangeTaskTitle, HandleDragTasks, HandleSaveBoard,
 import { v4 } from "uuid";
 import Tooltip from "../Tooltip/Tooltip";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { MAX_CARD_TITLE, MAX_COLUMN_TITLE, MAX_DESC } from "@/Data/Limits";
 
 type Props = {
   Card: any;
@@ -49,7 +50,7 @@ const CardModal = ({ Card, Column, ColumnIndex, CardIndex }: Props) => {
         </ListOption>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[450px] md:max-w-[550px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark p-10 flex flex-col justify-start items-start">
-        <MinimalInput placeholder="Card Title" value={CardTile} onChange={(e) => setCardTile(e.target.value)} />
+        <MinimalInput maxLength={MAX_CARD_TITLE} placeholder="Card Title" value={CardTile} onChange={(e) => setCardTile(e.target.value.trim())} />
 
         <h2 className="mt-5 text-lg">Tasks</h2>
 
@@ -66,6 +67,7 @@ const CardModal = ({ Card, Column, ColumnIndex, CardIndex }: Props) => {
                             <div className="ITEM flex items-center space-x-2 w-full" ref={DragProvided.innerRef} style={DragProvided.draggableProps.style} {...DragProvided.draggableProps} {...DragProvided.dragHandleProps}>
                               <Checkbox id="terms" checked={Task.Completed} onClick={() => HandleToggleTask(Index, setCardTasks, CardTasks)} />
                               <MinimalInput
+                                maxLength={MAX_COLUMN_TITLE}
                                 placeholder="Column Title"
                                 autoFocus={Index === FocusOn}
                                 key={v4()}
@@ -73,7 +75,7 @@ const CardModal = ({ Card, Column, ColumnIndex, CardIndex }: Props) => {
                                 value={Task.TaskTitle}
                                 onChange={(e) => {
                                   setFocusOn(Index);
-                                  HandleChangeTaskTitle(e.target.value, Index, setCardTasks, CardTasks);
+                                  HandleChangeTaskTitle(e.target.value.trim(), Index, setCardTasks, CardTasks);
                                 }}
                               />
                               <Tooltip text="Grab to Reorder">
@@ -98,7 +100,7 @@ const CardModal = ({ Card, Column, ColumnIndex, CardIndex }: Props) => {
         </Show>
 
         <h2 className="mt-5 text-lg">Description</h2>
-        <Textarea placeholder="Card Description(Optional)" value={CardDesc} onChange={(e) => setCardDesc(e.target.value)} />
+        <Textarea maxLength={MAX_DESC} placeholder="Card Description(Optional)" value={CardDesc} onChange={(e) => setCardDesc(e.target.value.trim())} />
 
         <Show if={!!Message}>
           <span className=" text-destructive ">{Message}</span>

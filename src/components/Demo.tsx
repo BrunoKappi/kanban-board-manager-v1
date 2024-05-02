@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 } from "uuid";
 
@@ -35,7 +34,7 @@ export function DialogDemo() {
                             return (
                               <span className={snapshot.isDragging ? "ITEM" : ""} ref={DragProvided.innerRef} style={DragProvided.draggableProps.style} {...DragProvided.draggableProps} {...DragProvided.dragHandleProps}>
                                 {Item.Text}
-                              </span> 
+                              </span>
                             );
                           }}
                         </Draggable>

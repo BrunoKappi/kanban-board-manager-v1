@@ -3,6 +3,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Mail } from "lucide-react";
 import { ForgotFn } from "./Forgot.Utils";
+import { MAX_CARD_EMAIL } from "@/Data/Limits";
 
 type ForgotProps = {
   setMode: (mode: string) => void;
@@ -22,7 +23,7 @@ export default function Forgot({ setMode, setOpen }: ForgotProps) {
   };
   return (
     <form className="flex gap-3 flex-col justify-start items-start w-full " onSubmit={handleForgot}>
-      <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <Input maxLength={MAX_CARD_EMAIL} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value.trim())} />
 
       {error && <p className="text-red-500">{error}</p>}
       {Message && <p className="dark:text-accent text-accent-foreground">{Message}</p>}

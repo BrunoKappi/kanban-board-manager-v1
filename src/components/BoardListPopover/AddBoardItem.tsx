@@ -12,6 +12,7 @@ import Show from "@/lib/Show";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 } from "uuid";
 import { cn } from "@/lib/utils";
+import { MAX_BOARD_TITLE, MAX_COLUMN_TITLE, MAX_DESC } from "@/Data/Limits";
 
 export function AddBoardItem({ className }: { className?: any }) {
   const [open, setOpen] = useState(false);
@@ -40,11 +41,12 @@ export function AddBoardItem({ className }: { className?: any }) {
           Board Name
         </h2>
         <MinimalInput
+          maxLength={MAX_BOARD_TITLE}
           placeholder="Board Name"
           value={BoardName}
           onChange={(e) => {
             setFocusWhat("BoardName");
-            setBoardName(e.target.value);
+            setBoardName(e.target.value.trim());
           }}
         />
 
@@ -54,11 +56,12 @@ export function AddBoardItem({ className }: { className?: any }) {
         </h2>
 
         <Textarea
+          maxLength={MAX_DESC}
           placeholder="Board Description(Optional)"
           value={BoardDesc}
           onChange={(e) => {
             setFocusWhat("BoardDesc");
-            setBoardDesc(e.target.value);
+            setBoardDesc(e.target.value.trim());
           }}
         />
         <div className="flex flex-row gap-2 items-center mt-5 justify-between w-full">
@@ -95,6 +98,7 @@ export function AddBoardItem({ className }: { className?: any }) {
                                     <GripVertical className="h-5" />
                                   </Tooltip>
                                   <MinimalInput
+                                    maxLength={MAX_COLUMN_TITLE}
                                     placeholder="Column Title"
                                     value={BoardColumn.ColumnTitle}
                                     autoFocus={ColumnIndex === FocusOn && FocusWhat === "BoardColumn"}
@@ -102,7 +106,7 @@ export function AddBoardItem({ className }: { className?: any }) {
                                       setFocusWhat("BoardColumn");
                                       setFocusOn(ColumnIndex);
 
-                                      HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns);
+                                      HandleColumnTitle(e.target.value.trim(), ColumnIndex, setBoardColumns, BoardColumns);
                                     }}
                                     className="flex-grow"
                                   />
@@ -130,7 +134,7 @@ export function AddBoardItem({ className }: { className?: any }) {
             return (
               <span className={"ITEM flex flex-row items-center gap-10 w-full"}>
                 <div className="flex flex-row items-center flex-grow gap-2">
-                  <MinimalInput placeholder="Column Title" value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
+                  <MinimalInput maxLength={MAX_COLUMN_TITLE} placeholder="Column Title" value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value.trim(), ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
                 </div>
 
                 <ColorPicker onSelect={(Value: any) => HandleColumnColor(Value, ColumnIndex, setBoardColumns, BoardColumns)} color={BoardColumn.ColumnColor} />

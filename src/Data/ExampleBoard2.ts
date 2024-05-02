@@ -1,6 +1,6 @@
 export const ExampleBoard2 = {
   BoardId: "board2",
-  BoardName: "Local Example Board 2",
+  BoardName: "Example Board 2",
   BoardColumnsQtd: 4,
   Description: "Just an Example Board",
   CreatedAt: "1714188295",

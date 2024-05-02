@@ -12,6 +12,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 } from "uuid";
 import { ListOption } from "../ListOption/ListOption";
 import { useSelector } from "react-redux";
+import { MAX_BOARD_TITLE, MAX_COLUMN_TITLE, MAX_DESC } from "@/Data/Limits";
 
 type Props = {
   SetExternalOpen: (state: boolean) => void;
@@ -38,12 +39,13 @@ export function BoardModal({ SetExternalOpen }: Props) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[450px] md:max-w-[550px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark p-10 flex flex-col justify-start items-start">
         <MinimalInput
+          maxLength={MAX_BOARD_TITLE}
           className=" flex-shrink-0 line-clamp-2 resize-none text-2xl border-none break-words max-w-full overflow-wrap-normalver"
           placeholder="Board Name"
           value={BoardName}
           onChange={(e) => {
             setFocusWhat("BoardName");
-            setBoardName(e.target.value);
+            setBoardName(e.target.value.trim());
           }}
         />
 
@@ -53,11 +55,12 @@ export function BoardModal({ SetExternalOpen }: Props) {
         </h2>
 
         <Textarea
+          maxLength={MAX_DESC}
           placeholder="Board Description(Optional)"
           value={BoardDesc}
           onChange={(e) => {
             setFocusWhat("BoardDesc");
-            setBoardDesc(e.target.value);
+            setBoardDesc(e.target.value.trim());
           }}
         />
         <div className="flex flex-row gap-2 items-center mt-5 justify-between w-full">
@@ -94,13 +97,14 @@ export function BoardModal({ SetExternalOpen }: Props) {
                                     <GripVertical className="h-5" />
                                   </Tooltip>
                                   <MinimalInput
+                                    maxLength={MAX_COLUMN_TITLE}
                                     autoFocus={ColumnIndex === FocusOn && FocusWhat === "BoardColumn"}
                                     placeholder="Column Title"
                                     value={BoardColumn.ColumnTitle}
                                     onChange={(e) => {
                                       setFocusWhat("BoardColumn");
                                       setFocusOn(ColumnIndex);
-                                      HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns);
+                                      HandleColumnTitle(e.target.value.trim(), ColumnIndex, setBoardColumns, BoardColumns);
                                     }}
                                     className="flex-grow"
                                   />
@@ -128,7 +132,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
             return (
               <span className={"ITEM flex flex-row items-center gap-10 w-full"}>
                 <div className="flex flex-row items-center flex-grow gap-2">
-                  <MinimalInput placeholder="Column Title" value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
+                  <MinimalInput maxLength={MAX_COLUMN_TITLE} placeholder="Column Title" value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value.trim(), ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
                 </div>
 
                 <ColorPicker onSelect={(Value: any) => HandleColumnColor(Value, ColumnIndex, setBoardColumns, BoardColumns)} color={BoardColumn.ColumnColor} />

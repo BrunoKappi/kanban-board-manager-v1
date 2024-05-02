@@ -6,6 +6,7 @@ import { MinimalInput } from "../ui/minimalInput";
 import { ChangeColumn } from "./Status.Utils";
 import { Button } from "../ui/button";
 import Tooltip from "../Tooltip/Tooltip";
+import { MAX_COLUMN_TITLE } from "@/Data/Limits";
 
 type StatusProps = {
   Color: string;
@@ -39,7 +40,7 @@ export default function Status({ Color = "neutral", Text = "Status", Column }: S
         </Tooltip>
       </PopoverTrigger>
       <PopoverContent className="w-56  py-2 bg-background flex flex-row flex-wrap dark:bg-background-dark dark:border-border-dark select-none gap-1">
-        <MinimalInput value={ColumnTitle} onChange={(e) => setColumnTitle(e.target.value)} className={`p-0 px-3 py-0.5 h-auto text-sm rounded-full mb-5 mt-2 ${colors[ColorChoose.toLowerCase()].bg} ${colors[ColorChoose.toLowerCase()].text}`} autoFocus={false} />
+        <MinimalInput maxLength={MAX_COLUMN_TITLE} value={ColumnTitle} onChange={(e) => setColumnTitle(e.target.value.trim())} className={`p-0 px-3 py-0.5 h-auto text-sm rounded-full mb-5 mt-2 ${colors[ColorChoose.toLowerCase()].bg} ${colors[ColorChoose.toLowerCase()].text}`} autoFocus={false} />
         <div className="flex flex-row flex-wrap gap-1">
           {Object.keys(ColorOptions).map((Key) => {
             return <span className={`${ColorOptions[Key].bg} size-5 rounded-full cursor-pointer`} onClick={() => HandlePickColor(Key)}></span>;

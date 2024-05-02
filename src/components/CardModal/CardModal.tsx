@@ -19,6 +19,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { colors } from "@/Data/Colors";
 import TagInput from "./TagInput";
 import { HandleCardTagToggle } from "./TagInput.Utils";
+import { MAX_CARD_TITLE, MAX_COLUMN_TITLE, MAX_DESC } from "@/Data/Limits";
 
 type Props = {};
 
@@ -106,13 +107,13 @@ const CardModal = ({}: Props) => {
             ref={TitleTextarea}
             className=" flex-shrink-0 resize-none text-2xl border-none  max-w-full overflow-hidden"
             placeholder="Card Title"
-            maxLength={500}
+            maxLength={MAX_CARD_TITLE}
             value={CardTile}
             onChange={(e) => {
               setCanSave(true);
               setFocusWhat("Title");
-              SetCardModalTitle(e.target.value);
-              setCardTile(e.target.value);
+              SetCardModalTitle(e.target.value.trim());
+              setCardTile(e.target.value.trim());
             }}
           />
 
@@ -190,6 +191,7 @@ const CardModal = ({}: Props) => {
                               <div className="ITEM flex items-center space-x-2 w-full" ref={DragProvided.innerRef} style={DragProvided.draggableProps.style} {...DragProvided.draggableProps} {...DragProvided.dragHandleProps}>
                                 <Checkbox id="terms" checked={Task.Completed} onClick={() => HandleToggleTask(Index, setCardTasks, CardTasks)} />
                                 <MinimalInput
+                                  maxLength={MAX_COLUMN_TITLE}
                                   placeholder="Column Title"
                                   autoFocus={Index === FocusOn && FocusWhat === "Tasks"}
                                   key={v4()}
@@ -199,7 +201,7 @@ const CardModal = ({}: Props) => {
                                     setCanSave(true);
                                     setFocusWhat("Tasks");
                                     setFocusOn(Index);
-                                    HandleChangeTaskTitle(e.target.value, Index, setCardTasks, CardTasks);
+                                    HandleChangeTaskTitle(e.target.value.trim(), Index, setCardTasks, CardTasks);
                                   }}
                                 />
                                 <Tooltip text="Delete Task">
@@ -237,6 +239,7 @@ const CardModal = ({}: Props) => {
           </h2>
 
           <Textarea
+            maxLength={MAX_DESC}
             ref={textareaRef}
             placeholder="Card Description(Optional)"
             cols={200}
@@ -244,7 +247,7 @@ const CardModal = ({}: Props) => {
             onChange={(e) => {
               setCanSave(true);
               setFocusWhat("Desc");
-              setCardDesc(e.target.value);
+              setCardDesc(e.target.value.trim());
             }}
           />
 
@@ -254,15 +257,15 @@ const CardModal = ({}: Props) => {
           </h2>
 
           <Textarea
+            maxLength={MAX_DESC}
             ref={NotesTextarea}
             className=" resize-none border-none ring-0 shadow-none focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 px-0"
             cols={200}
             value={CardNotes}
-            maxLength={3000}
             onChange={(e) => {
               setCanSave(true);
               setFocusWhat("Desc");
-              setCardNotes(e.target.value);
+              setCardNotes(e.target.value.trim());
             }}
           />
 

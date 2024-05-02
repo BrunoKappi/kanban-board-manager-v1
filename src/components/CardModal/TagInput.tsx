@@ -11,6 +11,7 @@ import { HandleCardTagToggle } from "./TagInput.Utils";
 import { HandleAddBoardTag } from "./EditBoardTag.Utils";
 import { Check } from "lucide-react";
 import Tooltip from "../Tooltip/Tooltip";
+import { MAX_TAGNAME } from "@/Data/Limits";
 
 type Props = {};
 
@@ -22,7 +23,7 @@ export default function TagInput({}: Props) {
 
   const OnSearchChange = (e: any) => {
     setOpen(true);
-    setTagSearch(e.target.value);
+    setTagSearch(e.target.value.trim());
   };
 
   const FilterTags = (BorardTag: TagType) => {
@@ -43,7 +44,7 @@ export default function TagInput({}: Props) {
         <span className=" text-xs hover:text-sm">+ Edit Tags</span>
       </PopoverTrigger>
       <PopoverContent className="w-56 p-0 bg-background   dark:bg-background-dark-dialog dark:border-border-dark select-none overflow-hidden">
-        <MinimalInput placeholder="Search Tag" className="text-xs py-1  px-0  w-full text-center h-auto " autoFocus={true} onChange={OnSearchChange} value={TagSearch} />
+        <MinimalInput maxLength={MAX_TAGNAME} placeholder="Search Tag" className="text-xs py-1  px-0  w-full text-center h-auto " autoFocus={true} onChange={OnSearchChange} value={TagSearch} />
         <PopOverList className="flex flex-col justify-start items-start py-2 gap-0 dark:bg-background-dark-dialog " onClick={(event) => event.stopPropagation()}>
           <div className="flex flex-col gap-2 px-2 w-full">
             {Board?.Tags?.filter(FilterTags).map((BorardTag: TagType) => {

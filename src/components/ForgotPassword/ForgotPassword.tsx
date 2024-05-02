@@ -4,6 +4,7 @@ import { FIREBASE_LoginWithEmailPassword } from "@/Config/Firebase/Auth";
 import { LogIn } from "lucide-react";
 import { useState } from "react";
 import { Input } from "../ui/input";
+import { MAX_CARD_EMAIL, MAX_CARD_PASSWORD } from "@/Data/Limits";
 
 export function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -36,8 +37,8 @@ export function ForgotPassword() {
           <DialogDescription className="dark:text-accent text-accent-foreground">Access your account to save your work</DialogDescription>
         </DialogHeader>
         <div className="flex gap-3 flex-col justify-start items-start w-full ">
-          <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Input maxLength={MAX_CARD_EMAIL} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value.trim())} />
+          <Input maxLength={MAX_CARD_PASSWORD} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value.trim())} />
           {error && <p className="text-red-500">{error}</p>}
         </div>
         <DialogFooter>

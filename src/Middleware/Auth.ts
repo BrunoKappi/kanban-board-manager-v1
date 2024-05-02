@@ -1,6 +1,8 @@
 import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
 import { FIREBASE_LoginWithEmailPassword, FIREBASE_LoginWithGoogle, FIREBASE_RegisterUserEmailPassword, FIREBASE_SendEMailResetPassword } from "@/Config/Firebase/Auth";
 import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList } from "@/Config/Firebase/Firestore";
+import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
+import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { ExampleBoard1 } from "@/Data/ExampleBoard1";
 import moment from "moment";
@@ -17,6 +19,8 @@ export const MIDDLEWARE_Login = ({ email, password, setOpen, setError }: MIDDLEW
   FIREBASE_LoginWithEmailPassword(email, password)
     .then(() => {
       setOpen(false);
+      //@ts-ignore
+      store.dispatch(SetCardModalCard({}));
     })
     .catch(() => {
       setError("Email or password incorrect");
@@ -35,10 +39,12 @@ export const MIDDLEWARE_LoginWithGoogle = ({ setOpen, setError }: MIDDLEWARE_Log
   FIREBASE_LoginWithGoogle()
     .then(() => {
       setOpen(false);
+      //@ts-ignore
+      store.dispatch(SetCardModalCard({}));
     })
     .catch((error) => {
-      console.log(error)
-      setError("Something went wrong");
+      console.log(error);
+      setError("Something went wrong, try with Email and Password");
       setTimeout(() => {
         setError("");
       }, 3000);
@@ -55,6 +61,8 @@ type MIDDLEWARE_ForgotProps = {
 export const MIDDLEWARE_Forgot = ({ email, setOpen, setError, setMessage }: MIDDLEWARE_ForgotProps) => {
   FIREBASE_SendEMailResetPassword(email.toLocaleLowerCase())
     .then(() => {
+      //@ts-ignore
+      store.dispatch(SetCardModalCard({}));
       setMessage(" An email was sent to your email account");
       setTimeout(() => {
         setOpen(false);
@@ -79,6 +87,8 @@ type MIDDLEWARE_RegisterProps = {
 export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMessage }: MIDDLEWARE_RegisterProps) => {
   FIREBASE_RegisterUserEmailPassword(email.toLocaleLowerCase(), password)
     .then((Data) => {
+      //@ts-ignore
+      store.dispatch(SetCardModalCard({}));
       setMessage("User registered successfully");
       const UserUid = Data.user.uid;
 
