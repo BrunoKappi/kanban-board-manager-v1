@@ -14,6 +14,7 @@ export type CardType = {
   LastEditedAt: string;
   TasksQtd: number;
   Tasks: TaskType[];
+  Tags: string[];
 };
 
 export type ColumnType = {

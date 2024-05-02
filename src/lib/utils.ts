@@ -25,6 +25,25 @@ export const GetPanelSize = (Panel: string, SidebarState: any) => {
   return Panel === "Left" ? Left : Right;
 };
 
+export const GetPanelSize2 = (Panel: string, SidebarState: any, Screen: number) => {
+  let Left: number;
+  let Right: number;
+
+  if (Screen > 1800) {
+    Left = 13;
+  } else if (Screen > 1312) {
+    Left = 15;
+  } else {
+    Left = 20;
+  }
+
+  Right = 100 - Left;
+
+  if (SidebarState === "Closed") Left = 0;
+
+  return Panel === "Left" ? Left : Right;
+};
+
 export default function getEmailPrefix(email: string) {
   // Verifica se o email é uma string
   if (typeof email !== "string") {

@@ -13,7 +13,7 @@ import CardModal from "../CardModal/CardModal";
 export const Board = ({ Board }: BoardProps) => {
   return (
     <div className="flex-grow  h-full flex flex-row items-start justify-start scroll px-4 pt-10 pb-5 pl-10 overflow-x-auto">
-      <CardModal/>
+      <CardModal />
       <Show if={Board?.BoardId !== ""}>
         <DragDropContext
           onDragEnd={(result) => {
@@ -22,33 +22,36 @@ export const Board = ({ Board }: BoardProps) => {
         >
           <Show if={!!Board.BoardId}>
             {Board?.Columns?.filter((Colum) => Colum.Visible).map((Column: any, ColumIndex) => (
-              <BoardColumn Column={Column} ColumIndex={ColumIndex}/>
+              <BoardColumn Column={Column} ColumIndex={ColumIndex} />
             ))}
           </Show>
         </DragDropContext>
 
-        <div className="flex flex-col justify-start gap-2 ">
+        <div className="flex flex-col justify-start gap-2 ml-5">
           <Show if={!!Board.BoardId}>
             <BoardAddColumn />
           </Show>
-          <div>
+
+          <div className="">
             <Show if={Board?.Columns?.filter((Colum) => !Colum.Visible).length > 0}>
               <h1 className="mt-5 mb-2 ">Hidden Columns</h1>
             </Show>
 
-            <Show if={!!Board.BoardId}>
-              {Board?.Columns?.filter((Colum) => !Colum.Visible).map((Column: any) => (
-                <div className="flex flex-row justify-between w-full gap-3 items-center">
-                  <Status Color={Column.ColumnColor} Text={Column.ColumnTitle} Column={Column} />
-                  <div className="flex flex-row gap-5 items-center">
-                    <Tooltip text="Qtd of Cards">
-                      <span>{Column.CardsQtd}</span>
-                    </Tooltip>
-                    <BoardColumnOptions Column={Column} />
+            <div className="flex flex-col gap-0">
+              <Show if={!!Board.BoardId}>
+                {Board?.Columns?.filter((Colum) => !Colum.Visible).map((Column: any) => (
+                  <div className="flex flex-row justify-between w-full gap-3 items-center">
+                    <Status Color={Column.ColumnColor} Text={Column.ColumnTitle} Column={Column} />
+                    <div className="flex flex-row gap-5 items-center">
+                      <Tooltip text="Qtd of Cards">
+                        <span>{Column.CardsQtd}</span>
+                      </Tooltip>
+                      <BoardColumnOptions Column={Column} />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </Show>
+                ))}
+              </Show>
+            </div>
           </div>
         </div>
       </Show>

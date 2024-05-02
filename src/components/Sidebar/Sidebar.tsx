@@ -30,7 +30,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className=" w-full h-full flex flex-col items-center pt-8 px-5 pl-0 gap-8 relative bg-slate-400/10 dark:bg-slate-400/5">
+    <div className="hidden md:flex w-full h-full  flex-col items-center pt-8 px-5 pl-0 gap-8 relative bg-slate-400/10 dark:bg-slate-400/5">
       <div className="w-full flex flex-row items-center justify-start gap-5 cursor-pointer  ml-7 flex-wrap">
         <ToggleSidebar />
         <Logo />

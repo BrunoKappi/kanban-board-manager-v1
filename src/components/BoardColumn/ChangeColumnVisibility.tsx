@@ -25,8 +25,8 @@ export default function ChangeColumnVisibility({ Column }: Props) {
         <ListOption>
           {Column.Visible && <EyeOff className="size-4" />}
           {!Column.Visible && <Eye className="size-4" />}
-          {Column.Visible && "Turn invisible"}
-          {!Column.Visible && "Turn visible"}
+          {Column.Visible && "Hide Group"}
+          {!Column.Visible && "Show Group"}
         </ListOption>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-background dark:bg-background-dark-dialog dark:border-border-dark">

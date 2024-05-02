@@ -7,6 +7,9 @@ import BoardsSlice from "./Boards/Boards";
 import BoardSlice from "./Board/Boards";
 import BoardListSlice from "./BoardList/BoardList";
 import CardModalSlice from "./CardModal/CardModal";
+import CardWidthSlice from "./CardWidth/CardWidth";
+import TagsFilterSlice from "./TagsFilter/TagsFilter";
+import SearchFilterSlice from "./SearchFilter/CardWidth";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +21,9 @@ const store = configureStore({
     Board: BoardSlice,
     BoardList: BoardListSlice,
     CardModal: CardModalSlice,
+    CardWidth: CardWidthSlice,
+    TagsFilter: TagsFilterSlice,
+    SearchFilter: SearchFilterSlice,
   },
 });
 

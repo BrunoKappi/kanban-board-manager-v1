@@ -10,14 +10,15 @@ import { HandleDeleteCard } from "./DeleteCard.Utils";
 type Props = {
   CardIndex: number;
   ColumIndex: number;
+  Column: any;
 };
 
-export default function DeleteCard({ CardIndex, ColumIndex }: Props) {
+export default function DeleteCard({ CardIndex, ColumIndex, Column }: Props) {
   const [open, setOpen] = useState(false);
 
   const HandleDeleteCardn = () => {
     setOpen(false);
-    HandleDeleteCard(ColumIndex, CardIndex);
+    HandleDeleteCard(ColumIndex, CardIndex, Column);
   };
 
   return (
@@ -25,7 +26,7 @@ export default function DeleteCard({ CardIndex, ColumIndex }: Props) {
       <AlertDialogTrigger asChild>
         <ListOption className="flex flex-row items-center justify-start">
           <Trash2 className="size-4" />
-          <span className="mt-1"> Delete Card</span>
+          <span className="mt-1">Delete Card</span>
         </ListOption>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-background dark:bg-background-dark-dialog dark:border-border-dark">

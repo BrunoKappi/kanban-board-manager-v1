@@ -23,6 +23,7 @@ export const ExampleBoard1 = {
         {
           CardId: "Column1/card1",
           CardTitle: "Some Task 1",
+          CardNotes:'',
           CardDescription: "Just a Card",
           CreatedAt: "1714188295",
           LastEditedAt: "1714188295",
@@ -61,6 +62,7 @@ export const ExampleBoard1 = {
         {
           CardId: "Column2/card1",
           CardTitle: "Some Task 1",
+          CardNotes:'',
           CardDescription: "Just a Card",
           CreatedAt: "1714188295",
           LastEditedAt: "1714188295",
@@ -87,6 +89,7 @@ export const ExampleBoard1 = {
         {
           CardId: "Column2/card2",
           CardTitle: "Some Task 2",
+          CardNotes:'',
           CardDescription: "Just a Card",
           CreatedAt: "1714188295",
           LastEditedAt: "1714188295",
@@ -112,6 +115,7 @@ export const ExampleBoard1 = {
         {
           CardId: "Column2/card3",
           CardTitle: "Some Task 3",
+          CardNotes:'',
           CardDescription: "Just a Card",
           CreatedAt: "1714188295",
           LastEditedAt: "1714188295",
@@ -149,6 +153,7 @@ export const ExampleBoard1 = {
         {
           CardId: "Column3/card1",
           CardTitle: "Some Task",
+          CardNotes:'',
           CardDescription: "Just a Card",
           CreatedAt: "1714188295",
           LastEditedAt: "1714188295",
@@ -174,6 +179,7 @@ export const ExampleBoard1 = {
         {
           CardId: "Column3/card2",
           CardTitle: "Some Task",
+          CardNotes:'',
           CardDescription: "Just a Card",
           CreatedAt: "1714188295",
           LastEditedAt: "1714188295",
@@ -199,6 +205,7 @@ export const ExampleBoard1 = {
         {
           CardId: "Column3/card3",
           CardTitle: "Some Task",
+          CardNotes:'',
           CardDescription: "Just a Card",
           CreatedAt: "1714188295",
           LastEditedAt: "1714188295",
@@ -236,6 +243,7 @@ export const ExampleBoard1 = {
         {
           CardId: "Column4/card1",
           CardTitle: "Some Task",
+          CardNotes:'',
           CardDescription: "Just a Card",
           CreatedAt: "1714188295",
           LastEditedAt: "1714188295",
@@ -261,6 +269,7 @@ export const ExampleBoard1 = {
         {
           CardId: "Column4/card2",
           CardTitle: "Some Task",
+          CardNotes:'',
           CardDescription: "Just a Card",
           CreatedAt: "1714188295",
           LastEditedAt: "1714188295",

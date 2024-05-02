@@ -186,6 +186,33 @@ export const HandleChangeCardTitle = (Title: string) => {
   //store.dispatch(SetCardModalCardTitle(Title))
 };
 
+export const HandleChangeCardNotes = (Title: string) => {
+  const ColumIndex: number = store.getState().CardModal.ColumnIndex;
+  const CardIndex: number = store.getState().CardModal.CardIndex;
+  const CardMode: string = store.getState().CardModal.Mode;
+  var NewBoard: any = { ...store.getState().Board };
+  var NewColumns: any = [...NewBoard.Columns];
+  var NewColumn: any = { ...NewBoard.Columns[ColumIndex] };
+  var NewCards: any = [...NewColumn.Cards];
+  var NewCard: any = { ...NewCards[CardIndex] };
+
+  NewCard.CardNotes = Title;
+
+  NewCards = NewCards.map((Card: any) => {
+    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
+  });
+
+  NewColumn.Cards = [...NewCards];
+
+  NewColumns[ColumIndex] = { ...NewColumn };
+
+  NewBoard.Columns = [...NewColumns];
+
+  if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
+
+  //store.dispatch(SetCardModalCardTitle(Title))
+};
+
 export const SetCardModalTitle = (Title: string) => {
   //@ts-ignore
   store.dispatch(SetCardModalCardTitle(Title));
