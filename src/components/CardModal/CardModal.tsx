@@ -81,14 +81,14 @@ const CardModal = ({}: Props) => {
   useEffect(() => {
     if (textareaRef.current) {
       //@ts-ignore
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 10}px`; // ajusta a altura com base no conteúdo
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // ajusta a altura com base no conteúdo
     }
   }, [CardDesc]);
 
   useEffect(() => {
     if (NotesTextarea.current) {
       //@ts-ignore
-      NotesTextarea.current.style.height = `${NotesTextarea.current.scrollHeight + 10}px`; // ajusta a altura com base no conteúdo
+      NotesTextarea.current.style.height = `${NotesTextarea.current.scrollHeight}px`; // ajusta a altura com base no conteúdo
     }
   }, [CardNotes]);
 
@@ -112,8 +112,8 @@ const CardModal = ({}: Props) => {
             onChange={(e) => {
               setCanSave(true);
               setFocusWhat("Title");
-              SetCardModalTitle(e.target.value.trim());
-              setCardTile(e.target.value.trim());
+              SetCardModalTitle(e.target.value);
+              setCardTile(e.target.value);
             }}
           />
 
@@ -201,7 +201,7 @@ const CardModal = ({}: Props) => {
                                     setCanSave(true);
                                     setFocusWhat("Tasks");
                                     setFocusOn(Index);
-                                    HandleChangeTaskTitle(e.target.value.trim(), Index, setCardTasks, CardTasks);
+                                    HandleChangeTaskTitle(e.target.value, Index, setCardTasks, CardTasks);
                                   }}
                                 />
                                 <Tooltip text="Delete Task">
@@ -247,7 +247,7 @@ const CardModal = ({}: Props) => {
             onChange={(e) => {
               setCanSave(true);
               setFocusWhat("Desc");
-              setCardDesc(e.target.value.trim());
+              setCardDesc(e.target.value);
             }}
           />
 
@@ -265,7 +265,7 @@ const CardModal = ({}: Props) => {
             onChange={(e) => {
               setCanSave(true);
               setFocusWhat("Desc");
-              setCardNotes(e.target.value.trim());
+              setCardNotes(e.target.value);
             }}
           />
 

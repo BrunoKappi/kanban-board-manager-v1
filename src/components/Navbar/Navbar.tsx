@@ -62,7 +62,7 @@ const Navbar = ({ Board }: NavbarProps) => {
 
         {Editing && (
           <form className="flex flex-row items-center justify-start gap-2 bg-slate-400/10 dark:bg-slate-400/5 rounded-full px-5 py-2 dark:text-accent text-accent-foreground font-medium text-xl " onSubmit={HandleChangeBoardName}>
-            <MinimalInput maxLength={MAX_BOARD_TITLE} className="text-xl bg-transparent p-0 border-none m-0 h-auto" value={BoardName} onChange={(e) => setBoardName(e.target.value.trim())} />
+            <MinimalInput maxLength={MAX_BOARD_TITLE} className="text-xl bg-transparent p-0 border-none m-0 h-auto" value={BoardName} onChange={(e) => setBoardName(e.target.value)} />
             {/* <Button type="submit" variant="ghost" size="icon" className=" flex-shrink-0" onClick={HandleChangeBoardName}>
               <Save className="size-5" />
             </Button> */}

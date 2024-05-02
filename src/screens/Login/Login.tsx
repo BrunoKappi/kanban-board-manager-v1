@@ -40,8 +40,8 @@ function Login() {
             <DialogTitle>Login</DialogTitle>
           </DialogHeader>
           <div className="flex gap-3 flex-col justify-center items-center  p-10 w-full">
-            <Input maxLength={MAX_CARD_EMAIL} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value.trim())} />
-            <Input maxLength={MAX_CARD_PASSWORD} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value.trim())} />
+            <Input maxLength={MAX_CARD_EMAIL} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input maxLength={MAX_CARD_PASSWORD} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Button onClick={handleLogin}>Entrar</Button>
             <Button onClick={loginWithGoogle}>Entrar com Google</Button>
             {error && <p className="text-red-500">{error}</p>}

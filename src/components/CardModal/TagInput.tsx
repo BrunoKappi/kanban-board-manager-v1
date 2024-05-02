@@ -23,7 +23,7 @@ export default function TagInput({}: Props) {
 
   const OnSearchChange = (e: any) => {
     setOpen(true);
-    setTagSearch(e.target.value.trim());
+    setTagSearch(e.target.value);
   };
 
   const FilterTags = (BorardTag: TagType) => {

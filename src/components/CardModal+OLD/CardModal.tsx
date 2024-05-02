@@ -50,7 +50,7 @@ const CardModal = ({ Card, Column, ColumnIndex, CardIndex }: Props) => {
         </ListOption>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[450px] md:max-w-[550px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark p-10 flex flex-col justify-start items-start">
-        <MinimalInput maxLength={MAX_CARD_TITLE} placeholder="Card Title" value={CardTile} onChange={(e) => setCardTile(e.target.value.trim())} />
+        <MinimalInput maxLength={MAX_CARD_TITLE} placeholder="Card Title" value={CardTile} onChange={(e) => setCardTile(e.target.value)} />
 
         <h2 className="mt-5 text-lg">Tasks</h2>
 
@@ -75,7 +75,7 @@ const CardModal = ({ Card, Column, ColumnIndex, CardIndex }: Props) => {
                                 value={Task.TaskTitle}
                                 onChange={(e) => {
                                   setFocusOn(Index);
-                                  HandleChangeTaskTitle(e.target.value.trim(), Index, setCardTasks, CardTasks);
+                                  HandleChangeTaskTitle(e.target.value, Index, setCardTasks, CardTasks);
                                 }}
                               />
                               <Tooltip text="Grab to Reorder">
@@ -100,7 +100,7 @@ const CardModal = ({ Card, Column, ColumnIndex, CardIndex }: Props) => {
         </Show>
 
         <h2 className="mt-5 text-lg">Description</h2>
-        <Textarea maxLength={MAX_DESC} placeholder="Card Description(Optional)" value={CardDesc} onChange={(e) => setCardDesc(e.target.value.trim())} />
+        <Textarea maxLength={MAX_DESC} placeholder="Card Description(Optional)" value={CardDesc} onChange={(e) => setCardDesc(e.target.value)} />
 
         <Show if={!!Message}>
           <span className=" text-destructive ">{Message}</span>

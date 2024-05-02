@@ -36,9 +36,9 @@ export default function Register({ setMode, setOpen }: RegisterProps) {
 
   return (
     <form className="flex gap-3 flex-col justify-start items-start w-full " onSubmit={handleRegister}>
-      <Input maxLength={MAX_CARD_EMAIL} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value.trim())} />
-      <Input maxLength={MAX_CARD_PASSWORD} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value.trim())} />
-      <Input maxLength={MAX_CARD_PASSWORD} type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value.trim())} />
+      <Input maxLength={MAX_CARD_EMAIL} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <Input maxLength={MAX_CARD_PASSWORD} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <Input maxLength={MAX_CARD_PASSWORD} type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       <div className="px-3 py-2 border w-full rounded-md flex flex-row items-center justify-center gap-2 cursor-pointer hover:bg-overlay dark:hover:bg-overlay-dark dark:border-border-dark" onClick={handleLoginWithGoogle}>
         <img src={Google} alt="" className="size-6" />
         Register with Google

@@ -45,7 +45,7 @@ export function AddBoardItem() {
           value={BoardName}
           onChange={(e) => {
             setFocusWhat("BoardName");
-            setBoardName(e.target.value.trim());
+            setBoardName(e.target.value);
           }}
         />
 
@@ -59,7 +59,7 @@ export function AddBoardItem() {
           value={BoardDesc}
           onChange={(e) => {
             setFocusWhat("BoardDesc");
-            setBoardDesc(e.target.value.trim());
+            setBoardDesc(e.target.value);
           }}
         />
         <div className="flex flex-row gap-2 items-center mt-5 justify-between w-full">
@@ -104,7 +104,7 @@ export function AddBoardItem() {
                                       setFocusWhat("BoardColumn");
                                       setFocusOn(ColumnIndex);
 
-                                      HandleColumnTitle(e.target.value.trim(), ColumnIndex, setBoardColumns, BoardColumns);
+                                      HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns);
                                     }}
                                     className="flex-grow"
                                   />
@@ -132,7 +132,7 @@ export function AddBoardItem() {
             return (
               <span className={"ITEM flex flex-row items-center gap-10 w-full"}>
                 <div className="flex flex-row items-center flex-grow gap-2">
-                  <MinimalInput maxLength={MAX_COLUMN_TITLE} placeholder="Column Title" value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value.trim(), ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
+                  <MinimalInput maxLength={MAX_COLUMN_TITLE} placeholder="Column Title" value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
                 </div>
 
                 <ColorPicker onSelect={(Value: any) => HandleColumnColor(Value, ColumnIndex, setBoardColumns, BoardColumns)} color={BoardColumn.ColumnColor} />
