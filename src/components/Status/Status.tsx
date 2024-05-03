@@ -20,13 +20,14 @@ export default function Status({ Color = "neutral", Text = "Status", Column }: S
 
   const HandlePickColor = (Key: string) => {
     setColorChoose(Key);
+    ChangeColumn(Key, ColumnTitle, Column);
   };
 
   const handleChangeColumn = (e: FormEvent) => {
     e?.preventDefault();
     setOpen(false);
     if (!ColumnTitle) return;
-    ChangeColumn(ColorChoose, ColumnTitle, Column); 
+    ChangeColumn(ColorChoose, ColumnTitle, Column);
   };
 
   return (
