@@ -18,7 +18,7 @@ export default function BoardColumnOptions({ Column }: Props) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button size="icon" variant="ghost">
+        <Button size="icon" className=" rounded-lg" variant="ghost">
           <EllipsisVertical className="size-4" />
         </Button>
       </PopoverTrigger>

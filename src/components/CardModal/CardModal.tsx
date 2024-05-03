@@ -177,7 +177,7 @@ const CardModal = ({}: Props) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup defaultValue={"Todo2"}>
-                  <SelectLabel>Columns</SelectLabel>
+                  <SelectLabel>Groups</SelectLabel>
                   {Board?.Columns?.map((Column: ColumnType) => {
                     return (
                       <SelectItem textValue={Column.ColumnTitle} value={Column.ColumId}>

@@ -81,7 +81,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
         <div className="flex flex-row gap-2 items-center mt-5 justify-between w-full">
           <h2 className="mt-5 text-lg flex flex-row gap-2 items-center w-full bg-overlay dark:bg-overlay-dark py-0.5 px-1 rounded-md">
             <Columns2 className="size-5" />
-            Board Columns
+            Board Groups
           </h2>
         </div>
 
