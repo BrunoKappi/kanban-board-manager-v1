@@ -23,7 +23,6 @@ function App() {
   } else {
     document.documentElement.classList.remove("dark");
   }
-  
 
   const dispatch = useDispatch();
 
