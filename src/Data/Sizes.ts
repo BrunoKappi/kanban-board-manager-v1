@@ -1,7 +1,7 @@
 export const CardSizes = [
   {
     Name: "Extra Small",
-    Size: "w-46",
+    Size: "w-48",
   },
   {
     Name: "Small",

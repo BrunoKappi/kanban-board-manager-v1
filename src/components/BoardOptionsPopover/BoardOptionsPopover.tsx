@@ -17,7 +17,7 @@ export default function BoardOptionsPopover({}: Props) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div className="flex flex-row items-center  flex-shrink-0 gap-2 justify-center cursor-pointer select-none hover:bg-overlay hover:text-accent-foreground dark:hover:bg-overlay-dark dark:hover:text-primary-foreground px-3 py-2 rounded-full">
+        <div className="flex flex-row items-center  flex-shrink-0 gap-2 justify-center cursor-pointer select-none hover:bg-overlay hover:text-accent-foreground dark:hover:bg-overlay-dark dark:hover:text-primary-foreground px-3 py-2 rounded-xl">
           <Tooltip text="Board Options">
             <EllipsisVertical className=" size-6  dark:text-accent text-accent-foreground" />
           </Tooltip>

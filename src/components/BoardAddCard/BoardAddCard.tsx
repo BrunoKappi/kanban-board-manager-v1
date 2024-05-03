@@ -26,7 +26,7 @@ export default function BoardAddCard({ ColumnIndex }: Props) {
   };
 
   return (
-    <div className="px-3 line-clamp-2 text-card-foreground flex items-center justify-start border-slate-200 hover:bg-white  py-2  w-full rounded-md hover:text-primary min-h-10 cursor-pointer  dark:bg-overlay-dark  dark:hover:bg-overlay dark:border-overlay-dark dark:text-primary-foreground" onClick={HandleAddCard}>
+    <div className="px-3 line-clamp-2 text-card-foreground flex items-center justify-start  border-slate-200 hover:bg-white  py-2  w- rounded-md hover:text-primary min-h-10 cursor-pointer  dark:bg-overlay-dark  dark:hover:bg-overlay dark:border-overlay-dark dark:text-primary-foreground" onClick={HandleAddCard}>
       <span className=" line-clamp-2 select-none text-primary  font-medium text-sm">+ Add Card</span>
     </div>
   );

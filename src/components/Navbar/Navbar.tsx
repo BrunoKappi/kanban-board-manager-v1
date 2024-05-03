@@ -38,13 +38,13 @@ const Navbar = ({ Board }: NavbarProps) => {
   const HasBorard = !!Board?.BoardId;
 
   return (
-    <div className="min-h-14 resize-y flex-shrink-0 flex  flex-col md:flex-row items-start md:justify-between md:items-start px-5 py-5 pt-7 pl-10 gap-5 pr-10">
-      <div className="flex flex-row gap-0 md:gap-5 items-start justify-start w-full ">
+    <div className="min-h-14 resize-y flex-shrink-0 flex  flex-col md:flex-row items-start md:justify-between md:items-center px-5 py-5 pt-7 pl-10 gap-5 pr-10">
+      <div className="flex flex-row gap-0 md:gap-5 items-center justify-start w-full md:w-auto bg-slate-400/10 dark:bg-slate-400/5 rounded-xl px-2 py-1">
         {Sidebar === "Closed" && <ToggleSidebar />}
 
         {!Editing && HasBorard && (
           <Tooltip text="Double click to edit Board name">
-            <span className="dark:text-accent text-accent-foreground hidden md:flex md:min-w-72 bg-slate-400/10 dark:bg-slate-400/5 rounded-full px-5 py-2 font-medium text-xl select-none cursor-pointer  line-clamp-1 max-w-72 truncate text-ellipsis" onDoubleClick={HandleStartEditing}>
+            <span className="dark:text-accent text-accent-foreground hidden md:flex md:min-w-72  px-5 py-2 font-medium text-xl select-none cursor-pointer  line-clamp-1 max-w-72 truncate text-ellipsis" onDoubleClick={HandleStartEditing}>
               <span className="max-w-full truncate">{Board?.BoardName}</span>
             </span>
           </Tooltip>
@@ -52,10 +52,9 @@ const Navbar = ({ Board }: NavbarProps) => {
 
         {!Editing && HasBorard && <BoardListPopover />}
 
-     
         {Editing && (
-          <form className="flex flex-row items-center justify-start gap-2 bg-slate-400/10 dark:bg-slate-400/5 rounded-full px-5 py-2 dark:text-accent text-accent-foreground font-medium text-xl " onSubmit={HandleChangeBoardName}>
-            <MinimalInput maxLength={MAX_BOARD_TITLE} className="text-xl bg-transparent p-0 border-none m-0 h-auto" value={BoardName} onChange={(e) => setBoardName(e.target.value)} />
+          <form className="flex flex-row items-center justify-start gap-2  px-5 py-2 dark:text-accent text-accent-foreground font-medium text-xl " onSubmit={HandleChangeBoardName}>
+            <MinimalInput maxLength={MAX_BOARD_TITLE} className="text-xl bg-transparent dark:bg-transparent p-0 border-none m-0 h-auto" value={BoardName} onChange={(e) => setBoardName(e.target.value)} />
             <Tooltip text="Cancel">
               <X className="size-5 cursor-pointer" />
             </Tooltip>
@@ -71,7 +70,7 @@ const Navbar = ({ Board }: NavbarProps) => {
         <SearchBar />
       </Show>
 
-      <div className="flex flex-row gap-4 items-center md:justify-end flex-wrap w-full">
+      <div className="flex flex-row gap-4 items-center md:justify-end flex-wrap  ">
         <Show if={HasBorard}>
           <ColumnSizePopover />
         </Show>

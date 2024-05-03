@@ -68,6 +68,7 @@ export const HandleDeleteTask = (Index: number, Setter: any, Tasks: any) => {
 };
 
 export const HandleChangeTaskTitle = (Value: string, Index: number, Setter: any, Tasks: any) => {
+ 
   const Current = Tasks.map((task: any) => ({ ...task })); // Cria uma cópia profunda de cada objeto dentro do array Tasks
   Current[Index].TaskTitle = Value;
   Setter(Current);
@@ -160,6 +161,7 @@ export const HandleSaveBoard = (NewBoard: any) => {
 };
 
 export const HandleChangeCardTitle = (Title: string) => {
+  if (!Title) return;
   const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
   const CardMode: string = store.getState().CardModal.Mode;
@@ -219,6 +221,7 @@ export const SetCardModalTitle = (Title: string) => {
 };
 
 export const HandleChangeCardColumn = (ColumnId: string) => {
+  if (!ColumnId) return;
   const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
 

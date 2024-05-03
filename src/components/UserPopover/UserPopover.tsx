@@ -17,7 +17,7 @@ export default function UserPopover({}: Props) {
   const GetName = () => {
     if (User?.displayName && User?.displayName !== "Guest") return User?.displayName;
     else if (User?.uid) return getEmailPrefix(User?.email);
-    else return "Account";
+    else return "Guest";
   };
 
   return (

@@ -19,7 +19,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { colors } from "@/Data/Colors";
 import TagInput from "./TagInput";
 import { HandleCardTagToggle } from "./TagInput.Utils";
-import { MAX_CARD_TITLE, MAX_COLUMN_TITLE, MAX_DESC } from "@/Data/Limits";
+import { MAX_CARD_TITLE, MAX_DESC, MAX_TASK_TITLE } from "@/Data/Limits";
 import { useDispatch } from "react-redux";
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 
@@ -207,11 +207,11 @@ const CardModal = ({}: Props) => {
                               <div className="ITEM flex items-center space-x-2 w-full" ref={DragProvided.innerRef} style={DragProvided.draggableProps.style} {...DragProvided.draggableProps} {...DragProvided.dragHandleProps}>
                                 <Checkbox id="terms" checked={Task.Completed} onClick={() => HandleToggleTask(Index, setCardTasks, CardTasks)} />
                                 <MinimalInput
-                                  maxLength={MAX_COLUMN_TITLE}
-                                  placeholder="Column Title"
+                                  maxLength={MAX_TASK_TITLE}
+                                  placeholder="Task"
                                   autoFocus={Index === FocusOn && FocusWhat === "Tasks"}
                                   key={v4()}
-                                  className="m-0 py-0 px-0 h-auto"
+                                  className={`"m-0 py-0 px-0 h-auto ${Task.Completed && "line-through"}`}
                                   value={Task.TaskTitle}
                                   onChange={(e) => {
                                     setCanSave(true);

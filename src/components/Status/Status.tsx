@@ -26,12 +26,12 @@ export default function Status({ Color = "neutral", Text = "Status", Column }: S
     e?.preventDefault();
     setOpen(false);
     if (!ColumnTitle) return;
-    ChangeColumn(ColorChoose, ColumnTitle, Column);
+    ChangeColumn(ColorChoose, ColumnTitle, Column); 
   };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="max-w-[75%]">
+      <PopoverTrigger className=" min-w-2 max-w-[75%]">
         <div className={`flex px-2 w-full flex-row gap-2 cursor-pointer items-center justify-center ${colors[Color.toLowerCase()].bg} px-3 py-0.5 rounded-full select-none`} onClick={() => setOpen(true)}>
           <div className={`size-3 ${colors[Color.toLowerCase()].circle} rounded-full flex-shrink-0`}></div>
           <span className={`${colors[Color.toLowerCase()].text} text-sm truncate`}>{Text}</span>
