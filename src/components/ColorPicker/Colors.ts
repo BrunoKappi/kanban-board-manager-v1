@@ -1,8 +1,8 @@
 export type ColorType = {
-  text: string,
-  circle:string,
-  bg:string
-}
+  text: string;
+  circle: string;
+  bg: string;
+};
 
 export const ColorOptions: any = {
   red: {

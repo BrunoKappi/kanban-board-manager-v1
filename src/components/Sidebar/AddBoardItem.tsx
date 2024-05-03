@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Bookmark, Columns2, Columns3, GripVertical, PencilLine, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { MinimalInput } from "../ui/minimalInput";
 import ColorPicker from "../ColorPicker/ColorPicker";
@@ -12,8 +12,10 @@ import Show from "@/lib/Show";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 } from "uuid";
 import { MAX_BOARD_TITLE, MAX_COLUMN_TITLE } from "@/Data/Limits";
+import { cn } from "@/lib/utils";
 
-export function AddBoardItem() {
+export function AddBoardItem({ className }: { className?: string }) {
+  const textareaRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [Reorder] = useState(false);
   const [BoardName, setBoardName] = useState("");
@@ -23,15 +25,27 @@ export function AddBoardItem() {
   const [FocusOn, setFocusOn] = useState(0);
   const [FocusWhat, setFocusWhat] = useState("");
 
+  const HandleInputHeight = (ref: any, state: any, defaultHeight: string) => {
+    if (ref.current) {
+      //@ts-ignore
+      ref.current.style.height = `${ref.current.scrollHeight}px`;
+      if (!state && defaultHeight)
+        //@ts-ignore
+        ref.current.style.height = defaultHeight;
+    }
+  };
+
+  HandleInputHeight(textareaRef, BoardDesc, "10px");
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="flex flex-row justify-start items-center gap-2  w-full px-3 py-2  rounded-r-3xl text-primary  cursor-pointer hover:bg-primary hover:text-primary-foreground">
+        <div className={`${cn("flex flex-row justify-start items-center gap-2  w-full px-3 py-2  rounded-r-3xl text-primary  cursor-pointer hover:bg-primary hover:text-primary-foreground", className)}`}>
           <Columns3 className="size-5 flex-shrink-0" />
           <span className="truncate text-sm">+ Create Board</span>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[450px] md:max-w-[550px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark p-10 flex flex-col justify-start items-start">
+      <DialogContent className="px-10 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
         <DialogHeader className="mb-8">
           <DialogTitle className="dark:text-accent text-accent-foreground text-xl">Create Board</DialogTitle>
         </DialogHeader>
@@ -40,6 +54,7 @@ export function AddBoardItem() {
           Board Name
         </h2>
         <MinimalInput
+          autoFocus={false}
           maxLength={MAX_BOARD_TITLE}
           placeholder="Board Name"
           value={BoardName}
@@ -51,11 +66,13 @@ export function AddBoardItem() {
 
         <h2 className="mt-5 text-lg flex flex-row gap-2 items-center w-full bg-overlay dark:bg-overlay-dark py-0.5 px-1 rounded-md">
           <PencilLine className="size-5" />
-          Description
+          Description (Optional)
         </h2>
 
         <Textarea
-          placeholder="Board Description(Optional)"
+          autoFocus={false}
+          ref={textareaRef}
+          className=" min-h-none resize-none border overflow-hidden border-background dark:border-background-dark-dialog ring-0 shadow-none focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 px-0 "
           value={BoardDesc}
           onChange={(e) => {
             setFocusWhat("BoardDesc");
@@ -67,12 +84,6 @@ export function AddBoardItem() {
             <Columns2 className="size-5" />
             Board Columns
           </h2>
-          {/* <span className="flex flex-row gap-2 items-center mt-5">
-            <div className="flex items-center space-x-2">
-              <Switch id="airplane-mode" checked={Reorder} onClick={() => setReorder(!Reorder)} />
-              <Label htmlFor="airplane-mode">Reorder</Label>
-            </div>
-          </span> */}
         </div>
 
         <Show if={!Reorder}>
@@ -132,7 +143,7 @@ export function AddBoardItem() {
             return (
               <span className={"ITEM flex flex-row items-center gap-10 w-full"}>
                 <div className="flex flex-row items-center flex-grow gap-2">
-                  <MinimalInput maxLength={MAX_COLUMN_TITLE} placeholder="Column Title" value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
+                  <MinimalInput autoFocus={false} maxLength={MAX_COLUMN_TITLE} placeholder="Column Title" value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
                 </div>
 
                 <ColorPicker onSelect={(Value: any) => HandleColumnColor(Value, ColumnIndex, setBoardColumns, BoardColumns)} color={BoardColumn.ColumnColor} />

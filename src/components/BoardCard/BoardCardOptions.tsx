@@ -23,7 +23,7 @@ export default function BoardCardOptions({ Card, CardIndex, ColumnIndex, Column 
       <PopoverTrigger>
         <Button className="hidden px-1 py-1 size-8 h-auto rounded-md group-hover:flex items-center justify-center group-hover:absolute right-1 top-1 z-20 " variant="ghost" size="icon">
           <EllipsisVertical
-            className="size-5 dark:bg-overlay-dark"
+            className="size-5 "
             onClick={(event) => {
               event.stopPropagation();
               setOpen(true);

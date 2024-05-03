@@ -343,7 +343,7 @@ export const ExampleBoard1 = {
       TagColor: "orange",
     },
     {
-      TagId: "Tag8",
+      TagId: "Tag9",
       TagName: "Low",
       TagColor: "green",
     },

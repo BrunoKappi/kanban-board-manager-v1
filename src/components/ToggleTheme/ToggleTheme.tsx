@@ -4,15 +4,10 @@ import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MIDDLEWARE_ToggleTheme } from "@/Middleware/SetData";
 import Tooltip from "../Tooltip/Tooltip";
+import { useEffect } from "react";
 
 export default function ToggleTheme({ className }: any) {
   const Theme = useSelector((state: any) => state.Theme);
-
-  if (Theme === "Dark") {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
 
   const handleKeyPress = (event: any) => {
     if (event.ctrlKey && event.shiftKey && event.key === "L") {
@@ -20,11 +15,16 @@ export default function ToggleTheme({ className }: any) {
     }
   };
 
-  document.addEventListener("keydown", handleKeyPress);
-
   const ToggleTheme = () => {
     MIDDLEWARE_ToggleTheme();
   };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
 
   return (
     <Tooltip text="Change Theme">

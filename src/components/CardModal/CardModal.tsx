@@ -20,10 +20,13 @@ import { colors } from "@/Data/Colors";
 import TagInput from "./TagInput";
 import { HandleCardTagToggle } from "./TagInput.Utils";
 import { MAX_CARD_TITLE, MAX_COLUMN_TITLE, MAX_DESC } from "@/Data/Limits";
+import { useDispatch } from "react-redux";
+import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 
 type Props = {};
 
 const CardModal = ({}: Props) => {
+  const dispatch = useDispatch();
   const textareaRef = useRef(null);
   const NotesTextarea = useRef(null);
   const TitleTextarea = useRef(null);
@@ -44,14 +47,28 @@ const CardModal = ({}: Props) => {
 
   const HandleDialogChange = (State: boolean) => {
     setOpen(State);
+    if (!State) {
+      setCardTile("");
+      setCardDesc("");
+      setCardNotes("");
+      setCardTasks([]);
+      setColumnId("");
+      setCanSave(false);
+      setFocusOn(0);
+      setFocusWhat("");
+      setMessage("");
+      //@ts-ignore
+      dispatch(SetCardModalCard({}));
+    }
   };
 
   useEffect(() => {
     if (!!CardModal.Card.CardId) setOpen(true);
-    setCardTile(CardModal.Card?.CardTitle || "");
-    setCardDesc(CardModal.Card?.CardDescription || "");
-    setCardNotes(CardModal.Card?.CardNotes || "");
-    setCardTasks([...(CardModal.Card?.Tasks || [])]);
+    if (!CardTile) setCardTile(CardModal.Card?.CardTitle || "");
+    if (!CardDesc) setCardDesc(CardModal.Card?.CardDescription || "");
+    if (!CardNotes) setCardNotes(CardModal.Card?.CardNotes || "");
+
+    if (CardTasks.length === 0) setCardTasks([...(CardModal.Card?.Tasks || [])]);
 
     if (!!Board?.BoardId) {
       Board?.Columns?.forEach((Column: ColumnType, Index: number) => {
@@ -64,49 +81,48 @@ const CardModal = ({}: Props) => {
     setBoardTags(Board?.Tags);
   }, [CardModal, Board?.Tags]);
 
+  const HandleInputHeight = (ref: any, state: any, defaultHeight: string) => {
+    if (ref.current) {
+      //@ts-ignore
+      ref.current.style.height = `${ref.current.scrollHeight}px`;
+      if (!state && defaultHeight)
+        //@ts-ignore
+        ref.current.style.height = defaultHeight;
+    }
+  };
+
   useEffect(() => {
     const delayInputTimeoutId = setTimeout(() => {
-      if (CardTasks.length > 0 && CanSave) HandleSaveTasks(CardTasks);
-      if (!!CardTile && CanSave) HandleChangeCardTitle(CardTile);
-      if (!!CardDesc && CanSave) HandleChangeCardDesc(CardDesc);
-      if (!!CardNotes && CanSave) HandleChangeCardNotes(CardNotes);
-      if (TitleTextarea.current) {
-        //@ts-ignore
-        TitleTextarea.current.style.height = `${TitleTextarea.current.scrollHeight}px`; // ajusta a altura com base no conteúdo
+      if (CardTasks.length > 0 && CanSave) {
+        HandleSaveTasks(CardTasks);
       }
+      if (CanSave) HandleChangeCardTitle(CardTile.trim());
+      if (CanSave) HandleChangeCardDesc(CardDesc.trim());
+      if (CanSave) HandleChangeCardNotes(CardNotes.trim());
+
+      HandleInputHeight(TitleTextarea, CardTile, "");
+      HandleInputHeight(NotesTextarea, CardNotes, "30px");
+      HandleInputHeight(textareaRef, CardDesc, "30px");
     }, 500);
+
     return () => clearTimeout(delayInputTimeoutId);
   }, [CardTasks, CardDesc, CardTile, CardNotes]);
 
   useEffect(() => {
-    if (textareaRef.current) {
-      //@ts-ignore
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // ajusta a altura com base no conteúdo
-    }
-  }, [CardDesc]);
-
-  useEffect(() => {
-    if (NotesTextarea.current) {
-      //@ts-ignore
-      NotesTextarea.current.style.height = `${NotesTextarea.current.scrollHeight}px`; // ajusta a altura com base no conteúdo
-    }
-  }, [CardNotes]);
-
-  useEffect(() => {
-    if (TitleTextarea.current) {
-      //@ts-ignore
-      TitleTextarea.current.style.height = `${TitleTextarea.current.scrollHeight}px`; // ajusta a altura com base no conteúdo
-    }
-  }, [CardTile]);
+    HandleInputHeight(TitleTextarea, CardTile, "");
+    HandleInputHeight(NotesTextarea, CardNotes, "30px");
+    HandleInputHeight(textareaRef, CardDesc, "30px");
+  }, [CardTile, CardNotes, CardDesc]);
 
   return (
     <Dialog open={open} onOpenChange={HandleDialogChange}>
-      <DialogContent className="sm:max-w-[450px] md:max-w-[550px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
+      <DialogContent className="px-10 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
         <div className="flex flex-col items-stretch justify-stretch gap-2">
           <MinimalTextarea
             ref={TitleTextarea}
             className=" flex-shrink-0 resize-none text-2xl border-none  max-w-full overflow-hidden"
             placeholder="Card Title"
+            autoFocus={false}
             maxLength={MAX_CARD_TITLE}
             value={CardTile}
             onChange={(e) => {
@@ -241,8 +257,7 @@ const CardModal = ({}: Props) => {
           <Textarea
             maxLength={MAX_DESC}
             ref={textareaRef}
-            placeholder="Card Description(Optional)"
-            cols={200}
+            className=" resize-none border overflow-hidden border-background dark:border-background-dark-dialog ring-0 shadow-none focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 px-0"
             value={CardDesc}
             onChange={(e) => {
               setCanSave(true);
@@ -259,8 +274,7 @@ const CardModal = ({}: Props) => {
           <Textarea
             maxLength={MAX_DESC}
             ref={NotesTextarea}
-            className=" resize-none border-none ring-0 shadow-none focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 px-0"
-            cols={200}
+            className=" resize-none border overflow-hidden border-background dark:border-background-dark-dialog ring-0 shadow-none focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 px-0"
             value={CardNotes}
             onChange={(e) => {
               setCanSave(true);

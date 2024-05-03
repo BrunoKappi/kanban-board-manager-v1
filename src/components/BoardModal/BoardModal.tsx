@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Columns2, GripVertical, Pencil, PencilLine, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { MinimalInput } from "../ui/minimalInput";
 import ColorPicker from "../ColorPicker/ColorPicker";
 import { Button } from "../ui/button";
@@ -19,6 +19,7 @@ type Props = {
 };
 
 export function BoardModal({ SetExternalOpen }: Props) {
+  const textareaRef = useRef(null);
   const Board = useSelector((state: any) => state.Board);
   const [open, setOpen] = useState(false);
   const [FocusOn, setFocusOn] = useState(0);
@@ -29,6 +30,18 @@ export function BoardModal({ SetExternalOpen }: Props) {
   const [Message, setMessage] = useState("");
   const [BoardColumns, setBoardColumns] = useState([...(Board?.Columns || [])]);
 
+  const HandleInputHeight = (ref: any, state: any, defaultHeight: string) => {
+    if (ref.current) {
+      //@ts-ignore
+      ref.current.style.height = `${ref.current.scrollHeight}px`;
+      if (!state && defaultHeight)
+        //@ts-ignore
+        ref.current.style.height = defaultHeight;
+    }
+  };
+
+  HandleInputHeight(textareaRef, BoardDesc, "30px");
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -37,8 +50,9 @@ export function BoardModal({ SetExternalOpen }: Props) {
           Edit Board
         </ListOption>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[450px] md:max-w-[550px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark p-10 flex flex-col justify-start items-start">
+      <DialogContent className="px-10 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
         <MinimalInput
+          autoFocus={false}
           maxLength={MAX_BOARD_TITLE}
           className=" flex-shrink-0 line-clamp-2 resize-none text-2xl border-none break-words max-w-full overflow-wrap-normalver"
           placeholder="Board Name"
@@ -51,12 +65,13 @@ export function BoardModal({ SetExternalOpen }: Props) {
 
         <h2 className="mt-5 text-lg flex flex-row gap-2 items-center w-full bg-overlay dark:bg-overlay-dark py-0.5 px-1 rounded-md">
           <PencilLine className="size-5" />
-          Description
+          Description (Optional)
         </h2>
 
         <Textarea
           maxLength={MAX_DESC}
-          placeholder="Board Description(Optional)"
+          ref={textareaRef}
+          className=" resize-none border overflow-hidden border-background dark:border-background-dark-dialog ring-0 shadow-none focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 px-0"
           value={BoardDesc}
           onChange={(e) => {
             setFocusWhat("BoardDesc");
@@ -68,12 +83,6 @@ export function BoardModal({ SetExternalOpen }: Props) {
             <Columns2 className="size-5" />
             Board Columns
           </h2>
-          {/* <span className="flex flex-row gap-2 items-center mt-5">
-            <div className="flex items-center space-x-2">
-              <Switch id="airplane-mode" checked={Reorder} onClick={() => setReorder(!Reorder)} />
-              <Label htmlFor="airplane-mode">Reorder</Label>
-            </div>
-          </span> */}
         </div>
 
         <Show if={!Reorder}>
@@ -157,6 +166,20 @@ export function BoardModal({ SetExternalOpen }: Props) {
         <DialogFooter className="mt-5 flex flex-row justify-end w-full">
           <Button
             onClick={() => {
+              if (!BoardName) {
+                setMessage("Board Name is empty");
+                setTimeout(() => {
+                  setMessage("");
+                }, 3000);
+                return;
+              }
+              if (BoardColumns.length === 0) {
+                setMessage("Add at least one column");
+                setTimeout(() => {
+                  setMessage("");
+                }, 3000);
+                return;
+              }
               SetExternalOpen(false);
               HandleEditBoard(BoardName, BoardColumns, BoardDesc, setMessage, Board);
             }}

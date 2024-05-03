@@ -9,6 +9,7 @@ import BoardImage from "@/Assets/Board.svg";
 import BoardColumnOptions from "../BoardColumn/BoardColumnOptions";
 import Tooltip from "../Tooltip/Tooltip";
 import CardModal from "../CardModal/CardModal";
+import { AddBoardItem } from "../Sidebar/AddBoardItem";
 
 export const Board = ({ Board }: BoardProps) => {
   return (
@@ -57,9 +58,10 @@ export const Board = ({ Board }: BoardProps) => {
       </Show>
 
       <Show if={!Board.BoardId}>
-        <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-5">
+        <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-7">
           <h1 className=" text-4xl font-semibold">No Boards Yet</h1>
           <img src={BoardImage} alt="" className="size-[80%] md:size-[50%] max-w-96" />
+          <AddBoardItem className="rounded-full w-auto" />
         </div>
       </Show>
     </div>

@@ -81,10 +81,10 @@ export default function BoardColumn({ Column, ColumnIndex }: Props) {
     <Droppable droppableId={Column.ColumId} key={Column.ColumId}>
       {(provided: any) => {
         return (
-          <div className={`flex flex-col ${CardWidth} flex-shrink-0 bg-red justify-start  items-stretch gap-4 px-3 py-4 rounded-xl bg-slate-400/10 dark:bg-slate-400/5 mr-2 `} {...provided.droppableProps} ref={provided.innerRef}>
-            <div className="flex flex-row justify-between w-full items-center">
+          <div className={`flex flex-col ${CardWidth} max-w-${CardWidth} flex-shrink-0 bg-red justify-start gap-4 px-3 py-4 rounded-xl bg-slate-400/10 dark:bg-slate-400/5 mr-2 `} {...provided.droppableProps} ref={provided.innerRef}>
+            <div className="flex flex-row justify-between  items-center gap-3">
               <Status Color={Column.ColumnColor} Text={Column.ColumnTitle} Column={Column} />
-              <div className="flex flex-row gap-5 items-center">
+              <div className="flex flex-row gap-5 items-center justify-end ">
                 <Tooltip text="Qtd of Cards">
                   <span>{Column.CardsQtd}</span>
                 </Tooltip>

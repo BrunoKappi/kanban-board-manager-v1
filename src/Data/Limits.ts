@@ -1,10 +1,10 @@
 export const MAX_CARD_TITLE = 500;
-export const MAX_BOARD_TITLE = 50;
-export const MAX_TASK_TITLE = 50;
+export const MAX_BOARD_TITLE = 100;
+export const MAX_TASK_TITLE = 100;
 export const MAX_NOTES = 3000;
 export const MAX_DESC = 3000;
-export const MAX_TAGNAME = 20;
-export const MAX_COLUMN_TITLE = 20;
-export const MAX_SEARCH = 20;
+export const MAX_TAGNAME = 30;
+export const MAX_COLUMN_TITLE = 30;
+export const MAX_SEARCH = 30;
 export const MAX_CARD_EMAIL = 100;
 export const MAX_CARD_PASSWORD = 100;

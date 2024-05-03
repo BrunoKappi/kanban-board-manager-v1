@@ -259,7 +259,7 @@ export const HandleChangeCardDesc = (Desc: string) => {
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
 
-  NewCard.CardDescription = Desc;
+  NewCard.CardDescription = Desc || "";
 
   NewCards = NewCards.map((Card: any) => {
     return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };

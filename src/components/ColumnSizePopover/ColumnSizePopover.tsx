@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { SetCardWidth } from "@/Config/Store/CardWidth/CardWidth";
 import { useSelector } from "react-redux";
 import Show from "@/lib/Show";
+import { CardSizes } from "@/Data/Sizes";
 
 type Props = {
   Mode?: string;
@@ -23,6 +24,18 @@ export default function ColumnSizePopover({ Mode = "Default" }: Props) {
   const HandleSetCardWidth = (Width: string) => {
     localStorage.setItem("Kanban-CardWidth", Width);
     dispatch(SetCardWidth(Width));
+  };
+
+  const GetSide = () => {
+    if (Mode === "Default") {
+      return "bottom";
+    } else {
+      if (window.innerWidth > 768) {
+        return "right";
+      } else {
+        return "bottom";
+      }
+    }
   };
 
   return (
@@ -42,23 +55,19 @@ export default function ColumnSizePopover({ Mode = "Default" }: Props) {
           </ListOption>
         </Show>
       </PopoverTrigger>
-      <PopoverContent side={`${Mode === "Default" ? "bottom" : "right"}`} className="w-56 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
+      <PopoverContent side={`${GetSide()}`} className="w-56 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList className="gap-0 py-0">
           <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent">
             <span>Card Width</span>
           </ListOption>
-          <ListOption onClick={() => HandleSetCardWidth("w-56")}>
-            <Check className={`size-5 ${CardWidth === "w-56" ? " opacity-100" : " opacity-0"}`} />
-            Small
-          </ListOption>
-          <ListOption onClick={() => HandleSetCardWidth("w-64")}>
-            <Check className={`size-5 ${CardWidth === "w-64" ? " opacity-100" : " opacity-0"}`} />
-            Medium
-          </ListOption>
-          <ListOption onClick={() => HandleSetCardWidth("w-72")}>
-            <Check className={`size-5 ${CardWidth === "w-72" ? " opacity-100" : " opacity-0"}`} />
-            Large
-          </ListOption>
+          {CardSizes.map((CardSize) => {
+            return (
+              <ListOption onClick={() => HandleSetCardWidth(CardSize.Size)}>
+                <Check className={`size-5 ${CardWidth === CardSize.Size ? " opacity-100" : " opacity-0"}`} />
+                {CardSize.Name}
+              </ListOption>
+            );
+          })}
         </PopOverList>
       </PopoverContent>
     </Popover>

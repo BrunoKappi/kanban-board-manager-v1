@@ -84,4 +84,9 @@ export const colors: any = {
     circle: "bg-slate-400 dark:bg-slate-500",
     bg: "bg-slate-200 dark:bg-slate-300",
   },
+  primary: {
+    text: "text-blue-600 dark:text-blue-700",
+    circle: "bg-blue-600 dark:bg-blue-700",
+    bg: "bg-primary dark:bg-primary",
+  },
 };
