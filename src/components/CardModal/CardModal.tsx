@@ -116,11 +116,11 @@ const CardModal = ({}: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={HandleDialogChange}>
-      <DialogContent className="px-10 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
-        <div className="flex flex-col items-stretch justify-stretch gap-2">
+      <DialogContent className=" px-14 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
+        <div className="flex flex-col items-start justify-stretch gap-2">
           <MinimalTextarea
             ref={TitleTextarea}
-            className=" flex-shrink-0 resize-none text-2xl border-none  max-w-full overflow-hidden"
+            className=" flex-shrink-0 resize-none text-3xl border-none  max-w-full overflow-hidden"
             placeholder="Card Title"
             autoFocus={false}
             maxLength={MAX_CARD_TITLE}

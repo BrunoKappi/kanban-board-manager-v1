@@ -9,7 +9,7 @@ const GetInitialWidth = () => {
   } else if (window.innerWidth >= 768) {
     return CardSizes[1].Size;
   } else {
-    return CardSizes[1].Size;
+    return CardSizes[0].Size;
   }
 };
 
