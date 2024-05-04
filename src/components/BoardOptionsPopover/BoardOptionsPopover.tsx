@@ -8,17 +8,20 @@ import Tooltip from "../Tooltip/Tooltip";
 import { ListOption } from "../ListOption/ListOption";
 import DuplicateBoard from "./DuplicateBoard";
 import ColumnSizePopover from "../ColumnSizePopover/ColumnSizePopover";
+import { useSelector } from "react-redux";
 
 type Props = {};
 
 export default function BoardOptionsPopover({}: Props) {
+  const Translations = useSelector((state: any) => state.Translations);
+
   const [open, setOpen] = useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <div className="flex flex-row items-center  flex-shrink-0 gap-2 justify-center cursor-pointer select-none hover:bg-overlay hover:text-accent-foreground dark:hover:bg-overlay-dark dark:hover:text-primary-foreground px-3 py-2 rounded-xl">
-          <Tooltip text="Board Options">
+          <Tooltip text={Translations.Tooltips.BoardOptions}>
             <EllipsisVertical className=" size-6  dark:text-accent text-accent-foreground" />
           </Tooltip>
         </div>
@@ -26,7 +29,7 @@ export default function BoardOptionsPopover({}: Props) {
       <PopoverContent className="w-56 mr-10 p-0 py-4 bg-background  flex flex-col items-stretch justify-start dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList className="flex flex-col items-stretch">
           <ListOption className="flex flex-row justify-center items-stretch mb-2 cursor-default hover:bg-transparent">
-            <span>Board Options</span>
+            <span>{Translations.PopoverTitle.BoardOptions}</span>
           </ListOption>
           <ColumnSizePopover Mode="List" />
           <BoardModal SetExternalOpen={setOpen} />

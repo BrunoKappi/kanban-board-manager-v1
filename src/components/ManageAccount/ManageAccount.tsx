@@ -6,15 +6,23 @@ import Show from "@/lib/Show";
 import Forgot from "./Fogot";
 import Register from "./Register";
 import { ListOption } from "../ListOption/ListOption";
+import { useSelector } from "react-redux";
 
 export function ManageAccount() {
+  const Translations = useSelector((state: any) => state.Translations);
   const [Mode, setMode] = useState("Login");
   const [open, setOpen] = useState(false);
 
   const GetTitle = () => {
-    if (Mode === "Login") return "Login";
-    if (Mode === "Forgot") return "Reset Password";
-    if (Mode === "Create") return "Create Account";
+    if (Mode === "Login") return Translations.Login.Title;
+    if (Mode === "Forgot") return Translations.Forgot.Title;
+    if (Mode === "Create") return Translations.Register.Title;
+  };
+
+  const GetSubTitle = () => {
+    if (Mode === "Login") return Translations.Login.Desc;
+    if (Mode === "Forgot") return Translations.Forgot.Desc;
+    if (Mode === "Create") return Translations.Register.Desc;
   };
 
   return (
@@ -28,7 +36,7 @@ export function ManageAccount() {
       <DialogContent className="sm:max-w-[450px] md:max-w-[550px] bg-background dark:bg-card-foreground border dark:border-border-dark p-10">
         <DialogHeader className="mb-8 flex flex-col gap-3">
           <DialogTitle className="dark:text-accent text-accent-foreground text-xl font-semibold">{GetTitle()}</DialogTitle>
-          <span className="dark:text-accent text-accent-foreground">Access your account to save your work</span>
+          <span className="dark:text-accent text-accent-foreground">{GetSubTitle()}</span>
         </DialogHeader>
         <Show if={Mode === "Login"}>
           <Login setMode={setMode} setOpen={setOpen} />

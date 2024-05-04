@@ -31,6 +31,7 @@ const CardModal = ({}: Props) => {
   const NotesTextarea = useRef(null);
   const TitleTextarea = useRef(null);
   const CardModal = useSelector((state: any) => state.CardModal);
+  const Translations = useSelector((state: any) => state.Translations);
   const Board = useSelector((state: any) => state.Board);
   const [CardTile, setCardTile] = useState("");
   const [CardTasks, setCardTasks] = useState([...(CardModal?.Card?.Tasks || [])]);
@@ -121,7 +122,7 @@ const CardModal = ({}: Props) => {
           <MinimalTextarea
             ref={TitleTextarea}
             className=" flex-shrink-0 resize-none text-3xl border-none  max-w-full overflow-hidden"
-            placeholder="Card Title"
+            placeholder={Translations.Placeholders.CardTitle}
             autoFocus={false}
             maxLength={MAX_CARD_TITLE}
             value={CardTile}
@@ -135,7 +136,7 @@ const CardModal = ({}: Props) => {
 
           <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5  flex-row gap-2 items-center w-full py-0.5 px-1 rounded-md">
             <Tag className="size-5" />
-            Tags
+            {Translations.ModalHeaders.Tags}
           </h2>
           <div className="flex flex-row items-center flex-wrap gap-2 overflow-x-hidden max-w-full flex-shrink-0">
             {CardModal.Card.Tags?.map((TagId: string) => {
@@ -163,7 +164,7 @@ const CardModal = ({}: Props) => {
           <Show if={CardModal.Mode === "View"}>
             <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5 flex-row gap-2 items-center w-full py-0.5 px-1 rounded-md">
               <Columns2 className="size-5" />
-              Group
+              {Translations.ModalHeaders.Group}
             </h2>
             <Select
               onValueChange={(Value) => {
@@ -173,11 +174,11 @@ const CardModal = ({}: Props) => {
               defaultValue={ColumnId}
             >
               <SelectTrigger className="">
-                <SelectValue placeholder="Select a Group" />
+                <SelectValue placeholder={Translations.Placeholders.GroupSelect} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup defaultValue={"Todo2"}>
-                  <SelectLabel>Groups</SelectLabel>
+                  <SelectLabel>{Translations.PopoverTitle.Groups}</SelectLabel>
                   {Board?.Columns?.map((Column: ColumnType) => {
                     return (
                       <SelectItem textValue={Column.ColumnTitle} value={Column.ColumId}>
@@ -192,7 +193,7 @@ const CardModal = ({}: Props) => {
 
           <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5 flex-row gap-2 items-center w-full py-0.5 px-1 rounded-md">
             <ListChecks className="size-5" />
-            Tasks
+            {Translations.ModalHeaders.Tasks}
           </h2>
           <DragDropContext onDragEnd={(Result) => HandleDragTasks(Result, CardTasks, setCardTasks)}>
             <Droppable droppableId={v4()} key={v4()}>
@@ -208,7 +209,7 @@ const CardModal = ({}: Props) => {
                                 <Checkbox id="terms" checked={Task.Completed} onClick={() => HandleToggleTask(Index, setCardTasks, CardTasks)} />
                                 <MinimalInput
                                   maxLength={MAX_TASK_TITLE}
-                                  placeholder="Task"
+                                  placeholder={Translations.Placeholders.Task}
                                   autoFocus={Index === FocusOn && FocusWhat === "Tasks"}
                                   key={v4()}
                                   className={`"m-0 py-0 px-0 h-auto ${Task.Completed && "line-through"}`}
@@ -220,7 +221,7 @@ const CardModal = ({}: Props) => {
                                     HandleChangeTaskTitle(e.target.value, Index, setCardTasks, CardTasks);
                                   }}
                                 />
-                                <Tooltip text="Delete Task">
+                                <Tooltip text={Translations.Tooltips.DeleteTask}>
                                   <Trash2
                                     className="h-4 mr-3"
                                     onClick={() => {
@@ -228,7 +229,7 @@ const CardModal = ({}: Props) => {
                                     }}
                                   />
                                 </Tooltip>
-                                <Tooltip text="Grab to Reorder">
+                                <Tooltip text={Translations.Tooltips.GrabTask}>
                                   <GripVertical className="h-5" />
                                 </Tooltip>
                               </div>
@@ -245,13 +246,13 @@ const CardModal = ({}: Props) => {
 
           <Show if={!Reorder}>
             <Button variant="outline" onClick={() => HandleAddTask(setCardTasks, CardTasks)}>
-              Add Task
+              {Translations.Buttons.AddTask}
             </Button>
           </Show>
 
           <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5 flex-row gap-2 items-center w-full py-0.5 px-1 rounded-md">
             <PencilLine className="size-5" />
-            Description
+            {Translations.ModalHeaders.Tasks}
           </h2>
 
           <Textarea
@@ -268,7 +269,7 @@ const CardModal = ({}: Props) => {
 
           <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5 flex-row gap-2 items-center w-full py-0.5 px-1 rounded-md">
             <NotebookPen className="size-5" />
-            Notes
+            {Translations.ModalHeaders.Notes}
           </h2>
 
           <Textarea
@@ -294,7 +295,7 @@ const CardModal = ({}: Props) => {
                   HandleCreateCard(CardTile, CardDesc, CardTasks, setOpen, setMessage);
                 }}
               >
-                Add Card
+                {Translations.Buttons.AddCard}
               </Button>
             </DialogFooter>
           </Show>

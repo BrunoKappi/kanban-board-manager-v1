@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { ListOption } from "../ListOption/ListOption";
 import { HandleDeleteCard } from "./DeleteCard.Utils";
+import { useSelector } from "react-redux";
 
 type Props = {
   CardIndex: number;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export default function DeleteCard({ CardIndex, ColumnIndex, Column }: Props) {
+  const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 
   const HandleDeleteCardn = () => {
@@ -26,20 +28,20 @@ export default function DeleteCard({ CardIndex, ColumnIndex, Column }: Props) {
       <AlertDialogTrigger asChild>
         <ListOption className="flex flex-row items-center justify-start">
           <Trash2 className="size-4" />
-          <span className="mt-1">Delete Card</span>
+          <span className="mt-1">{Translations.Buttons.DeleteCard}</span>
         </ListOption>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-background dark:bg-background-dark-dialog dark:border-border-dark">
         <AlertDialogHeader>
-          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">Are you sure you want to delete this Card?</h1>
-          <AlertDialogDescription>This action cannot be undone. This will permanently delete this Card of your board.</AlertDialogDescription>
+          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">{Translations.AlertDialog.DeleteCard.Title}</h1>
+          <AlertDialogDescription>{Translations.AlertDialog.DeleteCard.Desc}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
+            {Translations.AlertDialog.DeleteCard.CancelButton}
           </Button>
           <Button variant="destructive" onClick={HandleDeleteCardn}>
-            Delete
+            {Translations.AlertDialog.DeleteCard.ActionButton}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

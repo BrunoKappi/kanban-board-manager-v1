@@ -6,12 +6,14 @@ import { useState } from "react";
 import { ColumnType } from "@/Data/Types";
 import { ChangeColumnVisibilityFn } from "./ChangeColumnVisibility.Utils";
 import { ListOption } from "../ListOption/ListOption";
+import { useSelector } from "react-redux";
 
 type Props = {
   Column: ColumnType;
 };
 
 export default function ChangeColumnVisibility({ Column }: Props) {
+  const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 
   const HandleChangeColumnVisibility = () => {
@@ -25,22 +27,22 @@ export default function ChangeColumnVisibility({ Column }: Props) {
         <ListOption>
           {Column.Visible && <EyeOff className="size-4" />}
           {!Column.Visible && <Eye className="size-4" />}
-          {Column.Visible && "Hide Group"}
-          {!Column.Visible && "Show Group"}
+          {Column.Visible && Translations.PopoversSubtitles.HideGroup}
+          {!Column.Visible && Translations.PopoversSubtitles.ShowGroup}
         </ListOption>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-background dark:bg-background-dark-dialog dark:border-border-dark">
         <AlertDialogHeader>
-          {Column.Visible && <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">Are you sure you want to hide this column?</h1>}
-          {!Column.Visible && <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">Are you sure you want to make this column visible?</h1>}
+          {Column.Visible && <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">{Translations.AlertDialog.HideColumn.Title}</h1>}
+          {!Column.Visible && <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">{Translations.AlertDialog.ShowColumn.Title}</h1>}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
+            {Translations.AlertDialog.HideColumn.CancelButton}
           </Button>
           <Button variant="default" onClick={HandleChangeColumnVisibility}>
-            {Column.Visible && "Hide"}
-            {!Column.Visible && "Show"}
+            {Column.Visible && Translations.AlertDialog.HideColumn.ActionButton}
+            {!Column.Visible && Translations.AlertDialog.ShowColumn.ActionButton}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

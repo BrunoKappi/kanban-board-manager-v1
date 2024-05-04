@@ -5,12 +5,14 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { TagType } from "@/Data/Types";
 import { HandleDeleteBoardTag } from "./DeleteBoardTag.Utils";
+import { useSelector } from "react-redux";
 
 type Props = {
   Tag: TagType;
 };
 
 export default function DeleteBoardTag({ Tag }: Props) {
+  const Translations = useSelector((state: any) => state.Translations);
   const [Open, setOpen] = useState(false);
 
   const DeleteBoardTag = (e: any) => {
@@ -26,8 +28,8 @@ export default function DeleteBoardTag({ Tag }: Props) {
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-background dark:bg-background-dark-dialog dark:border-border-dark" onClick={(e) => e.stopPropagation()}>
         <AlertDialogHeader>
-          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">Are you sure you want to delete this Tag?</h1>
-          <AlertDialogDescription>This action cannot be undone. This will permanently delete this Tag of your board.</AlertDialogDescription>
+          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">{Translations.AlertDialog.DeleteTag.Title}</h1>
+          <AlertDialogDescription>{Translations.AlertDialog.DeleteTag.Desc}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button
@@ -37,10 +39,10 @@ export default function DeleteBoardTag({ Tag }: Props) {
               setOpen(false);
             }}
           >
-            Cancel
+            {Translations.AlertDialog.DeleteTag.CancelButton}
           </Button>
           <Button variant="destructive" onClick={DeleteBoardTag}>
-            Delete
+            {Translations.AlertDialog.DeleteTag.ActionButton}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

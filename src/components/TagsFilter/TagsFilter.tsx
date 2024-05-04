@@ -17,6 +17,7 @@ export default function TagsFilter({}: Props) {
   const [open, setOpen] = useState(false);
   const Board = useSelector((state: any) => state.Board);
   const TagsToFilter = useSelector((state: any) => state.TagsFilter);
+  const Translations = useSelector((state: any) => state.Translations);
 
   const dispatch = useDispatch();
 
@@ -36,7 +37,7 @@ export default function TagsFilter({}: Props) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
-        <Tooltip text="Filter Boards Tags">
+        <Tooltip text={Translations.Tooltips.FilterTags}>
           <Button onClick={() => setOpen(true)} variant="ghost" size="icon">
             <Filter />
           </Button>
@@ -45,7 +46,7 @@ export default function TagsFilter({}: Props) {
       <PopoverContent className="w-56 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList className="gap-0 py-0">
           <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent">
-            <span>Filter Tags</span>
+            <span>{Translations.PopoversSubtitles.FilterTags}</span>
           </ListOption>
 
           {Board?.Tags?.map((Tag: TagType) => {

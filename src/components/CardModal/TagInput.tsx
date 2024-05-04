@@ -1,5 +1,5 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { MinimalInput } from "../ui/minimalInput";
 import { PopOverList } from "../PopOverList/PopOverList";
 import { useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import { colors } from "@/Data/Colors";
 import EditBoardTag from "./EditBoardTag";
 import DeleteBoardTag from "./DeleteBoardTag";
 import { HandleCardTagToggle } from "./TagInput.Utils";
-import { HandleAddBoardTag } from "./EditBoardTag.Utils";
+import { HandleAddBoardTag, HandleAddBoardTagWithValue } from "./EditBoardTag.Utils";
 import { Check } from "lucide-react";
 import Tooltip from "../Tooltip/Tooltip";
 import { MAX_TAGNAME } from "@/Data/Limits";
@@ -20,6 +20,7 @@ export default function TagInput({}: Props) {
   const Board = useSelector((state: any) => state.Board);
   const [open, setOpen] = useState(false);
   const [TagSearch, setTagSearch] = useState("");
+  const Translations = useSelector((state: any) => state.Translations);
 
   const OnSearchChange = (e: any) => {
     setOpen(true);
@@ -34,26 +35,40 @@ export default function TagInput({}: Props) {
     }
   };
 
+  const FilteredTags = Board?.Tags?.filter(FilterTags);
+
   const HandleTagClick = (BorardTag: TagType) => {
     HandleCardTagToggle(BorardTag);
+  };
+
+  const HandleTagSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    console.log(FilteredTags);
+    if (FilteredTags.length > 0) {
+      HandleTagClick(FilteredTags[0]);
+    } else {
+      HandleAddBoardTagWithValue(TagSearch, setTagSearch, setOpen);
+    }
   };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
-        <span className=" text-xs hover:text-sm">+ Edit Tags</span>
+        <span className=" text-xs hover:text-sm">{Translations.Buttons.EditTags}</span>
       </PopoverTrigger>
       <PopoverContent className="w-56 p-0 bg-background   dark:bg-background-dark-dialog dark:border-border-dark select-none overflow-hidden">
-        <MinimalInput maxLength={MAX_TAGNAME} placeholder="Search Tag" className="text-xs py-1  px-0  w-full text-center h-auto " autoFocus={true} onChange={OnSearchChange} value={TagSearch} />
+        <form onSubmit={HandleTagSubmit}>
+          <MinimalInput maxLength={MAX_TAGNAME} placeholder={Translations.Placeholders.SearchTag} className="text-xs py-1  px-0  w-full text-center h-auto " autoFocus={true} onChange={OnSearchChange} value={TagSearch} />
+        </form>
         <PopOverList className="flex flex-col justify-start items-start py-2 gap-0 dark:bg-background-dark-dialog " onClick={(event) => event.stopPropagation()}>
           <div className="flex flex-col gap-2 px-2 w-full">
-            {Board?.Tags?.filter(FilterTags).map((BorardTag: TagType) => {
+            {FilteredTags.map((BorardTag: TagType) => {
               const HasTag = CardModal.Card.Tags?.indexOf(BorardTag.TagId) !== -1 && CardModal.Card.Tags?.length > 0;
               return (
                 <div className="flex flex-row items-center justify-between w-full">
                   <span className="flex flex-row justify-start items-center gap-2 flex-shrink-0">
                     <Check className={`size-3 flex-shrink-0 ${HasTag ? " opacity-100" : " opacity-0"}`} />
-                    <Tooltip text={`${HasTag ? "Remove Tag" : "Add Tag"}`}>
+                    <Tooltip text={`${HasTag ? Translations.Tooltips.RemoveTag : Translations.Tooltips.AddTag}`}>
                       <span className={`${colors[BorardTag?.TagColor]?.bg} ${colors[BorardTag?.TagColor]?.text} cursor-pointer max-w-36 text-xs px-2 rounded-sm truncate flex-shrink-0 flex flex-row gap-1 items-center`} onClick={() => HandleTagClick(BorardTag)}>
                         <span className=" flex-shrink truncate">{BorardTag?.TagName}</span>
                       </span>
@@ -67,7 +82,15 @@ export default function TagInput({}: Props) {
               );
             })}
             <span className="mt-2 w-full text-center text-xs cursor-pointer" onClick={HandleAddBoardTag}>
-              + New Tag
+              {!TagSearch && "+ " + Translations.Buttons.NewTag}
+              {!!TagSearch && FilteredTags.length === 0 && (
+                <div className="flex flex-row w-full bg-red justify-center gap-2 items-center hover:bg-overlay dark:hover:bg-overlay-dark px-2 py-1" onClick={() => HandleAddBoardTagWithValue(TagSearch, setTagSearch, setOpen)}>
+                  <span>+ {Translations.Buttons.TagAction}</span>
+                  <span className={`${colors["slate"]?.bg} ${colors["slate"]?.text} cursor-pointer max-w-36 text-xs px-2 rounded-sm truncate flex-shrink-0 flex flex-row gap-1 items-center`}>
+                    <span className=" flex-shrink truncate">{TagSearch}</span>
+                  </span>
+                </div>
+              )}
             </span>
           </div>
         </PopOverList>

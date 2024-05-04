@@ -13,8 +13,10 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 } from "uuid";
 import { MAX_BOARD_TITLE, MAX_COLUMN_TITLE } from "@/Data/Limits";
 import { cn } from "@/lib/utils";
+import { useSelector } from "react-redux";
 
 export function AddBoardItem({ className }: { className?: string }) {
+  const Translations = useSelector((state: any) => state.Translations);
   const textareaRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [Reorder] = useState(false);
@@ -42,21 +44,21 @@ export function AddBoardItem({ className }: { className?: string }) {
       <DialogTrigger asChild>
         <div className={`${cn("flex flex-row justify-start items-center gap-2  w-full px-3 py-2  rounded-r-3xl text-primary  cursor-pointer hover:bg-primary hover:text-primary-foreground", className)}`}>
           <Columns3 className="size-5 flex-shrink-0" />
-          <span className="truncate text-sm">+ Create Board</span>
+          <span className="truncate text-sm">{Translations.OptionsLists.CreateBoard}</span>
         </div>
       </DialogTrigger>
       <DialogContent className="px-10 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
         <DialogHeader className="mb-8">
-          <DialogTitle className="dark:text-accent text-accent-foreground text-xl">Create Board</DialogTitle>
+          <DialogTitle className="dark:text-accent text-accent-foreground text-xl">{Translations.AddBoardModal.Title}</DialogTitle>
         </DialogHeader>
         <h2 className="mt-5 text-lg flex flex-row gap-2 items-center w-full bg-overlay dark:bg-overlay-dark py-0.5 px-1 rounded-md">
           <Bookmark className="size-5" />
-          Board Name
+          {Translations.ModalHeaders.BoardName}
         </h2>
         <MinimalInput
           autoFocus={false}
           maxLength={MAX_BOARD_TITLE}
-          placeholder="Board Name"
+          placeholder={Translations.Placeholders.BoardName}
           value={BoardName}
           onChange={(e) => {
             setFocusWhat("BoardName");
@@ -66,7 +68,7 @@ export function AddBoardItem({ className }: { className?: string }) {
 
         <h2 className="mt-5 text-lg flex flex-row gap-2 items-center w-full bg-overlay dark:bg-overlay-dark py-0.5 px-1 rounded-md">
           <PencilLine className="size-5" />
-          Description (Optional)
+          {Translations.ModalHeaders.BoardDesc}
         </h2>
 
         <Textarea
@@ -82,7 +84,7 @@ export function AddBoardItem({ className }: { className?: string }) {
         <div className="flex flex-row gap-2 items-center mt-5 justify-between w-full">
           <h2 className="mt-5 text-lg flex flex-row gap-2 items-center w-full bg-overlay dark:bg-overlay-dark py-0.5 px-1 rounded-md">
             <Columns2 className="size-5" />
-            Board Columns
+            {Translations.ModalHeaders.BoardColumns}
           </h2>
         </div>
 
@@ -103,7 +105,7 @@ export function AddBoardItem({ className }: { className?: string }) {
                             return (
                               <span className={snapshot.isDragging ? "ITEM flex flex-row items-center gap-10 w-full" : "ITEM flex flex-row items-center gap-10 w-full"} ref={DragProvided.innerRef} style={DragProvided.draggableProps.style} {...DragProvided.draggableProps} {...DragProvided.dragHandleProps}>
                                 <div className="flex flex-row items-center flex-grow gap-2">
-                                  <Tooltip text="Grab to Reorder">
+                                  <Tooltip text={Translations.Tooltips.GrabColumn}>
                                     <GripVertical className="h-5" />
                                   </Tooltip>
                                   <MinimalInput
@@ -122,7 +124,7 @@ export function AddBoardItem({ className }: { className?: string }) {
                                 </div>
                                 <ColorPicker onSelect={(Value: any) => HandleColumnColor(Value, ColumnIndex, setBoardColumns, BoardColumns)} color={BoardColumn.ColumnColor} />
 
-                                <Tooltip text="Delete Column">
+                                <Tooltip text={Translations.Tooltips.DeleteColumn}>
                                   <Trash2 className="size-5 cursor-pointer" onClick={() => HandleDeleteColumn(ColumnIndex, setBoardColumns, BoardColumns)} />
                                 </Tooltip>
                               </span>
@@ -148,7 +150,7 @@ export function AddBoardItem({ className }: { className?: string }) {
 
                 <ColorPicker onSelect={(Value: any) => HandleColumnColor(Value, ColumnIndex, setBoardColumns, BoardColumns)} color={BoardColumn.ColumnColor} />
 
-                <Tooltip text="Delete Column">
+                <Tooltip text={Translations.Tooltips.DeleteColumn}>
                   <Trash2 className="size-5 cursor-pointer" onClick={() => HandleDeleteColumn(ColumnIndex, setBoardColumns, BoardColumns)} />
                 </Tooltip>
               </span>
@@ -158,7 +160,7 @@ export function AddBoardItem({ className }: { className?: string }) {
 
         <Show if={!Reorder}>
           <Button className="w-full" variant="outline" onClick={() => HandleAddColumn(setBoardColumns, BoardColumns)}>
-            + Add Column
+            {Translations.Buttons.AddColumn}
           </Button>
         </Show>
         <Show if={!!Message}>

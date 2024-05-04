@@ -21,6 +21,7 @@ const Navbar = ({ Board }: NavbarProps) => {
   const [BoardName, setBoardName] = useState(Board?.BoardName);
   const [Editing, setEditing] = useState(false);
   const Sidebar = useSelector((state: any) => state.Sidebar);
+  const Translations = useSelector((state: any) => state.Translations);
 
   const HandleChangeBoardName = (e: any) => {
     e.preventDefault();
@@ -44,7 +45,7 @@ const Navbar = ({ Board }: NavbarProps) => {
           {Sidebar === "Closed" && <ToggleSidebar />}
 
           {!Editing && HasBorard && (
-            <Tooltip text="Double click to edit Board name">
+            <Tooltip text={Translations.Tooltips.EditBoardName}>
               <span className="dark:text-accent text-accent-foreground hidden md:flex md:min-w-72  px-5 py-2 font-medium text-xl select-none cursor-pointer  line-clamp-1 max-w-72 truncate text-ellipsis" onDoubleClick={HandleStartEditing}>
                 <span className="max-w-full truncate">{Board?.BoardName}</span>
               </span>
@@ -56,7 +57,7 @@ const Navbar = ({ Board }: NavbarProps) => {
           {Editing && (
             <form className="flex flex-row items-center justify-start gap-2  px-5 py-2 dark:text-accent text-accent-foreground font-medium text-xl " onSubmit={HandleChangeBoardName}>
               <MinimalInput maxLength={MAX_BOARD_TITLE} className="text-xl bg-transparent dark:bg-transparent p-0 border-none m-0 h-auto" value={BoardName} onChange={(e) => setBoardName(e.target.value)} />
-              <Tooltip text="Cancel">
+              <Tooltip text={Translations.Tooltips.CancelEditBoardName}>
                 <X className="size-5 cursor-pointer" />
               </Tooltip>
             </form>

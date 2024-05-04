@@ -29,6 +29,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
   const [BoardDesc, setBoardDesc] = useState(Board?.BoardDesc);
   const [Message, setMessage] = useState("");
   const [BoardColumns, setBoardColumns] = useState([...(Board?.Columns || [])]);
+  const Translations = useSelector((state: any) => state.Translations);
 
   const HandleInputHeight = (ref: any, state: any, defaultHeight: string) => {
     if (ref.current) {
@@ -47,7 +48,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
       <DialogTrigger asChild>
         <ListOption>
           <Pencil className="size-4" />
-          Edit Board
+          {Translations.BoardModal.Title}
         </ListOption>
       </DialogTrigger>
       <DialogContent className="px-10 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
@@ -55,7 +56,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
           autoFocus={false}
           maxLength={MAX_BOARD_TITLE}
           className=" flex-shrink-0 line-clamp-2 resize-none text-2xl border-none break-words max-w-full overflow-wrap-normalver"
-          placeholder="Board Name"
+          placeholder={Translations.Placeholders.BoardName}
           value={BoardName}
           onChange={(e) => {
             setFocusWhat("BoardName");
@@ -65,7 +66,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
 
         <h2 className="mt-5 text-lg flex flex-row gap-2 items-center w-full bg-overlay dark:bg-overlay-dark py-0.5 px-1 rounded-md">
           <PencilLine className="size-5" />
-          Description (Optional)
+          {Translations.ModalHeaders.BoardDesc}
         </h2>
 
         <Textarea
@@ -81,7 +82,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
         <div className="flex flex-row gap-2 items-center mt-5 justify-between w-full">
           <h2 className="mt-5 text-lg flex flex-row gap-2 items-center w-full bg-overlay dark:bg-overlay-dark py-0.5 px-1 rounded-md">
             <Columns2 className="size-5" />
-            Board Groups
+            {Translations.ModalHeaders.BoardColumns}
           </h2>
         </div>
 
@@ -102,13 +103,13 @@ export function BoardModal({ SetExternalOpen }: Props) {
                             return (
                               <span className={snapshot.isDragging ? "ITEM flex flex-row items-center gap-10 w-full" : "ITEM flex flex-row items-center gap-10 w-full"} ref={DragProvided.innerRef} style={DragProvided.draggableProps.style} {...DragProvided.draggableProps} {...DragProvided.dragHandleProps}>
                                 <div className="flex flex-row items-center flex-grow gap-2">
-                                  <Tooltip text="Grab to Reorder">
+                                  <Tooltip text={Translations.Tooltips.GrabColumn}>
                                     <GripVertical className="h-5" />
                                   </Tooltip>
                                   <MinimalInput
                                     maxLength={MAX_COLUMN_TITLE}
                                     autoFocus={ColumnIndex === FocusOn && FocusWhat === "BoardColumn"}
-                                    placeholder="Column Title"
+                                    placeholder={Translations.Placeholders.BoardColumn}
                                     value={BoardColumn.ColumnTitle}
                                     onChange={(e) => {
                                       setFocusWhat("BoardColumn");
@@ -120,7 +121,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
                                 </div>
                                 <ColorPicker onSelect={(Value: any) => HandleColumnColor(Value, ColumnIndex, setBoardColumns, BoardColumns)} color={BoardColumn.ColumnColor} />
 
-                                <Tooltip text="Delete Column">
+                                <Tooltip text={Translations.Tooltips.DeleteColumn}>
                                   <Trash2 className="size-5 cursor-pointer" onClick={() => HandleDeleteColumn(ColumnIndex, setBoardColumns, BoardColumns)} />
                                 </Tooltip>
                               </span>
@@ -141,12 +142,12 @@ export function BoardModal({ SetExternalOpen }: Props) {
             return (
               <span className={"ITEM flex flex-row items-center gap-10 w-full"}>
                 <div className="flex flex-row items-center flex-grow gap-2">
-                  <MinimalInput maxLength={MAX_COLUMN_TITLE} placeholder="Column Title" value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
+                  <MinimalInput maxLength={MAX_COLUMN_TITLE} placeholder={Translations.Placeholders.BoardColumn} value={BoardColumn.ColumnTitle} onChange={(e) => HandleColumnTitle(e.target.value, ColumnIndex, setBoardColumns, BoardColumns)} className="flex-grow" />
                 </div>
 
                 <ColorPicker onSelect={(Value: any) => HandleColumnColor(Value, ColumnIndex, setBoardColumns, BoardColumns)} color={BoardColumn.ColumnColor} />
 
-                <Tooltip text="Delete Column">
+                <Tooltip text={Translations.Tooltips.DeleteColumn}>
                   <Trash2 className="size-5 cursor-pointer" onClick={() => HandleDeleteColumn(ColumnIndex, setBoardColumns, BoardColumns)} />
                 </Tooltip>
               </span>
@@ -156,7 +157,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
 
         <Show if={!Reorder}>
           <Button variant="outline" onClick={() => HandleAddColumn(setBoardColumns, BoardColumns)}>
-            + Add Column
+            {Translations.Buttons.AddColumn}
           </Button>
         </Show>
         <Show if={!!Message}>
@@ -167,14 +168,14 @@ export function BoardModal({ SetExternalOpen }: Props) {
           <Button
             onClick={() => {
               if (!BoardName) {
-                setMessage("Board Name is empty");
+                setMessage(Translations.BoardModal.ErrorTitle);
                 setTimeout(() => {
                   setMessage("");
                 }, 3000);
                 return;
               }
               if (BoardColumns.length === 0) {
-                setMessage("Add at least one column");
+                setMessage(Translations.BoardModal.ErrorColumns);
                 setTimeout(() => {
                   setMessage("");
                 }, 3000);
@@ -184,7 +185,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
               HandleEditBoard(BoardName, BoardColumns, BoardDesc, setMessage, Board);
             }}
           >
-            Save Changes
+            {Translations.Buttons.SaveChanges}
           </Button>
         </DialogFooter>
       </DialogContent>

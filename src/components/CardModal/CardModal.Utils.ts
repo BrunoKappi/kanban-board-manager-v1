@@ -68,7 +68,6 @@ export const HandleDeleteTask = (Index: number, Setter: any, Tasks: any) => {
 };
 
 export const HandleChangeTaskTitle = (Value: string, Index: number, Setter: any, Tasks: any) => {
- 
   const Current = Tasks.map((task: any) => ({ ...task })); // Cria uma cópia profunda de cada objeto dentro do array Tasks
   Current[Index].TaskTitle = Value;
   Setter(Current);
@@ -87,7 +86,7 @@ export const HandleAddTask = (Setter: any, Tasks: any) => {
   const Current = Tasks.map((task: any) => ({ ...task })); // Cria uma cópia profunda de cada objeto dentro do array Tasks
   var NewTask = {
     TaskId: v4(),
-    TaskTitle: `Task ${Tasks.length + 1}`,
+    TaskTitle: `${store.getState().Translations.Mocks.Task} ${Tasks.length + 1}`,
     Completed: false,
     CreatedAt: moment().valueOf(),
     LastEditedAt: moment().valueOf(),
@@ -304,7 +303,7 @@ export const HandleSaveTasks = (Tasks: any) => {
 
 export const HandleCreateCard = (CardTitle: string, CardDesc: string, Tasks: any, setOpen: (state: boolean) => void, setMessage: (message: string) => void) => {
   if (!CardTitle) {
-    setMessage("Card Title is Empty");
+    setMessage(store.getState().Translations.CardModal.ErrorTitle);
     setTimeout(() => {
       setMessage("");
       return;

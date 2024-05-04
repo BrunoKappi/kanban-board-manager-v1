@@ -2,21 +2,26 @@ import { FIREBASE_Logout } from "@/Config/Firebase/Auth";
 import { LogOut } from "lucide-react";
 import { ListOption } from "../ListOption/ListOption";
 import { DefaultBoardList } from "@/Data/BoardList";
-import { ExampleBoard1 } from "@/Data/ExampleBoard1";
+
 import { v4 } from "uuid";
 import moment from "moment";
 import store from "@/Config/Store/Store";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
+import { useSelector } from "react-redux";
+import { ExampleBoard1 } from "@/Data/ExampleBoard1";
 
 type Props = {
   setOpen: (mode: boolean) => void;
 };
 
 export default function Logout({ setOpen }: Props) {
+  const Translations = useSelector((state: any) => state.Translations);
   const handleLogout = () => {
+    const CurrentTheme = localStorage.getItem("Kanban-Theme");
     localStorage.clear();
+    if (CurrentTheme) localStorage.setItem("Kanban-Theme", CurrentTheme);
     var NewId = v4();
     var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
     var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
@@ -42,7 +47,7 @@ export default function Logout({ setOpen }: Props) {
   return (
     <ListOption className="flex flex-row items-center gap-2 justify-start cursor-pointer " onClick={handleLogout}>
       <LogOut className="size-5" />
-      <span>Logout</span>
+      <span>{Translations.OptionsLists.Logout}</span>
     </ListOption>
   );
 }

@@ -27,7 +27,7 @@ export const AddColumn = () => {
     Visible: true,
     CardsQtd: 0,
     Cards: [],
-    ColumnTitle: "Column " + (NewColumns.length + 1),
+    ColumnTitle: store.getState().Translations.Mocks.Column + " " + (NewColumns.length + 1),
     ColumnColor: "slate",
   };
 

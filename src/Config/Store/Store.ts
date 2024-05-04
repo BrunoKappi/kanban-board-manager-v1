@@ -10,11 +10,15 @@ import CardModalSlice from "./CardModal/CardModal";
 import CardWidthSlice from "./CardWidth/CardWidth";
 import TagsFilterSlice from "./TagsFilter/TagsFilter";
 import SearchFilterSlice from "./SearchFilter/CardWidth";
+import UserPreferences from "./UserPreferences/UserPreferences";
+import LanguageSlice from "./Language/Language";
+import TranslationsSlice from "./Translations/Translations";
 
 const store = configureStore({
   reducer: {
     User: UserSlice,
     Theme: ThemeSlice,
+    Language: LanguageSlice,
     Sidebar: SidebarSlice,
     SelectedBoard: SelectedBoardSlice,
     Boards: BoardsSlice,
@@ -24,11 +28,13 @@ const store = configureStore({
     CardWidth: CardWidthSlice,
     TagsFilter: TagsFilterSlice,
     SearchFilter: SearchFilterSlice,
+    UserPreferences: UserPreferences,
+    Translations: TranslationsSlice,
   },
 });
 
 const logChanges = () => {
-  //console.log("LOG STORE", store.getState());
+  console.log("LOG STORE", store.getState());
 };
 
 export const unsubscribe = store.subscribe(logChanges);

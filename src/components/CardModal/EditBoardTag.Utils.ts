@@ -2,6 +2,7 @@ import store from "@/Config/Store/Store";
 import { TagType } from "@/Data/Types";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 import { v4 } from "uuid";
+import { HandleCardTagToggle } from "./TagInput.Utils";
 
 export const HandleChangeBoardTagColor = (Tag: TagType, NewTagColor: string) => {
   if (!NewTagColor) return;
@@ -46,7 +47,7 @@ export const HandleAddBoardTag = () => {
 
   const NewTag: TagType = {
     TagId: v4(),
-    TagName: "My Tag",
+    TagName: store.getState().Translations.Mocks.Tag,
     TagColor: "green",
   };
 
@@ -55,4 +56,23 @@ export const HandleAddBoardTag = () => {
   NewBoard.Tags = [...NewBoardTags];
 
   MIDDLEWARE_UpdateBoard(NewBoard);
+};
+
+export const HandleAddBoardTagWithValue = (Value: string, setTagSearch: any, setOpen: any) => {
+  var NewBoard: any = { ...store.getState().Board };
+
+  const NewTag: TagType = {
+    TagId: v4(),
+    TagName: Value,
+    TagColor: "slate",
+  };
+
+  var NewBoardTags = [...(NewBoard.Tags || []), NewTag];
+
+  NewBoard.Tags = [...NewBoardTags];
+
+  MIDDLEWARE_UpdateBoard(NewBoard);
+  setTagSearch("");
+  setOpen(false);
+  HandleCardTagToggle(NewTag);
 };

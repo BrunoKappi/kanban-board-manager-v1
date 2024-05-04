@@ -22,6 +22,7 @@ export default function BoardColumn({ Column, ColumnIndex }: Props) {
   const TagsToFilter = useSelector((state: any) => state.TagsFilter);
   const SearchFilter = useSelector((state: any) => state.SearchFilter);
   const Board = useSelector((state: any) => state.Board);
+  const Translations = useSelector((state: any) => state.Translations);
 
   useEffect(() => {
     setCards(Column.Cards);
@@ -85,7 +86,7 @@ export default function BoardColumn({ Column, ColumnIndex }: Props) {
             <div className="flex flex-row justify-between  items-center gap-3">
               <Status Color={Column.ColumnColor} Text={Column.ColumnTitle} Column={Column} />
               <div className="flex flex-row gap-5 items-center justify-end ">
-                <Tooltip text="Qtd of Cards">
+                <Tooltip text={Translations.Tooltips.QtdCards}>
                   <span>{Column.CardsQtd}</span>
                 </Tooltip>
                 <BoardColumnOptions Column={Column} />

@@ -1,14 +1,23 @@
+import { FIREBASE_GetUserPreferences, FIREBASE_UpdateUserPreferences } from "./../Config/Firebase/Firestore";
 import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
 import { OrderBoards } from "@/components/Sidebar/SidebarUtils";
-import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_GetBoard, FIREBASE_GetBoardList, FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
+import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_CreateUserPreferences, FIREBASE_GetBoard, FIREBASE_GetBoardList, FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
 import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
+import { SetCardWidth } from "@/Config/Store/CardWidth/CardWidth";
+import { SetLanguage } from "@/Config/Store/Language/Language";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import store from "@/Config/Store/Store";
+import { SetTheme } from "@/Config/Store/Theme/Theme";
+import { SetTranslations } from "@/Config/Store/Translations/Translations";
+import { DefaultNewUserPreference, SetUserPreferences } from "@/Config/Store/UserPreferences/UserPreferences";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { Boards } from "@/Data/Boards";
 import { ExampleBoard1 } from "@/Data/ExampleBoard1";
+import { ExampleBoard1_PortugueseBr } from "@/Data/ExampleBoard1_PortugueseBr";
+import { TRANSLATIONS_ENGLISH } from "@/Data/Translations_English";
+import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
 import moment from "moment";
 import { v4 } from "uuid";
 
@@ -112,6 +121,8 @@ export const MIDDLEWARE_GetUser = async (Uid: string, Email: string) => {
 
   const Data = await FIREBASE_GetUser(Uid);
 
+  MIDDLEWARE_GetUserPreferences(Uid);
+
   if (Data.length !== 0) return;
 
   const NewUser = {
@@ -120,7 +131,57 @@ export const MIDDLEWARE_GetUser = async (Uid: string, Email: string) => {
     CreatedAt: moment().valueOf(),
   };
 
-  const Response = await FIREBASE_CreateUser(NewUser);
+  const NewUserPreference = {
+    ...DefaultNewUserPreference,
+    Uid: Uid,
+    Theme: store.getState().Theme,
+    CardWidth: store.getState().CardWidth,
+  };
+
+  //@ts-ignore
+  const NewUserDoc = await FIREBASE_CreateUser(NewUser);
+  const UserPrefenceDoc = await FIREBASE_CreateUserPreferences(NewUserPreference);
+
+  const UpdatedUserPreference = {
+    ...NewUserPreference,
+    Uid: UserPrefenceDoc.id,
+  };
+
+  //@ts-ignore
+  store.dispatch(SetUserPreferences(UpdatedUserPreference));
+
+  FIREBASE_UpdateUserPreferences(UpdatedUserPreference);
 
   SyncCurrentUserWork(Uid);
+};
+
+export const MIDDLEWARE_GetUserPreferences = async (Uid: string) => {
+  const UserPreferences: any = await FIREBASE_GetUserPreferences(Uid);
+
+  if (!!UserPreferences.docID) {
+    //@ts-ignore
+    store.dispatch(SetUserPreferences(UserPreferences));
+    store.dispatch(SetTheme(UserPreferences.Theme));
+    store.dispatch(SetCardWidth(UserPreferences.CardWidth));
+    store.dispatch(SetLanguage(UserPreferences.Language));
+
+    if (UserPreferences.Language === "English") {
+      //@ts-ignore
+      store.dispatch(SetTranslations(TRANSLATIONS_ENGLISH));
+      console.log("XXXXXXXXX", UserPreferences.Language);
+    } else if (UserPreferences.Language === "Portuguese-br") {
+      //@ts-ignore
+      store.dispatch(SetTranslations(TRANSLATIONS_PORTUGUESE));
+    }
+  }
+};
+
+export const MIDDLEWARE_GetExampleBoard = () => {
+  const CurrentLanguage = store.getState().Language;
+
+  if (CurrentLanguage === "English") {
+    return { ...ExampleBoard1 };
+  } else if (CurrentLanguage === "Portuguese-br") {
+    return { ...ExampleBoard1_PortugueseBr };
+  }
 };

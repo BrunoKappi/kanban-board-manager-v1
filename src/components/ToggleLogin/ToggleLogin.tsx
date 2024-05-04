@@ -7,6 +7,7 @@ import { BoardListItemType } from "@/Data/Types";
 import moment from "moment";
 import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList } from "@/Config/Firebase/Firestore";
 import { DefaultBoardList } from "@/Data/BoardList";
+import { MIDDLEWARE_GetExampleBoard } from "@/Middleware/GetData";
 import { ExampleBoard1 } from "@/Data/ExampleBoard1";
 
 export default function ToggleLogin({ className }: any) {

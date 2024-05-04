@@ -4,6 +4,7 @@ import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetSidebar } from "@/Config/Store/Sidebar/Sidebar";
 import store from "@/Config/Store/Store";
 import { SetTheme } from "@/Config/Store/Theme/Theme";
+import { DefaultNewUserPreference, SetUserPreferencesTheme } from "@/Config/Store/UserPreferences/UserPreferences";
 import { BoardListItemType } from "@/Data/Types";
 import moment from "moment";
 
@@ -61,12 +62,17 @@ export const MIDDLEWARE_ToggleSidebar = () => {
 
 export const MIDDLEWARE_ToggleTheme = () => {
   const Theme = store.getState().Theme || "Light";
+  const UserPreferences = { ...store.getState().UserPreferences } || { ...DefaultNewUserPreference };
 
   if (Theme === "Dark") {
     localStorage.setItem("Kanban-Theme", "Light");
     store.dispatch(SetTheme("Light"));
+    store.dispatch(SetUserPreferencesTheme("Light"));
+    UserPreferences.Theme = "Light";
   } else {
     localStorage.setItem("Kanban-Theme", "Dark");
     store.dispatch(SetTheme("Dark"));
+    store.dispatch(SetUserPreferencesTheme("Dark"));
+    UserPreferences.Theme = "Dark";
   }
 };

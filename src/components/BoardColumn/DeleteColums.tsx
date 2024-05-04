@@ -6,12 +6,14 @@ import { useState } from "react";
 import { ColumnType } from "@/Data/Types";
 import { DeleteColumnFn } from "./DeleteColumns.Utils";
 import { ListOption } from "../ListOption/ListOption";
+import { useSelector } from "react-redux";
 
 type Props = {
   Column: ColumnType;
 };
 
 export default function DeleteColum({ Column }: Props) {
+  const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 
   const HandleDeleteColumn = () => {
@@ -24,20 +26,20 @@ export default function DeleteColum({ Column }: Props) {
       <AlertDialogTrigger asChild>
         <ListOption>
           <Trash2 className="size-4" />
-          Delete Column
+          {Translations.OptionsLists.DeleteColumn}
         </ListOption>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-background dark:bg-background-dark-dialog dark:border-border-dark">
         <AlertDialogHeader>
-          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">Are you sure you want to delete this column?</h1>
-          <AlertDialogDescription>This action cannot be undone. This will permanently delete this column of your board.</AlertDialogDescription>
+          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">{Translations.AlertDialog.DeleteColumn.Title}</h1>
+          <AlertDialogDescription>{Translations.AlertDialog.DeleteColumn.Desc}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
+            {Translations.AlertDialog.DeleteColumn.CancelButton}
           </Button>
           <Button variant="destructive" onClick={HandleDeleteColumn}>
-            Delete
+            {Translations.AlertDialog.DeleteColumn.ActionButton}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -1,3 +1,4 @@
+import store from "@/Config/Store/Store";
 import { ColumnType } from "@/Data/Types";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 import moment from "moment";
@@ -30,7 +31,7 @@ export const HandleDeleteColumn = (Index: number, Setter: any, BoardColumns: any
 export const HandleAddColumn = (Setter: any, BoardColumns: any) => {
   const Current = BoardColumns.map((Item: any) => ({ ...Item }));
   var NewColum = {
-    ColumnTitle: `Column ${Current.length + 1}`,
+    ColumnTitle: `${store.getState().Translations.Mocks.Column} ${Current.length + 1}`,
     ColumnColor: "slate",
     ColumId: v4(),
     CreatedAt: moment().valueOf(),
@@ -38,14 +39,14 @@ export const HandleAddColumn = (Setter: any, BoardColumns: any) => {
     Visible: true,
     CardsQtd: 0,
     Cards: [],
-  };
+  }; 
   Current.push(NewColum);
   Setter(Current);
 };
 
 export const HandleEditBoard = (BoardName: string, BoardColumns: any[], BoardDesc: string, setMessage: (message: string) => void, Board: any) => {
   if (!BoardName) {
-    setMessage("Board Name is empty");
+    setMessage(store.getState().Translations.BoardModal.ErrorTitle);
     setTimeout(() => {
       setMessage("");
     }, 3000);
@@ -53,7 +54,7 @@ export const HandleEditBoard = (BoardName: string, BoardColumns: any[], BoardDes
   }
 
   if (BoardColumns.length === 0) {
-    setMessage("Add at least one column");
+    setMessage(store.getState().Translations.BoardModal.ErrorColumns);
     setTimeout(() => {
       setMessage("");
     }, 3000);
@@ -80,11 +81,6 @@ export const HandleEditBoard = (BoardName: string, BoardColumns: any[], BoardDes
 };
 
 function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: number) {
-  // Verifica se os índices estão dentro dos limites do array
-  if (sourceIndex < 0 || sourceIndex >= arr.length || destinationIndex < 0 || destinationIndex > arr.length) {
-    throw new Error("Índices estão fora dos limites do array.");
-  }
-
   // Faz uma cópia profunda do array original para não modificar o original
   const newArr = arr.map((obj: any) => ({ ...obj }));
 

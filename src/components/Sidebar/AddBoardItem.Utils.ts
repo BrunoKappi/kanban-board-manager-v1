@@ -30,13 +30,13 @@ export const HandleDeleteColumn = (Index: number, Setter: any, BoardColumns: any
 
 export const HandleAddColumn = (Setter: any, BoardColumns: any) => {
   const Current = [...BoardColumns];
-  Current.push({ ColumnTitle: `Column ${Current.length + 1}`, ColumnColor: "slate" });
+  Current.push({ ColumnTitle: `${store.getState().Translations.Mocks.Column} ${Current.length + 1}`, ColumnColor: "slate" });
   Setter(Current);
 };
 
 export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardDesc: string, setMessage: (message: string) => void, setOpen: (open: boolean) => void) => {
   if (!BoardName) {
-    setMessage("Board Name is empty");
+    setMessage(store.getState().Translations.BoardModal.ErrorTitle);
     setTimeout(() => {
       setMessage("");
     }, 3000);
@@ -44,7 +44,7 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
   }
 
   if (BoardColumns.length === 0) {
-    setMessage("Add at least one column");
+    setMessage(store.getState().Translations.BoardModal.ErrorColumns);
     setTimeout(() => {
       setMessage("");
     }, 3000);
@@ -82,17 +82,17 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
     Tags: [
       {
         TagId: v4(),
-        TagName: "My Tag",
+        TagName: store.getState().Translations.Mocks.Tag,
         TagColor: "slate",
       },
       {
         TagId: v4(),
-        TagName: "My Tag 2",
+        TagName: store.getState().Translations.Mocks.Tag + " 2",
         TagColor: "red",
       },
-      { 
+      {
         TagId: v4(),
-        TagName: "My Tag 3",
+        TagName: store.getState().Translations.Mocks.Tag + " 3",
         TagColor: "blue",
       },
     ],
@@ -102,11 +102,6 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
 };
 
 function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: number) {
-  // Verifica se os índices estão dentro dos limites do array
-  if (sourceIndex < 0 || sourceIndex >= arr.length || destinationIndex < 0 || destinationIndex > arr.length) {
-    throw new Error("Índices estão fora dos limites do array.");
-  }
-
   // Faz uma cópia profunda do array original para não modificar o original
   const newArr = arr.map((obj: any) => ({ ...obj }));
 
@@ -127,5 +122,4 @@ export const HandleDragColumns = (Result: DropResult, Columns: any, setBoardColu
   const NewColumns = moveObjectInArray(Columns, SourceIndex, DestinationIndex);
 
   setBoardColumns(NewColumns);
-
 };

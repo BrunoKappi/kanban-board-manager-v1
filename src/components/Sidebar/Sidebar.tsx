@@ -13,6 +13,7 @@ import { AddBoardItem } from "../BoardListPopover/AddBoardItem";
 export default function Sidebar() {
   const BoardList = useSelector((state: any) => state.BoardList);
   const SelectedBoard = useSelector((state: any) => state.SelectedBoard);
+  const Translations = useSelector((state: any) => state.Translations);
 
   const dispatch = useDispatch();
 
@@ -38,7 +39,9 @@ export default function Sidebar() {
       </div>
 
       <div className="w-full ml-7 truncate">
-        <span className="truncate">All Boards ({BoardList?.length})</span>
+        <span className="truncate">
+          {Translations.Sidebar.AllBoards} ({BoardList?.length})
+        </span>
       </div>
 
       <div className=" flex flex-col gap-2  w-full ">

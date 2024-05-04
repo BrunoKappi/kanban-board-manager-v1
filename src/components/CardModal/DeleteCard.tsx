@@ -12,6 +12,7 @@ type Props = {
 export default function DeleteCard({ setOpen }: Props) {
   const [Dialogopen, setDialogOpen] = useState(false);
   const CardModal = useSelector((state: any) => state.CardModal);
+  const Translations = useSelector((state: any) => state.Translations);
 
   const DeleteCard = () => {
     HandleDeleteCard();
@@ -30,22 +31,22 @@ export default function DeleteCard({ setOpen }: Props) {
                 setDialogOpen(true);
               }}
             >
-              Delete Card
+              {Translations.OptionsLists.DeleteCard}
             </Button>
           </div>
         </Show>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-background dark:bg-background-dark-dialog dark:border-border-dark">
         <AlertDialogHeader>
-          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">Are you sure you want to delete this Card?</h1>
-          <AlertDialogDescription>This action cannot be undone. This will permanently delete this card of your board.</AlertDialogDescription>
+          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">{Translations.AlertDialog.DeleteCard.Title}</h1>
+          <AlertDialogDescription>{Translations.AlertDialog.DeleteCard.Desc}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button variant="outline" onClick={() => setDialogOpen(false)}>
-            Cancel
+            {Translations.AlertDialog.DeleteCard.CancelButton}
           </Button>
           <Button variant="destructive" onClick={DeleteCard}>
-            Delete
+            {Translations.AlertDialog.DeleteCard.ActionButton}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

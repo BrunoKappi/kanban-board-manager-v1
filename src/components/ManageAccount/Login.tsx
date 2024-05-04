@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { LoginFn, LoginWithGoogleFn } from "./Login.Utils";
 import Google from "@/Assets/Google.svg";
 import { MAX_CARD_EMAIL, MAX_CARD_PASSWORD } from "@/Data/Limits";
+import { useSelector } from "react-redux";
 
 type LoginProps = {
   setMode: (mode: string) => void;
@@ -11,6 +12,7 @@ type LoginProps = {
 };
 
 export default function Login({ setMode, setOpen }: LoginProps) {
+  const Translations = useSelector((state: any) => state.Translations);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -30,17 +32,17 @@ export default function Login({ setMode, setOpen }: LoginProps) {
       <Input maxLength={MAX_CARD_PASSWORD} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <div className="px-3 py-2 border w-full rounded-md flex flex-row items-center justify-center gap-2 cursor-pointer hover:bg-overlay dark:hover:bg-overlay-dark dark:border-border-dark" onClick={handleLoginWithGoogle}>
         <img src={Google} alt="" className="size-6" />
-        Login with Google
+        {Translations.Buttons.LoginWithGoogle}
       </div>
       {error && <p className="text-red-500">{error}</p>}
       <span className=" cursor-pointer hover:underline mt-5" onClick={() => setMode("Forgot")}>
-        Forgot Password?
+        {Translations.Login.Forgot}
       </span>
       <span className=" cursor-pointer hover:underline" onClick={() => setMode("Create")}>
-        Create Account
+        {Translations.Login.Register}
       </span>
       <div className="mt-5 flex flex-row justify-end w-full">
-        <Button type="submit">Login</Button>
+        <Button type="submit">{Translations.Buttons.Login}</Button>
       </div>
     </form>
   );

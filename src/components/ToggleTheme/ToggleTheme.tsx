@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 export default function ToggleTheme({ className }: any) {
   const Theme = useSelector((state: any) => state.Theme);
+  const Translations = useSelector((state: any) => state.Translations);
 
   const handleKeyPress = (event: any) => {
     if (event.ctrlKey && event.shiftKey && event.key === "L") {
@@ -27,7 +28,7 @@ export default function ToggleTheme({ className }: any) {
   }, []);
 
   return (
-    <Tooltip text="Change Theme">
+    <Tooltip text={Translations.Tooltips.ChangeTheme}>
       <Button onClick={ToggleTheme} className={cn("", className)} variant="ghost" size="icon">
         {Theme === "Light" ? <Sun /> : <Moon />}
       </Button>

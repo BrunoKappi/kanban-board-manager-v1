@@ -17,6 +17,7 @@ type Props = {};
 export default function BoardListPopover({}: Props) {
   const BoardList = useSelector((state: any) => state.BoardList);
   const Board = useSelector((state: any) => state.Board);
+  const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export default function BoardListPopover({}: Props) {
       <PopoverContent align="center" className=" md:w-72 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList>
           <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent">
-            <span className=" font-medium text-lg">Boards</span>
+            <span className=" font-medium text-lg">{Translations.PopoverTitle.Boards}</span>
           </ListOption>
           {[...BoardList].sort(OrderBoards).map((BoardListItem: any) => {
             return (

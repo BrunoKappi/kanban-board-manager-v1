@@ -13,6 +13,7 @@ type Props = {
 export default function DeleteBoard({ SetExternalOpen }: Props) {
   const [open, setOpen] = useState(false);
   const Board = useSelector((state: any) => state.Board);
+  const Translations = useSelector((state: any) => state.Translations);
 
   const HandleDeleteBoard = () => {
     setOpen(false);
@@ -25,20 +26,20 @@ export default function DeleteBoard({ SetExternalOpen }: Props) {
       <AlertDialogTrigger asChild>
         <ListOption>
           <Trash2 className="size-4" />
-          Delete Board
+         {Translations.OptionsLists.DeleteBoard}
         </ListOption>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-background dark:bg-background-dark-dialog dark:border-border-dark">
         <AlertDialogHeader>
-          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">Are you sure you want to delete this Board?</h1>
-          <AlertDialogDescription>This action cannot be undone. This will permanently delete this Board.</AlertDialogDescription>
+          <h1 className="text-lg mb-5 dark:text-accent text-accent-foreground">{Translations.AlertDialog.DeleteBoard.Title}</h1>
+          <AlertDialogDescription>{Translations.AlertDialog.DeleteBoard.Desc}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
+          {Translations.AlertDialog.DeleteBoard.CancelButton}
           </Button>
           <Button variant="destructive" onClick={HandleDeleteBoard}>
-            Delete
+          {Translations.AlertDialog.DeleteBoard.CancelButton}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

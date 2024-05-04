@@ -1,88 +1,11 @@
 import moment from "moment";
 import { v4 } from "uuid";
 
-const GetText = (lang: string) => {
-  if (lang === "English") {
-    return {
-      BoardName: "Example Board",
-      BoardDescription: "Just an Example Board",
-      Column1Title: "Todo",
-      Column1Card1Title: "Design Website",
-      Column1Card1Task1Title: "Create mockups",
-      Column1Card1Task2Title: "Define color palette",
-      Column1Card1Task3Title: "Choose fonts",
-      Column1Card2Title: "Develop Core Features",
-      Column1Card2Task1Title: "Implement login system",
-      Column1Card2Task2Title: "Create board creation interface",
-      Column1Card2Task3Title: "Add drag and drop functionality",
-      Column2Title: "Doing",
-      Column2Card1Title: "Review Website Content",
-      Column2Card1Task1Title: "Write homepage text",
-      Column2Card1Task2Title: "Create documentation pages",
-      Column2Card1Task3Title: "Review content",
-      Column2Card2Title: "Test Features",
-      Column2Card2Task1Title: "Test login across different browsers",
-      Column2Card2Task2Title: "Test drag and drop functionality on mobile devices",
-      Column3Title: "Reviewing",
-      Column3Card1Title: "Review Design",
-      Column3Card1Task1Title: "Request feedback from peers",
-      Column3Card1Task2Title: "Make adjustments based on received feedback",
-      Column4Title: "Completed",
-      Column4Card1Title: "Launch Website",
-      Column4Card1Task1Title: "Set up web server",
-      Column4Card1Task2Title: "Make launch announcement",
-      Column4Card2Title: "Perform User Testing",
-      Column4Card2Task1Title: "Recruit participants for user testing",
-      Column4Card2Task2Title: "Conduct usability tests on the website",
-      Column4Card2Task3Title: "Gather feedback and make final adjustments based on user responses",
-    };
-  } else {
-    return {
-      BoardName: "Quadro de Exemplo",
-      BoardDescription: "Apenas um Quadro de Exemplo",
-      Column1Title: "A Fazer",
-      Column1Card1Title: "Design do Website",
-      Column1Card1Task1Title: "Criar mockups",
-      Column1Card1Task2Title: "Definir paleta de cores",
-      Column1Card1Task3Title: "Escolher fontes",
-      Column1Card2Title: "Desenvolver Recursos Principais",
-      Column1Card2Task1Title: "Implementar sistema de login",
-      Column1Card2Task2Title: "Criar interface de criação de quadro",
-      Column1Card2Task3Title: "Adicionar funcionalidade de arrastar e soltar",
-      Column2Title: "Fazendo",
-      Column2Card1Title: "Revisar Conteúdo do Website",
-      Column2Card1Task1Title: "Escrever texto da página inicial",
-      Column2Card1Task2Title: "Criar páginas de documentação",
-      Column2Card1Task3Title: "Revisar conteúdo",
-      Column2Card2Title: "Testar Recursos",
-      Column2Card2Task1Title: "Testar login em diferentes navegadores",
-      Column2Card2Task2Title: "Testar funcionalidade de arrastar e soltar em dispositivos móveis",
-      Column2Card3Title: "Escrever Conteúdo do Website",
-      Column2Card3Task1Title: "Escrever texto da página inicial",
-      Column2Card3Task2Title: "Criar páginas de documentação",
-      Column3Title: "Revisando",
-      Column3Card1Title: "Revisar Design",
-      Column3Card1Task1Title: "Solicitar feedback dos colegas",
-      Column3Card1Task2Title: "Fazer ajustes com base no feedback recebido",
-      Column4Title: "Concluído",
-      Column4Card1Title: "Lançar Website",
-      Column4Card1Task1Title: "Configurar servidor web",
-      Column4Card1Task2Title: "Fazer anúncio de lançamento",
-      Column4Card2Title: "Realizar Testes de Usuário",
-      Column4Card2Task1Title: "Recrutar participantes para testes de usuário",
-      Column4Card2Task2Title: "Conduzir testes de usabilidade no site",
-      Column4Card2Task3Title: "Reunir feedback e fazer ajustes finais com base nas respostas dos usuários",
-    };
-  }
-};
-
-const Data = GetText("English");
-
-export const ExampleBoard1 = {
+export const ExampleBoard1_PortugueseBr = {
   BoardId: v4(),
-  BoardName: Data.BoardName,
+  BoardName: "Quadro de Exemplo",
   BoardColumnsQtd: 4,
-  Description: Data.BoardDescription,
+  Description: "Apenas um Quadro de Exemplo",
   CreatedAt: moment().valueOf(),
   LastEditedAt: moment().valueOf(),
   Public: false,
@@ -93,7 +16,7 @@ export const ExampleBoard1 = {
   Columns: [
     {
       ColumId: v4(),
-      ColumnTitle: Data.Column1Title,
+      ColumnTitle: "A fazer",
       ColumnColor: "red",
       CreatedAt: moment().valueOf(),
       LastEditedAt: moment().valueOf(),
@@ -102,7 +25,7 @@ export const ExampleBoard1 = {
       Cards: [
         {
           CardId: v4(),
-          CardTitle: Data.Column1Card1Title,
+          CardTitle: "Design do Website",
           CardNotes: "",
           CardDescription: "",
           CreatedAt: moment().valueOf(),
@@ -113,21 +36,21 @@ export const ExampleBoard1 = {
           Tasks: [
             {
               TaskId: v4(),
-              TaskTitle: Data.Column1Card1Task1Title,
+              TaskTitle: "Criar mockups",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column1Card1Task2Title,
+              TaskTitle: "Definir paleta de cores",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column1Card1Task3Title,
+              TaskTitle: "Escolher fontes",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
@@ -136,7 +59,7 @@ export const ExampleBoard1 = {
         },
         {
           CardId: v4(),
-          CardTitle: Data.Column1Card2Title,
+          CardTitle: "Desenvolver Recursos Principais",
           CardNotes: "",
           CardDescription: "",
           CreatedAt: moment().valueOf(),
@@ -147,21 +70,21 @@ export const ExampleBoard1 = {
           Tasks: [
             {
               TaskId: v4(),
-              TaskTitle: Data.Column1Card2Task1Title,
+              TaskTitle: "Implementar sistema de login",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column1Card2Task2Title,
+              TaskTitle: "Criar interface de criação de quadro",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column1Card2Task3Title,
+              TaskTitle: "Adicionar funcionalidade de arrastar e soltar",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
@@ -173,7 +96,7 @@ export const ExampleBoard1 = {
     //COLUNA2
     {
       ColumId: v4(),
-      ColumnTitle: Data.Column2Title,
+      ColumnTitle: "Fazendo",
       ColumnColor: "blue",
       CreatedAt: moment().valueOf(),
       LastEditedAt: moment().valueOf(),
@@ -182,7 +105,7 @@ export const ExampleBoard1 = {
       Cards: [
         {
           CardId: v4(),
-          CardTitle: Data.Column2Card1Title,
+          CardTitle: "Revisar Conteúdo do Website",
           CardNotes: "",
           CardDescription: "",
           CreatedAt: moment().valueOf(),
@@ -193,21 +116,21 @@ export const ExampleBoard1 = {
           Tasks: [
             {
               TaskId: v4(),
-              TaskTitle: Data.Column2Card1Task1Title,
+              TaskTitle: "Escrever texto da página inicial",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column2Card1Task2Title,
+              TaskTitle: "Criar páginas de documentação",
               Completed: true,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column2Card1Task3Title,
+              TaskTitle: "Revisar conteúdo",
               Completed: true,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
@@ -216,7 +139,7 @@ export const ExampleBoard1 = {
         },
         {
           CardId: v4(),
-          CardTitle: Data.Column2Card2Title,
+          CardTitle: "Testar Recursos",
           CardNotes: "",
           CardDescription: "",
           CreatedAt: moment().valueOf(),
@@ -227,14 +150,14 @@ export const ExampleBoard1 = {
           Tasks: [
             {
               TaskId: v4(),
-              TaskTitle: Data.Column2Card2Task1Title,
+              TaskTitle: "Testar login em diferentes navegadores",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column2Card2Task2Title,
+              TaskTitle: "Testar funcionalidade de arrastar e soltar em dispositivos móveis",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
@@ -243,7 +166,7 @@ export const ExampleBoard1 = {
         },
         {
           CardId: v4(),
-          CardTitle: Data.Column2Card3Title,
+          CardTitle: "Escrever Conteúdo do Website",
           CardNotes: "",
           CardDescription: "",
           CreatedAt: moment().valueOf(),
@@ -254,14 +177,14 @@ export const ExampleBoard1 = {
           Tasks: [
             {
               TaskId: v4(),
-              TaskTitle: Data.Column2Card3Task1Title,
+              TaskTitle: "Escrever texto da página inicial",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column2Card3Task2Title,
+              TaskTitle: "Criar páginas de documentação",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
@@ -273,7 +196,7 @@ export const ExampleBoard1 = {
     //COLUNA3
     {
       ColumId: v4(),
-      ColumnTitle: Data.Column3Title,
+      ColumnTitle: "Revisando",
       ColumnColor: "slate",
       CreatedAt: moment().valueOf(),
       LastEditedAt: moment().valueOf(),
@@ -282,7 +205,7 @@ export const ExampleBoard1 = {
       Cards: [
         {
           CardId: v4(),
-          CardTitle: Data.Column3Card1Title,
+          CardTitle: "Revisar Design",
           CardNotes: "",
           CardDescription: "",
           CreatedAt: moment().valueOf(),
@@ -293,14 +216,14 @@ export const ExampleBoard1 = {
           Tasks: [
             {
               TaskId: v4(),
-              TaskTitle: Data.Column3Card1Task1Title,
+              TaskTitle: "Solicitar feedback dos colegas",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column3Card1Task2Title,
+              TaskTitle: "Fazer ajustes com base no feedback recebido",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
@@ -312,7 +235,7 @@ export const ExampleBoard1 = {
     //COLUNA4
     {
       ColumId: v4(),
-      ColumnTitle: Data.Column4Title,
+      ColumnTitle: "Concluído",
       ColumnColor: "green",
       CreatedAt: moment().valueOf(),
       LastEditedAt: moment().valueOf(),
@@ -321,7 +244,7 @@ export const ExampleBoard1 = {
       Cards: [
         {
           CardId: v4(),
-          CardTitle: Data.Column4Card1Title,
+          CardTitle: "Lançar Website",
           CardNotes: "",
           CardDescription: "",
           CreatedAt: moment().valueOf(),
@@ -332,14 +255,14 @@ export const ExampleBoard1 = {
           Tasks: [
             {
               TaskId: v4(),
-              TaskTitle: Data.Column4Card1Task1Title,
+              TaskTitle: "Configurar servidor web",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column4Card1Task2Title,
+              TaskTitle: "Fazer anúncio de lançamento",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
@@ -348,32 +271,32 @@ export const ExampleBoard1 = {
         },
         {
           CardId: v4(),
-          CardTitle: Data.Column4Card2Title,
+          CardTitle: "Realizar Testes de Usuário",
           CardNotes: "",
           CardDescription: "",
           CreatedAt: moment().valueOf(),
           LastEditedAt: moment().valueOf(),
           Notes: "",
-          TasksQtd: 3,
+          TasksQtd: 2,
           Tags: ["Tag3"],
           Tasks: [
             {
               TaskId: v4(),
-              TaskTitle: Data.Column4Card2Task1Title,
+              TaskTitle: "Recrutar participantes para testes de usuário",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column4Card2Task2Title,
+              TaskTitle: "Conduzir testes de usabilidade no site",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
             },
             {
               TaskId: v4(),
-              TaskTitle: Data.Column4Card2Task3Title,
+              TaskTitle: "Reunir feedback e fazer ajustes finais com base nas respostas dos usuários",
               Completed: false,
               CreatedAt: moment().valueOf(),
               LastEditedAt: moment().valueOf(),
@@ -391,37 +314,37 @@ export const ExampleBoard1 = {
     },
     {
       TagId: "Tag2",
-      TagName: "Development",
+      TagName: "Desenvolvimento",
       TagColor: "red",
     },
     {
       TagId: "Tag3",
-      TagName: "Testing",
+      TagName: "Testes",
       TagColor: "blue",
     },
     {
       TagId: "Tag5",
-      TagName: "Content",
+      TagName: "Conteúdo",
       TagColor: "sky",
     },
     {
       TagId: "Tag6",
-      TagName: "Review",
+      TagName: "Revisão",
       TagColor: "slate",
     },
     {
       TagId: "Tag7",
-      TagName: "High",
+      TagName: "Alta",
       TagColor: "red",
     },
     {
       TagId: "Tag8",
-      TagName: "Medium",
+      TagName: "Média",
       TagColor: "orange",
     },
     {
       TagId: "Tag9",
-      TagName: "Low",
+      TagName: "Baixa",
       TagColor: "green",
     },
   ],

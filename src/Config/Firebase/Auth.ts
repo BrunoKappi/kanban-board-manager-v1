@@ -3,6 +3,7 @@ import { Firease_Auth } from "./Config";
 import { sendPasswordResetEmail, updatePassword } from "firebase/auth";
 import store from "../Store/Store";
 import { SetUser, UserType } from "../Store/User/User";
+import { MIDDLEWARE_GetUserPreferences } from "@/Middleware/GetData";
 
 const onAuthStateChangedHandler = (AuthCurrentUser: User) => {
   //console.log("FIREBASE AuthChanged", AuthCurrentUser ? AuthCurrentUser : "FIREBASE Auth Vazio");
@@ -18,6 +19,10 @@ const onAuthStateChangedHandler = (AuthCurrentUser: User) => {
 
   //@ts-ignore
   store.dispatch(SetUser(User));
+
+  if (User?.uid) {
+    MIDDLEWARE_GetUserPreferences(User?.uid);
+  }
 };
 
 //@ts-ignore

@@ -6,6 +6,7 @@ import { MinimalInput } from "../ui/minimalInput";
 import { ChangeColumn } from "./Status.Utils";
 import { Button } from "../ui/button";
 import { MAX_COLUMN_TITLE } from "@/Data/Limits";
+import { useSelector } from "react-redux";
 
 type StatusProps = {
   Color: string;
@@ -17,6 +18,7 @@ export default function Status({ Color = "neutral", Text = "Status", Column }: S
   const [open, setOpen] = useState(false);
   const [ColorChoose, setColorChoose] = useState(Color);
   const [ColumnTitle, setColumnTitle] = useState(Column.ColumnTitle);
+  const Translations = useSelector((state: any) => state.Translations);
 
   const HandlePickColor = (Key: string) => {
     setColorChoose(Key);
@@ -49,7 +51,7 @@ export default function Status({ Color = "neutral", Text = "Status", Column }: S
 
           <div className="flex flex-row justify-end mt-2 w-full">
             <Button className=" flex flex-row justify-end  cursor-pointer text-xs" variant="outline" size="sm" onClick={handleChangeColumn}>
-              Save
+              {Translations.Buttons.Save}
             </Button>
           </div>
         </form>

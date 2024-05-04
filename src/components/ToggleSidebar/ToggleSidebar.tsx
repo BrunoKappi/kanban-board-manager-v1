@@ -7,13 +7,14 @@ import Tooltip from "../Tooltip/Tooltip";
 
 export default function ToggleSidebar({ className }: any) {
   const Sidebar = useSelector((state: any) => state.Sidebar);
+  const Translations = useSelector((state: any) => state.Translations);
 
   const ToggleSidebar = () => {
     MIDDLEWARE_ToggleSidebar();
   };
 
   return (
-    <Tooltip text={Sidebar === "Opened" ? "Hide Sidebar" : "Show Sidebar"}>
+    <Tooltip text={Sidebar === "Opened" ? Translations.Tooltips.HideSidebar : Translations.Tooltips.ShowSidebar}>
       <Button onClick={ToggleSidebar} className={cn(" hidden md:flex", className)} variant="ghost" size="icon">
         {Sidebar === "Opened" ? <ChevronsLeft /> : <ChevronsRight />}
       </Button>

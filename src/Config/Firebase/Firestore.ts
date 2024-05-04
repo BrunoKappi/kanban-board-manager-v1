@@ -12,6 +12,11 @@ export const FIREBASE_CreateUser = async (Payload: any) => {
   return addDoc(CollectionRef, Payload);
 };
 
+export const FIREBASE_CreateUserPreferences = async (Payload: any) => {
+  var CollectionRef = collection(Firebase_DB, "UsersPreferences");
+  return addDoc(CollectionRef, Payload);
+};
+
 export const FIREBASE_DeleteBoard = async (Payload: any) => {
   if (!Payload.docID) return;
   var CollectionRef = collection(Firebase_DB, "Boards");
@@ -35,6 +40,13 @@ export const FIREBASE_DeleteBoardListItem = async (Payload: any) => {
 export const FIREBASE_UpdateBoard = async (Board: any) => {
   if (Board?.docID) {
     return updateDoc(doc(Firebase_DB, "Boards", Board?.docID), Board);
+  }
+};
+
+//UPDATE
+export const FIREBASE_UpdateUserPreferences = async (UserPreference: any) => {
+  if (UserPreference?.docID) {
+    return updateDoc(doc(Firebase_DB, "UsersPreferences", UserPreference?.docID), UserPreference);
   }
 };
 
@@ -85,6 +97,18 @@ export const FIREBASE_GetBoardList = async (uid: string) => {
 export const FIREBASE_GetBoard = async (uid: string, BoardId: string) => {
   var CollectionRef = collection(Firebase_DB, "Boards");
   const Query = query(CollectionRef, where("BoardId", "==", BoardId), where("OwnerUid", "==", uid));
+  const querySnapshot = await getDocs(Query);
+  const matchedDocs = querySnapshot.docs.map((doc) => ({
+    ...doc.data(),
+    docID: doc.id,
+  }));
+  return matchedDocs[0];
+};
+
+//USER PREFERENCES
+export const FIREBASE_GetUserPreferences = async (uid: string) => {
+  var CollectionRef = collection(Firebase_DB, "UsersPreferences");
+  const Query = query(CollectionRef, where("Uid", "==", uid));
   const querySnapshot = await getDocs(Query);
   const matchedDocs = querySnapshot.docs.map((doc) => ({
     ...doc.data(),
