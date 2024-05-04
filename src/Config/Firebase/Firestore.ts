@@ -7,6 +7,11 @@ export const FIREBASE_CreateBoard = async (Payload: any) => {
   return addDoc(CollectionRef, Payload);
 };
 
+export const FIREBASE_CreateUser = async (Payload: any) => {
+  var CollectionRef = collection(Firebase_DB, "Users");
+  return addDoc(CollectionRef, Payload);
+};
+
 export const FIREBASE_DeleteBoard = async (Payload: any) => {
   if (!Payload.docID) return;
   var CollectionRef = collection(Firebase_DB, "Boards");
@@ -44,6 +49,18 @@ export const FIREBASE_UpdateBoardListItem = async (BoardListItem: any) => {
 export const FIREBASE_GetDocBoards = async (uid: string) => {
   var CollectionRef = collection(Firebase_DB, "Boards");
   const Query = query(CollectionRef, where("OwnerUid", "==", uid));
+  const querySnapshot = await getDocs(Query);
+  const matchedDocs = querySnapshot.docs.map((doc) => ({
+    ...doc.data(),
+    docID: doc.id,
+  }));
+  return matchedDocs;
+};
+
+//GET USER
+export const FIREBASE_GetUser = async (uid: string) => {
+  var CollectionRef = collection(Firebase_DB, "Users");
+  const Query = query(CollectionRef, where("Uid", "==", uid));
   const querySnapshot = await getDocs(Query);
   const matchedDocs = querySnapshot.docs.map((doc) => ({
     ...doc.data(),

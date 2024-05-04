@@ -1,12 +1,13 @@
 import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
 import { FIREBASE_LoginWithEmailPassword, FIREBASE_LoginWithGoogle, FIREBASE_RegisterUserEmailPassword, FIREBASE_SendEMailResetPassword } from "@/Config/Firebase/Auth";
-import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList } from "@/Config/Firebase/Firestore";
+import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser } from "@/Config/Firebase/Firestore";
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { ExampleBoard1 } from "@/Data/ExampleBoard1";
 import moment from "moment";
 import { v4 } from "uuid";
+import { MIDDLEWARE_GetUser } from "./GetData";
 
 type MIDDLEWARE_LoginProps = {
   email: string;
@@ -37,10 +38,12 @@ type MIDDLEWARE_LoginGoogleProps = {
 
 export const MIDDLEWARE_LoginWithGoogle = ({ setOpen, setError }: MIDDLEWARE_LoginGoogleProps) => {
   FIREBASE_LoginWithGoogle()
-    .then(() => {
+    .then((Data) => {
       setOpen(false);
       //@ts-ignore
       store.dispatch(SetCardModalCard({}));
+
+      MIDDLEWARE_GetUser(Data.user.uid, Data.user.email || "");
     })
     .catch(() => {
       //console.log(error);
@@ -91,6 +94,14 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
       store.dispatch(SetCardModalCard({}));
       setMessage("User registered successfully");
       const UserUid = Data.user.uid;
+
+      const NewUser = {
+        Uid: UserUid,
+        Email: email,
+        CreatedAt: moment().valueOf(),
+      };
+
+      FIREBASE_CreateUser(NewUser);
 
       if (localStorage.getItem(`Kanban-BoardList`)) {
         const LocalStorageBoardList = getKeysWithSubstring("Kanban-BoardListItem-");

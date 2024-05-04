@@ -1,6 +1,14 @@
 import { FIREBASE_Logout } from "@/Config/Firebase/Auth";
 import { LogOut } from "lucide-react";
 import { ListOption } from "../ListOption/ListOption";
+import { DefaultBoardList } from "@/Data/BoardList";
+import { ExampleBoard1 } from "@/Data/ExampleBoard1";
+import { v4 } from "uuid";
+import moment from "moment";
+import store from "@/Config/Store/Store";
+import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
+import { SetBoard } from "@/Config/Store/Board/Boards";
+import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 
 type Props = {
   setOpen: (mode: boolean) => void;
@@ -8,8 +16,25 @@ type Props = {
 
 export default function Logout({ setOpen }: Props) {
   const handleLogout = () => {
-    //localStorage.clear();
-    localStorage.setItem(`Kanban-BoardList`, JSON.stringify([]));
+    localStorage.clear();
+    var NewId = v4();
+    var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
+    var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
+
+    localStorage.setItem(`Kanban-Board-${NewBoard.BoardId}`, JSON.stringify(NewBoard));
+    localStorage.setItem(`Kanban-BoardListItem-${NewBoard.BoardId}`, JSON.stringify(NewBoardListItem));
+    localStorage.setItem(`Kanban-BoardList`, JSON.stringify([NewBoardListItem]));
+
+    store.dispatch(SetBoardList([NewBoardListItem]));
+
+    //@ts-ignore
+    store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
+
+    setTimeout(() => {
+      //@ts-ignore
+      store.dispatch(SetBoard(NewBoard));
+    }, 1500);
+
     FIREBASE_Logout();
     setOpen(false);
   };

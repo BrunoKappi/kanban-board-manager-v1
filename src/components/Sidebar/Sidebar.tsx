@@ -6,8 +6,9 @@ import { useEffect } from "react";
 import { OrderBoards } from "./SidebarUtils";
 import Logo from "../Logo/Logo";
 import SidebarItem from "./SidebarItem";
-import { AddBoardItem } from "./AddBoardItem";
+
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
+import { AddBoardItem } from "../BoardListPopover/AddBoardItem";
 
 export default function Sidebar() {
   const BoardList = useSelector((state: any) => state.BoardList);
@@ -45,7 +46,7 @@ export default function Sidebar() {
           return <SidebarItem Active={SelectedBoard !== Board?.BoardId} BoardId={Board?.BoardId} Text={Board?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
         })}
 
-        <AddBoardItem />
+        <AddBoardItem className=" rounded-r-full" />
       </div>
     </div>
   );

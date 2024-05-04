@@ -1,11 +1,16 @@
+import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
 import { OrderBoards } from "@/components/Sidebar/SidebarUtils";
-import { FIREBASE_GetBoard, FIREBASE_GetBoardList } from "@/Config/Firebase/Firestore";
+import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_GetBoard, FIREBASE_GetBoardList, FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
 import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
+import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { Boards } from "@/Data/Boards";
+import { ExampleBoard1 } from "@/Data/ExampleBoard1";
+import moment from "moment";
+import { v4 } from "uuid";
 
 export const GetBoardList = async () => {
   //@ts-ignore
@@ -67,4 +72,55 @@ export const GetBoard = async (BoardId: string) => {
       return Board;
     }
   }
+};
+
+const SyncCurrentUserWork = async (Uid: string) => {
+  if (!Uid) return;
+  //@ts-ignore
+  store.dispatch(SetCardModalCard({}));
+
+  const UserUid = Uid;
+
+  if (localStorage.getItem(`Kanban-BoardList`)) {
+    const LocalStorageBoardList = getKeysWithSubstring("Kanban-BoardListItem-");
+
+    LocalStorageBoardList.map((LocalBoardListString: string) => {
+      var BoardListItem = { ...JSON.parse(localStorage.getItem(LocalBoardListString) || "") };
+      var NewId = v4();
+
+      var NewBoardListItem = { ...BoardListItem, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+
+      FIREBASE_CreateBoardList(NewBoardListItem);
+
+      if (localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`)) {
+        var NewBoard = { ...JSON.parse(localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`) || ""), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+        FIREBASE_CreateBoard(NewBoard);
+      }
+    });
+  } else {
+    var NewId = v4();
+    var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+    var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+    FIREBASE_CreateBoard(NewBoard);
+    FIREBASE_CreateBoardList(NewBoardListItem);
+  }
+  GetBoardList();
+};
+
+export const MIDDLEWARE_GetUser = async (Uid: string, Email: string) => {
+  if (!Uid || !Email) return;
+
+  const Data = await FIREBASE_GetUser(Uid);
+
+  if (Data.length !== 0) return;
+
+  const NewUser = {
+    Uid: Uid,
+    Email: Email,
+    CreatedAt: moment().valueOf(),
+  };
+
+  const Response = await FIREBASE_CreateUser(NewUser);
+
+  SyncCurrentUserWork(Uid);
 };

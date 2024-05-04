@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Bookmark, Columns2, Columns3, GripVertical, PencilLine, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { MinimalInput } from "../ui/minimalInput";
 import ColorPicker from "../ColorPicker/ColorPicker";
@@ -14,15 +14,32 @@ import { v4 } from "uuid";
 import { cn } from "@/lib/utils";
 import { MAX_BOARD_TITLE, MAX_COLUMN_TITLE, MAX_DESC } from "@/Data/Limits";
 
+const GetDefaultBoardColumns = () => {
+  return [
+    ...DefaultBoardColumns.map((BoardColumn) => {
+      return { ...BoardColumn };
+    }),
+  ];
+};
+
 export function AddBoardItem({ className }: { className?: any }) {
   const [open, setOpen] = useState(false);
   const [Reorder] = useState(false);
   const [BoardName, setBoardName] = useState("");
   const [BoardDesc, setBoardDesc] = useState("");
   const [Message, setMessage] = useState("");
-  const [BoardColumns, setBoardColumns] = useState(DefaultBoardColumns);
+  const [BoardColumns, setBoardColumns] = useState(GetDefaultBoardColumns());
   const [FocusOn, setFocusOn] = useState(0);
   const [FocusWhat, setFocusWhat] = useState("");
+
+  useEffect(() => {
+    setBoardName("");
+    setBoardDesc("");
+    setMessage("");
+    setBoardColumns(GetDefaultBoardColumns());
+    setFocusOn(0);
+    setFocusWhat("");
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
