@@ -37,9 +37,9 @@ export default function BoardCard({ Card, Index, ColumnIndex, CardIndex, Column 
 
   return (
     <Draggable key={Card.CardId} draggableId={Card.CardId} index={Index}>
-      {(DragProvided: any) => {
+      {(DragProvided: any, Snapshot) => {
         return (
-          <div className="group w-full relative   px-3 border line-clamp-2  text-card-foreground gap-2 flex flex-col items-start border-slate-200 bg-white  py-2    rounded-md shadow-md hover:text-primary min-h-16 cursor-pointer dark:bg-overlay-dark dark:border-overlay-dark dark:text-primary-foreground flex-shrink" onClick={HandleSelectCard} ref={DragProvided.innerRef} style={DragProvided.draggableProps.style} {...DragProvided.draggableProps} {...DragProvided.dragHandleProps}>
+          <div className={`group w-full relative   px-3 border line-clamp-2  text-card-foreground gap-2 flex flex-col items-start border-slate-200 bg-white  py-2    rounded-md shadow-md hover:text-primary min-h-16 cursor-pointer ${Snapshot.isDragging ? " dark:bg-overlay-dark" : " dark:bg-overlay-dark"} dark:border-overlay-dark dark:text-primary-foreground flex-shrink`} onClick={HandleSelectCard} ref={DragProvided.innerRef} style={DragProvided.draggableProps.style} {...DragProvided.draggableProps} {...DragProvided.dragHandleProps}>
             <div className="flex flex-row flex-wrap gap-1  gap-y-2 overflow-x-hidden flex-shrink">
               {Card.Tags?.map((TagId: string) => {
                 let Tag: any = Board?.Tags?.find((BoardTag: TagType) => BoardTag.TagId === TagId);
