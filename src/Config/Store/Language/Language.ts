@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const LanguageSlice = createSlice({
   name: "Language",
-  initialState: localStorage.getItem("Kanban-Language") || "Portuguese-br",
+  initialState: localStorage.getItem("Kanban-Language") || "English",
   reducers: {
     SetLanguage: (state, action) => {
       return (state = action.payload);

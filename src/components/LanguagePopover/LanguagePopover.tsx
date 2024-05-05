@@ -13,6 +13,10 @@ import { SetLanguage } from "@/Config/Store/Language/Language";
 import { SetTranslations } from "@/Config/Store/Translations/Translations";
 import { TRANSLATIONS_ENGLISH } from "@/Data/Translations_English";
 import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
+import { ChangeExampleBoardLanguage } from "./LanguagePopover.Utils";
+import { TRANSLATIONS_SPANISH } from "@/Data/Translations_Espanish";
+import { TRANSLATIONS_FRENCH } from "@/Data/Translations_French";
+import { TRANSLATIONS_GERMAN } from "@/Data/Translations_German";
 
 type Props = {
   Mode?: string;
@@ -21,12 +25,16 @@ type Props = {
 export default function LanguagePopover({ Mode = "Default" }: Props) {
   const [open, setOpen] = useState(false);
   const Translations = useSelector((state: any) => state.Translations);
+  const Board = useSelector((state: any) => state.Board);
 
   const Language = useSelector((state: any) => state.Language);
 
   const dispatch = useDispatch();
 
   const HandleSetLanguage = (Value: string) => {
+    if (Language === Value) return;
+    ChangeExampleBoardLanguage(Value);
+
     localStorage.setItem("Kanban-Language", Value);
     dispatch(SetLanguage(Value));
 
@@ -36,6 +44,15 @@ export default function LanguagePopover({ Mode = "Default" }: Props) {
     } else if (Value === "Portuguese-br") {
       //@ts-ignore
       dispatch(SetTranslations(TRANSLATIONS_PORTUGUESE));
+    } else if (Value === "Spanish") {
+      //@ts-ignore
+      dispatch(SetTranslations(TRANSLATIONS_SPANISH));
+    } else if (Value === "French") {
+      //@ts-ignore
+      dispatch(SetTranslations(TRANSLATIONS_FRENCH));
+    } else if (Value === "German") {
+      //@ts-ignore
+      dispatch(SetTranslations(TRANSLATIONS_GERMAN));
     }
 
     const UserPreferences = { ...store.getState().UserPreferences } || { ...DefaultNewUserPreference };
@@ -46,6 +63,9 @@ export default function LanguagePopover({ Mode = "Default" }: Props) {
       FIREBASE_UpdateUserPreferences(UserPreferences);
     }
   };
+
+  //@ts-ignore
+  const LanguagesTranslated = Languages[Language] || [];
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -58,7 +78,7 @@ export default function LanguagePopover({ Mode = "Default" }: Props) {
       <PopoverContent side={`bottom`} className="w-56 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList className="gap-0 py-0">
           <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent">{Translations.PopoversSubtitles.Languages}</ListOption>
-          {Languages.map((CardSize) => {
+          {LanguagesTranslated.map((CardSize: any) => {
             return (
               <ListOption onClick={() => HandleSetLanguage(CardSize.Value)}>
                 <Check className={`size-5 ${Language === CardSize.Value ? " opacity-100" : " opacity-0"}`} />

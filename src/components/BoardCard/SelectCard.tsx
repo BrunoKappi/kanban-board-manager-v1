@@ -14,6 +14,7 @@ type Props = {
 
 export default function SelectCard({ CardIndex, ColumnIndex, Card, Column }: Props) {
   const Board = useSelector((state: any) => state.Board);
+  const Translations = useSelector((state: any) => state.Translations);
   const dispatch = useDispatch();
 
   const HandleSelectCard = () => {
@@ -35,7 +36,7 @@ export default function SelectCard({ CardIndex, ColumnIndex, Card, Column }: Pro
   return (
     <ListOption className="flex flex-row items-center justify-start" onClick={() => HandleSelectCard()}>
       <Pen className="size-4" />
-      <span className="mt-1"> Edit Card</span>
+      <span className="mt-1"> {Translations.OptionsLists.EditCard}</span>
     </ListOption>
   );
 }

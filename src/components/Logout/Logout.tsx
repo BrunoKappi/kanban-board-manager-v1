@@ -20,8 +20,11 @@ export default function Logout({ setOpen }: Props) {
   const Translations = useSelector((state: any) => state.Translations);
   const handleLogout = () => {
     const CurrentTheme = localStorage.getItem("Kanban-Theme");
+    const CurrentLanguage = localStorage.getItem("Kanban-Language");
+
     localStorage.clear();
     if (CurrentTheme) localStorage.setItem("Kanban-Theme", CurrentTheme);
+    if (CurrentLanguage) localStorage.setItem("Kanban-Language", CurrentLanguage);
     var NewId = v4();
     var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
     var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };

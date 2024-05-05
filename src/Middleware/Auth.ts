@@ -4,7 +4,7 @@ import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser } f
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
-import { ExampleBoard1 } from "@/Data/ExampleBoard1";
+import { ExampleBoard1, GetText } from "@/Data/ExampleBoard1";
 import moment from "moment";
 import { v4 } from "uuid";
 import { MIDDLEWARE_GetUser } from "./GetData";
@@ -125,9 +125,41 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
         });
       } else {
         var NewId = v4();
-        var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
-        var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
-        FIREBASE_CreateBoard(NewBoard);
+        const Language = store.getState().Language;
+        var OriginalBoard = { ...JSON.parse(JSON.stringify(ExampleBoard1)), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+        var NewBoard = { ...GetText(Language) };
+
+        for (let i = 0; i < OriginalBoard.Columns.length; i++) {
+          //@ts-ignore
+          OriginalBoard.Columns[i].ColumnTitle = NewBoard.Columns[`Column${i + 1}`].Title;
+
+          for (let j = 0; j < OriginalBoard.Columns[i].Cards.length; j++) {
+            //@ts-ignore
+            OriginalBoard.Columns[i].Cards[j].CardTitle = NewBoard.Columns[`Column${i + 1}`].Cards[`Card${j + 1}`].Title;
+
+            for (let k = 0; k < OriginalBoard.Columns[i].Cards[j].Tasks.length; k++) {
+              //@ts-ignore
+              OriginalBoard.Columns[i].Cards[j].Tasks[k].TaskTitle = NewBoard.Columns[`Column${i + 1}`].Cards[`Card${j + 1}`].Tasks[`Task${k + 1}`];
+            }
+          }
+        }
+
+        OriginalBoard.BoardName = NewBoard.Board?.Name;
+        OriginalBoard.Description = NewBoard.Board?.Description;
+
+        var NewBoardListItem = {
+          ...DefaultBoardList[0],
+          BoardId: OriginalBoard.BoardId,
+          BoardName: OriginalBoard.BoardName,
+          LastEditedAt: moment().valueOf(),
+          OwnerUid: UserUid,
+        };
+
+        localStorage.setItem(`Kanban-Board-${OriginalBoard.BoardId}`, JSON.stringify(OriginalBoard));
+        localStorage.setItem(`Kanban-BoardListItem-${OriginalBoard.BoardId}`, JSON.stringify(NewBoardListItem));
+        localStorage.setItem(`Kanban-BoardList`, JSON.stringify([NewBoardListItem]));
+
+        FIREBASE_CreateBoard(OriginalBoard);
         FIREBASE_CreateBoardList(NewBoardListItem);
         setTimeout(() => {
           setOpen(false);

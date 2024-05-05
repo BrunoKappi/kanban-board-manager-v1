@@ -62,6 +62,7 @@ export const TRANSLATIONS_PORTUGUESE = {
     RegisterWithGoogle: "Registrar com o Google",
     NewTag: "+ Nova Tag",
     TagAction: "Criar",
+    ClearTagFilter: "Limpar Filtro",
   },
   Placeholders: {
     CardTitle: "Título do Cartão",
@@ -126,6 +127,8 @@ export const TRANSLATIONS_PORTUGUESE = {
     Title: "Criar Quadro",
   },
   OptionsLists: {
+    ExportColumnToCSV: "Exportar Coluna para CSV",
+    ExportCSV: "Exportar Quadro para CSV",
     CardWidth: "Largura do Cartão",
     EditBoard: "Editar Quadro",
     DuplicateBoard: "Duplicar Quadro",
@@ -182,5 +185,8 @@ export const TRANSLATIONS_PORTUGUESE = {
     Card: "Cartão",
     Tag: "Minha Tag",
     UserName: "Anônimo",
+  },
+  Text: {
+    FilterTagsNofound: "Sem resultados",
   },
 };

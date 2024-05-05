@@ -22,6 +22,7 @@ export default function ColumnSizePopover({ Mode = "Default" }: Props) {
   const [open, setOpen] = useState(false);
   const CardWidth = useSelector((state: any) => state.CardWidth);
   const Translations = useSelector((state: any) => state.Translations);
+  const Language = useSelector((state: any) => state.Language);
 
   const dispatch = useDispatch();
 
@@ -30,8 +31,6 @@ export default function ColumnSizePopover({ Mode = "Default" }: Props) {
     dispatch(SetCardWidth(Width));
 
     const UserPreferences = { ...store.getState().UserPreferences } || { ...DefaultNewUserPreference };
-
-    console.log("TOGGLE WIDTH", UserPreferences);
 
     UserPreferences.CardWidth = Width;
 
@@ -52,6 +51,9 @@ export default function ColumnSizePopover({ Mode = "Default" }: Props) {
     }
   };
 
+  //@ts-ignore
+  const CardSizesTranslated = CardSizes[Language] || [];
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
@@ -64,7 +66,7 @@ export default function ColumnSizePopover({ Mode = "Default" }: Props) {
         </Show>
         <Show if={Mode === "List"}>
           <ListOption className="w-full bg-red flex-grow">
-            <Columns2 className="size-5" />
+            <Columns2 className="size-4" />
             {Translations.OptionsLists.CardWidth}
           </ListOption>
         </Show>
@@ -74,7 +76,7 @@ export default function ColumnSizePopover({ Mode = "Default" }: Props) {
           <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent">
             <span> {Translations.PopoversSubtitles.CardWidth}</span>
           </ListOption>
-          {CardSizes.map((CardSize) => {
+          {CardSizesTranslated.map((CardSize: any) => {
             return (
               <ListOption onClick={() => HandleSetCardWidth(CardSize.Size)}>
                 <Check className={`size-5 ${CardWidth === CardSize.Size ? " opacity-100" : " opacity-0"}`} />

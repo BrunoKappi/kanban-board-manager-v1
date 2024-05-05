@@ -62,6 +62,7 @@ export const TRANSLATIONS_ENGLISH = {
     RegisterWithGoogle: "Register with Google",
     NewTag: "+ New Tag",
     TagAction: "Create",
+    ClearTagFilter: "Clear Filter",
   },
   Placeholders: {
     CardTitle: "Card Title",
@@ -126,6 +127,8 @@ export const TRANSLATIONS_ENGLISH = {
     Title: "Create Board",
   },
   OptionsLists: {
+    ExportColumnToCSV:'Export Column to CSV',
+    ExportCSV:'Export Board to CSV',
     CardWidth: "Card Width",
     EditBord: "Edit Board",
     DuplicateBoard: "Duplicate Board",
@@ -182,5 +185,8 @@ export const TRANSLATIONS_ENGLISH = {
     Card: "Card",
     Tag: "My Tag",
     UserName: "Guest",
+  },
+  Text: {
+    FilterTagsNofound: "No results",
   },
 };

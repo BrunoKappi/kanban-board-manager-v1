@@ -30,7 +30,7 @@ export function ManageAccount() {
       <DialogTrigger asChild>
         <ListOption>
           <LogIn className="size-5" />
-          <span>Login</span>
+          <span>{Translations.Buttons.Login}</span>
         </ListOption>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[450px] md:max-w-[550px] bg-background dark:bg-card-foreground border dark:border-border-dark p-10">

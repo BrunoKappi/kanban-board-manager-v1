@@ -17,6 +17,9 @@ import { Boards } from "@/Data/Boards";
 import { ExampleBoard1 } from "@/Data/ExampleBoard1";
 import { ExampleBoard1_PortugueseBr } from "@/Data/ExampleBoard1_PortugueseBr";
 import { TRANSLATIONS_ENGLISH } from "@/Data/Translations_English";
+import { TRANSLATIONS_SPANISH } from "@/Data/Translations_Espanish";
+import { TRANSLATIONS_FRENCH } from "@/Data/Translations_French";
+import { TRANSLATIONS_GERMAN } from "@/Data/Translations_German";
 import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
 import moment from "moment";
 import { v4 } from "uuid";
@@ -136,6 +139,7 @@ export const MIDDLEWARE_GetUser = async (Uid: string, Email: string) => {
     Uid: Uid,
     Theme: store.getState().Theme,
     CardWidth: store.getState().CardWidth,
+    Language: store.getState().Language,
   };
 
   //@ts-ignore
@@ -165,13 +169,45 @@ export const MIDDLEWARE_GetUserPreferences = async (Uid: string) => {
     store.dispatch(SetCardWidth(UserPreferences.CardWidth));
     store.dispatch(SetLanguage(UserPreferences.Language));
 
+    localStorage.setItem("Kanban-Language", UserPreferences.Language);
+    localStorage.setItem("Kanban-Theme", UserPreferences.Theme);
+    localStorage.setItem("Kanban-CardWidth", UserPreferences.CardWidth);
+
     if (UserPreferences.Language === "English") {
       //@ts-ignore
       store.dispatch(SetTranslations(TRANSLATIONS_ENGLISH));
-      console.log("XXXXXXXXX", UserPreferences.Language);
     } else if (UserPreferences.Language === "Portuguese-br") {
       //@ts-ignore
       store.dispatch(SetTranslations(TRANSLATIONS_PORTUGUESE));
+    } else if (UserPreferences.Language === "Spanish") {
+      //@ts-ignore
+      store.dispatch(SetTranslations(TRANSLATIONS_SPANISH));
+    } else if (UserPreferences.Language === "French") {
+      //@ts-ignore
+      dispatch(SetTranslations(TRANSLATIONS_FRENCH));
+    } else if (UserPreferences.Language === "German") {
+      //@ts-ignore
+      dispatch(SetTranslations(TRANSLATIONS_GERMAN));
+    }
+  } else {
+    const Language = localStorage.getItem("Kanban-Language") || "English";
+    store.dispatch(SetLanguage(Language));
+
+    if (Language === "English") {
+      //@ts-ignore
+      store.dispatch(SetTranslations(TRANSLATIONS_ENGLISH));
+    } else if (Language === "Portuguese-br") {
+      //@ts-ignore
+      store.dispatch(SetTranslations(TRANSLATIONS_PORTUGUESE));
+    } else if (Language === "Spanish") {
+      //@ts-ignore
+      store.dispatch(SetTranslations(TRANSLATIONS_SPANISH));
+    } else if (Language === "French") {
+      //@ts-ignore
+      dispatch(SetTranslations(TRANSLATIONS_FRENCH));
+    } else if (Language === "German") {
+      //@ts-ignore
+      dispatch(SetTranslations(TRANSLATIONS_GERMAN));
     }
   }
 };

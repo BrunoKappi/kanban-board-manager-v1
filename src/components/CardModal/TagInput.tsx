@@ -43,7 +43,7 @@ export default function TagInput({}: Props) {
 
   const HandleTagSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(FilteredTags);
+    
     if (FilteredTags.length > 0) {
       HandleTagClick(FilteredTags[0]);
     } else {
@@ -82,7 +82,7 @@ export default function TagInput({}: Props) {
               );
             })}
             <span className="mt-2 w-full text-center text-xs cursor-pointer" onClick={HandleAddBoardTag}>
-              {!TagSearch && "+ " + Translations.Buttons.NewTag}
+              {!TagSearch && Translations.Buttons.NewTag}
               {!!TagSearch && FilteredTags.length === 0 && (
                 <div className="flex flex-row w-full bg-red justify-center gap-2 items-center hover:bg-overlay dark:hover:bg-overlay-dark px-2 py-1" onClick={() => HandleAddBoardTagWithValue(TagSearch, setTagSearch, setOpen)}>
                   <span>+ {Translations.Buttons.TagAction}</span>

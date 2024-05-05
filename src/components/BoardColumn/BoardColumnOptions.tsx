@@ -7,6 +7,7 @@ import DeleteColum from "./DeleteColums";
 import ChangeColumnVisibility from "./ChangeColumnVisibility";
 import { PopOverList } from "../PopOverList/PopOverList";
 import ColumnSizePopover from "../ColumnSizePopover/ColumnSizePopover";
+import ExportColumnToCsv from "./ExportColumnToCsv";
 
 type Props = {
   Column: ColumnType;
@@ -24,9 +25,10 @@ export default function BoardColumnOptions({ Column }: Props) {
       </PopoverTrigger>
       <PopoverContent className="w-56 p-0 bg-background  dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList className="flex flex-col justify-center items-stretch py-2 gap-0">
-          <ColumnSizePopover Mode="List"/>
+          <ColumnSizePopover Mode="List" />
           <DeleteColum Column={Column} />
           <ChangeColumnVisibility Column={Column} />
+          <ExportColumnToCsv Column={Column} />
         </PopOverList>
       </PopoverContent>
     </Popover>

@@ -9,6 +9,7 @@ import { ListOption } from "../ListOption/ListOption";
 import DuplicateBoard from "./DuplicateBoard";
 import ColumnSizePopover from "../ColumnSizePopover/ColumnSizePopover";
 import { useSelector } from "react-redux";
+import ExportCSV from "./ExportBoardToCsv";
 
 type Props = {};
 
@@ -27,7 +28,7 @@ export default function BoardOptionsPopover({}: Props) {
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-56 mr-10 p-0 py-4 bg-background  flex flex-col items-stretch justify-start dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
-        <PopOverList className="flex flex-col items-stretch">
+        <PopOverList className="flex flex-col items-stretch gap-0">
           <ListOption className="flex flex-row justify-center items-stretch mb-2 cursor-default hover:bg-transparent">
             <span>{Translations.PopoverTitle.BoardOptions}</span>
           </ListOption>
@@ -35,6 +36,7 @@ export default function BoardOptionsPopover({}: Props) {
           <BoardModal SetExternalOpen={setOpen} />
           <DuplicateBoard SetExternalOpen={setOpen} />
           <DeleteBoard SetExternalOpen={setOpen} />
+          <ExportCSV SetExternalOpen={setOpen} />
         </PopOverList>
       </PopoverContent>
     </Popover>

@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const GetInitialWidth = () => {
   if (window.innerWidth >= 1536) {
-    return CardSizes[3].Size;
+    return CardSizes["English"][3].Size;
   } else if (window.innerWidth >= 1280) {
-    return CardSizes[2].Size;
+    return CardSizes["English"][2].Size;
   } else if (window.innerWidth >= 768) {
-    return CardSizes[1].Size;
+    return CardSizes["English"][1].Size;
   } else {
-    return CardSizes[0].Size;
+    return CardSizes["English"][0].Size;
   }
 };
 
