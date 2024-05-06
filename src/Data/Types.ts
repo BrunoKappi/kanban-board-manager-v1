@@ -54,4 +54,5 @@ export type BoardListItemType = {
   OwnerUid: string;
   docID: string;
   LastEditedAt: number;
+  IsBoardShared: boolean;
 };

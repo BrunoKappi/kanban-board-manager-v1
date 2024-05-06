@@ -30,6 +30,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
   const [Message, setMessage] = useState("");
   const [BoardColumns, setBoardColumns] = useState([...(Board?.Columns || [])]);
   const Translations = useSelector((state: any) => state.Translations);
+  const IsBoardOwner = useSelector((state: any) => state.IsBoardOwner);
 
   const HandleInputHeight = (ref: any, state: any, defaultHeight: string) => {
     if (ref.current) {
@@ -59,8 +60,10 @@ export function BoardModal({ SetExternalOpen }: Props) {
           placeholder={Translations.Placeholders.BoardName}
           value={BoardName}
           onChange={(e) => {
-            setFocusWhat("BoardName");
-            setBoardName(e.target.value);
+            if (IsBoardOwner) {
+              setFocusWhat("BoardName");
+              setBoardName(e.target.value);
+            }
           }}
         />
 

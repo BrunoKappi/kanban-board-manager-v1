@@ -22,9 +22,11 @@ const Navbar = ({ Board }: NavbarProps) => {
   const [Editing, setEditing] = useState(false);
   const Sidebar = useSelector((state: any) => state.Sidebar);
   const Translations = useSelector((state: any) => state.Translations);
+  const IsBoardOwner = useSelector((state: any) => state.IsBoardOwner);
 
   const HandleChangeBoardName = (e: any) => {
     e.preventDefault();
+
     if (!BoardName) return;
     setEditing(false);
     ChangeBoardName(BoardName);
@@ -32,8 +34,10 @@ const Navbar = ({ Board }: NavbarProps) => {
 
   const HandleStartEditing = (e: any) => {
     e.preventDefault();
-    setEditing(true);
-    setBoardName(Board?.BoardName);
+    if (IsBoardOwner) {
+      setEditing(true);
+      setBoardName(Board?.BoardName);
+    }
   };
 
   const HasBorard = !!Board?.BoardId;

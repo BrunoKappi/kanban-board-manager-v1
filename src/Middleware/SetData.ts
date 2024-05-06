@@ -1,4 +1,4 @@
-import { FIREBASE_UpdateBoard, FIREBASE_UpdateBoardListItem } from "@/Config/Firebase/Firestore";
+import { FIREBASE_CreateUserPreferences, FIREBASE_UpdateBoard, FIREBASE_UpdateBoardListItem, FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
 import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetSidebar } from "@/Config/Store/Sidebar/Sidebar";
@@ -17,6 +17,8 @@ import moment from "moment";
 export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
   const NewBoard = { ...BoardParam };
   const UserUid = store.getState().User?.uid || "";
+  const CanEditBoard = store.getState().CanEditBoard;
+  const IsBoardOwner = store.getState().IsBoardOwner;
 
   NewBoard.LastEditedAt = moment().valueOf();
 
@@ -48,7 +50,8 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
   localStorage.setItem(`Kanban-BoardListItem-${NewBoard.BoardId}`, JSON.stringify(NewBoardListItem));
   localStorage.setItem(`Kanban-BoardList`, JSON.stringify(NewBoardList));
 
-  if (UserUid) {
+  if ((UserUid && CanEditBoard) || IsBoardOwner) {
+  
     FIREBASE_UpdateBoard(NewBoard);
     FIREBASE_UpdateBoardListItem(NewBoardListItem);
   }
@@ -70,6 +73,8 @@ export const MIDDLEWARE_ToggleTheme = () => {
   const Theme = store.getState().Theme || "Light";
   const UserPreferences = { ...store.getState().UserPreferences } || { ...DefaultNewUserPreference };
 
+  const UserUid = store.getState().User?.uid || "";
+
   if (Theme === "Dark") {
     localStorage.setItem("Kanban-Theme", "Light");
     store.dispatch(SetTheme("Light"));
@@ -80,6 +85,10 @@ export const MIDDLEWARE_ToggleTheme = () => {
     store.dispatch(SetTheme("Dark"));
     store.dispatch(SetUserPreferencesTheme("Dark"));
     UserPreferences.Theme = "Dark";
+  }
+
+  if (UserUid) {
+    FIREBASE_UpdateUserPreferences(UserPreferences);
   }
 };
 

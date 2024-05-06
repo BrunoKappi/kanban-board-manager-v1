@@ -3,9 +3,10 @@ import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import store from "@/Config/Store/Store";
+import moment from "moment";
 
 export const MIDDLEWARE_AddBoard = (BoardParam: any, setOpen: (open: boolean) => void) => {
-  const NewBoard = { ...BoardParam };
+  const NewBoard = { ...BoardParam, LastEditedAt: moment().valueOf() };
   const UserUid = store.getState().User?.uid || "";
   const BoardList = store.getState().BoardList || [];
 
@@ -14,7 +15,8 @@ export const MIDDLEWARE_AddBoard = (BoardParam: any, setOpen: (open: boolean) =>
     BoardId: NewBoard.BoardId,
     OwnerUid: NewBoard.OwnerUid,
     docID: "",
-    LastEditedAt: NewBoard.LastEditedAt,
+    LastEditedAt: moment().valueOf(),
+    IsBoardShared: false,
   };
 
   if (UserUid) {

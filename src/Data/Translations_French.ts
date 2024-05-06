@@ -4,7 +4,7 @@ export const TRANSLATIONS_FRENCH = {
     HiddenColumns: "Colonnes Masquées",
   },
   Sidebar: {
-    AllBoards: "Tous les Tableaux",
+    AllBoards: "Mes tableaux",
     CreateBoard: "+ Créer un Tableau",
   },
   Navbar: {
@@ -127,8 +127,8 @@ export const TRANSLATIONS_FRENCH = {
     Title: "Créer un Tableau",
   },
   OptionsLists: {
-    ExportColumnToCSV:'Exporter la colonne au format CSV',
-    ExportCSV:'Exporter le tableau au format CSV',
+    ExportColumnToCSV: "Exporter la colonne au format CSV",
+    ExportCSV: "Exporter le tableau au format CSV",
     CardWidth: "Largeur de la Carte",
     EditBord: "Éditer le Tableau",
     DuplicateBoard: "Dupliquer le Tableau",
@@ -187,8 +187,18 @@ export const TRANSLATIONS_FRENCH = {
     UserName: "Anonyme",
   },
   Text: {
-    NewCardTitle: 'Nouvelle Carte',
+    NewCardTitle: "Nouvelle Carte",
     FilterTagsNofound: "Aucun résultat",
   },
+  Sharing: {
+    NotLogged: "Le partage est disponible uniquement pour les utilisateurs connectés à un compte.",
+    ListOption: "Partager le Tableau",
+    Title: "Options de Partage",
+    PublicUrl: "URL Publique",
+    CopyButton: "Copier l'URL",
+    EditMessage: "Autoriser les Utilisateurs à Modifier",
+    DuplicateMessage: "Autoriser les Utilisateurs à Dupliquer le Tableau",
+    ClipboardMessage: "URL Copiée dans le Presse-papiers",
+    AllowSharing: "Activer le Partage de Tableau",
+  },
 };
-

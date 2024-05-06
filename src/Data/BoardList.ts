@@ -8,5 +8,6 @@ export const DefaultBoardList: BoardListItemType[] = [
     OwnerUid: "",
     docID: "",
     LastEditedAt: 2,
+    IsBoardShared: false,
   },
 ];

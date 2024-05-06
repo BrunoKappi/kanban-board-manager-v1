@@ -9,6 +9,7 @@ import SidebarItem from "./SidebarItem";
 
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import { AddBoardItem } from "../BoardListPopover/AddBoardItem";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const BoardList = useSelector((state: any) => state.BoardList);
@@ -16,6 +17,7 @@ export default function Sidebar() {
   const Translations = useSelector((state: any) => state.Translations);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   if (!SelectedBoard) dispatch(SetSelectedBoard(BoardList.sort(OrderBoards)[0]?.BoardId));
 
@@ -29,6 +31,7 @@ export default function Sidebar() {
     dispatch(SetSelectedBoard(BoardId));
     //@ts-ignore
     dispatch(SetCardModalCard({}));
+    navigate("../");
   };
 
   return (

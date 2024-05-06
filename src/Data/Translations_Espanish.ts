@@ -4,7 +4,7 @@ export const TRANSLATIONS_SPANISH = {
     HiddenColumns: "Columnas Ocultas",
   },
   Sidebar: {
-    AllBoards: "Tableros",
+    AllBoards: "Mis Tableros",
     CreateBoard: "+ Crear Tablero",
   },
   Navbar: {
@@ -127,8 +127,8 @@ export const TRANSLATIONS_SPANISH = {
     Title: "Crear Tablero",
   },
   OptionsLists: {
-    ExportColumnToCSV:'Exportar Columna a CSV',
-    ExportCSV:'Exportar Tablero a CSV',
+    ExportColumnToCSV: "Exportar Columna a CSV",
+    ExportCSV: "Exportar Tablero a CSV",
     CardWidth: "Ancho de la Tarjeta",
     EditBord: "Editar Tablero",
     DuplicateBoard: "Duplicar Tablero",
@@ -187,7 +187,18 @@ export const TRANSLATIONS_SPANISH = {
     UserName: "Anónimo",
   },
   Text: {
-    NewCardTitle: 'Nueva Tarjeta',
+    NewCardTitle: "Nueva Tarjeta",
     FilterTagsNofound: "Sin resultados",
+  },
+  Sharing: {
+    NotLogged: "La compartición está disponible solo para usuarios conectados a una cuenta",
+    ListOption: "Compartir Tablero",
+    Title: "Opciones de Compartir",
+    PublicUrl: "URL Pública",
+    CopyButton: "Copiar URL",
+    EditMessage: "Permitir que Usuarios Editen",
+    DuplicateMessage: "Permitir que Usuarios Duplicen el Tablero",
+    ClipboardMessage: "URL Copiada al Portapapeles",
+    AllowSharing: "Habilitar Compartir Tablero",
   },
 };

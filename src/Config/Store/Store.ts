@@ -13,6 +13,9 @@ import SearchFilterSlice from "./SearchFilter/CardWidth";
 import UserPreferences from "./UserPreferences/UserPreferences";
 import LanguageSlice from "./Language/Language";
 import TranslationsSlice from "./Translations/Translations";
+import CanEditBoardSlice from "./CanEditBoard/CanEditBoard";
+import IsBoardOwnerSlice from "./IsBoardOwner/IsBoardOwner";
+import CanDuplicateBoardSlice from "./CanDuplicateBoard/CanDuplicateBoard";
 
 const store = configureStore({
   reducer: {
@@ -30,11 +33,14 @@ const store = configureStore({
     SearchFilter: SearchFilterSlice,
     UserPreferences: UserPreferences,
     Translations: TranslationsSlice,
+    CanEditBoard: CanEditBoardSlice,
+    CanDuplicateBoard: CanDuplicateBoardSlice,
+    IsBoardOwner: IsBoardOwnerSlice,
   },
 });
 
 const logChanges = () => {
-  console.log("LOG STORE", store.getState());
+  // console.log("LOG STORE", store.getState());
 };
 
 export const unsubscribe = store.subscribe(logChanges);

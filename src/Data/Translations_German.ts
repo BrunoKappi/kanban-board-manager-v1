@@ -4,7 +4,7 @@ export const TRANSLATIONS_GERMAN = {
     HiddenColumns: "Ausgeblendete Spalten",
   },
   Sidebar: {
-    AllBoards: "Alle Boards",
+    AllBoards: "Meine Boards",
     CreateBoard: "+ Board erstellen",
   },
   Navbar: {
@@ -127,8 +127,8 @@ export const TRANSLATIONS_GERMAN = {
     Title: "Board erstellen",
   },
   OptionsLists: {
-    ExportColumnToCSV:'Spalte als CSV exportieren',
-    ExportCSV:'Tafel als CSV exportieren',
+    ExportColumnToCSV: "Spalte als CSV exportieren",
+    ExportCSV: "Tafel als CSV exportieren",
     CardWidth: "Kartenbreite",
     EditBord: "Board bearbeiten",
     DuplicateBoard: "Board duplizieren",
@@ -187,8 +187,18 @@ export const TRANSLATIONS_GERMAN = {
     UserName: "Anonym",
   },
   Text: {
-    NewCardTitle: 'Neue Karte',
+    NewCardTitle: "Neue Karte",
     FilterTagsNofound: "Keine Ergebnisse",
   },
+  Sharing: {
+    NotLogged: "Die Freigabe steht nur angemeldeten Benutzern zur Verfügung.",
+    ListOption: "Board teilen",
+    Title: "Freigabeoptionen",
+    PublicUrl: "Öffentliche URL",
+    CopyButton: "URL kopieren",
+    EditMessage: "Benutzern Bearbeiten erlauben",
+    DuplicateMessage: "Benutzern Board-Duplikation erlauben",
+    ClipboardMessage: "URL in die Zwischenablage kopiert",
+    AllowSharing: "Freigabe des Boards aktivieren",
+  },
 };
-

@@ -20,7 +20,7 @@ export function DialogDemo() {
         <div className="grid gap-4 py-4">
           <DragDropContext
             onDragEnd={() => {
-              alert("ffoi");
+     
             }}
           >
             <Droppable droppableId={v4()} key={v4()}>

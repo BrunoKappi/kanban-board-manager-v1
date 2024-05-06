@@ -4,7 +4,7 @@ export const TRANSLATIONS_PORTUGUESE = {
     HiddenColumns: "Colunas Ocultas",
   },
   Sidebar: {
-    AllBoards: "Quadros",
+    AllBoards: "Meus Quadros",
     CreateBoard: "+ Criar Quadro",
   },
   Navbar: {
@@ -189,5 +189,16 @@ export const TRANSLATIONS_PORTUGUESE = {
   Text: {
     NewCardTitle: "Novo Cartão",
     FilterTagsNofound: "Sem resultados",
+  },
+  Sharing: {
+    NotLogged: "O compartilhamento está disponível apenas para usuários logados em uma conta.",
+    ListOption: "Compartilhar Quadro",
+    Title: "Opções de Compartilhamento",
+    PublicUrl: "URL Pública",
+    CopyButton: "Copiar URL",
+    EditMessage: "Permitir que Usuários Editem o Quadro",
+    DuplicateMessage: "Permitir que Usuários Dupliquem o Quadro",
+    ClipboardMessage: "URL Copiada para a Área de Transferência",
+    AllowSharing: "Habilitar Compartilhamento do Quadro",
   },
 };

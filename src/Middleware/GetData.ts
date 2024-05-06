@@ -1,4 +1,4 @@
-import { FIREBASE_GetUserPreferences, FIREBASE_UpdateUserPreferences } from "./../Config/Firebase/Firestore";
+import { FIREBASE_GetAllUsers, FIREBASE_GetPublicBoard, FIREBASE_GetUserByEmail, FIREBASE_GetUserPreferences, FIREBASE_UpdateUserPreferences } from "./../Config/Firebase/Firestore";
 import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
 import { OrderBoards } from "@/components/Sidebar/SidebarUtils";
 import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_CreateUserPreferences, FIREBASE_GetBoard, FIREBASE_GetBoardList, FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
@@ -57,7 +57,7 @@ export const GetBoardList = async () => {
   }
 };
 
-export const GetBoard = async (BoardId: string) => {
+export const MIDDLEWARE_GetBoard = async (BoardId: string) => {
   //@ts-ignore
   const { User, SelectedBoard, BoardList, Board } = store.getState();
 
@@ -66,6 +66,7 @@ export const GetBoard = async (BoardId: string) => {
     const Board = await FIREBASE_GetBoard(User.uid, BoardId);
     //@ts-ignore
     store.dispatch(SetBoard(Board));
+    localStorage.setItem(`Kanban-Board-${BoardId}`, JSON.stringify(Board || {})); 
     return Board;
   }
   //USUSARIO DESLOGADO
@@ -78,6 +79,24 @@ export const GetBoard = async (BoardId: string) => {
       //store.dispatch(SetBoard(Board));
       return Board;
     }
+  }
+};
+
+export const MIDDLEWARE_GetPublicBoard = async (BoardId: string) => {
+  const Board: any = await FIREBASE_GetPublicBoard(BoardId);
+  var Error = "";
+
+  if (!!Board?.BoardId) {
+    if (Board.Public) {
+      //store.dispatch(SetBoard(Board));
+      return { Error, Board };
+    } else {
+      Error = "You dont have access to this board";
+      return { Error };
+    }
+  } else {
+    Error = "Board not Found";
+    return { Error };
   }
 };
 
@@ -152,6 +171,18 @@ export const MIDDLEWARE_GetUser = async (Uid: string, Email: string) => {
   FIREBASE_UpdateUserPreferences(UpdatedUserPreference);
 
   SyncCurrentUserWork(Uid);
+};
+
+export const MIDDLEWARE_GetUserByEmail = async (Email: string) => {
+  const Data = await FIREBASE_GetUserByEmail(Email);
+
+  return Data;
+};
+
+export const MIDDLEWARE_GetAllUsers = async () => {
+  const Data = await FIREBASE_GetAllUsers();
+
+  return Data || [];
 };
 
 export const MIDDLEWARE_GetUserPreferences = async (Uid: string) => {

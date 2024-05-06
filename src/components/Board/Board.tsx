@@ -11,9 +11,23 @@ import Tooltip from "../Tooltip/Tooltip";
 import CardModal from "../CardModal/CardModal";
 import { AddBoardItem } from "../Sidebar/AddBoardItem";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { SetIsBoardOwner } from "@/Config/Store/IsBoardOwner/IsBoardOwner";
 
-export const Board = ({ Board }: BoardProps) => {
+export const Board = ({ Board, BoardError }: BoardProps) => {
   const Translations = useSelector((state: any) => state.Translations);
+  const User = useSelector((state: any) => state.User);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (Board.OwnerUid === User.uid) {
+      dispatch(SetIsBoardOwner(true));
+    } else {
+      dispatch(SetIsBoardOwner(false));
+    }
+  }, [Board,User]);
+
   return (
     <div className="flex-grow  h-full flex flex-row items-start justify-start scroll px-4 pt-10 pb-5 pl-10 overflow-x-auto">
       <CardModal />
@@ -25,7 +39,7 @@ export const Board = ({ Board }: BoardProps) => {
             ))}
           </Show>
         </DragDropContext>
- 
+
         <div className="flex flex-col justify-start gap-2 ml-5">
           <Show if={!!Board.BoardId}>
             <BoardAddColumn />
@@ -55,11 +69,16 @@ export const Board = ({ Board }: BoardProps) => {
         </div>
       </Show>
 
-      <Show if={!Board.BoardId}>
+      <Show if={!Board.BoardId && !BoardError}>
         <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-7">
           <h1 className=" text-4xl font-semibold">{Translations.Board.NoBoard}</h1>
           <img src={BoardImage} alt="" className="size-[80%] md:size-[50%] max-w-96" />
           <AddBoardItem className="rounded-full w-auto" />
+        </div>
+      </Show>
+      <Show if={!Board.BoardId && !!BoardError}>
+        <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-7">
+          <h1 className=" text-4xl font-semibold">{BoardError}</h1>
         </div>
       </Show>
     </div>

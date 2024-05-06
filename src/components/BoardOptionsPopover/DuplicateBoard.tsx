@@ -2,6 +2,7 @@ import { Copy } from "lucide-react";
 import { ListOption } from "../ListOption/ListOption";
 import { DuplicateBoardFn } from "./DuplicateBoard.Utils";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   SetExternalOpen: (state: boolean) => void;
@@ -9,9 +10,11 @@ type Props = {
 
 export default function DuplicateBoard({ SetExternalOpen }: Props) {
   const Translations = useSelector((state: any) => state.Translations);
+  const navigate = useNavigate();
   const HandleDuplicateBoard = () => {
     SetExternalOpen(false);
     DuplicateBoardFn();
+    navigate("../");
   };
 
   return (

@@ -463,13 +463,16 @@ const Data = GetText();
 export const ExampleBoard1 = {
   BoardId: ExampleBoardID,
   BoardName: Data?.Board?.Name,
-  BoardColumnsQtd: 4,
+  BoardColumnsQtd: 4, 
   Description: Data?.Board?.Description,
   CreatedAt: moment().valueOf(),
   LastEditedAt: moment().valueOf(),
   Public: false,
   PublicURL: "",
   OwnerUid: "",
+  PuclicEdit: false,
+  AllowDuplicate: false,
+  Collaborators: [],
   docID: "",
   ColorColumns: true,
   Columns: [

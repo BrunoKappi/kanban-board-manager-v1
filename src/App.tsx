@@ -86,7 +86,7 @@ function App() {
     <main className=" h-dvh w-dvw bg-background dark:bg-background-dark">
       <Routes>
         <Route path="/" element={GetElement()} />
-
+        <Route path="/View/:BoardId" element={GetElement()} />
         <Route
           path="*"
           element={

@@ -4,7 +4,7 @@ export const TRANSLATIONS_ENGLISH = {
     HiddenColumns: "Hidden Collumns",
   },
   Sidebar: {
-    AllBoards: "All Boars",
+    AllBoards: "My Boars",
     CreateBoard: "+ Create Board",
   },
   Navbar: {
@@ -127,8 +127,8 @@ export const TRANSLATIONS_ENGLISH = {
     Title: "Create Board",
   },
   OptionsLists: {
-    ExportColumnToCSV:'Export Column to CSV',
-    ExportCSV:'Export Board to CSV',
+    ExportColumnToCSV: "Export Column to CSV",
+    ExportCSV: "Export Board to CSV",
     CardWidth: "Card Width",
     EditBord: "Edit Board",
     DuplicateBoard: "Duplicate Board",
@@ -187,7 +187,18 @@ export const TRANSLATIONS_ENGLISH = {
     UserName: "Guest",
   },
   Text: {
-    NewCardTitle: 'New Card',
+    NewCardTitle: "New Card",
     FilterTagsNofound: "No results",
+  },
+  Sharing: {
+    NotLogged: "Sharing is available only for users logged into an account",
+    ListOption: "Share Board",
+    Title: "Sharing Options",
+    PublicUrl: "Public URL",
+    CopyButton: "Copy URL",
+    EditMessage: "Allow Users to Edit",
+    DuplicateMessage: "Allow Users to Duplicate Board",
+    ClipboardMessage: "URL Copied to Clipboard",
+    AllowSharing: "Enable Board Sharing",
   },
 };

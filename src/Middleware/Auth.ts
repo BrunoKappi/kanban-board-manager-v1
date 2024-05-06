@@ -99,6 +99,10 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
         Uid: UserUid,
         Email: email,
         CreatedAt: moment().valueOf(),
+        LastEditedAt: moment().valueOf(),
+        docID: "",
+        displayName: "",
+        photoURL: "",
       };
 
       FIREBASE_CreateUser(NewUser);
@@ -153,6 +157,7 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
           BoardName: OriginalBoard.BoardName,
           LastEditedAt: moment().valueOf(),
           OwnerUid: UserUid,
+          IsBoardShared: false,
         };
 
         localStorage.setItem(`Kanban-Board-${OriginalBoard.BoardId}`, JSON.stringify(OriginalBoard));
