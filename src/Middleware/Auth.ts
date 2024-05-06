@@ -139,7 +139,7 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
 
             for (let k = 0; k < OriginalBoard.Columns[i].Cards[j].Tasks.length; k++) {
               //@ts-ignore
-              OriginalBoard.Columns[i].Cards[j].Tasks[k].TaskTitle = NewBoard.Columns[`Column${i + 1}`].Cards[`Card${j + 1}`].Tasks[`Task${k + 1}`];
+              OriginalBoard.Columns[i].Cards[j].Tasks[k]?.TaskTitle = NewBoard.Columns[`Column${i + 1}`].Cards[`Card${j + 1}`].Tasks[`Task${k + 1}`];
             }
           }
         }

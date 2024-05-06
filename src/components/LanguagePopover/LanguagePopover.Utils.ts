@@ -25,7 +25,7 @@ export const ChangeExampleBoardLanguage = (Language: string) => {
       if (OriginalBoard.Columns[i].Cards[j].CardTitle !== CurrentlBoard.Columns[i].Cards[j].CardTitle) Changed = true;
 
       for (let k = 0; k < OriginalBoard.Columns[i].Cards[j].Tasks.length; k++) {
-        if (OriginalBoard.Columns[i].Cards[j].Tasks[k].TaskTitle !== CurrentlBoard.Columns[i].Cards[j].Tasks[k].TaskTitle) Changed = true;
+        if (OriginalBoard.Columns[i].Cards[j].Tasks[k]?.TaskTitle !== CurrentlBoard.Columns[i].Cards[j].Tasks[k]?.TaskTitle) Changed = true;
       }
     }
   }
@@ -44,7 +44,7 @@ export const ChangeExampleBoardLanguage = (Language: string) => {
 
       for (let k = 0; k < OriginalBoard.Columns[i].Cards[j].Tasks.length; k++) {
         //@ts-ignore
-        OriginalBoard.Columns[i].Cards[j].Tasks[k].TaskTitle = NewBoard.Columns[`Column${i + 1}`].Cards[`Card${j + 1}`].Tasks[`Task${k + 1}`];
+        OriginalBoard.Columns[i].Cards[j].Tasks[k]?.TaskTitle = NewBoard.Columns[`Column${i + 1}`].Cards[`Card${j + 1}`].Tasks[`Task${k + 1}`];
       }
     }
   }
