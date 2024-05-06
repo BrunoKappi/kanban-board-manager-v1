@@ -7,7 +7,7 @@ import { ExampleBoard1, ExampleBoardID, GetText } from "@/Data/ExampleBoard1";
 
 export const ChangeExampleBoardLanguage = (Language: string) => {
   const CurrentlBoardList = JSON.parse(JSON.stringify(store.getState().BoardList));
-  const CurrentlBoard = JSON.parse(JSON.stringify(store.getState().Board)); 
+  const CurrentlBoard = JSON.parse(JSON.stringify(store.getState().Board));
 
   var OriginalBoard = JSON.parse(JSON.stringify(ExampleBoard1));
   var NewBoard = { ...GetText(Language) };
@@ -25,7 +25,9 @@ export const ChangeExampleBoardLanguage = (Language: string) => {
       if (OriginalBoard.Columns[i].Cards[j].CardTitle !== CurrentlBoard.Columns[i].Cards[j].CardTitle) Changed = true;
 
       for (let k = 0; k < OriginalBoard.Columns[i].Cards[j].Tasks.length; k++) {
-        if (OriginalBoard.Columns[i].Cards[j].Tasks[k]?.TaskTitle !== CurrentlBoard.Columns[i].Cards[j].Tasks[k]?.TaskTitle) Changed = true;
+        if (!!OriginalBoard.Columns[i].Cards[j].Tasks[k]) {
+          if (OriginalBoard.Columns[i].Cards[j].Tasks[k].TaskTitle !== CurrentlBoard.Columns[i].Cards[j].Tasks[k].TaskTitle) Changed = true;
+        }
       }
     }
   }
@@ -43,8 +45,10 @@ export const ChangeExampleBoardLanguage = (Language: string) => {
       OriginalBoard.Columns[i].Cards[j].CardTitle = NewBoard.Columns[`Column${i + 1}`].Cards[`Card${j + 1}`].Title;
 
       for (let k = 0; k < OriginalBoard.Columns[i].Cards[j].Tasks.length; k++) {
-        //@ts-ignore
-        OriginalBoard.Columns[i].Cards[j].Tasks[k]?.TaskTitle = NewBoard.Columns[`Column${i + 1}`].Cards[`Card${j + 1}`].Tasks[`Task${k + 1}`];
+        if (!!OriginalBoard.Columns[i].Cards[j].Tasks[k]) {
+          //@ts-ignore  
+          OriginalBoard.Columns[i].Cards[j].Tasks[k].TaskTitle = NewBoard.Columns[`Column${i + 1}`].Cards[`Card${j + 1}`].Tasks[`Task${k + 1}`];
+        }
       }
     }
   }
