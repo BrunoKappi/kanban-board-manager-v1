@@ -10,11 +10,24 @@ type Props = {
 
 export default function ExportColumnToCsv({ Column }: Props) {
   const Translations = useSelector((state: any) => state.Translations);
+  const Board = useSelector((state: any) => state.Board);
+
+  const BoardTags = [...Board?.Tags];
 
   function convertToCSVData() {
-    const headers = ["Column Title", "Card Title", "Card Description", "Task Title"];
+    const headers = ["Column Title", "Column Visible", "Card Title", "Card Description", "Tags", "Task Title", "Completed"];
 
-    const data = Column.Cards.flatMap((card: CardType) => card.Tasks.map((task: TaskType) => [Column.ColumnTitle, card.CardTitle, card.CardDescription, task.TaskTitle]));
+    const data = Column?.Cards?.flatMap((card: CardType) =>
+      card.Tasks?.map((task: TaskType) => [
+        Column.ColumnTitle,
+        Column.Visible ? "Visible" : "Not Visible",
+        card.CardTitle,
+        card.CardDescription,
+        card.Tags?.map((tagId: string) => BoardTags.find((tag) => tag.TagId === tagId)?.TagName).join(", "), // Concatenates tag names
+        task.TaskTitle,
+        task.Completed ? "Completed" : "Not Completed",
+      ])
+    );
 
     return [headers, ...data];
   }

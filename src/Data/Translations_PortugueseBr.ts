@@ -187,6 +187,7 @@ export const TRANSLATIONS_PORTUGUESE = {
     UserName: "Anônimo",
   },
   Text: {
+    NewCardTitle: "Novo Cartão",
     FilterTagsNofound: "Sem resultados",
   },
 };

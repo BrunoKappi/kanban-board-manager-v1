@@ -187,6 +187,7 @@ export const TRANSLATIONS_FRENCH = {
     UserName: "Anonyme",
   },
   Text: {
+    NewCardTitle: 'Nouvelle Carte',
     FilterTagsNofound: "Aucun résultat",
   },
 };

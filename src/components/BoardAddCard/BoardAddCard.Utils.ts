@@ -1,11 +1,12 @@
+import moment from "moment";
 import { v4 } from "uuid";
 
 export const DefaultCardToAdd = {
   CardId: v4(),
-  CardTitle: "",
+  CardTitle: "New Card",
   CardDescription: "",
-  CreatedAt: 0,
-  LastEditedAt: 0,
+  CreatedAt: moment().valueOf(),
+  LastEditedAt: moment().valueOf(),
   Notes: "",
   TasksQtd: 2,
   Tags: [],

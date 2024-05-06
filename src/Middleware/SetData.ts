@@ -4,7 +4,13 @@ import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetSidebar } from "@/Config/Store/Sidebar/Sidebar";
 import store from "@/Config/Store/Store";
 import { SetTheme } from "@/Config/Store/Theme/Theme";
+import { SetTranslations } from "@/Config/Store/Translations/Translations";
 import { DefaultNewUserPreference, SetUserPreferencesTheme } from "@/Config/Store/UserPreferences/UserPreferences";
+import { TRANSLATIONS_ENGLISH } from "@/Data/Translations_English";
+import { TRANSLATIONS_SPANISH } from "@/Data/Translations_Espanish";
+import { TRANSLATIONS_FRENCH } from "@/Data/Translations_French";
+import { TRANSLATIONS_GERMAN } from "@/Data/Translations_German";
+import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
 import { BoardListItemType } from "@/Data/Types";
 import moment from "moment";
 
@@ -74,5 +80,24 @@ export const MIDDLEWARE_ToggleTheme = () => {
     store.dispatch(SetTheme("Dark"));
     store.dispatch(SetUserPreferencesTheme("Dark"));
     UserPreferences.Theme = "Dark";
+  }
+};
+
+export const MIDDLEWARE_SetTranslations = (Language: string) => {
+  if (Language === "English") {
+    //@ts-ignore
+    store.dispatch(SetTranslations(TRANSLATIONS_ENGLISH));
+  } else if (Language === "Portuguese-br") {
+    //@ts-ignore
+    store.dispatch(SetTranslations(TRANSLATIONS_PORTUGUESE));
+  } else if (Language === "Spanish") {
+    //@ts-ignore
+    store.dispatch(SetTranslations(TRANSLATIONS_SPANISH));
+  } else if (Language === "French") {
+    //@ts-ignore
+    store.dispatch(SetTranslations(TRANSLATIONS_FRENCH));
+  } else if (Language === "German") {
+    //@ts-ignore
+    store.dispatch(SetTranslations(TRANSLATIONS_GERMAN));
   }
 };

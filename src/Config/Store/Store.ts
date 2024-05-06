@@ -34,7 +34,7 @@ const store = configureStore({
 });
 
 const logChanges = () => {
-  //console.log("LOG STORE", store.getState());
+  console.log("LOG STORE", store.getState());
 };
 
 export const unsubscribe = store.subscribe(logChanges);

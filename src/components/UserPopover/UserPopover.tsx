@@ -27,7 +27,7 @@ export default function UserPopover({}: Props) {
       <PopoverTrigger asChild>
         <div className="flex flex-row items-center gap-2 justify-center cursor-pointer select-none hover:bg-overlay hover:text-accent-foreground dark:hover:bg-overlay-dark dark:hover:text-primary-foreground px-3 py-2 rounded-full">
           {!User?.photoURL && <CircleUserRound className="size-6" />}
-          {!!User?.photoURL && <img src={User?.photoURL} alt="User Photo" className="size-6 rounded-full" />}
+          {!!User?.photoURL && <img src={User?.photoURL} alt="User Photo" className="size-6 rounded-full min-w-6 min-h-6" />}
 
           {GetName()}
         </div>

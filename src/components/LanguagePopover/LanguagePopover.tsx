@@ -10,22 +10,17 @@ import { DefaultNewUserPreference } from "@/Config/Store/UserPreferences/UserPre
 import { FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
 import { Languages } from "@/Data/Languages";
 import { SetLanguage } from "@/Config/Store/Language/Language";
-import { SetTranslations } from "@/Config/Store/Translations/Translations";
-import { TRANSLATIONS_ENGLISH } from "@/Data/Translations_English";
-import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
 import { ChangeExampleBoardLanguage } from "./LanguagePopover.Utils";
-import { TRANSLATIONS_SPANISH } from "@/Data/Translations_Espanish";
-import { TRANSLATIONS_FRENCH } from "@/Data/Translations_French";
-import { TRANSLATIONS_GERMAN } from "@/Data/Translations_German";
+import { MIDDLEWARE_SetTranslations } from "@/Middleware/SetData";
 
 type Props = {
   Mode?: string;
 };
 
+//@ts-ignore
 export default function LanguagePopover({ Mode = "Default" }: Props) {
   const [open, setOpen] = useState(false);
   const Translations = useSelector((state: any) => state.Translations);
-  const Board = useSelector((state: any) => state.Board);
 
   const Language = useSelector((state: any) => state.Language);
 
@@ -38,22 +33,7 @@ export default function LanguagePopover({ Mode = "Default" }: Props) {
     localStorage.setItem("Kanban-Language", Value);
     dispatch(SetLanguage(Value));
 
-    if (Value === "English") {
-      //@ts-ignore
-      dispatch(SetTranslations(TRANSLATIONS_ENGLISH));
-    } else if (Value === "Portuguese-br") {
-      //@ts-ignore
-      dispatch(SetTranslations(TRANSLATIONS_PORTUGUESE));
-    } else if (Value === "Spanish") {
-      //@ts-ignore
-      dispatch(SetTranslations(TRANSLATIONS_SPANISH));
-    } else if (Value === "French") {
-      //@ts-ignore
-      dispatch(SetTranslations(TRANSLATIONS_FRENCH));
-    } else if (Value === "German") {
-      //@ts-ignore
-      dispatch(SetTranslations(TRANSLATIONS_GERMAN));
-    }
+    MIDDLEWARE_SetTranslations(Value);
 
     const UserPreferences = { ...store.getState().UserPreferences } || { ...DefaultNewUserPreference };
 
@@ -80,7 +60,7 @@ export default function LanguagePopover({ Mode = "Default" }: Props) {
           <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent">{Translations.PopoversSubtitles.Languages}</ListOption>
           {LanguagesTranslated.map((CardSize: any) => {
             return (
-              <ListOption onClick={() => HandleSetLanguage(CardSize.Value)}>
+              <ListOption onClick={() => HandleSetLanguage(CardSize.Value)} key={CardSize.Value}>
                 <Check className={`size-5 ${Language === CardSize.Value ? " opacity-100" : " opacity-0"}`} />
                 {CardSize.Name}
               </ListOption>

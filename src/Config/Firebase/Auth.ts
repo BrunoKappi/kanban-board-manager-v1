@@ -5,12 +5,8 @@ import store from "../Store/Store";
 import { SetUser, UserType } from "../Store/User/User";
 import { MIDDLEWARE_GetUserPreferences } from "@/Middleware/GetData";
 import { SetLanguage } from "../Store/Language/Language";
-import { TRANSLATIONS_ENGLISH } from "@/Data/Translations_English";
-import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
-import { SetTranslations } from "../Store/Translations/Translations";
-import { TRANSLATIONS_SPANISH } from "@/Data/Translations_Espanish";
-import { TRANSLATIONS_FRENCH } from "@/Data/Translations_French";
-import { TRANSLATIONS_GERMAN } from "@/Data/Translations_German";
+
+import { MIDDLEWARE_SetTranslations } from "@/Middleware/SetData";
 
 const onAuthStateChangedHandler = (AuthCurrentUser: User) => {
   //console.log("FIREBASE AuthChanged", AuthCurrentUser ? AuthCurrentUser : "FIREBASE Auth Vazio");
@@ -32,22 +28,8 @@ const onAuthStateChangedHandler = (AuthCurrentUser: User) => {
   } else {
     const Language = localStorage.getItem("Kanban-Language") || "English";
     store.dispatch(SetLanguage(Language));
-    if (Language === "English") {
-      //@ts-ignore
-      store.dispatch(SetTranslations(TRANSLATIONS_ENGLISH));
-    } else if (Language === "Portuguese-br") {
-      //@ts-ignore
-      store.dispatch(SetTranslations(TRANSLATIONS_PORTUGUESE));
-    } else if (Language === "Spanish") {
-      //@ts-ignore
-      store.dispatch(SetTranslations(TRANSLATIONS_SPANISH));
-    } else if (Language === "French") {
-      //@ts-ignore
-      store.dispatch(SetTranslations(TRANSLATIONS_FRENCH));
-    } else if (Language === "German") {
-      //@ts-ignore
-      store.dispatch(SetTranslations(TRANSLATIONS_GERMAN));
-    }
+
+    MIDDLEWARE_SetTranslations(Language);
   }
 };
 

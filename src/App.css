@@ -38,3 +38,8 @@
   position: static !important;
   top: 0 !important;
 }
+
+.ITEM2 {
+  position: static !important;
+  bottom: 0 !important;
+}

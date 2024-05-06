@@ -18,18 +18,14 @@ export const Board = ({ Board }: BoardProps) => {
     <div className="flex-grow  h-full flex flex-row items-start justify-start scroll px-4 pt-10 pb-5 pl-10 overflow-x-auto">
       <CardModal />
       <Show if={Board?.BoardId !== ""}>
-        <DragDropContext
-          onDragEnd={(result) => {
-            HandleDrag(result, Board);
-          }}
-        >
+        <DragDropContext onDragEnd={(result) => HandleDrag(result, Board)}>
           <Show if={!!Board.BoardId}>
             {Board?.Columns?.filter((Colum) => Colum.Visible).map((Column: any, ColumnIndex) => (
               <BoardColumn Column={Column} ColumnIndex={ColumnIndex} />
             ))}
           </Show>
         </DragDropContext>
-
+ 
         <div className="flex flex-col justify-start gap-2 ml-5">
           <Show if={!!Board.BoardId}>
             <BoardAddColumn />

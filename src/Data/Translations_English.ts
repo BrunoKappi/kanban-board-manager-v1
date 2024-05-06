@@ -187,6 +187,7 @@ export const TRANSLATIONS_ENGLISH = {
     UserName: "Guest",
   },
   Text: {
+    NewCardTitle: 'New Card',
     FilterTagsNofound: "No results",
   },
 };

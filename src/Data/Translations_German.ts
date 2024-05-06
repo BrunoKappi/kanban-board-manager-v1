@@ -187,6 +187,7 @@ export const TRANSLATIONS_GERMAN = {
     UserName: "Anonym",
   },
   Text: {
+    NewCardTitle: 'Neue Karte',
     FilterTagsNofound: "Keine Ergebnisse",
   },
 };

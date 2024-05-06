@@ -187,6 +187,7 @@ export const TRANSLATIONS_SPANISH = {
     UserName: "Anónimo",
   },
   Text: {
+    NewCardTitle: 'Nueva Tarjeta',
     FilterTagsNofound: "Sin resultados",
   },
 };

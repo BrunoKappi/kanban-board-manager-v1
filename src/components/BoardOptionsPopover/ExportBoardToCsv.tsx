@@ -12,10 +12,25 @@ export default function ExportCSV({ SetExternalOpen }: Props) {
   const Translations = useSelector((state: any) => state.Translations);
   const Board = useSelector((state: any) => state.Board);
 
-  function convertToCSVData(board: any) {
-    const headers = ["Board Name", "Column Title", "Card Title", "Card Description", "Task Title"];
+  const BoardTags = [...Board?.Tags];
 
-    const data = board.Columns.flatMap((column: ColumnType) => column.Cards.flatMap((card) => card.Tasks.map((task) => [board.BoardName, column.ColumnTitle, card.CardTitle, card.CardDescription, task.TaskTitle])));
+  function convertToCSVData(board: any) {
+    const headers = ["Board Name", "Column Title", "Column Visible", "Card Title", "Card Description", "Tags", "Task Title", "Task Completed"];
+
+    const data = board.Columns.flatMap((column: ColumnType) =>
+      column.Cards.flatMap((card) =>
+        card.Tasks.map((task) => [
+          board.BoardName,
+          column.ColumnTitle,
+          column.Visible ? "Visible" : "Not Visible",
+          card.CardTitle,
+          card.CardDescription,
+          card.Tags?.map((tagId: string) => BoardTags.find((tag) => tag.TagId === tagId)?.TagName).join(", "), // Concatenates tag names
+          task.TaskTitle,
+          task.Completed ? "Completed" : "Not Completed",
+        ])
+      )
+    );
 
     return [headers, ...data];
   }
