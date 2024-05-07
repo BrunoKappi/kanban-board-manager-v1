@@ -142,6 +142,7 @@ export const TRANSLATIONS_GERMAN = {
     DeleteCard: "Karte löschen",
     Logout: "Abmelden",
     CreateBoard: "+ Board erstellen",
+    DeleteBoardForMe: "Board für mich löschen",
   },
   AlertDialog: {
     DeleteBoard: {
@@ -199,6 +200,13 @@ export const TRANSLATIONS_GERMAN = {
     EditMessage: "Benutzern Bearbeiten erlauben",
     DuplicateMessage: "Benutzern Board-Duplikation erlauben",
     ClipboardMessage: "URL in die Zwischenablage kopiert",
-    AllowSharing: "Freigabe des Boards aktivieren",
+    AllowSharing: "Öffentliches Teilen aktivieren",
+    Collaborators: "Mitarbeiter",
+    RemoveCollaborator: "Mitarbeiter entfernen",
+    AddCollaborator: "Benutzer hinzufügen",
+    CollaboratorPlaceholder: "Benutzer-E-Mail...",
+    UserNotFound: "Benutzer nicht gefunden",
+    Already: "Benutzer bereits hinzugefügt",
+    Added: "Benutzer als Bearbeiter des Boards hinzugefügt",
   },
 };

@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { LoaderCircle, X } from "lucide-react";
 
 import Tooltip from "../Tooltip/Tooltip";
 import { useSelector } from "react-redux";
@@ -19,10 +19,21 @@ import { MAX_BOARD_TITLE } from "@/Data/Limits";
 
 const Navbar = ({ Board }: NavbarProps) => {
   const [BoardName, setBoardName] = useState(Board?.BoardName);
+  const BoardObje = useSelector((state: any) => state.Board);
   const [Editing, setEditing] = useState(false);
   const Sidebar = useSelector((state: any) => state.Sidebar);
   const Translations = useSelector((state: any) => state.Translations);
   const IsBoardOwner = useSelector((state: any) => state.IsBoardOwner);
+  const LoadingBoard = useSelector((state: any) => state.LoadingBoard);
+  const User = useSelector((state: any) => state.User);
+  var IsOneOfTheOwners = false;
+
+  //@ts-ignore
+  BoardObje?.Collaborators?.forEach((Collab: any) => {
+    if (Collab.Uid === User.uid) {
+      IsOneOfTheOwners = true;
+    }
+  });
 
   const HandleChangeBoardName = (e: any) => {
     e.preventDefault();
@@ -43,15 +54,16 @@ const Navbar = ({ Board }: NavbarProps) => {
   const HasBorard = !!Board?.BoardId;
 
   return (
-    <div className="min-h-14 resize-y flex-shrink-0 flex  flex-col md:flex-row items-start md:justify-between md:items-center px-5 py-5 pt-7 pl-10 gap-5 pr-10">
+    <div className="min-h-14 resize-y flex-shrink-0 flex  flex-col xl:flex-row items-start xl:justify-between xl:items-center px-5 py-5 pt-7 pl-10 gap-5 pr-10">
       <Show if={HasBorard}>
-        <div className="flex flex-row gap-0 md:gap-5 items-center justify-start w-full md:w-auto bg-slate-400/10 dark:bg-slate-400/5 rounded-xl px-2 py-1">
+        <div className="flex flex-row gap-0 xl:gap-5 items-center justify-start w-full xl:w-auto bg-slate-400/10 dark:bg-slate-400/5 rounded-xl px-2 py-1">
           {Sidebar === "Closed" && <ToggleSidebar />}
 
           {!Editing && HasBorard && (
             <Tooltip text={Translations.Tooltips.EditBoardName}>
-              <span className="dark:text-accent text-accent-foreground hidden md:flex md:min-w-72  px-5 py-2 font-medium text-xl select-none cursor-pointer  line-clamp-1 max-w-72 truncate text-ellipsis" onDoubleClick={HandleStartEditing}>
-                <span className="max-w-full truncate">{Board?.BoardName}</span>
+              <span className="dark:text-accent text-accent-foreground hidden xl:flex xl:min-w-72  px-5 py-2 font-medium text-xl select-none cursor-pointer  line-clamp-1 max-w-72 truncate text-ellipsis" onDoubleClick={HandleStartEditing}>
+                {!LoadingBoard && <span className="max-w-full truncate">{Board?.BoardName}</span>}
+                {LoadingBoard && <LoaderCircle className=" animate-spin size-7" />}
               </span>
             </Tooltip>
           )}
@@ -77,7 +89,7 @@ const Navbar = ({ Board }: NavbarProps) => {
         <SearchBar />
       </Show>
 
-      <div className="flex flex-row gap-4 items-center md:justify-end flex-wrap  ">
+      <div className="flex flex-row gap-4 items-center xl:justify-end flex-wrap  ">
         <Show if={HasBorard}>
           <ColumnSizePopover />
         </Show>

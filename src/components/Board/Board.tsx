@@ -14,9 +14,11 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { SetIsBoardOwner } from "@/Config/Store/IsBoardOwner/IsBoardOwner";
+import { LoaderCircle } from "lucide-react";
 
 export const Board = ({ Board, BoardError }: BoardProps) => {
   const Translations = useSelector((state: any) => state.Translations);
+  const LoadingBoard = useSelector((state: any) => state.LoadingBoard);
   const User = useSelector((state: any) => state.User);
   const dispatch = useDispatch();
 
@@ -26,60 +28,65 @@ export const Board = ({ Board, BoardError }: BoardProps) => {
     } else {
       dispatch(SetIsBoardOwner(false));
     }
-  }, [Board,User]);
+  }, [Board, User]);
 
   return (
     <div className="flex-grow  h-full flex flex-row items-start justify-start scroll px-4 pt-10 pb-5 pl-10 overflow-x-auto">
-      <CardModal />
-      <Show if={Board?.BoardId !== ""}>
-        <DragDropContext onDragEnd={(result) => HandleDrag(result, Board)}>
-          <Show if={!!Board.BoardId}>
-            {Board?.Columns?.filter((Colum) => Colum.Visible).map((Column: any, ColumnIndex) => (
-              <BoardColumn Column={Column} ColumnIndex={ColumnIndex} />
-            ))}
-          </Show>
-        </DragDropContext>
+      <Show if={!LoadingBoard}>
+        <CardModal />
+        <Show if={Board?.BoardId !== ""}>
+          <DragDropContext onDragEnd={(result) => HandleDrag(result, Board)}>
+            <Show if={!!Board.BoardId}>
+              {Board?.Columns?.filter((Colum) => Colum.Visible).map((Column: any, ColumnIndex) => (
+                <BoardColumn Column={Column} ColumnIndex={ColumnIndex} />
+              ))}
+            </Show>
+          </DragDropContext>
 
-        <div className="flex flex-col justify-start gap-2 ml-5">
-          <Show if={!!Board.BoardId}>
-            <BoardAddColumn />
-          </Show>
-
-          <div className="">
-            <Show if={Board?.Columns?.filter((Colum) => !Colum.Visible).length > 0}>
-              <h1 className="mt-5 mb-2 ">{Translations.Board.HiddenColumns}</h1>
+          <div className="flex flex-col justify-start gap-2 ml-5">
+            <Show if={!!Board.BoardId}>
+              <BoardAddColumn />
             </Show>
 
-            <div className="flex flex-col gap-0">
-              <Show if={!!Board.BoardId}>
-                {Board?.Columns?.filter((Colum) => !Colum.Visible).map((Column: any) => (
-                  <div className="flex flex-row justify-between w-full gap-3 items-center">
-                    <Status Color={Column.ColumnColor} Text={Column.ColumnTitle} Column={Column} />
-                    <div className="flex flex-row gap-5 items-center">
-                      <Tooltip text={Translations.Tooltips.QtdCards}>
-                        <span>{Column.CardsQtd}</span>
-                      </Tooltip>
-                      <BoardColumnOptions Column={Column} />
-                    </div>
-                  </div>
-                ))}
+            <div className="">
+              <Show if={Board?.Columns?.filter((Colum) => !Colum.Visible).length > 0}>
+                <h1 className="mt-5 mb-2 ">{Translations.Board.HiddenColumns}</h1>
               </Show>
+
+              <div className="flex flex-col gap-0">
+                <Show if={!!Board.BoardId}>
+                  {Board?.Columns?.filter((Colum) => !Colum.Visible).map((Column: any) => (
+                    <div className="flex flex-row justify-between w-full gap-3 items-center">
+                      <Status Color={Column.ColumnColor} Text={Column.ColumnTitle} Column={Column} />
+                      <div className="flex flex-row gap-5 items-center">
+                        <Tooltip text={Translations.Tooltips.QtdCards}>
+                          <span>{Column.CardsQtd}</span>
+                        </Tooltip>
+                        <BoardColumnOptions Column={Column} />
+                      </div>
+                    </div>
+                  ))}
+                </Show>
+              </div>
             </div>
           </div>
-        </div>
-      </Show>
+        </Show>
 
-      <Show if={!Board.BoardId && !BoardError}>
-        <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-7">
-          <h1 className=" text-4xl font-semibold">{Translations.Board.NoBoard}</h1>
-          <img src={BoardImage} alt="" className="size-[80%] md:size-[50%] max-w-96" />
-          <AddBoardItem className="rounded-full w-auto" />
-        </div>
+        <Show if={!Board.BoardId && !BoardError}>
+          <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-7">
+            <h1 className=" text-4xl font-semibold">{Translations.Board.NoBoard}</h1>
+            <img src={BoardImage} alt="" className="size-[80%] md:size-[50%] max-w-96" />
+            <AddBoardItem className="rounded-full w-auto" />
+          </div>
+        </Show>
+        <Show if={!Board.BoardId && !!BoardError}>
+          <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-7">
+            <h1 className=" text-4xl font-semibold">{BoardError}</h1>
+          </div>
+        </Show>
       </Show>
-      <Show if={!Board.BoardId && !!BoardError}>
-        <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-7">
-          <h1 className=" text-4xl font-semibold">{BoardError}</h1>
-        </div>
+      <Show if={LoadingBoard}>
+        <LoaderCircle className=" animate-spin" />
       </Show>
     </div>
   );

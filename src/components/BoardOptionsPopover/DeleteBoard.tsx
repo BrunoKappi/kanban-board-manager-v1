@@ -14,6 +14,7 @@ export default function DeleteBoard({ SetExternalOpen }: Props) {
   const [open, setOpen] = useState(false);
   const Board = useSelector((state: any) => state.Board);
   const Translations = useSelector((state: any) => state.Translations);
+  const IsBoardOwner = useSelector((state: any) => state.IsBoardOwner);
 
   const HandleDeleteBoard = () => {
     setOpen(false);
@@ -26,7 +27,8 @@ export default function DeleteBoard({ SetExternalOpen }: Props) {
       <AlertDialogTrigger asChild>
         <ListOption>
           <Trash2 className="size-4" />
-         {Translations.OptionsLists.DeleteBoard}
+          {IsBoardOwner && Translations.OptionsLists.DeleteBoard}
+          {!IsBoardOwner && Translations.OptionsLists.DeleteBoardForMe}
         </ListOption>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-background dark:bg-background-dark-dialog dark:border-border-dark">
@@ -36,10 +38,10 @@ export default function DeleteBoard({ SetExternalOpen }: Props) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
-          {Translations.AlertDialog.DeleteBoard.CancelButton}
+            {Translations.AlertDialog.DeleteBoard.CancelButton}
           </Button>
           <Button variant="destructive" onClick={HandleDeleteBoard}>
-          {Translations.AlertDialog.DeleteBoard.CancelButton}
+            {Translations.AlertDialog.DeleteBoard.CancelButton}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

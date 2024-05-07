@@ -1,5 +1,5 @@
 import { OrderBoards } from "@/components/Sidebar/SidebarUtils";
-import { FIREBASE_DeleteBoard, FIREBASE_DeleteBoardListItem } from "@/Config/Firebase/Firestore";
+import { FIREBASE_DeleteBoard, FIREBASE_DeleteBoardListItem, FIREBASE_UpdateBoard } from "@/Config/Firebase/Firestore";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import store from "@/Config/Store/Store";
@@ -9,17 +9,30 @@ export const MIDDLEWARE_DeleteBoard = (Board: any) => {
   const UserUid = store.getState().User?.uid || "";
   const BoardList = [...store.getState().BoardList];
   var NewBoardList = [...store.getState().BoardList];
+  const NewBoard = JSON.parse(JSON.stringify(Board));
 
   //@ts-ignore
   const BoardListItem: BoardListItemType = { ...BoardList.find((Item: BoardListItemType) => Item.BoardId === Board.BoardId) };
 
   NewBoardList = [...NewBoardList].filter((Item: BoardListItemType) => Item.BoardId !== Board.BoardId);
 
-  if (UserUid) {
-    FIREBASE_DeleteBoard(Board);
-    FIREBASE_DeleteBoardListItem(BoardListItem);
+  //@ts-ignore
+  if (BoardListItem.IsBoardShared === true) {
+    //REMOVE O COLLABORATOR
+    NewBoard.Collaborators = NewBoard.Collaborators.filter((Collab: any) => Collab.Uid !== UserUid);
+
+    FIREBASE_UpdateBoard(NewBoard);
   }
 
+
+  if (UserUid) {
+    //@ts-ignore
+    if (BoardListItem.IsBoardShared === false) {
+      FIREBASE_DeleteBoard(Board);
+    }
+
+    FIREBASE_DeleteBoardListItem(BoardListItem);
+  }
 
   store.dispatch(SetBoardList(NewBoardList));
   //@ts-ignore
@@ -28,4 +41,3 @@ export const MIDDLEWARE_DeleteBoard = (Board: any) => {
   localStorage.removeItem(`Kanban-Board-${Board.BoardId}`);
   localStorage.removeItem(`Kanban-BoardListItem-${Board.BoardId}`);
 };
-

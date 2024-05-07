@@ -15,10 +15,19 @@ import BoardShareModal from "../BoardShareModal/BoardShareModal";
 type Props = {};
 
 export default function BoardOptionsPopover({}: Props) {
+  const Board = useSelector((state: any) => state.Board);
   const Translations = useSelector((state: any) => state.Translations);
   const CanEditBoard = useSelector((state: any) => state.CanEditBoard);
   const IsBoardOwner = useSelector((state: any) => state.IsBoardOwner);
+  const User = useSelector((state: any) => state.User);
+  var IsOneOfTheOwners = false;
   const CanDuplicateBoard = useSelector((state: any) => state.CanDuplicateBoard);
+
+  Board?.Collaborators.forEach((Collab: any) => {
+    if (Collab.Uid === User.uid) {
+      IsOneOfTheOwners = true;
+    }
+  });
 
   const [open, setOpen] = useState(false);
 
@@ -39,7 +48,7 @@ export default function BoardOptionsPopover({}: Props) {
           <ColumnSizePopover Mode="List" />
           <BoardModal SetExternalOpen={setOpen} />
           {CanDuplicateBoard && <DuplicateBoard SetExternalOpen={setOpen} />}
-          {CanEditBoard && IsBoardOwner && <DeleteBoard SetExternalOpen={setOpen} />}
+          {CanEditBoard && (IsBoardOwner || IsOneOfTheOwners) && <DeleteBoard SetExternalOpen={setOpen} />}
           {CanEditBoard && IsBoardOwner && <BoardShareModal />}
           <ExportCSV SetExternalOpen={setOpen} />
         </PopOverList>

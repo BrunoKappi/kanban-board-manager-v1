@@ -1,6 +1,6 @@
 import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
 import { FIREBASE_LoginWithEmailPassword, FIREBASE_LoginWithGoogle, FIREBASE_RegisterUserEmailPassword, FIREBASE_SendEMailResetPassword } from "@/Config/Firebase/Auth";
-import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser } from "@/Config/Firebase/Firestore";
+import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_CreateUserPreferences, FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
@@ -8,6 +8,8 @@ import { ExampleBoard1, GetText } from "@/Data/ExampleBoard1";
 import moment from "moment";
 import { v4 } from "uuid";
 import { MIDDLEWARE_GetUser } from "./GetData";
+import { DefaultNewUserPreference, SetUserPreferences } from "@/Config/Store/UserPreferences/UserPreferences";
+import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 
 type MIDDLEWARE_LoginProps = {
   email: string;
@@ -18,10 +20,12 @@ type MIDDLEWARE_LoginProps = {
 
 export const MIDDLEWARE_Login = ({ email, password, setOpen, setError }: MIDDLEWARE_LoginProps) => {
   FIREBASE_LoginWithEmailPassword(email, password)
-    .then(() => {
+    .then((Data) => {
       setOpen(false);
       //@ts-ignore
       store.dispatch(SetCardModalCard({}));
+
+      MIDDLEWARE_GetUser(Data.user.uid, Data.user.email || "");
     })
     .catch(() => {
       setError("Email or password incorrect");
@@ -89,7 +93,7 @@ type MIDDLEWARE_RegisterProps = {
 
 export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMessage }: MIDDLEWARE_RegisterProps) => {
   FIREBASE_RegisterUserEmailPassword(email.toLocaleLowerCase(), password)
-    .then((Data) => {
+    .then(async (Data) => {
       //@ts-ignore
       store.dispatch(SetCardModalCard({}));
       setMessage("User registered successfully");
@@ -105,7 +109,28 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
         photoURL: "",
       };
 
-      FIREBASE_CreateUser(NewUser);
+      const NewUserPreference = {
+        ...DefaultNewUserPreference,
+        Uid: UserUid,
+        Theme: store.getState().Theme,
+        CardWidth: store.getState().CardWidth,
+        Language: store.getState().Language,
+      };
+
+      //@ts-ignore
+      const NewUserDoc = await FIREBASE_CreateUser(NewUser);
+      const UserPrefenceDoc = await FIREBASE_CreateUserPreferences(NewUserPreference);
+
+
+      const UpdatedUserPreference = {
+        ...NewUserPreference,
+        Uid: UserPrefenceDoc.id,
+      };
+
+      //@ts-ignore
+      store.dispatch(SetUserPreferences(UpdatedUserPreference));
+
+      //FIREBASE_UpdateUserPreferences(UpdatedUserPreference);
 
       if (localStorage.getItem(`Kanban-BoardList`)) {
         const LocalStorageBoardList = getKeysWithSubstring("Kanban-BoardListItem-");
@@ -120,6 +145,7 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
 
           if (localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`)) {
             var NewBoard = { ...JSON.parse(localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`) || ""), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+ 
             FIREBASE_CreateBoard(NewBoard);
           }
 
@@ -164,9 +190,11 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
         localStorage.setItem(`Kanban-BoardListItem-${OriginalBoard.BoardId}`, JSON.stringify(NewBoardListItem));
         localStorage.setItem(`Kanban-BoardList`, JSON.stringify([NewBoardListItem]));
 
+      
         FIREBASE_CreateBoard(OriginalBoard);
         FIREBASE_CreateBoardList(NewBoardListItem);
         setTimeout(() => {
+          //store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
           setOpen(false);
         }, 3000);
       }

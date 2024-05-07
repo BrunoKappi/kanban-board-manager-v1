@@ -142,6 +142,7 @@ export const TRANSLATIONS_SPANISH = {
     DeleteCard: "Eliminar Tarjeta",
     Logout: "Cerrar sesión",
     CreateBoard: "+ Crear Tablero",
+    DeleteBoardForMe: "Eliminar tablero para mí",
   },
   AlertDialog: {
     DeleteBoard: {
@@ -199,6 +200,10 @@ export const TRANSLATIONS_SPANISH = {
     EditMessage: "Permitir que Usuarios Editen",
     DuplicateMessage: "Permitir que Usuarios Duplicen el Tablero",
     ClipboardMessage: "URL Copiada al Portapapeles",
-    AllowSharing: "Habilitar Compartir Tablero",
+    AllowSharing: "Permitir Compartir Públicamente",
+    Collaborators: "Colaboradores",
+    RemoveCollaborator: "Eliminar Colaborador",
+    AddCollaborator: "Agregar Usuario",
+    CollaboratorPlaceholder: "Correo electrónico del usuario...",
   },
 };

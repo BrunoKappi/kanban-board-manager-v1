@@ -69,7 +69,7 @@ export default function TagsFilter({}: Props) {
       <PopoverContent className="w-56 mr-10 p-0 py-4 pt-1 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList className="gap-0 py-0">
           <MinimalInput maxLength={MAX_TAGNAME} placeholder={Translations.Placeholders.SearchTag} className="text-xs py-1  px-0  w-full text-center h-auto bg-r " autoFocus={true} onChange={OnSearchChange} value={TagSearch} />
-          <Show if={FilteredTags.length > 0}>
+          <Show if={FilteredTags?.length > 0}>
             <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent mt-2">
               <span>{Translations.PopoversSubtitles.FilterTags}</span>
             </ListOption>
@@ -85,13 +85,13 @@ export default function TagsFilter({}: Props) {
             );
           })}
 
-          <Show if={FilteredTags.length === 0}>
+          <Show if={FilteredTags?.length === 0}>
             <ListOption className="flex flex-row justify-center mb-2 cursor-default hover:bg-transparent mt-2">
               <span>{Translations.Text.FilterTagsNofound}</span>
             </ListOption>
           </Show>
 
-          <Show if={FilteredTags.length > 0}>
+          <Show if={FilteredTags?.length > 0}>
             <div className=" w-full flex flex-row px-2 mt-2 justify-end ">
               <span className="bg-overlay dark:bg-overlay-dark px-2 py-0.5 rounded-md cursor-pointer" onClick={handleClearFilter}>
                 {Translations.Buttons.ClearTagFilter}

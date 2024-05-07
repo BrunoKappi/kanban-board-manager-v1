@@ -9,9 +9,11 @@ import { useParams } from "react-router-dom";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import { SetCanEditBoard } from "@/Config/Store/CanEditBoard/CanEditBoard";
 import { SetCanDuplicateBoard } from "@/Config/Store/CanDuplicateBoard/CanDuplicateBoard";
+import { SetIsBoardOwner } from "@/Config/Store/IsBoardOwner/IsBoardOwner";
 
 export default function Content() {
   const [BoardError, setBoardError] = useState("");
+
   const SelectedBoard = useSelector((state: any) => state.SelectedBoard);
   const User = useSelector((state: any) => state.User);
   const Board = useSelector((state: any) => state.Board);
@@ -30,15 +32,20 @@ export default function Content() {
           //@ts-ignore
           dispatch(SetCanEditBoard(Data?.Board.PuclicEdit));
           dispatch(SetCanDuplicateBoard(Data?.Board.AllowDuplicate));
+
+          if (Data?.Board.OwnerUid === User.uid) {
+            dispatch(SetCanEditBoard(true));
+            dispatch(SetIsBoardOwner(true));
+          }
         }
       });
     } else {
+      dispatch(SetCanEditBoard(true));
       MIDDLEWARE_GetBoard(SelectedBoard).then((Data) => {
         //@ts-ignore
         dispatch(SetBoard(Data));
         dispatch(SetCanEditBoard(true));
         dispatch(SetCanDuplicateBoard(true));
-   
       });
     }
   }, [SelectedBoard, BoardId, User]);

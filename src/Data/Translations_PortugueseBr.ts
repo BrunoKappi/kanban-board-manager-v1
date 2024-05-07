@@ -142,6 +142,7 @@ export const TRANSLATIONS_PORTUGUESE = {
     DeleteCard: "Excluir Cartão",
     Logout: "Sair",
     CreateBoard: "+ Novo Quadro",
+    DeleteBoardForMe: "Excluir quadro para mim",
   },
   AlertDialog: {
     DeleteBoard: {
@@ -199,6 +200,13 @@ export const TRANSLATIONS_PORTUGUESE = {
     EditMessage: "Permitir que Usuários Editem o Quadro",
     DuplicateMessage: "Permitir que Usuários Dupliquem o Quadro",
     ClipboardMessage: "URL Copiada para a Área de Transferência",
-    AllowSharing: "Habilitar Compartilhamento do Quadro",
+    AllowSharing: "Ativar Compartilhamento Público",
+    Collaborators: "Colaboradores",
+    RemoveCollaborator: "Remover Colaborador",
+    AddCollaborator: "Adicionar Usuário",
+    CollaboratorPlaceholder: "E-mail do usuário...",
+    UserNotFound: "Usuário não encontrado",
+    Already: "Usuário já adicionado",
+    Added: "Usuário adicionado como editor do quadro",
   },
 };

@@ -20,6 +20,7 @@ export const MIDDLEWARE_AddBoard = (BoardParam: any, setOpen: (open: boolean) =>
   };
 
   if (UserUid) {
+    
     FIREBASE_CreateBoard(NewBoard)
       .then((Data) => {
         NewBoard.docID = Data.id;
@@ -36,6 +37,8 @@ export const MIDDLEWARE_AddBoard = (BoardParam: any, setOpen: (open: boolean) =>
     store.dispatch(SetBoardList([...BoardList, NewBoardListItem]));
     store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
     store.dispatch(SetBoard(NewBoard));
+
+
     localStorage.setItem(`Kanban-Board-${NewBoard.BoardId}`, JSON.stringify(NewBoard));
     localStorage.setItem(`Kanban-BoardListItem-${NewBoard.BoardId}`, JSON.stringify(NewBoardListItem));
     localStorage.setItem(`Kanban-BoardList`, JSON.stringify([...BoardList, NewBoardListItem]));

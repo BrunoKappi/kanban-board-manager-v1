@@ -16,6 +16,9 @@ import TranslationsSlice from "./Translations/Translations";
 import CanEditBoardSlice from "./CanEditBoard/CanEditBoard";
 import IsBoardOwnerSlice from "./IsBoardOwner/IsBoardOwner";
 import CanDuplicateBoardSlice from "./CanDuplicateBoard/CanDuplicateBoard";
+import LoadingSidebarSlice from "./Loading/LoadingSidebar";
+import LoadingBoardSlice from "./Loading/LoadingBoard";
+import LoadingBoardNameSlice from "./Loading/LoadingBoardName";
 
 const store = configureStore({
   reducer: {
@@ -36,11 +39,14 @@ const store = configureStore({
     CanEditBoard: CanEditBoardSlice,
     CanDuplicateBoard: CanDuplicateBoardSlice,
     IsBoardOwner: IsBoardOwnerSlice,
+    LoadingSidebar: LoadingSidebarSlice,
+    LoadingBoard: LoadingBoardSlice,
+    LoadingBoardName: LoadingBoardNameSlice,
   },
 });
 
 const logChanges = () => {
-  // console.log("LOG STORE", store.getState());
+  //console.log("LOG STORE", store.getState());
 };
 
 export const unsubscribe = store.subscribe(logChanges);

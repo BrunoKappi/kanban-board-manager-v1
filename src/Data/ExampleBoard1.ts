@@ -455,6 +455,95 @@ export const GetText = (Language?: string) => {
         },
       },
     };
+  } else {
+    return {
+      Board: {
+        Name: "Example Board",
+        Description: "Just an Example Board",
+      },
+      Columns: {
+        Column1: {
+          Title: "Todo",
+          Cards: {
+            Card1: {
+              Title: "Design Website",
+              Tasks: {
+                Task1: "Create mockups",
+                Task2: "Define color palette",
+                Task3: "Choose fonts",
+              },
+            },
+            Card2: {
+              Title: "Develop Core Features",
+              Tasks: {
+                Task1: "Implement login system",
+                Task2: "Create board creation interface",
+                Task3: "Add drag and drop functionality",
+              },
+            },
+          },
+        },
+        Column2: {
+          Title: "Doing",
+          Cards: {
+            Card1: {
+              Title: "Review Website Content",
+              Tasks: {
+                Task1: "Write homepage text",
+                Task2: "Create documentation pages",
+                Task3: "Review content",
+              },
+            },
+            Card2: {
+              Title: "Test Features",
+              Tasks: {
+                Task1: "Test login across different browsers",
+                Task2: "Test drag and drop functionality on mobile devices",
+              },
+            },
+            Card3: {
+              Title: "Write Website Content",
+              Tasks: {
+                Task1: "Write homepage text",
+                Task2: "Create documentation text",
+              },
+            },
+          },
+        },
+        Column3: {
+          Title: "Reviewing",
+          Cards: {
+            Card1: {
+              Title: "Review Design",
+              Tasks: {
+                Task1: "Request feedback from peers",
+                Task2: "Make adjustments based on received feedback",
+              },
+            },
+          },
+        },
+        Column4: {
+          Title: "Completed",
+          Cards: {
+            Card1: {
+              Title: "Launch Website",
+              Tasks: {
+                Task1: "Set up web server",
+                Task2: "Make launch announcement",
+              },
+            },
+            Card2: {
+              Title: "Perform User Testing",
+              Tasks: {
+                Task1: "Recruit participants for user testing",
+                Task2: "Conduct usability tests on the website",
+                Task3: "Gather feedback and make final adjustments based on user responses",
+              },
+            },
+          },
+        },
+      },
+    };
   }
 };
 
@@ -463,10 +552,11 @@ const Data = GetText();
 export const ExampleBoard1 = {
   BoardId: ExampleBoardID,
   BoardName: Data?.Board?.Name,
-  BoardColumnsQtd: 4, 
+  BoardColumnsQtd: 4,
   Description: Data?.Board?.Description,
   CreatedAt: moment().valueOf(),
   LastEditedAt: moment().valueOf(),
+  Shared: false,
   Public: false,
   PublicURL: "",
   OwnerUid: "",

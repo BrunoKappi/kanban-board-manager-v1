@@ -27,9 +27,7 @@ function App() {
   const dispatch = useDispatch();
 
   //DATA /////////////
-
   GetBoardList();
-
   //DATA //////////////////
 
   if (User.uid) {
@@ -39,11 +37,7 @@ function App() {
         dispatch(SetBoards(Data));
       else dispatch(SetBoards(GetInitialState()));
     });
-  } else if (User.displayName === "Guest") {
-    //@ts-ignore
-    //dispatch(SetBoards(GetInitialState()));
   }
-
   useEffect(() => {
     const handleResize = () => setScreen(window.innerWidth);
 

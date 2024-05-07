@@ -117,10 +117,22 @@ export const FIREBASE_GetBoardList = async (uid: string) => {
 };
 
 //get
+export const FIREBASE_GetBoardListItem = async (uid: string, BoardId: string) => {
+  var CollectionRef = collection(Firebase_DB, "BoardList");
+  const Query = query(CollectionRef, where("OwnerUid", "==", uid), where("BoardId", "==", BoardId));
+  const querySnapshot = await getDocs(Query);
+  const matchedDocs = querySnapshot.docs.map((doc) => ({
+    ...doc.data(),
+    docID: doc.id,
+  }));
+  return matchedDocs[0];
+};
+
+//@ts-ignore
 export const FIREBASE_GetBoard = async (uid: string, BoardId: string) => {
   var CollectionRef = collection(Firebase_DB, "Boards");
-  const Query = query(CollectionRef, where("BoardId", "==", BoardId), where("OwnerUid", "==", uid));
-  //const Query = query(CollectionRef, where("BoardId", "==", BoardId));
+  //const Query = query(CollectionRef, where("BoardId", "==", BoardId), where("OwnerUid", "==", uid));
+  const Query = query(CollectionRef, where("BoardId", "==", BoardId));
   const querySnapshot = await getDocs(Query);
   const matchedDocs = querySnapshot.docs.map((doc) => ({
     ...doc.data(),

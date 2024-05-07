@@ -142,6 +142,7 @@ export const TRANSLATIONS_FRENCH = {
     DeleteCard: "Supprimer la Carte",
     Logout: "Déconnexion",
     CreateBoard: "+ Créer un Tableau",
+    DeleteBoardForMe: "Supprimer le tableau pour moi",
   },
   AlertDialog: {
     DeleteBoard: {
@@ -199,6 +200,13 @@ export const TRANSLATIONS_FRENCH = {
     EditMessage: "Autoriser les Utilisateurs à Modifier",
     DuplicateMessage: "Autoriser les Utilisateurs à Dupliquer le Tableau",
     ClipboardMessage: "URL Copiée dans le Presse-papiers",
-    AllowSharing: "Activer le Partage de Tableau",
+    AllowSharing: "Activer le Partage Public",
+    Collaborators: "Collaborateurs",
+    RemoveCollaborator: "Supprimer le Collaborateur",
+    AddCollaborator: "Ajouter un Utilisateur",
+    CollaboratorPlaceholder: "Email de l'utilisateur...",
+    UserNotFound: "Utilisateur non trouvé",
+    Already: "Utilisateur déjà ajouté",
+    Added: "Utilisateur ajouté en tant qu'éditeur du tableau",
   },
 };

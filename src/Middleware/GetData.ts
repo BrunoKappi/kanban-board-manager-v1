@@ -2,7 +2,6 @@ import { FIREBASE_GetAllUsers, FIREBASE_GetPublicBoard, FIREBASE_GetUserByEmail,
 import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
 import { OrderBoards } from "@/components/Sidebar/SidebarUtils";
 import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_CreateUserPreferences, FIREBASE_GetBoard, FIREBASE_GetBoardList, FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
-import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import { SetCardWidth } from "@/Config/Store/CardWidth/CardWidth";
@@ -17,11 +16,13 @@ import { ExampleBoard1 } from "@/Data/ExampleBoard1";
 import { ExampleBoard1_PortugueseBr } from "@/Data/ExampleBoard1_PortugueseBr";
 import moment from "moment";
 import { v4 } from "uuid";
-import { MIDDLEWARE_SetTranslations } from "./SetData";
+import { MIDDLEWARE_SetLoadingBoard, MIDDLEWARE_SetLoadingSidebar, MIDDLEWARE_SetTranslations } from "./SetData";
 
 export const GetBoardList = async () => {
   //@ts-ignore
   const { User, SelectedBoard, Board } = store.getState();
+
+  MIDDLEWARE_SetLoadingSidebar(true);
 
   //USUSARIO LOGADO
   if (User.uid) {
@@ -61,12 +62,13 @@ export const MIDDLEWARE_GetBoard = async (BoardId: string) => {
   //@ts-ignore
   const { User, SelectedBoard, BoardList, Board } = store.getState();
 
+  MIDDLEWARE_SetLoadingBoard(true);
+
   //USUSARIO LOGADO
   if (User.uid) {
     const Board = await FIREBASE_GetBoard(User.uid, BoardId);
-    //@ts-ignore
-    store.dispatch(SetBoard(Board));
-    localStorage.setItem(`Kanban-Board-${BoardId}`, JSON.stringify(Board || {})); 
+
+    //localStorage.setItem(`Kanban-Board-${BoardId}`, JSON.stringify(Board || {}));
     return Board;
   }
   //USUSARIO DESLOGADO
@@ -75,24 +77,26 @@ export const MIDDLEWARE_GetBoard = async (BoardId: string) => {
       return JSON.parse(localStorage.getItem(`Kanban-Board-${BoardId}`) || "");
     } else {
       const Board = Boards.find((Board) => Board.BoardId === BoardId);
-      //@ts-ignore
-      //store.dispatch(SetBoard(Board));
       return Board;
     }
   }
 };
 
 export const MIDDLEWARE_GetPublicBoard = async (BoardId: string) => {
+  const User = { ...store.getState().User };
   const Board: any = await FIREBASE_GetPublicBoard(BoardId);
+
   var Error = "";
 
   if (!!Board?.BoardId) {
-    if (Board.Public) {
+    const UserInCollaborators = Board.Collaborators.find((user: any) => user.Uid === User.uid);
+
+    if (Board.Public || UserInCollaborators?.Uid) {
       //store.dispatch(SetBoard(Board));
       return { Error, Board };
     } else {
       Error = "You dont have access to this board";
-      return { Error };
+      return { Error }; 
     }
   } else {
     Error = "Board not Found";
@@ -119,7 +123,8 @@ const SyncCurrentUserWork = async (Uid: string) => {
       FIREBASE_CreateBoardList(NewBoardListItem);
 
       if (localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`)) {
-        var NewBoard = { ...JSON.parse(localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`) || ""), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+        var NewBoard = { ...(JSON.parse(localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`) || "") || { ...ExampleBoard1 }), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+
         FIREBASE_CreateBoard(NewBoard);
       }
     });
@@ -127,6 +132,7 @@ const SyncCurrentUserWork = async (Uid: string) => {
     var NewId = v4();
     var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
     var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+
     FIREBASE_CreateBoard(NewBoard);
     FIREBASE_CreateBoardList(NewBoardListItem);
   }
@@ -146,6 +152,10 @@ export const MIDDLEWARE_GetUser = async (Uid: string, Email: string) => {
     Uid: Uid,
     Email: Email,
     CreatedAt: moment().valueOf(),
+    LastEditedAt: moment().valueOf(),
+    docID: "",
+    displayName: "",
+    photoURL: "",
   };
 
   const NewUserPreference = {
@@ -188,7 +198,7 @@ export const MIDDLEWARE_GetAllUsers = async () => {
 export const MIDDLEWARE_GetUserPreferences = async (Uid: string) => {
   const UserPreferences: any = await FIREBASE_GetUserPreferences(Uid);
 
-  if (!!UserPreferences.docID) {
+  if (!!UserPreferences?.docID) {
     //@ts-ignore
     store.dispatch(SetUserPreferences(UserPreferences));
     store.dispatch(SetTheme(UserPreferences.Theme));

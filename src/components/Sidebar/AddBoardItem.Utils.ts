@@ -75,6 +75,7 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
     LastEditedAt: moment().valueOf(),
     Public: false,
     PublicURL: "",
+    Collaborators: [],
     OwnerUid: UserUid,
     docID: "",
     ColorColumns: true,

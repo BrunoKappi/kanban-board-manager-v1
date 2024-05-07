@@ -1,6 +1,8 @@
-import { FIREBASE_CreateUserPreferences, FIREBASE_UpdateBoard, FIREBASE_UpdateBoardListItem, FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
+import { FIREBASE_UpdateBoard, FIREBASE_UpdateBoardListItem, FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
 import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
+import { SetLoadingBoard } from "@/Config/Store/Loading/LoadingBoard";
+import { SetLoadingSidebar } from "@/Config/Store/Loading/LoadingSidebar";
 import { SetSidebar } from "@/Config/Store/Sidebar/Sidebar";
 import store from "@/Config/Store/Store";
 import { SetTheme } from "@/Config/Store/Theme/Theme";
@@ -19,18 +21,25 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
   const UserUid = store.getState().User?.uid || "";
   const CanEditBoard = store.getState().CanEditBoard;
   const IsBoardOwner = store.getState().IsBoardOwner;
+  var IsOneOfTheOwners = false;
+
+  NewBoard.Collaborators.forEach((Collab: any) => {
+    if (Collab.Uid === UserUid) {
+      IsOneOfTheOwners = true;
+    }
+  });
 
   NewBoard.LastEditedAt = moment().valueOf();
 
   var NewBoardList: any = [...store.getState().BoardList];
-
   NewBoardList = [...NewBoardList].map((BoardListItem: any) => {
     const NewItem = { ...BoardListItem };
     if (NewItem.BoardId === NewBoard.BoardId) {
       NewItem.LastEditedAt = NewBoard.LastEditedAt;
       NewItem.BoardName = NewBoard.BoardName;
       NewItem.BoardId = NewBoard.BoardId;
-      NewItem.OwnerUid = NewBoard.OwnerUid;
+      //NewItem.OwnerUid = NewBoard.OwnerUid;
+      NewItem.IsBoardShared = NewItem.IsBoardShared;
     }
     return NewItem;
   });
@@ -41,7 +50,8 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
   NewBoardListItem.LastEditedAt = NewBoard.LastEditedAt;
   NewBoardListItem.BoardName = NewBoard.BoardName;
   NewBoardListItem.BoardId = NewBoard.BoardId;
-  NewBoardListItem.OwnerUid = NewBoard.OwnerUid;
+
+  //NewBoardListItem.OwnerUid = NewBoard.OwnerUid;
 
   store.dispatch(SetBoard(NewBoard));
   store.dispatch(SetBoardList(NewBoardList));
@@ -50,8 +60,7 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
   localStorage.setItem(`Kanban-BoardListItem-${NewBoard.BoardId}`, JSON.stringify(NewBoardListItem));
   localStorage.setItem(`Kanban-BoardList`, JSON.stringify(NewBoardList));
 
-  if ((UserUid && CanEditBoard) || IsBoardOwner) {
-  
+  if ((UserUid && CanEditBoard) || IsBoardOwner || IsOneOfTheOwners) {
     FIREBASE_UpdateBoard(NewBoard);
     FIREBASE_UpdateBoardListItem(NewBoardListItem);
   }
@@ -75,15 +84,22 @@ export const MIDDLEWARE_ToggleTheme = () => {
 
   const UserUid = store.getState().User?.uid || "";
 
+  setTimeout(() => {
+    store.dispatch(SetLoadingSidebar(false));
+  }, 10);
+
   if (Theme === "Dark") {
     localStorage.setItem("Kanban-Theme", "Light");
     store.dispatch(SetTheme("Light"));
     store.dispatch(SetUserPreferencesTheme("Light"));
+    MIDDLEWARE_SetLoadingSidebar(false);
     UserPreferences.Theme = "Light";
   } else {
     localStorage.setItem("Kanban-Theme", "Dark");
     store.dispatch(SetTheme("Dark"));
+
     store.dispatch(SetUserPreferencesTheme("Dark"));
+    MIDDLEWARE_SetLoadingSidebar(false);
     UserPreferences.Theme = "Dark";
   }
 
@@ -108,5 +124,27 @@ export const MIDDLEWARE_SetTranslations = (Language: string) => {
   } else if (Language === "German") {
     //@ts-ignore
     store.dispatch(SetTranslations(TRANSLATIONS_GERMAN));
+  }
+};
+
+export const MIDDLEWARE_SetLoadingSidebar = (State: boolean) => {
+  if (State) {
+    store.dispatch(SetLoadingSidebar(true));
+    setTimeout(() => {
+      store.dispatch(SetLoadingSidebar(false));
+    }, 1000);
+  } else {
+    store.dispatch(SetLoadingSidebar(false));
+  }
+};
+
+export const MIDDLEWARE_SetLoadingBoard = (State: boolean) => {
+  if (State) {
+    store.dispatch(SetLoadingBoard(true));
+    setTimeout(() => {
+      store.dispatch(SetLoadingBoard(false));
+    }, 1000);
+  } else {
+    store.dispatch(SetLoadingBoard(false));
   }
 };

@@ -4,7 +4,7 @@ export const TRANSLATIONS_ENGLISH = {
     HiddenColumns: "Hidden Collumns",
   },
   Sidebar: {
-    AllBoards: "My Boars",
+    AllBoards: "My Boards",
     CreateBoard: "+ Create Board",
   },
   Navbar: {
@@ -142,6 +142,7 @@ export const TRANSLATIONS_ENGLISH = {
     DeleteCard: "Delete Card",
     Logout: "Logout",
     CreateBoard: "+ Create Board",
+    DeleteBoardForMe: "Delete Board for me",
   },
   AlertDialog: {
     DeleteBoard: {
@@ -199,6 +200,13 @@ export const TRANSLATIONS_ENGLISH = {
     EditMessage: "Allow Users to Edit",
     DuplicateMessage: "Allow Users to Duplicate Board",
     ClipboardMessage: "URL Copied to Clipboard",
-    AllowSharing: "Enable Board Sharing",
+    AllowSharing: "Enable Public Sharing",
+    Collaborators: "Collaborators",
+    RemoveCollaborator: "Remove Collaborator",
+    AddCollaborator: "Add User",
+    CollaboratorPlaceholder: "User email...",
+    UserNotFound: "User not found",
+    Already: "User already added",
+    Added: "User Added as Editor of the Board",
   },
 };
