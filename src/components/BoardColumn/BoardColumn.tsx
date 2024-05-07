@@ -60,7 +60,7 @@ export default function BoardColumn({ Column, ColumnIndex }: Props) {
     //TAG FILTER
     if (Card?.Tags?.length > 0) {
       if (TagsToFilter.length > 0) {
-        TagsToFilter.forEach((TagToFilter: string) => {
+        TagsToFilter?.forEach((TagToFilter: string) => {
           if (Card?.Tags?.indexOf(TagToFilter) !== -1) {
             HasTag = true;
           }

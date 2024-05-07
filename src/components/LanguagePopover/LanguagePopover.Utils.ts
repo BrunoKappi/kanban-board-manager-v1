@@ -12,7 +12,7 @@ export const ChangeExampleBoardLanguage = (Language: string) => {
   var OriginalBoard = JSON.parse(JSON.stringify(ExampleBoard1));
   var NewBoard = { ...GetText(Language) };
   var BoardListIndex = 0;
-  CurrentlBoardList.forEach((BoardListItem: any, Index: number) => {
+  CurrentlBoardList?.forEach((BoardListItem: any, Index: number) => {
     if (BoardListItem.BoardId === ExampleBoardID) BoardListIndex = Index;
   });
 

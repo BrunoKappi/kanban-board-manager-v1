@@ -23,7 +23,7 @@ export default function BoardOptionsPopover({}: Props) {
   var IsOneOfTheOwners = false;
   const CanDuplicateBoard = useSelector((state: any) => state.CanDuplicateBoard);
 
-  Board?.Collaborators.forEach((Collab: any) => {
+  Board?.Collaborators?.forEach((Collab: any) => {
     if (Collab.Uid === User.uid) {
       IsOneOfTheOwners = true;
     }

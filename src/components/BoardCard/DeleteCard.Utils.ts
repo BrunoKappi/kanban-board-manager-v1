@@ -7,7 +7,7 @@ export const HandleDeleteCard = (ColumnIndex: number, CardIndex: number, Column:
 
   var NewColumnIndex = ColumnIndex;
 
-  NewColumns.forEach((element: any, index: number) => {
+  NewColumns?.forEach((element: any, index: number) => {
     if (element.ColumId === Column.ColumId) NewColumnIndex = index;
   });
 
