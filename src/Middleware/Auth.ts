@@ -10,6 +10,8 @@ import { v4 } from "uuid";
 import { MIDDLEWARE_GetUser } from "./GetData";
 import { DefaultNewUserPreference, SetUserPreferences } from "@/Config/Store/UserPreferences/UserPreferences";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
+import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
+import { SetBoard } from "@/Config/Store/Board/Boards";
 
 type MIDDLEWARE_LoginProps = {
   email: string;
@@ -121,7 +123,6 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
       const NewUserDoc = await FIREBASE_CreateUser(NewUser);
       const UserPrefenceDoc = await FIREBASE_CreateUserPreferences(NewUserPreference);
 
-
       const UpdatedUserPreference = {
         ...NewUserPreference,
         Uid: UserPrefenceDoc.id,
@@ -145,7 +146,7 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
 
           if (localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`)) {
             var NewBoard = { ...JSON.parse(localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`) || ""), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
- 
+
             FIREBASE_CreateBoard(NewBoard);
           }
 
@@ -190,13 +191,20 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
         localStorage.setItem(`Kanban-BoardListItem-${OriginalBoard.BoardId}`, JSON.stringify(NewBoardListItem));
         localStorage.setItem(`Kanban-BoardList`, JSON.stringify([NewBoardListItem]));
 
-      
         FIREBASE_CreateBoard(OriginalBoard);
         FIREBASE_CreateBoardList(NewBoardListItem);
         setTimeout(() => {
-          //store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
+          store.dispatch(SetBoardList([NewBoardListItem]));
+          store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
+          store.dispatch(SetBoard(OriginalBoard));
           setOpen(false);
-        }, 3000);
+        }, 1000);
+        setTimeout(() => {
+          store.dispatch(SetBoardList([NewBoardListItem]));
+          store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
+          store.dispatch(SetBoard(OriginalBoard));
+          setOpen(false);
+        }, 3500);
       }
     })
     .catch((error) => {
