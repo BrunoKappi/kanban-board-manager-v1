@@ -6,6 +6,7 @@ import Show from "@/lib/Show";
 import { BoardProps } from "./Board.Types";
 import Status from "../Status/Status";
 import BoardImage from "@/Assets/Board.svg";
+import BoardNotFound from "@/Assets/BoardNotFound.svg";
 import BoardColumnOptions from "../BoardColumn/BoardColumnOptions";
 import Tooltip from "../Tooltip/Tooltip";
 import CardModal from "../CardModal/CardModal";
@@ -74,14 +75,15 @@ export const Board = ({ Board, BoardError }: BoardProps) => {
 
         <Show if={!Board.BoardId && !BoardError}>
           <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-7">
-            <h1 className=" text-4xl font-semibold">{Translations.Board.NoBoard}</h1>
+            <h1 className=" text-4xl font-semibold bg-blue-400/30 dark:bg-blue-400/10 dark:text-blue-400 text-blue-600 px-5 rounded-full py-1">{Translations.Board.NoBoard}</h1>
             <img src={BoardImage} alt="" className="size-[80%] md:size-[50%] max-w-96" />
             <AddBoardItem className="rounded-full w-auto" />
           </div>
         </Show>
         <Show if={!Board.BoardId && !!BoardError}>
           <div className="w-full text-center font-semibold text-2xl flex flex-col justify-center items-center gap-7">
-            <h1 className=" text-4xl font-semibold">{BoardError}</h1>
+            <h1 className=" text-4xl font-semibold bg-orange-400/30 dark:bg-orange-400/10 dark:text-orange-400 text-orange-600 px-5 rounded-full py-1">{BoardError}</h1>
+            <img src={BoardNotFound} alt="" className="size-[80%] md:size-[50%] max-w-96" />
           </div>
         </Show>
       </Show>
