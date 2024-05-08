@@ -1,6 +1,7 @@
-import { collection, deleteDoc } from "firebase/firestore";
+import { collection, deleteDoc, DocumentReference, onSnapshot, Unsubscribe } from "firebase/firestore";
 import { getDocs, addDoc, updateDoc, doc, where, query } from "firebase/firestore";
 import { Firebase_DB } from "./Config";
+import { MIDDLEWARE_SyncBoard } from "@/Middleware/SetData";
 
 export const FIREBASE_CreateBoard = async (Payload: any) => {
   var CollectionRef = collection(Firebase_DB, "Boards");
@@ -114,6 +115,25 @@ export const FIREBASE_GetBoardList = async (uid: string) => {
     docID: doc.id,
   }));
   return matchedDocs;
+};
+
+let unsubscribe: Unsubscribe | null = null;
+
+export const setListeningBoard = (docID: string) => {
+  // console.log("STARTED LISTENING");
+  const docRef: DocumentReference = doc(Firebase_DB, "Boards", docID);
+  unsubscribe = onSnapshot(docRef, (doc) => {
+    //@ts-ignore
+    MIDDLEWARE_SyncBoard(doc.data());
+  });
+};
+
+export const stopListeningBoard = () => {
+  if (unsubscribe) {
+    // console.log("STOPPED LISTENING");
+    unsubscribe();
+    unsubscribe = null;
+  }
 };
 
 //get

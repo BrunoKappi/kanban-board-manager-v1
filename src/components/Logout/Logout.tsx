@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { ExampleBoard1 } from "@/Data/ExampleBoard1";
 import { SetUserPreferencesdocID } from "@/Config/Store/UserPreferences/UserPreferences";
 
+
 type Props = {
   setOpen: (mode: boolean) => void;
 };
@@ -23,12 +24,13 @@ export default function Logout({ setOpen }: Props) {
     const CurrentLanguage = localStorage.getItem("Kanban-Language");
 
     localStorage.clear();
+   
+
     if (CurrentTheme) localStorage.setItem("Kanban-Theme", CurrentTheme);
     if (CurrentLanguage) localStorage.setItem("Kanban-Language", CurrentLanguage);
     var NewId = v4();
     var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
     var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
-
 
     localStorage.setItem(`Kanban-Board-${NewBoard.BoardId}`, JSON.stringify(NewBoard));
     localStorage.setItem(`Kanban-BoardListItem-${NewBoard.BoardId}`, JSON.stringify(NewBoardListItem));

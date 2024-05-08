@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Tooltip from "../Tooltip/Tooltip";
 
-type Props = {};
+type Props = { BoardId: string };
 
-export default function BoardMessage({}: Props) {
+export default function BoardMessage({ BoardId }: Props) {
   const [Message, setMessage] = useState("");
   const [DismissMessage, setDismissMessage] = useState(true);
   const [MessageType, setMessageType] = useState("alert");
@@ -16,8 +16,16 @@ export default function BoardMessage({}: Props) {
   const CanEditBoard = useSelector((state: any) => state.CanEditBoard);
   const Board = useSelector((state: any) => state.Board);
 
+  var IsOneOfTheOwners = false;
+
+  Board?.Collaborators?.forEach((Collab: any) => {
+    if (Collab.Uid === User?.uid) {
+      IsOneOfTheOwners = true;
+    }
+  });
+
   useEffect(() => {
-    if (!Board?.BorardId) {
+    if (!BoardId) {
       setMessage("");
       setDismissMessage(true);
       return;
@@ -33,7 +41,7 @@ export default function BoardMessage({}: Props) {
         setDismissMessage(true);
         return;
       } else {
-        if (CanEditBoard) {
+        if (CanEditBoard || IsOneOfTheOwners) {
           if (!User.uid) {
             setDismissMessage(false);
             setMessage(Translations.Text.NotLogged);

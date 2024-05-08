@@ -148,3 +148,12 @@ export const MIDDLEWARE_SetLoadingBoard = (State: boolean) => {
     store.dispatch(SetLoadingBoard(false));
   }
 };
+
+export const MIDDLEWARE_SyncBoard = (Data: any) => {
+  const Board = store.getState().Board;
+  //@ts-ignore
+  if (Data?.docID === Board?.docID) {
+    //@ts-ignore
+    store.dispatch(SetBoard(Data));
+  }
+};

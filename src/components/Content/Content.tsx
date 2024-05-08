@@ -11,6 +11,7 @@ import { SetCanEditBoard } from "@/Config/Store/CanEditBoard/CanEditBoard";
 import { SetCanDuplicateBoard } from "@/Config/Store/CanDuplicateBoard/CanDuplicateBoard";
 import { SetIsBoardOwner } from "@/Config/Store/IsBoardOwner/IsBoardOwner";
 import BoardMessage from "./BoardMessage";
+import { setListeningBoard, stopListeningBoard } from "@/Config/Firebase/Firestore";
 
 export default function Content() {
   const [BoardError, setBoardError] = useState("");
@@ -21,7 +22,15 @@ export default function Content() {
   const dispatch = useDispatch();
   const { BoardId } = useParams();
 
+  var HasCollab = false;
+  var IsPublic = false;
+
+  
+
   useEffect(() => {
+    HasCollab = false;
+    IsPublic = false;
+    stopListeningBoard();
     if (!!BoardId) {
       MIDDLEWARE_GetPublicBoard(BoardId).then((Data) => {
         if (Data.Error && Data.ErrorCode) {
@@ -34,6 +43,17 @@ export default function Content() {
           dispatch(SetCanEditBoard(Data?.Board.PuclicEdit));
           dispatch(SetCanDuplicateBoard(Data?.Board.AllowDuplicate));
 
+          if (Data?.Board.PuclicEdit) IsPublic = true;
+          if (Data?.Board?.Collaborators.length > 0) HasCollab = true;
+
+          if ((Data?.Board?.OwnerUid !== User.uid && !!User.uid) || IsPublic || HasCollab) {
+            setListeningBoard(Data?.Board.docID);
+          } else {
+            stopListeningBoard();
+          }
+
+          stopListeningBoard();
+
           if (Data?.Board.OwnerUid === User.uid) {
             dispatch(SetCanEditBoard(true));
             dispatch(SetIsBoardOwner(true));
@@ -41,20 +61,33 @@ export default function Content() {
         }
       });
     } else {
-      dispatch(SetCanEditBoard(true));
-      MIDDLEWARE_GetBoard(SelectedBoard).then((Data) => {
-        //@ts-ignore
-        dispatch(SetBoard(Data));
+      if (SelectedBoard) {
         dispatch(SetCanEditBoard(true));
-        dispatch(SetCanDuplicateBoard(true));
-      });
+        MIDDLEWARE_GetBoard(SelectedBoard).then((Data) => {
+          //@ts-ignore
+          dispatch(SetBoard(Data));
+          dispatch(SetCanEditBoard(true));
+          dispatch(SetCanDuplicateBoard(true));
+
+          if (Data?.PuclicEdit) IsPublic = true;
+          if (Data?.Collaborators?.length > 0) HasCollab = true;
+
+          if ((Data?.OwnerUid !== User.uid && !!User.uid) || IsPublic || HasCollab) {
+            setListeningBoard(Data?.docID);
+          } else {
+            stopListeningBoard();
+          }
+        });
+      } else {
+        stopListeningBoard();
+      }
     }
   }, [SelectedBoard, BoardId, User, Translations]);
 
   return (
     <div className="flex flex-col flex-grow h-full ">
       <Navbar Board={Board} />
-      <BoardMessage />
+      <BoardMessage BoardId={BoardId || ""} />
       <BoardComponente Board={Board} BoardError={BoardError} />
     </div>
   );

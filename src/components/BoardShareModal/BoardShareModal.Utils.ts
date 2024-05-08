@@ -1,4 +1,4 @@
-import { FIREBASE_CreateBoardList, FIREBASE_DeleteBoardListItem, FIREBASE_GetBoardListItem, FIREBASE_GetUserByEmail } from "@/Config/Firebase/Firestore";
+import { FIREBASE_CreateBoardList, FIREBASE_DeleteBoardListItem, FIREBASE_GetBoardListItem, FIREBASE_GetUserByEmail, setListeningBoard, stopListeningBoard } from "@/Config/Firebase/Firestore";
 import store from "@/Config/Store/Store";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 import moment from "moment";
@@ -15,6 +15,16 @@ export const ChangeBoardSharingOptions = (ShareBoard: boolean, AllowEdit: boolea
   NewBoard.PublicURL = ShareBoard ? `https://kanban.bkappi.com/view/${NewBoard.BoardId}` : "";
 
   MIDDLEWARE_UpdateBoard(NewBoard);
+
+  if (AllowEdit) {
+    setListeningBoard(NewBoard.docID);
+  } else {
+    if (NewBoard.Collaborators.length > 0) {
+      setListeningBoard(NewBoard.docID);
+    } else {
+      stopListeningBoard();
+    }
+  }
 };
 
 export const AddCollaborator = async (Email: string, setCollabMessage: (message: string) => void, setCollaboratorEmail: (message: string) => void) => {
@@ -71,10 +81,20 @@ export const AddCollaborator = async (Email: string, setCollabMessage: (message:
 
   MIDDLEWARE_UpdateBoard(NewBoard);
   FIREBASE_CreateBoardList(NewBoardListItem);
+  if (NewCollaborators.length === 0) {
+    stopListeningBoard();
+  } else {
+    if (NewBoard.AllowEdit) {
+      setListeningBoard(NewBoard.docID);
+    } else {
+      stopListeningBoard();
+    }
+  }
 
   setCollabMessage(store.getState().Translations.Sharing.Added);
   setTimeout(() => {
     setCollabMessage("");
+    setCollaboratorEmail("");
   }, 1500);
 };
 
