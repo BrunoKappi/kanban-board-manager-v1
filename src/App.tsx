@@ -11,6 +11,7 @@ import { GetInitialState, SetBoards } from "./Config/Store/Boards/Boards";
 import { GetPanelSize } from "./lib/utils";
 import { GetBoardList } from "./Middleware/GetData";
 import Lost from "./Assets/Lost.svg";
+import Updates from "./Updates";
 
 function App() {
   const User = useSelector((state: any) => state.User);
@@ -26,7 +27,6 @@ function App() {
 
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     GetBoardList();
   }, []);
@@ -34,8 +34,6 @@ function App() {
   useEffect(() => {
     GetBoardList();
   }, [User]);
-
-  
 
   if (User.uid) {
     FIREBASE_GetDocBoards(User.uid).then((Data) => {
@@ -85,6 +83,7 @@ function App() {
 
   return (
     <main className=" h-dvh w-dvw bg-background dark:bg-background-dark">
+      <Updates />
       <Routes>
         <Route path="/" element={GetElement()} />
         <Route path="/View/:BoardId" element={GetElement()} />

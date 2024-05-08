@@ -17,7 +17,6 @@ import { useDispatch } from "react-redux";
 import { SetIsBoardOwner } from "@/Config/Store/IsBoardOwner/IsBoardOwner";
 import { LoaderCircle } from "lucide-react";
 
-
 export const Board = ({ Board, BoardError }: BoardProps) => {
   const Translations = useSelector((state: any) => state.Translations);
   const LoadingBoard = useSelector((state: any) => state.LoadingBoard);
@@ -25,12 +24,16 @@ export const Board = ({ Board, BoardError }: BoardProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
-
     if (Board.OwnerUid === User.uid) {
       dispatch(SetIsBoardOwner(true));
     } else {
       dispatch(SetIsBoardOwner(false));
+    }
+
+    if (Board.BoardName) {
+      document.title = `${Board.BoardName}`;
+    } else {
+      document.title = "Kanban";
     }
   }, [Board, User]);
 
