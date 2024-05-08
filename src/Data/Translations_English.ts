@@ -17,6 +17,8 @@ export const TRANSLATIONS_ENGLISH = {
     ColumnOptions: "Column Options",
     Languages: "Languages",
     Boards: "Boards",
+    ExportFormats: 'Formats',
+    Export: "Export Board",
     Groups: "Groups",
   },
   Tooltips: {
@@ -130,6 +132,7 @@ export const TRANSLATIONS_ENGLISH = {
   OptionsLists: {
     ExportColumnToCSV: "Export Column to CSV",
     ExportCSV: "Export Board to CSV",
+    ExportExcel: "Export Board to Excel",
     CardWidth: "Card Width",
     EditBord: "Edit Board",
     DuplicateBoard: "Duplicate Board",

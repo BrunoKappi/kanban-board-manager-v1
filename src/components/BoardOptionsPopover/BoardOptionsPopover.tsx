@@ -9,8 +9,8 @@ import { ListOption } from "../ListOption/ListOption";
 import DuplicateBoard from "./DuplicateBoard";
 import ColumnSizePopover from "../ColumnSizePopover/ColumnSizePopover";
 import { useSelector } from "react-redux";
-import ExportCSV from "./ExportBoardToCsv";
 import BoardShareModal from "../BoardShareModal/BoardShareModal";
+import ExportBoard from "./ExportBoard";
 
 type Props = {};
 
@@ -50,7 +50,7 @@ export default function BoardOptionsPopover({}: Props) {
           {CanDuplicateBoard && <DuplicateBoard SetExternalOpen={setOpen} />}
           {CanEditBoard && (IsBoardOwner || IsOneOfTheOwners) && <DeleteBoard SetExternalOpen={setOpen} />}
           {CanEditBoard && IsBoardOwner && <BoardShareModal />}
-          <ExportCSV SetExternalOpen={setOpen} />
+          <ExportBoard SetExternalOpen={setOpen} />
         </PopOverList>
       </PopoverContent>
     </Popover>

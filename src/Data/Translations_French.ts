@@ -17,6 +17,8 @@ export const TRANSLATIONS_FRENCH = {
     ColumnOptions: "Options de la Colonne",
     Languages: "Langues",
     Boards: "Tableaux",
+    ExportFormats: 'Formats',
+    Export: 'Exporter le tableau',
     Groups: "Groupes",
   },
   Tooltips: {
@@ -130,6 +132,7 @@ export const TRANSLATIONS_FRENCH = {
   OptionsLists: {
     ExportColumnToCSV: "Exporter la colonne au format CSV",
     ExportCSV: "Exporter le tableau au format CSV",
+    ExportExcel: "Exporter le tableau au format Excel",
     CardWidth: "Largeur de la Carte",
     EditBord: "Éditer le Tableau",
     DuplicateBoard: "Dupliquer le Tableau",

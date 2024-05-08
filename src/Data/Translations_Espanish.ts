@@ -17,6 +17,8 @@ export const TRANSLATIONS_SPANISH = {
     ColumnOptions: "Opciones de la Columna",
     Languages: "Idiomas",
     Boards: "Tableros",
+    ExportFormats: 'Formatos',
+    Export: 'Exportar tablero',
     Groups: "Grupos",
   },
   Tooltips: {
@@ -130,6 +132,7 @@ export const TRANSLATIONS_SPANISH = {
   OptionsLists: {
     ExportColumnToCSV: "Exportar Columna a CSV",
     ExportCSV: "Exportar Tablero a CSV",
+    ExportExcel: "Exportar Tablero a Excel",
     CardWidth: "Ancho de la Tarjeta",
     EditBord: "Editar Tablero",
     DuplicateBoard: "Duplicar Tablero",

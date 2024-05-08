@@ -22,7 +22,7 @@ export default function BoardMessage({}: Props) {
       setDismissMessage(true);
     } else {
       const DismissLocalstorage = localStorage.getItem(`Kanban-Dismiss-${Board.BoardId}`) || "NotDismiss";
-      console.log(DismissLocalstorage);
+
       if (DismissLocalstorage === "Dismiss") {
         setDismissMessage(true);
         return;
@@ -50,7 +50,7 @@ export default function BoardMessage({}: Props) {
         }
       }
     }
-  }, [IsBoardOwner, CanEditBoard, User, Board,Translations]);
+  }, [IsBoardOwner, CanEditBoard, User, Board, Translations]);
 
   const handleDismissMessage = () => {
     localStorage.setItem(`Kanban-Dismiss-${Board.BoardId}`, "Dismiss");

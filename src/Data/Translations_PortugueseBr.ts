@@ -17,6 +17,8 @@ export const TRANSLATIONS_PORTUGUESE = {
     ColumnOptions: "Opções da Coluna",
     Languages: "Idioma do App",
     Boards: "Quadros",
+    ExportFormats: "Formatos",
+    Export: "Exportar Quadro",
     Groups: "Grupos",
   },
   Tooltips: {
@@ -130,6 +132,7 @@ export const TRANSLATIONS_PORTUGUESE = {
   OptionsLists: {
     ExportColumnToCSV: "Exportar Coluna para CSV",
     ExportCSV: "Exportar Quadro para CSV",
+    ExportExcel: "Exportar Quadro para Excel",
     CardWidth: "Largura do Cartão",
     EditBoard: "Editar Quadro",
     DuplicateBoard: "Duplicar Quadro",

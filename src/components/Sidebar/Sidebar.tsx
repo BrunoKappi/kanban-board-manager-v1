@@ -54,8 +54,6 @@ export default function Sidebar() {
     }
   };
 
-  console.log(BoardList);
-
   return (
     <div className="hidden md:flex w-full h-full  flex-col items-center justify-start pt-8 px-2  gap-0 relative  bg-slate-400/10 dark:bg-slate-400/5 overflow-y-scroll overflow-x-hidden">
       {LoadingSidebar && <LoaderCircle className=" animate-spin" />}
