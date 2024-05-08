@@ -89,7 +89,7 @@ const Navbar = ({ Board }: NavbarProps) => {
         <SearchBar />
       </Show>
 
-      <div className="flex flex-row gap-4 items-center xl:justify-end flex-wrap  ">
+      <div className="flex flex-row gap-4 items-center xl:justify-end flex-nowrap  ">
         <Show if={HasBorard}>
           <ColumnSizePopover />
         </Show>
