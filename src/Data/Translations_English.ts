@@ -17,7 +17,7 @@ export const TRANSLATIONS_ENGLISH = {
     ColumnOptions: "Column Options",
     Languages: "Languages",
     Boards: "Boards",
-    ExportFormats: 'Formats',
+    ExportFormats: "Formats",
     Export: "Export Board",
     Groups: "Groups",
   },
@@ -199,6 +199,8 @@ export const TRANSLATIONS_ENGLISH = {
     EditinNotAllowed: "Changes to this Board will not be saved as they are not enabled",
     SharedBoardMessage: "This Board was shared with you by",
     DismissSharedBoardMessage: "Close",
+    BoardAccessDenied: "You don't have access to this board",
+    BoardNotFound: "Board not Found",
   },
   Sharing: {
     NotLogged: "Sharing is available only for users logged into an account",

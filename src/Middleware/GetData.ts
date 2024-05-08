@@ -84,6 +84,7 @@ export const MIDDLEWARE_GetBoard = async (BoardId: string) => {
 
 export const MIDDLEWARE_GetPublicBoard = async (BoardId: string) => {
   const User = { ...store.getState().User };
+  const Translations = { ...store.getState().Translations };
   const Board: any = await FIREBASE_GetPublicBoard(BoardId);
 
   var Error = "";
@@ -95,12 +96,12 @@ export const MIDDLEWARE_GetPublicBoard = async (BoardId: string) => {
       //store.dispatch(SetBoard(Board));
       return { Error, Board };
     } else {
-      Error = "You dont have access to this board";
-      return { Error }; 
+      Error = Translations.Text.BoardAccessDenied;
+      return { Error, ErrorCode: "BoardAccessDenied" };
     }
   } else {
-    Error = "Board not Found";
-    return { Error };
+    Error = Translations.Text.BoardNotFound;
+    return { Error, ErrorCode: "BoardNotFound" };
   }
 };
 

@@ -16,6 +16,7 @@ export default function Content() {
   const [BoardError, setBoardError] = useState("");
   const SelectedBoard = useSelector((state: any) => state.SelectedBoard);
   const User = useSelector((state: any) => state.User);
+  const Translations = useSelector((state: any) => state.Translations);
   const Board = useSelector((state: any) => state.Board);
   const dispatch = useDispatch();
   const { BoardId } = useParams();
@@ -23,8 +24,8 @@ export default function Content() {
   useEffect(() => {
     if (!!BoardId) {
       MIDDLEWARE_GetPublicBoard(BoardId).then((Data) => {
-        if (Data.Error) {
-          setBoardError(Data.Error);
+        if (Data.Error && Data.ErrorCode) {
+          setBoardError(Translations.Text[Data.ErrorCode]);
         } else {
           //@ts-ignore
           dispatch(SetSelectedBoard(Data?.Board.BoardId));
@@ -48,7 +49,7 @@ export default function Content() {
         dispatch(SetCanDuplicateBoard(true));
       });
     }
-  }, [SelectedBoard, BoardId, User]);
+  }, [SelectedBoard, BoardId, User, Translations]);
 
   return (
     <div className="flex flex-col flex-grow h-full ">

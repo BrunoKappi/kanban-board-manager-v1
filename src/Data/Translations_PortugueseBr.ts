@@ -199,6 +199,8 @@ export const TRANSLATIONS_PORTUGUESE = {
     EditinNotAllowed: "As alterações neste quadro não serão salvas porque não estão habilitadas",
     SharedBoardMessage: "Este quadro foi compartilhado com você por",
     DismissSharedBoardMessage: "Fechar",
+    BoardAccessDenied: "Você não tem acesso a este quadro",
+    BoardNotFound: "Quadro não encontrado",
   },
   Sharing: {
     NotLogged: "O compartilhamento está disponível apenas para usuários logados em uma conta.",

@@ -17,8 +17,8 @@ export const TRANSLATIONS_SPANISH = {
     ColumnOptions: "Opciones de la Columna",
     Languages: "Idiomas",
     Boards: "Tableros",
-    ExportFormats: 'Formatos',
-    Export: 'Exportar tablero',
+    ExportFormats: "Formatos",
+    Export: "Exportar tablero",
     Groups: "Grupos",
   },
   Tooltips: {
@@ -199,6 +199,8 @@ export const TRANSLATIONS_SPANISH = {
     EditinNotAllowed: "Los cambios en este tablero no se guardarán porque no están habilitados",
     SharedBoardMessage: "Este tablero fue compartido contigo por",
     DismissSharedBoardMessage: "Cerrar",
+    BoardAccessDenied: "No tienes acceso a este tablero",
+    BoardNotFound: "Tablero no encontrado",
   },
   Sharing: {
     NotLogged: "La compartición está disponible solo para usuarios conectados a una cuenta",

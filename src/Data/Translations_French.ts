@@ -17,8 +17,8 @@ export const TRANSLATIONS_FRENCH = {
     ColumnOptions: "Options de la Colonne",
     Languages: "Langues",
     Boards: "Tableaux",
-    ExportFormats: 'Formats',
-    Export: 'Exporter le tableau',
+    ExportFormats: "Formats",
+    Export: "Exporter le tableau",
     Groups: "Groupes",
   },
   Tooltips: {
@@ -199,6 +199,8 @@ export const TRANSLATIONS_FRENCH = {
     EditinNotAllowed: "Les modifications apportées à ce tableau ne seront pas enregistrées car elles ne sont pas activées",
     SharedBoardMessage: "Ce tableau vous a été partagé par",
     DismissSharedBoardMessage: "Fermer",
+    BoardAccessDenied: "Vous n'avez pas accès à ce tableau",
+    BoardNotFound: "Tableau non trouvé",
   },
   Sharing: {
     NotLogged: "Le partage est disponible uniquement pour les utilisateurs connectés à un compte.",

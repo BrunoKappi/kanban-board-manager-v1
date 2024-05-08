@@ -17,8 +17,8 @@ export const TRANSLATIONS_GERMAN = {
     ColumnOptions: "Spaltenoptionen",
     Languages: "Sprachen",
     Boards: "Boards",
-    ExportFormats: 'Formate',
-    Export: 'Board exportieren',
+    ExportFormats: "Formate",
+    Export: "Board exportieren",
     Groups: "Gruppen",
   },
   Tooltips: {
@@ -199,6 +199,8 @@ export const TRANSLATIONS_GERMAN = {
     EditinNotAllowed: "Änderungen an diesem Board werden nicht gespeichert, da sie nicht aktiviert sind",
     SharedBoardMessage: "Dieses Board wurde von Ihnen geteilt",
     DismissSharedBoardMessage: "Schließen",
+    BoardAccessDenied: "Sie haben keinen Zugriff auf dieses Board",
+    BoardNotFound: "Board nicht gefunden",
   },
   Sharing: {
     NotLogged: "Die Freigabe steht nur angemeldeten Benutzern zur Verfügung.",
