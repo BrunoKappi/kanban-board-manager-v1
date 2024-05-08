@@ -11,9 +11,9 @@ export const GetPanelSize = (Panel: string, SidebarState: any) => {
   let Right: number;
 
   if (Screen > 1800) {
-    Left = 13;
+    Left = 14;
   } else if (Screen >= 1312) {
-    Left = 15;
+    Left = 16;
   } else {
     Left = 20;
   }

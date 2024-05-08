@@ -26,9 +26,16 @@ function App() {
 
   const dispatch = useDispatch();
 
-  //DATA /////////////
-  GetBoardList();
-  //DATA //////////////////
+
+  useEffect(() => {
+    GetBoardList();
+  }, []);
+
+  useEffect(() => {
+    GetBoardList();
+  }, [User]);
+
+  
 
   if (User.uid) {
     FIREBASE_GetDocBoards(User.uid).then((Data) => {

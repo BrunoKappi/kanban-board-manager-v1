@@ -6,6 +6,7 @@ export const TRANSLATIONS_FRENCH = {
   Sidebar: {
     AllBoards: "Mes tableaux",
     CreateBoard: "+ Créer un Tableau",
+    SharedWithMe: "Partagé avec moi",
   },
   Navbar: {
     BoardOptions: "Options du Tableau",
@@ -190,6 +191,11 @@ export const TRANSLATIONS_FRENCH = {
   Text: {
     NewCardTitle: "Nouvelle Carte",
     FilterTagsNofound: "Aucun résultat",
+    SharedBy: "Partagé par",
+    NotLogged: "Les modifications apportées à ce tableau ne seront pas enregistrées car vous n'êtes pas connecté",
+    EditinNotAllowed: "Les modifications apportées à ce tableau ne seront pas enregistrées car elles ne sont pas activées",
+    SharedBoardMessage: "Ce tableau vous a été partagé par",
+    DismissSharedBoardMessage: "Fermer",
   },
   Sharing: {
     NotLogged: "Le partage est disponible uniquement pour les utilisateurs connectés à un compte.",

@@ -6,6 +6,7 @@ export const TRANSLATIONS_ENGLISH = {
   Sidebar: {
     AllBoards: "My Boards",
     CreateBoard: "+ Create Board",
+    SharedWithMe: "Shared with me",
   },
   Navbar: {
     BoardOptions: "Board Options",
@@ -190,6 +191,11 @@ export const TRANSLATIONS_ENGLISH = {
   Text: {
     NewCardTitle: "New Card",
     FilterTagsNofound: "No results",
+    SharedBy: "Shared By",
+    NotLogged: "Changes to this Board will not be saved because you are not logged in",
+    EditinNotAllowed: "Changes to this Board will not be saved as they are not enabled",
+    SharedBoardMessage: "This Board was shared with you by",
+    DismissSharedBoardMessage: "Close",
   },
   Sharing: {
     NotLogged: "Sharing is available only for users logged into an account",

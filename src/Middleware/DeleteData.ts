@@ -1,11 +1,11 @@
 import { OrderBoards } from "@/components/Sidebar/SidebarUtils";
-import { FIREBASE_DeleteBoard, FIREBASE_DeleteBoardListItem, FIREBASE_UpdateBoard } from "@/Config/Firebase/Firestore";
+import { FIREBASE_DeleteBoard, FIREBASE_DeleteBoardListItem, FIREBASE_GetBoardListByBoardId, FIREBASE_UpdateBoard } from "@/Config/Firebase/Firestore";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import store from "@/Config/Store/Store";
 import { BoardListItemType } from "@/Data/Types";
 
-export const MIDDLEWARE_DeleteBoard = (Board: any) => {
+export const MIDDLEWARE_DeleteBoard = async (Board: any) => {
   const UserUid = store.getState().User?.uid || "";
   const BoardList = [...store.getState().BoardList];
   var NewBoardList = [...store.getState().BoardList];
@@ -18,12 +18,19 @@ export const MIDDLEWARE_DeleteBoard = (Board: any) => {
 
   //@ts-ignore
   if (BoardListItem.IsBoardShared === true) {
+    //SE FOR COMPARTILHADA
     //REMOVE O COLLABORATOR
     NewBoard.Collaborators = NewBoard.Collaborators.filter((Collab: any) => Collab.Uid !== UserUid);
 
     FIREBASE_UpdateBoard(NewBoard);
-  }
+  } else {
+    //SE FOR O DONO DA BOARD
+    const BoardListItemsOfTheBoard = await FIREBASE_GetBoardListByBoardId(NewBoard.BoardId);
 
+    BoardListItemsOfTheBoard.forEach((Item) => {
+      FIREBASE_DeleteBoardListItem(Item);
+    });
+  }
 
   if (UserUid) {
     //@ts-ignore

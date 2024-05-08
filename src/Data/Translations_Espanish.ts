@@ -6,6 +6,7 @@ export const TRANSLATIONS_SPANISH = {
   Sidebar: {
     AllBoards: "Mis Tableros",
     CreateBoard: "+ Crear Tablero",
+    SharedWithMe: "Compartido conmigo",
   },
   Navbar: {
     BoardOptions: "Opciones del Tablero",
@@ -190,6 +191,11 @@ export const TRANSLATIONS_SPANISH = {
   Text: {
     NewCardTitle: "Nueva Tarjeta",
     FilterTagsNofound: "Sin resultados",
+    SharedBy: "Compartido por",
+    NotLogged: "Los cambios en este tablero no se guardarán porque no has iniciado sesión",
+    EditinNotAllowed: "Los cambios en este tablero no se guardarán porque no están habilitados",
+    SharedBoardMessage: "Este tablero fue compartido contigo por",
+    DismissSharedBoardMessage: "Cerrar",
   },
   Sharing: {
     NotLogged: "La compartición está disponible solo para usuarios conectados a una cuenta",

@@ -22,11 +22,11 @@ export default function Sidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  if (!SelectedBoard) dispatch(SetSelectedBoard(BoardList.sort(OrderBoards)[0]?.BoardId));
+  if (!SelectedBoard) dispatch(SetSelectedBoard(BoardList.sort(OrderBoards)[0]?.BoardId || ""));
 
   useEffect(() => {
     //@ts-ignore
-    if (!SelectedBoard) dispatch(SetSelectedBoard(BoardList.sort(OrderBoards)[0]?.BoardId));
+    if (!SelectedBoard) dispatch(SetSelectedBoard(BoardList.sort(OrderBoards)[0]?.BoardId || ""));
   }, [SelectedBoard]);
 
   const HandleSelectBoard = (BoardId: string) => {
@@ -54,20 +54,20 @@ export default function Sidebar() {
     }
   };
 
- 
+  console.log(BoardList);
 
   return (
-    <div className="hidden md:flex w-full h-full  flex-col items-center pt-8 px-5 pl-0 gap-8 relative bg-slate-400/10 dark:bg-slate-400/5">
+    <div className="hidden md:flex w-full h-full  flex-col items-center justify-start pt-8 px-2  gap-0 relative  bg-slate-400/10 dark:bg-slate-400/5 overflow-y-scroll overflow-x-hidden">
       {LoadingSidebar && <LoaderCircle className=" animate-spin" />}
       {!LoadingSidebar && (
         <>
-          <div className="w-full flex flex-row items-center justify-start gap-5 cursor-pointer  ml-7 flex-wrap mr-4">
+          <div className="w-full flex flex-row items-center justify-start gap-1 cursor-pointer  ml-7 flex-wrap mr-4 mb-5">
             <ToggleSidebar />
             <Logo />
           </div>
 
-          <div className="w-full ml-7 truncate">
-            <span className="truncate">
+          <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center">
+            <span className="truncate w-full flex flex-row justify-between">
               {Translations.Sidebar.AllBoards} ({BoardList?.filter(FilterMyBoardList).length})
             </span>
           </div>
@@ -76,16 +76,18 @@ export default function Sidebar() {
             {[...BoardList]
               .filter(FilterMyBoardList)
               .sort(OrderBoards)
-              .map((Board: any) => {
-                return <SidebarItem Active={SelectedBoard !== Board?.BoardId} BoardId={Board?.BoardId} Text={Board?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
+              .map((BoardListItem: any) => {
+                return <SidebarItem BoardListItem={BoardListItem} Active={SelectedBoard !== BoardListItem?.BoardId} BoardId={BoardListItem?.BoardId} Text={BoardListItem?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
               })}
 
-            <AddBoardItem className=" rounded-r-full" />
+            <AddBoardItem className=" rounded-md" />
           </div>
 
           {BoardList?.filter(FilterBoardsSharedWithMe).length > 0 && (
-            <div className="w-full ml-7 truncate">
-              <span className="truncate">Shared With Me ({BoardList?.filter(FilterBoardsSharedWithMe).length})</span>
+            <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center mt-5">
+              <span className="truncate w-full flex flex-row justify-between">
+                {Translations.Sidebar.SharedWithMe} ({BoardList?.filter(FilterBoardsSharedWithMe).length})
+              </span>
             </div>
           )}
 
@@ -93,8 +95,8 @@ export default function Sidebar() {
             {[...BoardList]
               .filter(FilterBoardsSharedWithMe)
               .sort(OrderBoards)
-              .map((Board: any) => {
-                return <SidebarItem Active={SelectedBoard !== Board?.BoardId} BoardId={Board?.BoardId} Text={Board?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
+              .map((BoardListItem: any) => {
+                return <SidebarItem BoardListItem={BoardListItem} Active={SelectedBoard !== BoardListItem?.BoardId} BoardId={BoardListItem?.BoardId} Text={BoardListItem?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
               })}
           </div>
         </>

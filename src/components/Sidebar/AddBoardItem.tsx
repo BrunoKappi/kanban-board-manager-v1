@@ -42,7 +42,7 @@ export function AddBoardItem({ className }: { className?: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className={`${cn("flex flex-row justify-start items-center gap-2  w-full px-3 py-2  rounded-r-3xl text-primary  cursor-pointer hover:bg-primary hover:text-primary-foreground", className)}`}>
+        <div className={`${cn("flex flex-row justify-start items-center gap-2  w-full px-3 py-2  rounded-3xl text-primary  cursor-pointer hover:bg-primary hover:text-primary-foreground", className)}`}>
           <Columns3 className="size-5 flex-shrink-0" />
           <span className="truncate text-sm">{Translations.OptionsLists.CreateBoard}</span>
         </div>

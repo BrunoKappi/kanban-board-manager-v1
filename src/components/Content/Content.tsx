@@ -10,10 +10,10 @@ import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import { SetCanEditBoard } from "@/Config/Store/CanEditBoard/CanEditBoard";
 import { SetCanDuplicateBoard } from "@/Config/Store/CanDuplicateBoard/CanDuplicateBoard";
 import { SetIsBoardOwner } from "@/Config/Store/IsBoardOwner/IsBoardOwner";
+import BoardMessage from "./BoardMessage";
 
 export default function Content() {
   const [BoardError, setBoardError] = useState("");
-
   const SelectedBoard = useSelector((state: any) => state.SelectedBoard);
   const User = useSelector((state: any) => state.User);
   const Board = useSelector((state: any) => state.Board);
@@ -53,6 +53,7 @@ export default function Content() {
   return (
     <div className="flex flex-col flex-grow h-full ">
       <Navbar Board={Board} />
+      <BoardMessage />
       <BoardComponente Board={Board} BoardError={BoardError} />
     </div>
   );

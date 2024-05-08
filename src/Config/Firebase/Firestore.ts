@@ -117,6 +117,18 @@ export const FIREBASE_GetBoardList = async (uid: string) => {
 };
 
 //get
+export const FIREBASE_GetBoardListByBoardId = async (BoardId: string) => {
+  var CollectionRef = collection(Firebase_DB, "BoardList");
+  const Query = query(CollectionRef, where("BoardId", "==", BoardId));
+  const querySnapshot = await getDocs(Query);
+  const matchedDocs = querySnapshot.docs.map((doc) => ({
+    ...doc.data(),
+    docID: doc.id,
+  }));
+  return matchedDocs;
+};
+
+//get
 export const FIREBASE_GetBoardListItem = async (uid: string, BoardId: string) => {
   var CollectionRef = collection(Firebase_DB, "BoardList");
   const Query = query(CollectionRef, where("OwnerUid", "==", uid), where("BoardId", "==", BoardId));

@@ -6,6 +6,7 @@ export const TRANSLATIONS_GERMAN = {
   Sidebar: {
     AllBoards: "Meine Boards",
     CreateBoard: "+ Board erstellen",
+    SharedWithMe: "Mit mir geteilt",
   },
   Navbar: {
     BoardOptions: "Board-Optionen",
@@ -190,6 +191,11 @@ export const TRANSLATIONS_GERMAN = {
   Text: {
     NewCardTitle: "Neue Karte",
     FilterTagsNofound: "Keine Ergebnisse",
+    SharedBy: "Geteilt von",
+    NotLogged: "Änderungen an diesem Board werden nicht gespeichert, da Sie nicht angemeldet sind",
+    EditinNotAllowed: "Änderungen an diesem Board werden nicht gespeichert, da sie nicht aktiviert sind",
+    SharedBoardMessage: "Dieses Board wurde von Ihnen geteilt",
+    DismissSharedBoardMessage: "Schließen",
   },
   Sharing: {
     NotLogged: "Die Freigabe steht nur angemeldeten Benutzern zur Verfügung.",

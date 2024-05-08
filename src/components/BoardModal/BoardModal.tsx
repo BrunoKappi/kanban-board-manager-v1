@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Columns2, GripVertical, Pencil, PencilLine, Trash2 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MinimalInput } from "../ui/minimalInput";
 import ColorPicker from "../ColorPicker/ColorPicker";
 import { Button } from "../ui/button";
@@ -13,6 +13,7 @@ import { v4 } from "uuid";
 import { ListOption } from "../ListOption/ListOption";
 import { useSelector } from "react-redux";
 import { MAX_BOARD_TITLE, MAX_COLUMN_TITLE, MAX_DESC } from "@/Data/Limits";
+import { FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
 
 type Props = {
   SetExternalOpen: (state: boolean) => void;
@@ -24,6 +25,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
   const [open, setOpen] = useState(false);
   const [FocusOn, setFocusOn] = useState(0);
   const [FocusWhat, setFocusWhat] = useState("");
+  const [OwnerEmail, setOwnerEmail] = useState("");
   const [Reorder] = useState(false);
   const [BoardName, setBoardName] = useState(Board?.BoardName);
   const [BoardDesc, setBoardDesc] = useState(Board?.BoardDesc);
@@ -42,6 +44,15 @@ export function BoardModal({ SetExternalOpen }: Props) {
     }
   };
 
+  useEffect(() => {
+    if (!IsBoardOwner) {
+      FIREBASE_GetUser(Board.OwnerUid).then((UsersFound) => {
+        //@ts-ignore
+        setOwnerEmail(Translations.Text.SharedBy + " " + UsersFound[0].Email);
+      });
+    }
+  }, [IsBoardOwner]);
+
   HandleInputHeight(textareaRef, BoardDesc, "30px");
 
   return (
@@ -53,6 +64,12 @@ export function BoardModal({ SetExternalOpen }: Props) {
         </ListOption>
       </DialogTrigger>
       <DialogContent className="px-10 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
+        {!IsBoardOwner && (
+          <div>
+            <span className="text-xs bg-overlay dark:bg-blue-800/20 px-2 py-0.5 rounded-full">{OwnerEmail}</span>
+          </div>
+        )}
+
         <MinimalInput
           autoFocus={false}
           maxLength={MAX_BOARD_TITLE}

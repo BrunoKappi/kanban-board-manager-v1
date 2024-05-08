@@ -6,6 +6,7 @@ export const TRANSLATIONS_PORTUGUESE = {
   Sidebar: {
     AllBoards: "Meus Quadros",
     CreateBoard: "+ Criar Quadro",
+    SharedWithMe: "Compartilhado comigo",
   },
   Navbar: {
     BoardOptions: "Opções do Quadro",
@@ -190,6 +191,11 @@ export const TRANSLATIONS_PORTUGUESE = {
   Text: {
     NewCardTitle: "Novo Cartão",
     FilterTagsNofound: "Sem resultados",
+    SharedBy: "Compartilhado por",
+    NotLogged: "As alterações neste quadro não serão salvas porque você não está logado",
+    EditinNotAllowed: "As alterações neste quadro não serão salvas porque não estão habilitadas",
+    SharedBoardMessage: "Este quadro foi compartilhado com você por",
+    DismissSharedBoardMessage: "Fechar",
   },
   Sharing: {
     NotLogged: "O compartilhamento está disponível apenas para usuários logados em uma conta.",
