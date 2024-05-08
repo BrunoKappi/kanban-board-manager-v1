@@ -35,7 +35,7 @@ export default function BoardCard({ Card, Index, ColumnIndex, CardIndex, Column 
     dispatch(SetCardModalColumnIndex(NewColumnIndex));
     //@ts-ignore
     dispatch(SetCardModalCard(Card));
-  };
+  }; 
 
   return (
     <Draggable key={Card.CardId} draggableId={Card.CardId} index={Index}>
@@ -57,7 +57,7 @@ export default function BoardCard({ Card, Index, ColumnIndex, CardIndex, Column 
                       className="flex flex-row items-center justify-start gap-1.5 max-w-full"
                       onClick={(e) => {
                         e.stopPropagation();
-                        HandleToggleTask(Index, Card.Tasks, CardIndex);
+                        HandleToggleTask(Index, Card.Tasks, CardIndex,ColumnIndex);
                       }}
                     >
                       <Checkbox className="size-3 h-3 w-3" checked={Task.Completed} />

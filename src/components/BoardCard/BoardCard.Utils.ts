@@ -1,9 +1,7 @@
 import store from "@/Config/Store/Store";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 
-export const HandleToggleTask = (Index: number, Tasks: any, CardIndex: number) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-
+export const HandleToggleTask = (Index: number, Tasks: any, CardIndex: number, ColumnIndex: number) => {
   var NewBoard: any = { ...store.getState().Board };
   var NewColumns: any = [...NewBoard.Columns];
   var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
