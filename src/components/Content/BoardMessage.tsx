@@ -17,6 +17,12 @@ export default function BoardMessage({}: Props) {
   const Board = useSelector((state: any) => state.Board);
 
   useEffect(() => {
+    if (!Board?.BorardId) {
+      setMessage("");
+      setDismissMessage(true);
+      return;
+    }
+
     if (IsBoardOwner || User.uid === Board?.OwnerUid) {
       setMessage("");
       setDismissMessage(true);
