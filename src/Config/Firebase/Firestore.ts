@@ -120,7 +120,7 @@ export const FIREBASE_GetBoardList = async (uid: string) => {
 let unsubscribe: Unsubscribe | null = null;
 
 export const setListeningBoard = (docID: string) => {
-  // console.log("STARTED LISTENING");
+  console.log("STARTED LISTENING");
   const docRef: DocumentReference = doc(Firebase_DB, "Boards", docID);
   unsubscribe = onSnapshot(docRef, (doc) => {
     //@ts-ignore
@@ -130,7 +130,7 @@ export const setListeningBoard = (docID: string) => {
 
 export const stopListeningBoard = () => {
   if (unsubscribe) {
-    // console.log("STOPPED LISTENING");
+    console.log("STOPPED LISTENING");
     unsubscribe();
     unsubscribe = null;
   }
