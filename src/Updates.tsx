@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { SetSelectedBoard } from "./Config/Store/SelectedBoard/SelectedBoard";
 import store from "./Config/Store/Store";
+import { GetBoardList } from "./Middleware/GetData";
 
 function Updates() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function Updates() {
 
     const resetTimer = () => {
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => setInactive(true), 300000); // 5 minute
+      timeoutId = setTimeout(() => setInactive(true), 360000); //  6 minute
     };
 
     const handleMouseMove = () => {
@@ -59,6 +60,7 @@ function Updates() {
   useEffect(() => {
     if (!inactive) {
       UpdateBoard();
+      GetBoardList();
     }
   }, [inactive]);
 
