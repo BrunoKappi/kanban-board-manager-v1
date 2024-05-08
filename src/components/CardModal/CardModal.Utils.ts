@@ -187,6 +187,86 @@ export const HandleChangeCardTitle = (Title: string) => {
   //store.dispatch(SetCardModalCardTitle(Title))
 };
 
+export const HandleChangeShowTasksOnCard = (State: boolean) => {
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
+  const CardIndex: number = store.getState().CardModal.CardIndex;
+  const CardMode: string = store.getState().CardModal.Mode;
+  var NewBoard: any = { ...store.getState().Board };
+  var NewColumns: any = [...NewBoard.Columns];
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
+  var NewCards: any = [...NewColumn.Cards];
+  var NewCard: any = { ...NewCards[CardIndex] };
+
+  NewCard.ShowTasksOnCard = State;
+
+  NewCards = NewCards.map((Card: any) => {
+    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
+  });
+
+  NewColumn.Cards = [...NewCards];
+
+  NewColumns[ColumnIndex] = { ...NewColumn };
+
+  NewBoard.Columns = [...NewColumns];
+
+  if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
+
+  //store.dispatch(SetCardModalCardTitle(Title))
+};
+
+export const HandleChangeStartAt = (State: number) => {
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
+  const CardIndex: number = store.getState().CardModal.CardIndex;
+  const CardMode: string = store.getState().CardModal.Mode;
+  var NewBoard: any = { ...store.getState().Board };
+  var NewColumns: any = [...NewBoard.Columns];
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
+  var NewCards: any = [...NewColumn.Cards];
+  var NewCard: any = { ...NewCards[CardIndex] };
+
+  NewCard.StartAt = State;
+
+  NewCards = NewCards.map((Card: any) => {
+    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
+  });
+
+  NewColumn.Cards = [...NewCards];
+
+  NewColumns[ColumnIndex] = { ...NewColumn };
+
+  NewBoard.Columns = [...NewColumns];
+
+  if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
+
+  //store.dispatch(SetCardModalCardTitle(Title))
+};
+export const HandleChangeEndAt = (State: number) => {
+  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
+  const CardIndex: number = store.getState().CardModal.CardIndex;
+  const CardMode: string = store.getState().CardModal.Mode;
+  var NewBoard: any = { ...store.getState().Board };
+  var NewColumns: any = [...NewBoard.Columns];
+  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
+  var NewCards: any = [...NewColumn.Cards];
+  var NewCard: any = { ...NewCards[CardIndex] };
+
+  NewCard.EndAt = State;
+
+  NewCards = NewCards.map((Card: any) => {
+    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
+  });
+
+  NewColumn.Cards = [...NewCards];
+
+  NewColumns[ColumnIndex] = { ...NewColumn };
+
+  NewBoard.Columns = [...NewColumns];
+
+  if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
+
+  //store.dispatch(SetCardModalCardTitle(Title))
+};
+
 export const HandleChangeCardNotes = (Title: string) => {
   const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
   const CardIndex: number = store.getState().CardModal.CardIndex;
@@ -329,6 +409,9 @@ export const HandleCreateCard = (CardTitle: string, CardDesc: string, Tasks: any
   NewCard.CreatedAt = moment().valueOf();
   NewCard.Tags = [...CurrentCardTags];
   NewCard.TasksQtd = Tasks.length;
+  NewCard.ShowTasksOnCard = false;
+  NewCard.StartAt = 0;
+  NewCard.EndAt = 0;
 
   NewCards.push(NewCard);
 

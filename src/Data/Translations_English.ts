@@ -220,4 +220,12 @@ export const TRANSLATIONS_ENGLISH = {
     Already: "User already added",
     Added: "User Added as Editor of the Board",
   },
+  ShowTasks: {
+    ShowTasksOnCard: "Show tasks on card",
+  },
+  Dates: {
+    ModalHeader: "Dates and deadlines",
+    StartDatePlaceholder: "Select a start date",
+    EndDatePlaceholder: "Select an end date",
+  },
 };

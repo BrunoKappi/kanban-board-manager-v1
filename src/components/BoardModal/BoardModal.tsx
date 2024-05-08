@@ -63,7 +63,7 @@ export function BoardModal({ SetExternalOpen }: Props) {
           {Translations.BoardModal.Title}
         </ListOption>
       </DialogTrigger>
-      <DialogContent className="px-10 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
+      <DialogContent className="md:px-14 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark ">
         {!IsBoardOwner && (
           <div>
             <span className="text-xs bg-overlay dark:bg-blue-800/20 px-2 py-0.5 rounded-full">{OwnerEmail}</span>

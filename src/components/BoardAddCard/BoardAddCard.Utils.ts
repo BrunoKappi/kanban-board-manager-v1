@@ -2,7 +2,10 @@ import moment from "moment";
 import { v4 } from "uuid";
 
 export const DefaultCardToAdd = {
-  CardId: v4(),
+  ShowTasksOnCard: false,
+  StartAt: 0,
+  EndAt: 0,
+  CardId: v4(), 
   CardTitle: "New Card",
   CardDescription: "",
   CreatedAt: moment().valueOf(),

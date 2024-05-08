@@ -576,6 +576,9 @@ export const ExampleBoard1 = {
       CardsQtd: 2,
       Cards: [
         {
+          ShowTasksOnCard: false,
+          StartAt: 0,
+          EndAt: 0,
           CardId: v4(),
           CardTitle: Data?.Columns?.Column1?.Cards?.Card1?.Title,
           CardNotes: "",
@@ -610,6 +613,9 @@ export const ExampleBoard1 = {
           ],
         },
         {
+          ShowTasksOnCard: true,
+          StartAt: 0,
+          EndAt: 0,
           CardId: v4(),
           CardTitle: Data?.Columns?.Column1?.Cards?.Card2?.Title,
           CardNotes: "",
@@ -655,6 +661,9 @@ export const ExampleBoard1 = {
       CardsQtd: 3,
       Cards: [
         {
+          ShowTasksOnCard: false,
+          StartAt: 0,
+          EndAt: 0,
           CardId: v4(),
           CardTitle: Data?.Columns?.Column2?.Cards?.Card1?.Title,
           CardNotes: "",
@@ -682,6 +691,9 @@ export const ExampleBoard1 = {
           ],
         },
         {
+          ShowTasksOnCard: true,
+          StartAt: 0,
+          EndAt: 0,
           CardId: v4(),
           CardTitle: Data?.Columns?.Column2?.Cards?.Card2?.Title,
           CardNotes: "",
@@ -709,6 +721,9 @@ export const ExampleBoard1 = {
           ],
         },
         {
+          ShowTasksOnCard: false,
+          StartAt: 0,
+          EndAt: 0,
           CardId: v4(),
           CardTitle: Data?.Columns?.Column2?.Cards?.Card3?.Title,
           CardNotes: "",
@@ -747,6 +762,9 @@ export const ExampleBoard1 = {
       CardsQtd: 1,
       Cards: [
         {
+          ShowTasksOnCard: true,
+          StartAt: 0,
+          EndAt: 0,
           CardId: v4(),
           CardTitle: Data?.Columns?.Column3?.Cards?.Card1?.Title,
           CardNotes: "",
@@ -785,6 +803,9 @@ export const ExampleBoard1 = {
       CardsQtd: 2,
       Cards: [
         {
+          ShowTasksOnCard: false,
+          StartAt: 0,
+          EndAt: 0,
           CardId: v4(),
           CardTitle: Data?.Columns?.Column4?.Cards?.Card1?.Title,
           CardNotes: "",
@@ -812,6 +833,9 @@ export const ExampleBoard1 = {
           ],
         },
         {
+          ShowTasksOnCard: false,
+          StartAt: 0,
+          EndAt: 0,
           CardId: v4(),
           CardTitle: Data?.Columns?.Column4?.Cards?.Card2?.Title,
           CardNotes: "",

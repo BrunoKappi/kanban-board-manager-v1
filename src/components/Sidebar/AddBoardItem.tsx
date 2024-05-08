@@ -47,7 +47,7 @@ export function AddBoardItem({ className }: { className?: string }) {
           <span className="truncate text-sm">{Translations.OptionsLists.CreateBoard}</span>
         </div>
       </DialogTrigger>
-      <DialogContent className="px-10 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
+      <DialogContent className="md:px-14 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
         <DialogHeader className="mb-8">
           <DialogTitle className="dark:text-accent text-accent-foreground text-xl">{Translations.AddBoardModal.Title}</DialogTitle>
         </DialogHeader>

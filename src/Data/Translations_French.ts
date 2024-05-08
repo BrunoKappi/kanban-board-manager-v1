@@ -220,4 +220,12 @@ export const TRANSLATIONS_FRENCH = {
     Already: "Utilisateur déjà ajouté",
     Added: "Utilisateur ajouté en tant qu'éditeur du tableau",
   },
+  ShowTasks: {
+    ShowTasksOnCard: "Afficher les tâches sur la carte",
+  },
+  Dates: {
+    ModalHeader: "Dates et délais",
+    StartDatePlaceholder: "Sélectionnez une date de début",
+    EndDatePlaceholder: "Sélectionnez une date de fin",
+  },
 };

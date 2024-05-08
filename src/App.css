@@ -27,12 +27,16 @@
   opacity: 0.1;
 }
 
+/* Handle escuro */
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 1; /* Cor do Handle quando o modo escuro está ativado */
+}
+
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.3);
 }
-
-
 
 .ITEM {
   position: static !important;

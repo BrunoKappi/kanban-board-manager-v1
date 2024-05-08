@@ -217,4 +217,12 @@ export const TRANSLATIONS_SPANISH = {
     AddCollaborator: "Agregar Usuario",
     CollaboratorPlaceholder: "Correo electrónico del usuario...",
   },
+  ShowTasks: {
+    ShowTasksOnCard: "Mostrar tareas en la tarjeta",
+  },
+  Dates: {
+    ModalHeader: "Fechas y plazos",
+    StartDatePlaceholder: "Selecciona una fecha de inicio",
+    EndDatePlaceholder: "Selecciona una fecha de fin",
+  },
 };

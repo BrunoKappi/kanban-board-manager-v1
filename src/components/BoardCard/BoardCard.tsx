@@ -3,8 +3,10 @@ import { Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import BoardCardOptions from "./BoardCardOptions";
 import { useSelector } from "react-redux";
-import { TagType } from "@/Data/Types";
+import { TagType, TaskType } from "@/Data/Types";
 import { colors } from "@/Data/Colors";
+import { Checkbox } from "../ui/checkbox";
+import { HandleToggleTask } from "./BoardCard.Utils";
 
 type Props = {
   Card: any;
@@ -47,6 +49,24 @@ export default function BoardCard({ Card, Index, ColumnIndex, CardIndex, Column 
               })}
             </div>
             <span className=" group line-clamp-2 select-none text-sm">{Card.CardTitle}</span>
+            {Card.ShowTasksOnCard && (
+              <div className="flex flex-col gap-1 cursor-pointer max-w-full">
+                {Card.Tasks.map((Task: TaskType, Index: number) => {
+                  return (
+                    <div
+                      className="flex flex-row items-center justify-start gap-1.5 max-w-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        HandleToggleTask(Index, Card.Tasks, CardIndex);
+                      }}
+                    >
+                      <Checkbox className="size-3 h-3 w-3" checked={Task.Completed} />
+                      <span className="text-xs truncate">{Task.TaskTitle}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             <BoardCardOptions Card={Card} CardIndex={CardIndex} ColumnIndex={ColumnIndex} Column={Column} />
           </div>
         );

@@ -220,4 +220,12 @@ export const TRANSLATIONS_GERMAN = {
     Already: "Benutzer bereits hinzugefügt",
     Added: "Benutzer als Bearbeiter des Boards hinzugefügt",
   },
+  ShowTasks: {
+    ShowTasksOnCard: "Aufgaben auf der Karte anzeigen",
+  },
+  Dates: {
+    ModalHeader: "Termine und Fristen",
+    StartDatePlaceholder: "Wähle ein Startdatum",
+    EndDatePlaceholder: "Wähle ein Enddatum",
+  },
 };

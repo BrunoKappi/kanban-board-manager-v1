@@ -7,9 +7,9 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 } from "uuid";
 import { Checkbox } from "../ui/checkbox";
 import Tooltip from "../Tooltip/Tooltip";
-import { Columns2, GripVertical, ListChecks, NotebookPen, PencilLine, Tag, Trash2 } from "lucide-react";
+import { Calendar, Columns2, GripVertical, ListChecks, NotebookPen, PencilLine, Tag, Trash2 } from "lucide-react";
 import { ColumnType, TagType, TaskType } from "@/Data/Types";
-import { HandleAddTask, HandleChangeCardColumn, HandleChangeCardDesc, HandleChangeCardNotes, HandleChangeCardTitle, HandleChangeTaskTitle, HandleCreateCard, HandleDeleteTask, HandleDragTasks, HandleSaveTasks, HandleToggleTask, SetCardModalTitle } from "./CardModal.Utils";
+import { HandleAddTask, HandleChangeCardColumn, HandleChangeCardDesc, HandleChangeCardNotes, HandleChangeCardTitle, HandleChangeEndAt, HandleChangeShowTasksOnCard, HandleChangeStartAt, HandleChangeTaskTitle, HandleCreateCard, HandleDeleteTask, HandleDragTasks, HandleSaveTasks, HandleToggleTask, SetCardModalTitle } from "./CardModal.Utils";
 import { Button } from "../ui/button";
 import Show from "@/lib/Show";
 import { Textarea } from "../ui/textarea";
@@ -19,9 +19,10 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { colors } from "@/Data/Colors";
 import TagInput from "./TagInput";
 import { HandleCardTagToggle } from "./TagInput.Utils";
-import { MAX_CARD_TITLE, MAX_DESC, MAX_TASK_TITLE } from "@/Data/Limits";
+import { MAX_CARD_TITLE, MAX_DESC, MAX_NOTES, MAX_TASK_TITLE } from "@/Data/Limits";
 import { useDispatch } from "react-redux";
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
+import { DatePicker } from "../ui/DatePicker";
 
 type Props = {};
 
@@ -36,6 +37,9 @@ const CardModal = ({}: Props) => {
   const [CardTile, setCardTile] = useState("");
   const [CardTasks, setCardTasks] = useState([...(CardModal?.Card?.Tasks || [])]);
   const [CardDesc, setCardDesc] = useState("");
+  const [ShowTasksOnCard, setShowTasksOnCard] = useState(false);
+  const [StartAt, setStartAt] = useState(CardModal?.Card?.StartAt || 0);
+  const [EndAt, setEndAt] = useState(CardModal?.Card?.EndAt || 0);
   const [CardNotes, setCardNotes] = useState("");
   const [Message, setMessage] = useState("");
   const [FocusWhat, setFocusWhat] = useState("");
@@ -51,6 +55,9 @@ const CardModal = ({}: Props) => {
     if (!State) {
       setCardTile("");
       setCardDesc("");
+      setShowTasksOnCard(false);
+      setStartAt(0);
+      setEndAt(0);
       setCardNotes("");
       setCardTasks([]);
       setColumnId("");
@@ -64,9 +71,13 @@ const CardModal = ({}: Props) => {
   };
 
   useEffect(() => {
+    setShowTasksOnCard(CardModal.Card?.ShowTasksOnCard);
+    setStartAt(CardModal.Card?.StartAt);
+    setEndAt(CardModal.Card?.EndAt);
     if (!!CardModal.Card.CardId) setOpen(true);
     if (!CardTile) setCardTile(CardModal.Card?.CardTitle || "");
     if (!CardDesc) setCardDesc(CardModal.Card?.CardDescription || "");
+
     if (!CardNotes) setCardNotes(CardModal.Card?.CardNotes || "");
 
     if (CardTasks.length === 0) setCardTasks([...(CardModal.Card?.Tasks || [])]);
@@ -100,6 +111,9 @@ const CardModal = ({}: Props) => {
       if (CanSave) HandleChangeCardTitle(CardTile.trim());
       if (CanSave) HandleChangeCardDesc(CardDesc.trim());
       if (CanSave) HandleChangeCardNotes(CardNotes.trim());
+      if (CanSave) HandleChangeShowTasksOnCard(ShowTasksOnCard);
+      // if (CanSave) HandleChangeStartAt(StartAt);
+      // if (CanSave) HandleChangeEndAt(EndAt);
 
       HandleInputHeight(TitleTextarea, CardTile, "");
       HandleInputHeight(NotesTextarea, CardNotes, "30px");
@@ -107,19 +121,39 @@ const CardModal = ({}: Props) => {
     }, 500);
 
     return () => clearTimeout(delayInputTimeoutId);
-  }, [CardTasks, CardDesc, CardTile, CardNotes]);
+  }, [CardTasks, CardDesc, CardTile, CardNotes, ShowTasksOnCard]);
 
   useEffect(() => {
     HandleInputHeight(TitleTextarea, CardTile, "");
     HandleInputHeight(NotesTextarea, CardNotes, "30px");
     HandleInputHeight(textareaRef, CardDesc, "30px");
-  }, [CardTile, CardNotes, CardDesc]);
+  }, [CardTile, CardNotes, CardDesc, StartAt, EndAt]);
+
+  const HandleToggleShowTasksOnCard = () => {
+    setCanSave(true);
+    setShowTasksOnCard(!ShowTasksOnCard);
+  };
+
+  const HandleSetStartAt = (Unix: number) => {
+    setCanSave(true);
+    setStartAt(Unix);
+  
+    HandleChangeStartAt(Unix);
+  };
+  const HandleSetEndAt = (Unix: number) => {
+    setCanSave(true);
+    setEndAt(Unix);
+    HandleChangeEndAt(Unix);
+  };
 
   return (
     <Dialog open={open} onOpenChange={HandleDialogChange}>
       <DialogContent className=" md:px-14 sm:max-w-[450px] md:max-w-[700px] max-h-[90dvh] overflow-y-scroll bg-background dark:bg-background-dark-dialog border dark:border-border-dark  ">
         <div className="flex flex-col items-start justify-stretch gap-2">
           <MinimalTextarea
+            onFocus={() => {
+              setFocusWhat("Title");
+            }}
             ref={TitleTextarea}
             className=" flex-shrink-0 resize-none text-3xl border-none  max-w-full overflow-hidden"
             placeholder={Translations.Placeholders.CardTitle}
@@ -161,6 +195,16 @@ const CardModal = ({}: Props) => {
             <TagInput />
           </div>
 
+          <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5  flex-row gap-2 items-center w-full py-0.5 px-1 rounded-md">
+            <Calendar className="size-5" />
+            {Translations.Dates.ModalHeader}
+          </h2>
+
+          <div className="w-full flex flex-row justify- gap-5">
+            <DatePicker DateTime={StartAt} onSelect={HandleSetStartAt} Text={Translations.Dates.StartDatePlaceholder} />
+            <DatePicker DateTime={EndAt} onSelect={HandleSetEndAt} Text={Translations.Dates.EndDatePlaceholder} />
+          </div>
+
           <Show if={CardModal.Mode === "View"}>
             <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5 flex-row gap-2 items-center w-full py-0.5 px-1 rounded-md">
               <Columns2 className="size-5" />
@@ -191,9 +235,15 @@ const CardModal = ({}: Props) => {
             </Select>
           </Show>
 
-          <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5 flex-row gap-2 items-center w-full py-0.5 px-1 rounded-md">
-            <ListChecks className="size-5" />
-            {Translations.ModalHeaders.Tasks}
+          <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5 flex-row gap-2 items-center justify-between w-full py-0.5 px-1 pr-2 rounded-md">
+            <div className=" flex  flex-row gap-2 items-center">
+              <ListChecks className="size-5" />
+              {Translations.ModalHeaders.Tasks}
+            </div>
+            <div className="flex flex-row items-center justify-end gap-2">
+              <span className=" text-sm">{Translations.ShowTasks.ShowTasksOnCard}</span>
+              <Checkbox id="terms" checked={ShowTasksOnCard} onClick={HandleToggleShowTasksOnCard} />
+            </div>
           </h2>
           <DragDropContext onDragEnd={(Result) => HandleDragTasks(Result, CardTasks, setCardTasks)}>
             <Droppable droppableId={v4()} key={v4()}>
@@ -211,8 +261,12 @@ const CardModal = ({}: Props) => {
                                   maxLength={MAX_TASK_TITLE}
                                   placeholder={Translations.Placeholders.Task}
                                   autoFocus={Index === FocusOn && FocusWhat === "Tasks"}
+                                  onFocus={() => {
+                                    setFocusWhat("Tasks");
+                                    setFocusOn(Index);
+                                  }}
                                   key={v4()}
-                                  className={`"m-0 py-0 px-0 h-auto ${Task.Completed && "line-through"}`}
+                                  className={`"m-0 py-0 px-0 h-auto ${Task.Completed && !(Index === FocusOn && FocusWhat === "Tasks") && "line-through"}`}
                                   value={Task.TaskTitle}
                                   onChange={(e) => {
                                     setCanSave(true);
@@ -252,12 +306,15 @@ const CardModal = ({}: Props) => {
 
           <h2 className="mt-5 text-lg flex  bg-slate-400/10 dark:bg-slate-400/5 flex-row gap-2 items-center w-full py-0.5 px-1 rounded-md">
             <PencilLine className="size-5" />
-            {Translations.ModalHeaders.Tasks}
+            {Translations.ModalHeaders.Description}
           </h2>
 
           <Textarea
             maxLength={MAX_DESC}
             ref={textareaRef}
+            onFocus={() => {
+              setFocusWhat("Desc");
+            }}
             className=" resize-none border overflow-hidden border-background dark:border-background-dark-dialog ring-0 shadow-none focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 px-0"
             value={CardDesc}
             onChange={(e) => {
@@ -273,13 +330,16 @@ const CardModal = ({}: Props) => {
           </h2>
 
           <Textarea
-            maxLength={MAX_DESC}
+            onFocus={() => {
+              setFocusWhat("Notes");
+            }}
+            maxLength={MAX_NOTES}
             ref={NotesTextarea}
             className=" resize-none border overflow-hidden border-background dark:border-background-dark-dialog ring-0 shadow-none focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 px-0"
             value={CardNotes}
             onChange={(e) => {
               setCanSave(true);
-              setFocusWhat("Desc");
+              setFocusWhat("Notes");
               setCardNotes(e.target.value);
             }}
           />

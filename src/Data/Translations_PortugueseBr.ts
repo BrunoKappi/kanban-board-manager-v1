@@ -220,4 +220,12 @@ export const TRANSLATIONS_PORTUGUESE = {
     Already: "Usuário já adicionado",
     Added: "Usuário adicionado como editor do quadro",
   },
+  ShowTasks: {
+    ShowTasksOnCard: "Mostrar tarefas no cartão",
+  },
+  Dates: {
+    ModalHeader: "Datas e prazos",
+    StartDatePlaceholder: "Selecione uma data de início",
+    EndDatePlaceholder: "Selecione uma data de término",
+  },
 };
