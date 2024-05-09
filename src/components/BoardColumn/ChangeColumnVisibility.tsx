@@ -25,7 +25,7 @@ export default function ChangeColumnVisibility({ Column }: Props) {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <ListOption>
-          {Column.Visible && <EyeOff className="size-4" />}
+          {Column.Visible && <EyeOff className="size-4" />} 
           {!Column.Visible && <Eye className="size-4" />}
           {Column.Visible && Translations.PopoversSubtitles.HideGroup}
           {!Column.Visible && Translations.PopoversSubtitles.ShowGroup}
