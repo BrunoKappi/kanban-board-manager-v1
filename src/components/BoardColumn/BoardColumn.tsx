@@ -100,7 +100,7 @@ export default function BoardColumn({ Column, ColumnIndex }: Props) {
 
               {provided.placeholder}
 
-              <BoardAddCard ColumnIndex={ColumnIndex} />
+              {!SearchFilter && <BoardAddCard ColumnIndex={ColumnIndex} />}
             </div>
           </div>
         );
