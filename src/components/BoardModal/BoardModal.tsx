@@ -55,8 +55,15 @@ export function BoardModal({ SetExternalOpen }: Props) {
 
   HandleInputHeight(textareaRef, BoardDesc, "30px");
 
+  const HandleModal = (state: boolean) => {
+    setOpen(state);
+    if (state === false) {
+      HandleEditBoard(BoardName, BoardColumns, BoardDesc, setMessage, Board);
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={HandleModal}>
       <DialogTrigger asChild>
         <ListOption>
           <Pencil className="size-4" />

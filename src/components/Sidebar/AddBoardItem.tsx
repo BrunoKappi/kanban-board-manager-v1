@@ -37,10 +37,20 @@ export function AddBoardItem({ className }: { className?: string }) {
     }
   };
 
+  
   HandleInputHeight(textareaRef, BoardDesc, "10px");
 
+  const HandleModal = (state: boolean) => {
+    setOpen(state);
+    alert(state)
+    if (state === false) {
+      alert("Deveria Criar")
+      HandleCreateBoard(BoardName, BoardColumns, BoardDesc, setMessage, setOpen);
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={HandleModal}>
       <DialogTrigger asChild>
         <div className={`${cn("flex flex-row justify-start items-center gap-2  w-full px-3 py-2  rounded-3xl text-primary  cursor-pointer hover:bg-primary hover:text-primary-foreground", className)}`}>
           <Columns3 className="size-5 flex-shrink-0" />
@@ -168,7 +178,7 @@ export function AddBoardItem({ className }: { className?: string }) {
         </Show>
 
         <DialogFooter className="mt-5 flex flex-row justify-end w-full">
-          <Button onClick={() => HandleCreateBoard(BoardName, BoardColumns, BoardDesc, setMessage, setOpen)}>Create Board</Button>
+          <Button onClick={() => HandleCreateBoard(BoardName, BoardColumns, BoardDesc, setMessage, setOpen)}>{Translations.Buttons.CreateBoard}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

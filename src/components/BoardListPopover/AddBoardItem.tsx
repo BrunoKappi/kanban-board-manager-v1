@@ -43,8 +43,15 @@ export function AddBoardItem({ className }: { className?: any }) {
     setFocusWhat("");
   }, [open]);
 
+  const HandleModal = (state: boolean) => {
+    setOpen(state);
+    if (state === false) {
+      HandleCreateBoard(BoardName, BoardColumns, BoardDesc, setMessage, setOpen);
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={HandleModal}>
       <DialogTrigger asChild>
         <div className={cn("flex flex-row justify-start items-center gap-2  w-full px-3 py-2  text-primary  cursor-pointer hover:bg-primary hover:text-primary-foreground", className)}>
           <Columns3 className="size-5 flex-shrink-0" />
