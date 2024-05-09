@@ -55,4 +55,5 @@ export type BoardListItemType = {
   docID: string;
   LastEditedAt: number;
   IsBoardShared: boolean;
+  BoardListGroupId: string;
 };

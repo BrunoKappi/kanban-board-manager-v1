@@ -25,7 +25,7 @@ export default function BoardMessage({ BoardId }: Props) {
   });
 
   useEffect(() => {
-    if (!BoardId) {
+    if (!Board.BoardId) {
       setMessage("");
       setDismissMessage(true);
       return;

@@ -3,9 +3,10 @@ import { v4 } from "uuid";
 
 export const DefaultCardToAdd = {
   ShowTasksOnCard: false,
+  ShowDatesOnCard: false,
   StartAt: 0,
   EndAt: 0,
-  CardId: v4(), 
+  CardId: v4(),
   CardTitle: "New Card",
   CardDescription: "",
   CreatedAt: moment().valueOf(),

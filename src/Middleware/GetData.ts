@@ -17,6 +17,7 @@ import { ExampleBoard1_PortugueseBr } from "@/Data/ExampleBoard1_PortugueseBr";
 import moment from "moment";
 import { v4 } from "uuid";
 import { MIDDLEWARE_SetLoadingBoard, MIDDLEWARE_SetLoadingSidebar, MIDDLEWARE_SetTranslations } from "./SetData";
+import { BoardListItemType } from "@/Data/Types";
 
 export const GetBoardList = async () => {
   //@ts-ignore
@@ -119,7 +120,7 @@ const SyncCurrentUserWork = async (Uid: string) => {
       var BoardListItem = { ...JSON.parse(localStorage.getItem(LocalBoardListString) || "") };
       var NewId = v4();
 
-      var NewBoardListItem = { ...BoardListItem, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+      var NewBoardListItem: BoardListItemType = { ...BoardListItem, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
 
       FIREBASE_CreateBoardList(NewBoardListItem);
 
@@ -131,7 +132,7 @@ const SyncCurrentUserWork = async (Uid: string) => {
     });
   } else {
     var NewId = v4();
-    var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+    var NewBoardListItem: BoardListItemType = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
     var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
 
     FIREBASE_CreateBoard(NewBoard);

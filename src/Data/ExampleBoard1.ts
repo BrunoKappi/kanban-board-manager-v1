@@ -577,6 +577,7 @@ export const ExampleBoard1 = {
       Cards: [
         {
           ShowTasksOnCard: false,
+          ShowDatesOnCard: false,
           StartAt: 0,
           EndAt: 0,
           CardId: v4(),
@@ -614,6 +615,7 @@ export const ExampleBoard1 = {
         },
         {
           ShowTasksOnCard: true,
+          ShowDatesOnCard: false,
           StartAt: 0,
           EndAt: 0,
           CardId: v4(),
@@ -662,6 +664,7 @@ export const ExampleBoard1 = {
       Cards: [
         {
           ShowTasksOnCard: false,
+          ShowDatesOnCard: false,
           StartAt: 0,
           EndAt: 0,
           CardId: v4(),
@@ -692,6 +695,7 @@ export const ExampleBoard1 = {
         },
         {
           ShowTasksOnCard: true,
+          ShowDatesOnCard: false,
           StartAt: 0,
           EndAt: 0,
           CardId: v4(),
@@ -722,6 +726,7 @@ export const ExampleBoard1 = {
         },
         {
           ShowTasksOnCard: false,
+          ShowDatesOnCard: false,
           StartAt: 0,
           EndAt: 0,
           CardId: v4(),
@@ -763,6 +768,7 @@ export const ExampleBoard1 = {
       Cards: [
         {
           ShowTasksOnCard: true,
+          ShowDatesOnCard: false,
           StartAt: 0,
           EndAt: 0,
           CardId: v4(),
@@ -804,6 +810,7 @@ export const ExampleBoard1 = {
       Cards: [
         {
           ShowTasksOnCard: false,
+          ShowDatesOnCard: false,
           StartAt: 0,
           EndAt: 0,
           CardId: v4(),
@@ -834,6 +841,7 @@ export const ExampleBoard1 = {
         },
         {
           ShowTasksOnCard: false,
+          ShowDatesOnCard: false,
           StartAt: 0,
           EndAt: 0,
           CardId: v4(),

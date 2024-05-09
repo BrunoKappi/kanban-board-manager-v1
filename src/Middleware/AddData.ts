@@ -3,6 +3,7 @@ import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import store from "@/Config/Store/Store";
+import { BoardListItemType } from "@/Data/Types";
 import moment from "moment";
 
 export const MIDDLEWARE_AddBoard = (BoardParam: any, setOpen: (open: boolean) => void) => {
@@ -10,17 +11,17 @@ export const MIDDLEWARE_AddBoard = (BoardParam: any, setOpen: (open: boolean) =>
   const UserUid = store.getState().User?.uid || "";
   const BoardList = store.getState().BoardList || [];
 
-  const NewBoardListItem = {
+  const NewBoardListItem: BoardListItemType = {
     BoardName: NewBoard.BoardName,
     BoardId: NewBoard.BoardId,
     OwnerUid: NewBoard.OwnerUid,
     docID: "",
     LastEditedAt: moment().valueOf(),
     IsBoardShared: false,
+    BoardListGroupId: "",
   };
 
   if (UserUid) {
-    
     FIREBASE_CreateBoard(NewBoard)
       .then((Data) => {
         NewBoard.docID = Data.id;
@@ -37,7 +38,6 @@ export const MIDDLEWARE_AddBoard = (BoardParam: any, setOpen: (open: boolean) =>
     store.dispatch(SetBoardList([...BoardList, NewBoardListItem]));
     store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
     store.dispatch(SetBoard(NewBoard));
-
 
     localStorage.setItem(`Kanban-Board-${NewBoard.BoardId}`, JSON.stringify(NewBoard));
     localStorage.setItem(`Kanban-BoardListItem-${NewBoard.BoardId}`, JSON.stringify(NewBoardListItem));

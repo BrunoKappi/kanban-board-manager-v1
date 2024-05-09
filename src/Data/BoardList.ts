@@ -9,5 +9,6 @@ export const DefaultBoardList: BoardListItemType[] = [
     docID: "",
     LastEditedAt: 2,
     IsBoardShared: false,
+    BoardListGroupId: "",
   },
 ];

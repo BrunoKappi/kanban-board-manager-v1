@@ -7,7 +7,7 @@ import { BoardListItemType } from "@/Data/Types";
 import moment from "moment";
 import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList } from "@/Config/Firebase/Firestore";
 import { DefaultBoardList } from "@/Data/BoardList";
-import { MIDDLEWARE_GetExampleBoard } from "@/Middleware/GetData";
+
 import { ExampleBoard1 } from "@/Data/ExampleBoard1";
 
 export default function ToggleLogin({ className }: any) {
@@ -24,7 +24,7 @@ export default function ToggleLogin({ className }: any) {
           const UserUid = Data.user.uid;
           if (localStorage.getItem(`Kanban-BoardList`)) {
             BoardList.map((BoardListItem: BoardListItemType) => {
-              var NewBoardListItem = { ...BoardListItem, LastEditedAt: moment().valueOf(), OwnerUid: UserUid };
+              var NewBoardListItem: BoardListItemType = { ...BoardListItem, LastEditedAt: moment().valueOf(), OwnerUid: UserUid };
               FIREBASE_CreateBoardList(NewBoardListItem);
 
               if (localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`)) {
@@ -33,7 +33,7 @@ export default function ToggleLogin({ className }: any) {
               }
             });
           } else {
-            var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: UserUid };
+            var NewBoardListItem: BoardListItemType = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: UserUid };
             var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: UserUid };
             FIREBASE_CreateBoard(NewBoard);
             FIREBASE_CreateBoardList(NewBoardListItem);

@@ -1,6 +1,6 @@
 import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
 import { FIREBASE_LoginWithEmailPassword, FIREBASE_LoginWithGoogle, FIREBASE_RegisterUserEmailPassword, FIREBASE_SendEMailResetPassword } from "@/Config/Firebase/Auth";
-import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_CreateUserPreferences, FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
+import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_CreateUserPreferences } from "@/Config/Firebase/Firestore";
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
@@ -12,6 +12,7 @@ import { DefaultNewUserPreference, SetUserPreferences } from "@/Config/Store/Use
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetBoard } from "@/Config/Store/Board/Boards";
+import { BoardListItemType } from "@/Data/Types";
 
 type MIDDLEWARE_LoginProps = {
   email: string;
@@ -140,7 +141,7 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
           var BoardListItem = { ...JSON.parse(localStorage.getItem(LocalBoardListString) || "") };
           var NewId = v4();
 
-          var NewBoardListItem = { ...BoardListItem, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+          var NewBoardListItem: BoardListItemType = { ...BoardListItem, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
 
           FIREBASE_CreateBoardList(NewBoardListItem);
 
@@ -178,7 +179,7 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
         OriginalBoard.BoardName = NewBoard.Board?.Name;
         OriginalBoard.Description = NewBoard.Board?.Description;
 
-        var NewBoardListItem = {
+        var NewBoardListItem: BoardListItemType = {
           ...DefaultBoardList[0],
           BoardId: OriginalBoard.BoardId,
           BoardName: OriginalBoard.BoardName,

@@ -37,7 +37,7 @@ const CardModal = ({}: Props) => {
   const [CardTile, setCardTile] = useState("");
   const [CardTasks, setCardTasks] = useState([...(CardModal?.Card?.Tasks || [])]);
   const [CardDesc, setCardDesc] = useState("");
-  const [ShowTasksOnCard, setShowTasksOnCard] = useState(false);
+  const [ShowTasksOnCard, setShowTasksOnCard] = useState(CardModal?.Card?.ShowTasksOnCard || false);
   const [StartAt, setStartAt] = useState(CardModal?.Card?.StartAt || 0);
   const [EndAt, setEndAt] = useState(CardModal?.Card?.EndAt || 0);
   const [CardNotes, setCardNotes] = useState("");
@@ -71,7 +71,6 @@ const CardModal = ({}: Props) => {
   };
 
   useEffect(() => {
-    setShowTasksOnCard(CardModal.Card?.ShowTasksOnCard);
     setStartAt(CardModal.Card?.StartAt);
     setEndAt(CardModal.Card?.EndAt);
     if (!!CardModal.Card.CardId) setOpen(true);
@@ -111,9 +110,6 @@ const CardModal = ({}: Props) => {
       if (CanSave) HandleChangeCardTitle(CardTile.trim());
       if (CanSave) HandleChangeCardDesc(CardDesc.trim());
       if (CanSave) HandleChangeCardNotes(CardNotes.trim());
-      if (CanSave) HandleChangeShowTasksOnCard(ShowTasksOnCard);
-      // if (CanSave) HandleChangeStartAt(StartAt);
-      // if (CanSave) HandleChangeEndAt(EndAt);
 
       HandleInputHeight(TitleTextarea, CardTile, "");
       HandleInputHeight(NotesTextarea, CardNotes, "30px");
@@ -121,23 +117,25 @@ const CardModal = ({}: Props) => {
     }, 500);
 
     return () => clearTimeout(delayInputTimeoutId);
-  }, [CardTasks, CardDesc, CardTile, CardNotes, ShowTasksOnCard]);
+  }, [CardTasks, CardDesc, CardTile, CardNotes]);
 
   useEffect(() => {
     HandleInputHeight(TitleTextarea, CardTile, "");
     HandleInputHeight(NotesTextarea, CardNotes, "30px");
     HandleInputHeight(textareaRef, CardDesc, "30px");
+    setShowTasksOnCard(CardModal?.Card?.ShowTasksOnCard);
   }, [CardTile, CardNotes, CardDesc, StartAt, EndAt]);
 
   const HandleToggleShowTasksOnCard = () => {
-    setCanSave(true);
+    const NewValue = !ShowTasksOnCard;
     setShowTasksOnCard(!ShowTasksOnCard);
+    HandleChangeShowTasksOnCard(NewValue);
   };
 
   const HandleSetStartAt = (Unix: number) => {
     setCanSave(true);
     setStartAt(Unix);
-  
+
     HandleChangeStartAt(Unix);
   };
   const HandleSetEndAt = (Unix: number) => {
@@ -274,6 +272,7 @@ const CardModal = ({}: Props) => {
                                     setFocusOn(Index);
                                     HandleChangeTaskTitle(e.target.value, Index, setCardTasks, CardTasks);
                                   }}
+                                  onBlur={() => setFocusWhat("NA")}
                                 />
                                 <Tooltip text={Translations.Tooltips.DeleteTask}>
                                   <Trash2

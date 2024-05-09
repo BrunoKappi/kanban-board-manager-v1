@@ -4,7 +4,7 @@ export const SelectedBoardSlice = createSlice({
   name: "SelectedBoard",
   initialState: "",
   reducers: {
-    SetSelectedBoard: (state, action: any) => {
+    SetSelectedBoard: (state, action) => {
       return (state = action.payload);
     },
   },

@@ -14,7 +14,7 @@ import { LoaderCircle } from "lucide-react";
 import { MIDDLEWARE_SetLoadingBoard } from "@/Middleware/SetData";
 
 export default function Sidebar() {
-  const BoardList = useSelector((state: any) => state.BoardList);
+  const BoardList = useSelector((state: any) => [...state.BoardList]);
   const SelectedBoard = useSelector((state: any) => state.SelectedBoard);
   const Translations = useSelector((state: any) => state.Translations);
   const LoadingSidebar = useSelector((state: any) => state.LoadingSidebar);
@@ -22,11 +22,13 @@ export default function Sidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  if (!SelectedBoard) dispatch(SetSelectedBoard(BoardList.sort(OrderBoards)[0]?.BoardId || ""));
+  if (!SelectedBoard && BoardList.length > 0) dispatch(SetSelectedBoard(BoardList?.sort(OrderBoards)[0]?.BoardId || ""));
 
   useEffect(() => {
     //@ts-ignore
-    if (!SelectedBoard) dispatch(SetSelectedBoard(BoardList.sort(OrderBoards)[0]?.BoardId || ""));
+    if (!SelectedBoard && BoardList.length > 0) {
+      dispatch(SetSelectedBoard(BoardList?.sort(OrderBoards)[0]?.BoardId || ""));
+    }
   }, [SelectedBoard]);
 
   const HandleSelectBoard = (BoardId: string) => {

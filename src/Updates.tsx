@@ -14,7 +14,7 @@ function Updates() {
 
     const resetTimer = () => {
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => setInactive(true), 360000); //  6 minute
+      timeoutId = setTimeout(() => setInactive(true), 900000); //  15 minute
     };
 
     const handleMouseMove = () => {
@@ -59,8 +59,14 @@ function Updates() {
 
   useEffect(() => {
     if (!inactive) {
+      const CurrentSelectedBoard = store.getState().SelectedBoard;
       UpdateBoard();
-      GetBoardList();
+      GetBoardList().then(() => {
+        setTimeout(() => {
+          //@ts-ignore
+          dispatch(SetSelectedBoard(CurrentSelectedBoard));
+        }, 100);
+      });
     }
   }, [inactive]);
 

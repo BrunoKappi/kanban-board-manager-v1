@@ -1,5 +1,6 @@
 import { FIREBASE_CreateBoardList, FIREBASE_DeleteBoardListItem, FIREBASE_GetBoardListItem, FIREBASE_GetUserByEmail, setListeningBoard, stopListeningBoard } from "@/Config/Firebase/Firestore";
 import store from "@/Config/Store/Store";
+import { BoardListItemType } from "@/Data/Types";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 import moment from "moment";
 
@@ -53,13 +54,14 @@ export const AddCollaborator = async (Email: string, setCollabMessage: (message:
     Uid: User.Uid,
   };
 
-  const NewBoardListItem = {
+  const NewBoardListItem: BoardListItemType = {
     BoardName: NewBoard.BoardName,
     BoardId: NewBoard.BoardId,
     OwnerUid: User.Uid,
     docID: "",
     LastEditedAt: moment().valueOf(),
     IsBoardShared: true,
+    BoardListGroupId: "",
   };
 
   const UserInCollaborators = NewBoard.Collaborators.find((UserCollab: any) => UserCollab.Uid === User.Uid);
