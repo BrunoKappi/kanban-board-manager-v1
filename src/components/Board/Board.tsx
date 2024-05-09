@@ -62,14 +62,14 @@ export const Board = ({ Board, BoardError }: BoardProps) => {
 
               <div className="flex flex-col gap-0">
                 <Show if={!!Board.BoardId}>
-                  {Board?.Columns?.filter((Colum) => !Colum.Visible).map((Column: any) => (
+                  {Board?.Columns?.filter((Colum) => !Colum.Visible).map((Column: any, ColumnIndex) => (
                     <div className="flex flex-row justify-between w-full gap-3 items-center">
                       <Status Color={Column.ColumnColor} Text={Column.ColumnTitle} Column={Column} />
                       <div className="flex flex-row gap-5 items-center">
                         <Tooltip text={Translations.Tooltips.QtdCards}>
                           <span>{Column.CardsQtd}</span>
                         </Tooltip>
-                        <BoardColumnOptions Column={Column} />
+                        <BoardColumnOptions Column={Column} ColumnIndex={ColumnIndex}/>
                       </div>
                     </div>
                   ))}

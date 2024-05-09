@@ -51,7 +51,7 @@ export const TRANSLATIONS_FRENCH = {
   },
   Buttons: {
     Save: "Enregistrer",
-    AddCard: "+ Ajouter une Carte",
+    AddCard: " Ajouter une Carte",
     AddTask: "Ajouter une Tâche",
     DeleteCard: "Supprimer la Carte",
     EditTags: "+ Éditer les Étiquettes",

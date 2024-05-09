@@ -19,6 +19,7 @@ export const HandleToggleTask = (Index: number, Setter: any, Tasks: any) => {
   var NewCards: any = [...NewColumn.Cards];
   var NewCard: any = { ...NewCards[CardIndex] };
   const Current = Tasks.map((task: any) => ({ ...task })); // Cria uma cópia profunda de cada objeto dentro do array Tasks
+
   Current[Index].Completed = !Current[Index].Completed;
 
   NewCard.Tasks = [...Current];

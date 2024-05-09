@@ -8,12 +8,14 @@ import ChangeColumnVisibility from "./ChangeColumnVisibility";
 import { PopOverList } from "../PopOverList/PopOverList";
 import ColumnSizePopover from "../ColumnSizePopover/ColumnSizePopover";
 import ExportColumnToCsv from "./ExportColumnToCsv";
+import BoardAddCard from "../BoardAddCard/BoardAddCard";
 
 type Props = {
   Column: ColumnType;
+  ColumnIndex: number;
 };
 
-export default function BoardColumnOptions({ Column }: Props) {
+export default function BoardColumnOptions({ Column, ColumnIndex }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -29,6 +31,7 @@ export default function BoardColumnOptions({ Column }: Props) {
           <DeleteColum Column={Column} />
           <ChangeColumnVisibility Column={Column} />
           <ExportColumnToCsv Column={Column} />
+          <BoardAddCard ColumnIndex={ColumnIndex} Mode="Teste" />
         </PopOverList>
       </PopoverContent>
     </Popover>

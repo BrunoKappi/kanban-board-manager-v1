@@ -5,17 +5,20 @@ import { useSelector } from "react-redux";
 import { HandleCreateCard } from "../CardModal/CardModal.Utils";
 import moment from "moment";
 import { v4 } from "uuid";
+import { ListOption } from "../ListOption/ListOption";
+import { Plus } from "lucide-react";
 
 type Props = {
   ColumnIndex: number;
+  Mode?: string;
 };
 
-export default function BoardAddCard({ ColumnIndex }: Props) {
+export default function BoardAddCard({ ColumnIndex, Mode = "Button" }: Props) {
   const Translations = useSelector((state: any) => state.Translations);
   const Board = useSelector((state: any) => state.Board);
   const dispatch = useDispatch();
 
-  const NewIndex = Board.Columns[ColumnIndex].Cards.length;
+  const NewIndex = Board.Columns[ColumnIndex]?.Cards.length;
 
   const NewTasks = [
     {
@@ -55,9 +58,14 @@ export default function BoardAddCard({ ColumnIndex }: Props) {
     HandleCreateCard(Translations.Text.NewCardTitle, DefaultCardToAdd.CardDescription, NewTasks, Func, Func); //@ts-ignore
   };
 
-  return (
+  return Mode === "Button" ? (
     <div className="px-3 line-clamp-2 text-card-foreground flex items-center justify-start  border-slate-200 hover:bg-white  py-2  w- rounded-md hover:text-primary min-h-10 cursor-pointer  dark:bg-overlay-dark  dark:hover:bg-overlay dark:border-overlay-dark dark:text-primary-foreground" onClick={HandleAddCard}>
       <span className=" line-clamp-2 select-none text-primary  font-medium text-sm">{Translations.Buttons.AddCard}</span>
     </div>
+  ) : (
+    <ListOption>
+      <Plus className="size-4" />
+      {Translations.Buttons.AddCard}
+    </ListOption>
   );
 }

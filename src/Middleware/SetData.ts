@@ -13,7 +13,7 @@ import { TRANSLATIONS_SPANISH } from "@/Data/Translations_Espanish";
 import { TRANSLATIONS_FRENCH } from "@/Data/Translations_French";
 import { TRANSLATIONS_GERMAN } from "@/Data/Translations_German";
 import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
-import { BoardListItemType } from "@/Data/Types";
+import { BoardListItemType, ColumnType } from "@/Data/Types";
 import moment from "moment";
 
 export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
@@ -29,7 +29,12 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
     }
   });
 
-  NewBoard.LastEditedAt = moment().valueOf();
+  NewBoard.LastEditedAt = moment().valueOf(); 
+
+  //UPDATE CARDS QTD
+  NewBoard.Columns = NewBoard.Columns.map((Coluna: ColumnType) => {
+    return { ...Coluna, CardsQtd: Coluna.Cards.length };
+  });
 
   var NewBoardList: any = [...store.getState().BoardList];
   NewBoardList = [...NewBoardList].map((BoardListItem: any) => {

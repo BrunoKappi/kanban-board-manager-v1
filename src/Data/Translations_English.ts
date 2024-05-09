@@ -51,7 +51,7 @@ export const TRANSLATIONS_ENGLISH = {
   },
   Buttons: {
     Save: "Save",
-    AddCard: "+ Add Card",
+    AddCard: " Add Card",
     AddTask: "Add Task",
     DeleteCard: "Delete Card",
     EditTags: "+ Edit Tags",

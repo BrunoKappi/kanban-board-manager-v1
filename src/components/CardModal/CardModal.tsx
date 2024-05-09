@@ -254,7 +254,13 @@ const CardModal = ({}: Props) => {
                           {(DragProvided: any) => {
                             return (
                               <div className="ITEM flex items-center space-x-2 w-full" ref={DragProvided.innerRef} style={DragProvided.draggableProps.style} {...DragProvided.draggableProps} {...DragProvided.dragHandleProps}>
-                                <Checkbox id="terms" checked={Task.Completed} onClick={() => HandleToggleTask(Index, setCardTasks, CardTasks)} />
+                                <Checkbox
+                                  id="terms"
+                                  checked={Task.Completed}
+                                  onClick={() => {
+                                    HandleToggleTask(Index, setCardTasks, CardTasks);
+                                  }}
+                                />
                                 <MinimalInput
                                   maxLength={MAX_TASK_TITLE}
                                   placeholder={Translations.Placeholders.Task}
@@ -272,7 +278,7 @@ const CardModal = ({}: Props) => {
                                     setFocusOn(Index);
                                     HandleChangeTaskTitle(e.target.value, Index, setCardTasks, CardTasks);
                                   }}
-                                  onBlur={() => setFocusWhat("NA")}
+                                  //onBlur={() => setFocusWhat("NA")}
                                 />
                                 <Tooltip text={Translations.Tooltips.DeleteTask}>
                                   <Trash2

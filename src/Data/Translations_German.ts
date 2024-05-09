@@ -51,7 +51,7 @@ export const TRANSLATIONS_GERMAN = {
   },
   Buttons: {
     Save: "Speichern",
-    AddCard: "+ Karte hinzufügen",
+    AddCard: " Karte hinzufügen",
     AddTask: "Aufgabe hinzufügen",
     DeleteCard: "Karte löschen",
     EditTags: "+ Tags bearbeiten",

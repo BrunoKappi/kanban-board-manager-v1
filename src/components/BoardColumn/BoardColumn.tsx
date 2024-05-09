@@ -89,7 +89,7 @@ export default function BoardColumn({ Column, ColumnIndex }: Props) {
                 <Tooltip text={Translations.Tooltips.QtdCards}>
                   <span>{Column.CardsQtd}</span>
                 </Tooltip>
-                <BoardColumnOptions Column={Column} />
+                <BoardColumnOptions Column={Column} ColumnIndex={ColumnIndex}/>
               </div>
             </div>
 

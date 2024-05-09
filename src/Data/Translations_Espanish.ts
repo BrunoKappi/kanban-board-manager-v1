@@ -51,7 +51,7 @@ export const TRANSLATIONS_SPANISH = {
   },
   Buttons: {
     Save: "Guardar",
-    AddCard: "+ Agregar Tarjeta",
+    AddCard: " Agregar Tarjeta",
     AddTask: "Agregar Tarea",
     DeleteCard: "Eliminar Tarjeta",
     EditTags: "+ Editar Etiquetas",
