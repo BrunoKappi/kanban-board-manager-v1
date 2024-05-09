@@ -1,5 +1,6 @@
 import store from "@/Config/Store/Store";
 import { ColumnType } from "@/Data/Types";
+import { moveObjectInArray } from "@/lib/utils";
 import { MIDDLEWARE_AddBoard } from "@/Middleware/AddData";
 import moment from "moment";
 import { DropResult } from "react-beautiful-dnd";
@@ -37,17 +38,13 @@ export const HandleAddColumn = (Setter: any, BoardColumns: any) => {
 export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardDesc: string, setMessage: (message: string) => void, setOpen: (open: boolean) => void) => {
   if (!BoardName) {
     setMessage(store.getState().Translations.BoardModal.ErrorTitle);
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
+    setTimeout(() => setMessage(""), 3000);
     return;
   }
 
   if (BoardColumns.length === 0) {
     setMessage(store.getState().Translations.BoardModal.ErrorColumns);
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
+    setTimeout(() => setMessage(""), 3000);
     return;
   }
 
@@ -101,19 +98,6 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
 
   MIDDLEWARE_AddBoard(NewBoard, setOpen);
 };
-
-function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: number) {
-  // Faz uma cópia profunda do array original para não modificar o original
-  const newArr = arr.map((obj: any) => ({ ...obj }));
-
-  // Remove o objeto do sourceIndex
-  const [removedObject] = newArr.splice(sourceIndex, 1);
-
-  // Insere o objeto no destinationIndex
-  newArr.splice(destinationIndex, 0, removedObject);
-
-  return newArr;
-}
 
 export const HandleDragColumns = (Result: DropResult, Columns: any, setBoardColumns: (Columns: any) => void) => {
   if (!Result.destination) return;

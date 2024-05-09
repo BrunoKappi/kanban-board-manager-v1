@@ -10,8 +10,8 @@ export type CardType = {
   CardId: string;
   CardTitle: string;
   CardDescription: string;
-  CreatedAt: string;
-  LastEditedAt: string;
+  CreatedAt: number;
+  LastEditedAt: number;
   TasksQtd: number;
   Tasks: TaskType[];
   Tags: string[];

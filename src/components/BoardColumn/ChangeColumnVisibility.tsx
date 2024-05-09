@@ -10,22 +10,23 @@ import { useSelector } from "react-redux";
 
 type Props = {
   Column: ColumnType;
+  ColumnIndex: number;
 };
 
-export default function ChangeColumnVisibility({ Column }: Props) {
+export default function ChangeColumnVisibility({ Column, ColumnIndex }: Props) {
   const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 
   const HandleChangeColumnVisibility = () => {
     setOpen(false);
-    ChangeColumnVisibilityFn(Column);
+    ChangeColumnVisibilityFn(Column, ColumnIndex);
   };
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <ListOption>
-          {Column.Visible && <EyeOff className="size-4" />} 
+          {Column.Visible && <EyeOff className="size-4" />}
           {!Column.Visible && <Eye className="size-4" />}
           {Column.Visible && Translations.PopoversSubtitles.HideGroup}
           {!Column.Visible && Translations.PopoversSubtitles.ShowGroup}

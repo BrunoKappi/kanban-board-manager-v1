@@ -61,3 +61,21 @@ export default function getEmailPrefix(email: string) {
   // Capitaliza a primeira letra do prefixo e retorna
   return prefix.charAt(0).toUpperCase() + prefix.slice(1);
 }
+
+export const Copy = (ITEM: any) => {
+  return JSON.parse(JSON.stringify(ITEM));
+};
+
+
+export function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: number) {
+  // Faz uma cópia profunda do array original para não modificar o original
+  const newArr = arr.map((obj: any) => ({ ...obj }));
+
+  // Remove o objeto do sourceIndex
+  const [removedObject] = newArr.splice(sourceIndex, 1);
+
+  // Insere o objeto no destinationIndex
+  newArr.splice(destinationIndex, 0, removedObject);
+
+  return newArr;
+}

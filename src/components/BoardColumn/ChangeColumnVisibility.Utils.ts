@@ -1,9 +1,10 @@
 import store from "@/Config/Store/Store";
-import { ColumnType } from "@/Data/Types";
+import { BoardType, ColumnType } from "@/Data/Types";
+import { Copy } from "@/lib/utils";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 
-export const ChangeColumnVisibilityFn = (Column: ColumnType) => {
-  const NewBoard: any = { ...store.getState().Board };
+export const ChangeColumnVisibilityFn = (Column: ColumnType, ColumnIndex: number) => {
+  const NewBoard: BoardType = Copy(store.getState().Board);
 
   var NewColumns = [...NewBoard.Columns];
 
