@@ -25,5 +25,6 @@ export const HandleDrag = (Resultado: DropResult, Board: any) => {
     }
   });
 
+  
   MIDDLEWARE_UpdateBoard(NewBoard);
 };

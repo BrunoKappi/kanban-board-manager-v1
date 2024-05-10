@@ -22,6 +22,7 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
   const { User, CanEditBoard, IsBoardOwner, BoardList } = Copy(store.getState());
 
   const NewBoard: BoardType = Copy(BoardParam);
+
   const UserUid = User?.uid || "";
   var IsOneOfTheOwners = false;
 
@@ -33,7 +34,6 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
 
   NewBoard.LastEditedAt = moment().valueOf();
 
-  //UPDATE CARDS QTD
   NewBoard.Columns.map((Coluna: ColumnType) => (Coluna.CardsQtd = Coluna.Cards.length));
 
   var NewBoardList: BoardListItemType[] = Copy(BoardList);
@@ -48,12 +48,16 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
     return Item;
   });
 
+  console.log("BOARDLIST", BoardList);
+  console.log("BOARD", NewBoard);
   //@ts-ignore
   const NewBoardListItem: BoardListItemType = Copy(BoardList.find((Item: BoardListItemType) => Item.BoardId === NewBoard.BoardId));
 
-  NewBoardListItem.LastEditedAt = NewBoard.LastEditedAt;
-  NewBoardListItem.BoardName = NewBoard.BoardName;
-  NewBoardListItem.BoardId = NewBoard.BoardId;
+  if (NewBoardListItem) {
+    NewBoardListItem.LastEditedAt = NewBoard.LastEditedAt;
+    NewBoardListItem.BoardName = NewBoard.BoardName;
+    NewBoardListItem.BoardId = NewBoard.BoardId;
+  }
 
   //@ts-ignore
   store.dispatch(SetBoard(NewBoard));
@@ -167,4 +171,3 @@ export const MIDDLEWARE_SetCardModal = (Mode: string, CardIndex: number, ColumIn
   //@ts-ignore
   store.dispatch(SetCardModalCard(Card));
 };
-
