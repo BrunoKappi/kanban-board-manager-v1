@@ -1,5 +1,3 @@
-import { SetCardModalCard, SetCardModalCardIndex, SetCardModalColumnIndex, SetCardModalMode } from "@/Config/Store/CardModal/CardModal";
-import { useDispatch } from "react-redux";
 import { DefaultCardToAdd } from "./BoardAddCard.Utils";
 import { useSelector } from "react-redux";
 import { HandleCreateCard } from "../CardModal/CardModal.Utils";
@@ -7,6 +5,8 @@ import moment from "moment";
 import { v4 } from "uuid";
 import { ListOption } from "../ListOption/ListOption";
 import { Plus } from "lucide-react";
+import { MIDDLEWARE_SetCardModal } from "@/Middleware/SetData";
+import { TaskType } from "@/Data/Types";
 
 type Props = {
   ColumnIndex: number;
@@ -16,11 +16,10 @@ type Props = {
 export default function BoardAddCard({ ColumnIndex, Mode = "Button" }: Props) {
   const Translations = useSelector((state: any) => state.Translations);
   const Board = useSelector((state: any) => state.Board);
-  const dispatch = useDispatch();
 
   const NewIndex = Board.Columns[ColumnIndex]?.Cards.length;
 
-  const NewTasks = [
+  const NewTasks: TaskType[] = [
     {
       TaskId: v4(),
       TaskTitle: Translations.Mocks.Task + " 1",
@@ -40,22 +39,12 @@ export default function BoardAddCard({ ColumnIndex, Mode = "Button" }: Props) {
   const Func = () => {};
 
   const HandleAddCard = () => {
-    dispatch(SetCardModalMode("View"));
-    //@ts-ignore
-    dispatch(SetCardModalCardIndex(NewIndex));
-
-    //@ts-ignore
-    dispatch(SetCardModalColumnIndex(ColumnIndex));
-    //@ts-ignore
-    dispatch(
-      //@ts-ignore
-      SetCardModalCard({
-        ...DefaultCardToAdd,
-        CardTitle: Translations.Text.NewCardTitle,
-        Tasks: [...NewTasks],
-      })
-    );
-    HandleCreateCard(Translations.Text.NewCardTitle, DefaultCardToAdd.CardDescription, NewTasks, Func, Func); //@ts-ignore
+    MIDDLEWARE_SetCardModal("View", NewIndex, ColumnIndex, {
+      ...DefaultCardToAdd,
+      CardTitle: Translations.Text.NewCardTitle,
+      Tasks: [...NewTasks],
+    });
+    HandleCreateCard(Translations.Text.NewCardTitle, DefaultCardToAdd.CardDescription, NewTasks, Func, Func);
   };
 
   return Mode === "Button" ? (
@@ -63,7 +52,7 @@ export default function BoardAddCard({ ColumnIndex, Mode = "Button" }: Props) {
       <span className=" line-clamp-2 select-none text-primary  font-medium text-sm">{Translations.Buttons.AddCard}</span>
     </div>
   ) : (
-    <ListOption>
+    <ListOption onClick={HandleAddCard}>
       <Plus className="size-4" />
       {Translations.Buttons.AddCard}
     </ListOption>

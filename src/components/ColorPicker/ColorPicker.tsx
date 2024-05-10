@@ -1,6 +1,6 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useState } from "react";
-import { ColorOptions } from "./Colors";
+import { colors } from "@/Data/Colors";
 
 type Props = {
   onSelect: (Key: string) => void;
@@ -20,13 +20,13 @@ export default function ColorPicker({ onSelect, color }: Props) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <span onClick={(e) => e.stopPropagation()} className={`size-5 rounded-full cursor-pointer flex-shrink-0 ${ColorOptions[Color].bg}`}></span>
+        <span onClick={(e) => e.stopPropagation()} className={`size-5 rounded-full cursor-pointer flex-shrink-0 ${colors[Color].bg}`}></span>
       </PopoverTrigger>
       <PopoverContent className="w-44  py-2 bg-background flex flex-row flex-wrap dark:bg-background-dark dark:border-border-dark select-none gap-1" onClick={(e) => e.stopPropagation()}>
-        {Object.keys(ColorOptions).map((Key) => {
+        {Object.keys(colors).map((Key) => {
           return (
             <span
-              className={`${ColorOptions[Key].bg} size-5 rounded-full cursor-pointer`}
+              className={`${colors[Key].bg} size-5 rounded-full cursor-pointer`}
               onClick={(e) => {
                 e.stopPropagation();
                 HandlePickColor(Key);

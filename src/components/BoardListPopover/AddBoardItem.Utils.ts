@@ -1,5 +1,5 @@
 import store from "@/Config/Store/Store";
-import { ColumnType } from "@/Data/Types";
+import { BoardType, ColumnType } from "@/Data/Types";
 import { moveObjectInArray } from "@/lib/utils";
 import { MIDDLEWARE_AddBoard } from "@/Middleware/AddData";
 import moment from "moment";
@@ -50,7 +50,7 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
 
   const UserUid = store.getState().User?.uid || "";
 
-  const NewColumns = BoardColumns.map((Column: ColumnType) => {
+  const NewColumns: ColumnType[] = BoardColumns.map((Column: ColumnType) => {
     return {
       ColumId: v4(),
       ColumnTitle: Column.ColumnTitle,
@@ -63,13 +63,16 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
     };
   });
 
-  const NewBoard = {
+  const NewBoard: BoardType = {
     BoardId: v4(),
     BoardName: BoardName,
     BoardColumnsQtd: BoardColumns.length,
     Description: BoardDesc || "",
     CreatedAt: moment().valueOf(),
     LastEditedAt: moment().valueOf(),
+    Shared: false,
+    PuclicEdit: false,
+    AllowDuplicate: false,
     Public: false,
     PublicURL: "",
     Collaborators: [],

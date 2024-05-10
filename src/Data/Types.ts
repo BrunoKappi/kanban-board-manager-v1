@@ -2,8 +2,8 @@ export type TaskType = {
   TaskId: string;
   TaskTitle: string;
   Completed: boolean;
-  CreatedAt: string;
-  LastEditedAt: string;
+  CreatedAt: number;
+  LastEditedAt: number;
 };
 
 export type CardType = {
@@ -38,7 +38,7 @@ export type BoardType = {
   BoardName: string;
   BoardColumnsQtd: number;
   Description: string;
-  CreatedAt: string;
+  CreatedAt: number;
   LastEditedAt: number;
   Public: boolean;
   OwnerUid: string;

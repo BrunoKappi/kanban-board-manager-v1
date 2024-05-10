@@ -1,44 +1,25 @@
 import { SetCardModalCardTags } from "@/Config/Store/CardModal/CardModal";
 import store from "@/Config/Store/Store";
-import { TagType } from "@/Data/Types";
+import { BoardType, TagType } from "@/Data/Types";
+import { Copy } from "@/lib/utils";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 
 export const HandleCardTagToggle = (BorardTag: TagType) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
+  const { CardModal, Board } = store.getState();
 
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
-  //@ts-ignore
-  const CurrentCardTags: string[] = [...(store.getState().CardModal?.Card?.Tags || [])];
+  const ColumnIndex = CardModal.ColumnIndex;
+  const CardIndex = CardModal.CardIndex;
 
-  var NewCardTags = [...CurrentCardTags];
+  var NewBoard: BoardType = Copy(Board);
 
-  
-
-  const Contain = NewCardTags.includes(BorardTag.TagId);
-
-  if (!Contain) {
-    NewCardTags = [...NewCardTags, BorardTag.TagId];
+  if (!NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tags.includes(BorardTag.TagId)) {
+    NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tags.push(BorardTag.TagId);
   } else {
-    NewCardTags = [...NewCardTags].filter((TagId: string) => TagId !== BorardTag.TagId);
+    NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tags = NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tags.filter((TagId: string) => TagId !== BorardTag.TagId);
   }
 
-  NewCard.Tags = [...NewCardTags];
-
-  NewCards = [...NewCards].map((Card: any) => (Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard }));
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
-
   //@ts-ignore
-  store.dispatch(SetCardModalCardTags(NewCardTags));
+  store.dispatch(SetCardModalCardTags(NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tags));
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };

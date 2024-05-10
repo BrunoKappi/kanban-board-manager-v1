@@ -1,7 +1,6 @@
 import { colors } from "@/Data/Colors";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { FormEvent, useState } from "react";
-import { ColorOptions } from "../ColorPicker/Colors";
 import { MinimalInput } from "../ui/minimalInput";
 import { ChangeColumn } from "./Status.Utils";
 import { Button } from "../ui/button";
@@ -44,8 +43,8 @@ export default function Status({ Color = "neutral", Text = "Status", Column }: S
         <form onSubmit={handleChangeColumn}>
           <MinimalInput maxLength={MAX_COLUMN_TITLE} value={ColumnTitle} onChange={(e) => setColumnTitle(e.target.value)} className={`p-0 px-3 py-0.5 h-auto text-sm rounded-full mb-5 mt-2 ${colors[ColorChoose.toLowerCase()].bg} ${colors[ColorChoose.toLowerCase()].text}`} />
           <div className="flex flex-row flex-wrap gap-1">
-            {Object.keys(ColorOptions).map((Key) => {
-              return <span className={`${ColorOptions[Key].bg} size-5 rounded-full cursor-pointer`} onClick={() => HandlePickColor(Key)}></span>;
+            {Object.keys(colors).map((Key) => {
+              return <span className={`${colors[Key].bg} size-5 rounded-full cursor-pointer`} onClick={() => HandlePickColor(Key)}></span>;
             })}
           </div>
 

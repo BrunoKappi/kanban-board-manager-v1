@@ -1,9 +1,7 @@
 import { ListOption } from "../ListOption/ListOption";
-
-import { useDispatch } from "react-redux";
 import { Pen } from "lucide-react";
-import { SetCardModalCard, SetCardModalCardIndex, SetCardModalColumnIndex, SetCardModalMode } from "@/Config/Store/CardModal/CardModal";
 import { useSelector } from "react-redux";
+import { MIDDLEWARE_SetCardModal } from "@/Middleware/SetData";
 
 type Props = {
   CardIndex: number;
@@ -15,7 +13,6 @@ type Props = {
 export default function SelectCard({ CardIndex, ColumnIndex, Card, Column }: Props) {
   const Board = useSelector((state: any) => state.Board);
   const Translations = useSelector((state: any) => state.Translations);
-  const dispatch = useDispatch();
 
   const HandleSelectCard = () => {
     var NewColumnIndex = ColumnIndex;
@@ -24,14 +21,7 @@ export default function SelectCard({ CardIndex, ColumnIndex, Card, Column }: Pro
       if (element.ColumId === Column.ColumId) NewColumnIndex = index;
     });
 
-    //@ts-ignore
-    dispatch(SetCardModalMode("View"));
-    //@ts-ignore
-    dispatch(SetCardModalCardIndex(CardIndex));
-    //@ts-ignore
-    dispatch(SetCardModalColumnIndex(NewColumnIndex));
-    //@ts-ignore
-    dispatch(SetCardModalCard(Card));
+    MIDDLEWARE_SetCardModal("View", CardIndex, NewColumnIndex, Card);
   };
   return (
     <ListOption className="flex flex-row items-center justify-start" onClick={() => HandleSelectCard()}>

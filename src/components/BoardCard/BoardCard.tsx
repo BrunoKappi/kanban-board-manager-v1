@@ -1,12 +1,11 @@
-import { SetCardModalCard, SetCardModalCardIndex, SetCardModalColumnIndex, SetCardModalMode } from "@/Config/Store/CardModal/CardModal";
 import { Draggable } from "react-beautiful-dnd";
-import { useDispatch } from "react-redux";
 import BoardCardOptions from "./BoardCardOptions";
 import { useSelector } from "react-redux";
 import { TagType, TaskType } from "@/Data/Types";
 import { colors } from "@/Data/Colors";
 import { Checkbox } from "../ui/checkbox";
 import { HandleToggleTask } from "./BoardCard.Utils";
+import { MIDDLEWARE_SetCardModal } from "@/Middleware/SetData";
 
 type Props = {
   Card: any;
@@ -18,7 +17,6 @@ type Props = {
 
 export default function BoardCard({ Card, Index, ColumnIndex, CardIndex, Column }: Props) {
   const Board = useSelector((state: any) => state.Board);
-  const dispatch = useDispatch();
 
   const HandleSelectCard = () => {
     var NewColumnIndex = ColumnIndex;
@@ -27,14 +25,7 @@ export default function BoardCard({ Card, Index, ColumnIndex, CardIndex, Column 
       if (element.ColumId === Column.ColumId) NewColumnIndex = index;
     });
 
-    //@ts-ignore
-    dispatch(SetCardModalMode("View"));
-    //@ts-ignore
-    dispatch(SetCardModalCardIndex(CardIndex));
-    //@ts-ignore
-    dispatch(SetCardModalColumnIndex(NewColumnIndex));
-    //@ts-ignore
-    dispatch(SetCardModalCard(Card));
+    MIDDLEWARE_SetCardModal("View", CardIndex, NewColumnIndex, Card);
   };
 
   return (

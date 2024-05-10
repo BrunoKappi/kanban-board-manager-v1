@@ -5,12 +5,13 @@ import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { ExampleBoard, ExampleBoardID, GetText } from "@/Data/ExampleBoard";
 import { BoardType } from "@/Data/Types";
+import { Copy } from "@/lib/utils";
 
 export const ChangeExampleBoardLanguage = (Language: string) => {
-  const CurrentlBoardList = JSON.parse(JSON.stringify(store.getState().BoardList));
-  const CurrentlBoard = JSON.parse(JSON.stringify(store.getState().Board));
+  const CurrentlBoardList = Copy(store.getState().BoardList);
+  const CurrentlBoard = Copy(store.getState().Board);
 
-  var OriginalBoard: BoardType = JSON.parse(JSON.stringify(ExampleBoard));
+  var OriginalBoard: BoardType = Copy(ExampleBoard);
   var NewBoard = { ...GetText(Language) };
   var BoardListIndex = 0;
   CurrentlBoardList?.forEach((BoardListItem: any, Index: number) => {

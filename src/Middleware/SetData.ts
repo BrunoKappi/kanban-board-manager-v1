@@ -1,6 +1,7 @@
 import { FIREBASE_UpdateBoard, FIREBASE_UpdateBoardListItem, FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
 import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
+import { SetCardModalCard, SetCardModalCardIndex, SetCardModalColumnIndex, SetCardModalMode } from "@/Config/Store/CardModal/CardModal";
 import { SetLoadingBoard } from "@/Config/Store/Loading/LoadingBoard";
 import { SetLoadingSidebar } from "@/Config/Store/Loading/LoadingSidebar";
 import { SetSidebar } from "@/Config/Store/Sidebar/Sidebar";
@@ -13,14 +14,15 @@ import { TRANSLATIONS_SPANISH } from "@/Data/Translations_Espanish";
 import { TRANSLATIONS_FRENCH } from "@/Data/Translations_French";
 import { TRANSLATIONS_GERMAN } from "@/Data/Translations_German";
 import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
-import { BoardListItemType, ColumnType } from "@/Data/Types";
+import { BoardListItemType, BoardType, CardType, ColumnType } from "@/Data/Types";
+import { Copy } from "@/lib/utils";
 import moment from "moment";
 
 export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
-  const NewBoard = { ...BoardParam };
-  const UserUid = store.getState().User?.uid || "";
-  const CanEditBoard = store.getState().CanEditBoard;
-  const IsBoardOwner = store.getState().IsBoardOwner;
+  const { User, CanEditBoard, IsBoardOwner, BoardList } = Copy(store.getState());
+
+  const NewBoard: BoardType = Copy(BoardParam);
+  const UserUid = User?.uid || "";
   var IsOneOfTheOwners = false;
 
   NewBoard.Collaborators.forEach((Collab: any) => {
@@ -29,35 +31,31 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
     }
   });
 
-  NewBoard.LastEditedAt = moment().valueOf(); 
+  NewBoard.LastEditedAt = moment().valueOf();
 
   //UPDATE CARDS QTD
-  NewBoard.Columns = NewBoard.Columns.map((Coluna: ColumnType) => {
-    return { ...Coluna, CardsQtd: Coluna.Cards.length };
-  });
+  NewBoard.Columns.map((Coluna: ColumnType) => (Coluna.CardsQtd = Coluna.Cards.length));
 
-  var NewBoardList: any = [...store.getState().BoardList];
-  NewBoardList = [...NewBoardList].map((BoardListItem: any) => {
-    const NewItem = { ...BoardListItem };
-    if (NewItem.BoardId === NewBoard.BoardId) {
-      NewItem.LastEditedAt = NewBoard.LastEditedAt;
-      NewItem.BoardName = NewBoard.BoardName;
-      NewItem.BoardId = NewBoard.BoardId;
-      //NewItem.OwnerUid = NewBoard.OwnerUid;
-      NewItem.IsBoardShared = NewItem.IsBoardShared;
+  var NewBoardList: BoardListItemType[] = Copy(BoardList);
+
+  NewBoardList.map((Item) => {
+    if (Item.BoardId === NewBoard.BoardId) {
+      Item.LastEditedAt = NewBoard.LastEditedAt;
+      Item.BoardName = NewBoard.BoardName;
+      Item.BoardId = NewBoard.BoardId;
+      Item.IsBoardShared = Item.IsBoardShared;
     }
-    return NewItem;
+    return Item;
   });
 
   //@ts-ignore
-  const NewBoardListItem: BoardListItemType = { ...store.getState().BoardList.find((Item: BoardListItemType) => Item.BoardId === NewBoard.BoardId) };
+  const NewBoardListItem: BoardListItemType = Copy(BoardList.find((Item: BoardListItemType) => Item.BoardId === NewBoard.BoardId));
 
   NewBoardListItem.LastEditedAt = NewBoard.LastEditedAt;
   NewBoardListItem.BoardName = NewBoard.BoardName;
   NewBoardListItem.BoardId = NewBoard.BoardId;
 
-  //NewBoardListItem.OwnerUid = NewBoard.OwnerUid;
-
+  //@ts-ignore
   store.dispatch(SetBoard(NewBoard));
   store.dispatch(SetBoardList(NewBoardList));
 
@@ -73,12 +71,9 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
 
 export const MIDDLEWARE_ToggleSidebar = () => {
   const Sidebar = store.getState().Sidebar || "Opened";
-
   if (Sidebar === "Closed") {
-    //localStorage.setItem("Kanban-Sidebar", "Opened");
     store.dispatch(SetSidebar("Opened"));
   } else {
-    // localStorage.setItem("Kanban-Sidebar", "Closed");
     store.dispatch(SetSidebar("Closed"));
   }
 };
@@ -162,3 +157,14 @@ export const MIDDLEWARE_SyncBoard = (Data: any) => {
     store.dispatch(SetBoard(Data));
   }
 };
+
+export const MIDDLEWARE_SetCardModal = (Mode: string, CardIndex: number, ColumIndex: number, Card: CardType) => {
+  store.dispatch(SetCardModalMode(Mode));
+  //@ts-ignore
+  store.dispatch(SetCardModalCardIndex(CardIndex));
+  //@ts-ignore
+  store.dispatch(SetCardModalColumnIndex(ColumIndex));
+  //@ts-ignore
+  store.dispatch(SetCardModalCard(Card));
+};
+

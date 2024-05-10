@@ -1,17 +1,17 @@
 import { FIREBASE_CreateBoardList, FIREBASE_DeleteBoardListItem, FIREBASE_GetBoardListItem, FIREBASE_GetUserByEmail, setListeningBoard, stopListeningBoard } from "@/Config/Firebase/Firestore";
 import store from "@/Config/Store/Store";
-import { BoardListItemType } from "@/Data/Types";
+import { BoardListItemType, BoardType, CollaboratorType } from "@/Data/Types";
+import { Copy } from "@/lib/utils";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 import moment from "moment";
 
 //@ts-ignore
 export const ChangeBoardSharingOptions = (ShareBoard: boolean, AllowEdit: boolean, AllowDuplicate: boolean, Collaborators: string[]) => {
-  var NewBoard = JSON.parse(JSON.stringify(store.getState().Board));
+  var NewBoard = Copy(store.getState().Board);
 
   NewBoard.Public = ShareBoard;
   NewBoard.PuclicEdit = AllowEdit;
   NewBoard.AllowDuplicate = AllowDuplicate;
-  //NewBoard.Collaborators = [...Collaborators];
   NewBoard.LastEditedAt = moment().valueOf();
   NewBoard.PublicURL = ShareBoard ? `https://kanban.bkappi.com/view/${NewBoard.BoardId}` : "";
 
@@ -29,8 +29,8 @@ export const ChangeBoardSharingOptions = (ShareBoard: boolean, AllowEdit: boolea
 };
 
 export const AddCollaborator = async (Email: string, setCollabMessage: (message: string) => void, setCollaboratorEmail: (message: string) => void) => {
-  var NewBoard: any = { ...store.getState().Board };
-  var CurrentUser: any = { ...store.getState().User };
+  var NewBoard: BoardType = Copy(store.getState().Board);
+  var CurrentUser: any = Copy(store.getState().User);
 
   if (CurrentUser.email === Email) {
     setCollaboratorEmail("");
@@ -49,7 +49,7 @@ export const AddCollaborator = async (Email: string, setCollabMessage: (message:
     return;
   }
 
-  const NewCollaborator = {
+  const NewCollaborator: CollaboratorType = {
     Email: User.Email,
     Uid: User.Uid,
   };
@@ -75,18 +75,14 @@ export const AddCollaborator = async (Email: string, setCollabMessage: (message:
     return;
   }
 
-  const NewCollaborators = [...NewBoard.Collaborators];
-
-  NewCollaborators.push(NewCollaborator);
-
-  NewBoard.Collaborators = [...NewCollaborators];
+  NewBoard.Collaborators.push(NewCollaborator);
 
   MIDDLEWARE_UpdateBoard(NewBoard);
   FIREBASE_CreateBoardList(NewBoardListItem);
-  if (NewCollaborators.length === 0) {
+  if (NewBoard.Collaborators.length === 0) {
     stopListeningBoard();
   } else {
-    if (NewBoard.AllowEdit) {
+    if (NewBoard.PuclicEdit) {
       setListeningBoard(NewBoard.docID);
     } else {
       stopListeningBoard();
@@ -101,7 +97,7 @@ export const AddCollaborator = async (Email: string, setCollabMessage: (message:
 };
 
 export const RemoveCollaborator = async (Collab: any) => {
-  var NewBoard: any = JSON.parse(JSON.stringify(store.getState().Board));
+  var NewBoard: any = Copy(store.getState().Board);
 
   NewBoard.Collaborators = NewBoard.Collaborators.filter((Col: any) => Col.Uid !== Collab.Uid);
 
