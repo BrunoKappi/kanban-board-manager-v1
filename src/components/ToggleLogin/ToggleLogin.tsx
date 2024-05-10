@@ -8,7 +8,7 @@ import moment from "moment";
 import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList } from "@/Config/Firebase/Firestore";
 import { DefaultBoardList } from "@/Data/BoardList";
 
-import { ExampleBoard1 } from "@/Data/ExampleBoard1";
+import { ExampleBoard } from "@/Data/ExampleBoard";
 
 export default function ToggleLogin({ className }: any) {
   const User = useSelector((state: any) => state.User);
@@ -34,7 +34,7 @@ export default function ToggleLogin({ className }: any) {
             });
           } else {
             var NewBoardListItem: BoardListItemType = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: UserUid };
-            var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: UserUid };
+            var NewBoard = { ...ExampleBoard, LastEditedAt: moment().valueOf(), OwnerUid: UserUid };
             FIREBASE_CreateBoard(NewBoard);
             FIREBASE_CreateBoardList(NewBoardListItem);
           }

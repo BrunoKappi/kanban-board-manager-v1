@@ -3,13 +3,14 @@ import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
-import { ExampleBoard1, ExampleBoardID, GetText } from "@/Data/ExampleBoard1";
+import { ExampleBoard, ExampleBoardID, GetText } from "@/Data/ExampleBoard";
+import { BoardType } from "@/Data/Types";
 
 export const ChangeExampleBoardLanguage = (Language: string) => {
   const CurrentlBoardList = JSON.parse(JSON.stringify(store.getState().BoardList));
   const CurrentlBoard = JSON.parse(JSON.stringify(store.getState().Board));
 
-  var OriginalBoard = JSON.parse(JSON.stringify(ExampleBoard1));
+  var OriginalBoard: BoardType = JSON.parse(JSON.stringify(ExampleBoard));
   var NewBoard = { ...GetText(Language) };
   var BoardListIndex = 0;
   CurrentlBoardList?.forEach((BoardListItem: any, Index: number) => {
@@ -61,6 +62,11 @@ export const ChangeExampleBoardLanguage = (Language: string) => {
     }
   }
 
+  OriginalBoard.Tags.map((Tag) => {
+    //@ts-ignore
+    Tag.TagName = NewBoard.Tags[Tag.TagId];
+  });
+
   OriginalBoard.BoardName = NewBoard.Board?.Name;
   OriginalBoard.Description = NewBoard.Board?.Description;
 
@@ -79,6 +85,7 @@ export const ChangeExampleBoardLanguage = (Language: string) => {
   store.dispatch(SetBoardList([...CurrentlBoardList]));
 
   if (SameBoard) {
+    //@ts-ignore
     store.dispatch(SetBoard(OriginalBoard));
     //@ts-ignore
     store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));

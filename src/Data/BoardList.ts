@@ -1,9 +1,9 @@
-import { ExampleBoard1, ExampleBoardID } from "./ExampleBoard1";
+import { ExampleBoard, ExampleBoardID } from "./ExampleBoard";
 import { BoardListItemType } from "./Types";
 
 export const DefaultBoardList: BoardListItemType[] = [
   {
-    BoardName: ExampleBoard1.BoardName || "Example Board",
+    BoardName: ExampleBoard.BoardName || "Example Board",
     BoardId: ExampleBoardID,
     OwnerUid: "",
     docID: "",

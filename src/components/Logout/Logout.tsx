@@ -9,7 +9,7 @@ import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetBoard } from "@/Config/Store/Board/Boards";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import { useSelector } from "react-redux";
-import { ExampleBoard1 } from "@/Data/ExampleBoard1";
+import { ExampleBoard } from "@/Data/ExampleBoard";
 import { SetUserPreferencesdocID } from "@/Config/Store/UserPreferences/UserPreferences";
 
 
@@ -30,7 +30,7 @@ export default function Logout({ setOpen }: Props) {
     if (CurrentLanguage) localStorage.setItem("Kanban-Language", CurrentLanguage);
     var NewId = v4();
     var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
-    var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
+    var NewBoard = { ...ExampleBoard, LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
 
     localStorage.setItem(`Kanban-Board-${NewBoard.BoardId}`, JSON.stringify(NewBoard));
     localStorage.setItem(`Kanban-BoardListItem-${NewBoard.BoardId}`, JSON.stringify(NewBoardListItem));

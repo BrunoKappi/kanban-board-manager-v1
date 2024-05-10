@@ -17,6 +17,11 @@ export type CardType = {
   Tags: string[];
 };
 
+export type CollaboratorType = {
+  Email: string;
+  Uid: string;
+};
+
 export type ColumnType = {
   ColumId: string;
   ColumnTitle: string;
@@ -40,6 +45,12 @@ export type BoardType = {
   docID: string;
   ColorColumns: boolean;
   Columns: ColumnType[];
+  Collaborators: CollaboratorType[];
+  Shared: boolean;
+  PublicURL: string;
+  PuclicEdit: boolean;
+  AllowDuplicate: boolean;
+  Tags: TagType[];
 };
 
 export type TagType = {

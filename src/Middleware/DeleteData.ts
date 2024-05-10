@@ -3,25 +3,22 @@ import { FIREBASE_DeleteBoard, FIREBASE_DeleteBoardListItem, FIREBASE_GetBoardLi
 import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
 import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import store from "@/Config/Store/Store";
-import { BoardListItemType } from "@/Data/Types";
+import { BoardListItemType, BoardType } from "@/Data/Types";
+import { Copy } from "@/lib/utils";
 
 export const MIDDLEWARE_DeleteBoard = async (Board: any) => {
-  const UserUid = store.getState().User?.uid || "";
-  const BoardList = [...store.getState().BoardList];
-  var NewBoardList = [...store.getState().BoardList];
-  const NewBoard = JSON.parse(JSON.stringify(Board));
+  const UserUid: string = Copy(store.getState().User?.uid);
+  const BoardList: BoardListItemType[] = Copy(store.getState().BoardList);
+  var NewBoardList: BoardListItemType[] = Copy(store.getState().BoardList);
+  const NewBoard: BoardType = Copy(Board);
 
-  //@ts-ignore
-  const BoardListItem: BoardListItemType = { ...BoardList.find((Item: BoardListItemType) => Item.BoardId === Board.BoardId) };
+  const BoardListItem = BoardList.find((Item) => Item.BoardId === Board.BoardId);
 
-  NewBoardList = [...NewBoardList].filter((Item: BoardListItemType) => Item.BoardId !== Board.BoardId);
+  NewBoardList = NewBoardList.filter((Item) => Item.BoardId !== Board.BoardId);
 
-  //@ts-ignore
-  if (BoardListItem.IsBoardShared === true) {
+  if (BoardListItem?.IsBoardShared === true) {
     //SE FOR COMPARTILHADA
-    //REMOVE O COLLABORATOR
     NewBoard.Collaborators = NewBoard.Collaborators.filter((Collab: any) => Collab.Uid !== UserUid);
-
     FIREBASE_UpdateBoard(NewBoard);
   } else {
     //SE FOR O DONO DA BOARD
@@ -32,8 +29,7 @@ export const MIDDLEWARE_DeleteBoard = async (Board: any) => {
     });
   }
 
-  if (UserUid) {
-    //@ts-ignore
+  if (UserUid && BoardListItem) {
     if (BoardListItem.IsBoardShared === false) {
       FIREBASE_DeleteBoard(Board);
     }
@@ -42,7 +38,6 @@ export const MIDDLEWARE_DeleteBoard = async (Board: any) => {
   }
 
   store.dispatch(SetBoardList(NewBoardList));
-  //@ts-ignore
   store.dispatch(SetSelectedBoard(NewBoardList.sort(OrderBoards)[0]?.BoardId || "NA"));
   localStorage.setItem(`Kanban-BoardList`, JSON.stringify(NewBoardList));
   localStorage.removeItem(`Kanban-Board-${Board.BoardId}`);

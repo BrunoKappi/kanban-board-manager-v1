@@ -63,9 +63,8 @@ export default function getEmailPrefix(email: string) {
 }
 
 export const Copy = (ITEM: any) => {
-  return JSON.parse(JSON.stringify(ITEM));
+  return JSON.parse(JSON.stringify(ITEM || ""));
 };
-
 
 export function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: number) {
   // Faz uma cópia profunda do array original para não modificar o original

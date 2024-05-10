@@ -1,3 +1,3 @@
-import { ExampleBoard1 } from "./ExampleBoard1";
+import { ExampleBoard } from "./ExampleBoard";
 
-export const Boards = [{ ...ExampleBoard1 }];
+export const Boards = [{ ...ExampleBoard }];

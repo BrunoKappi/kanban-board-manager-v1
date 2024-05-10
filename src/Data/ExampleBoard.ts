@@ -98,6 +98,16 @@ export const GetText = (Language?: string) => {
           },
         },
       },
+      Tags: {
+        Tag1: "Design",
+        Tag2: "Development",
+        Tag3: "Testing",
+        Tag4: "Review",
+        Tag5: "Content",
+        Tag6: "High",
+        Tag7: "Medium",
+        Tag8: "Low",
+      },
     };
   } else if (Lang === "Portuguese-br") {
     return {
@@ -186,6 +196,16 @@ export const GetText = (Language?: string) => {
             },
           },
         },
+      },
+      Tags: {
+        Tag1: "Design",
+        Tag2: "Desenvolvimento",
+        Tag3: "Teste",
+        Tag4: "Revisão",
+        Tag5: "Conteúdo",
+        Tag6: "Alta",
+        Tag7: "Média",
+        Tag8: "Baixa",
       },
     };
   } else if (Lang === "Spanish") {
@@ -276,6 +296,16 @@ export const GetText = (Language?: string) => {
           },
         },
       },
+      Tags: {
+        Tag1: "Diseño",
+        Tag2: "Desarrollo",
+        Tag3: "Pruebas",
+        Tag4: "Revisión",
+        Tag5: "Contenido",
+        Tag6: "Alto",
+        Tag7: "Medio",
+        Tag8: "Bajo",
+      },
     };
   } else if (Lang === "French") {
     return {
@@ -364,6 +394,16 @@ export const GetText = (Language?: string) => {
             },
           },
         },
+      },
+      Tags: {
+        Tag1: "Conception",
+        Tag2: "Développement",
+        Tag3: "Essais",
+        Tag4: "Révision",
+        Tag5: "Contenu",
+        Tag6: "Haut",
+        Tag7: "Moyen",
+        Tag8: "Faible",
       },
     };
   } else if (Lang === "German") {
@@ -454,6 +494,16 @@ export const GetText = (Language?: string) => {
           },
         },
       },
+      Tags: {
+        Tag1: "Design",
+        Tag2: "Entwicklung",
+        Tag3: "Testen",
+        Tag4: "Überprüfung",
+        Tag5: "Inhalt",
+        Tag6: "Hoch",
+        Tag7: "Mittel",
+        Tag8: "Niedrig",
+      },
     };
   } else {
     return {
@@ -543,13 +593,23 @@ export const GetText = (Language?: string) => {
           },
         },
       },
+      Tags: {
+        Tag1: "Design",
+        Tag2: "Development",
+        Tag3: "Testing",
+        Tag4: "Review",
+        Tag5: "Content",
+        Tag6: "High",
+        Tag7: "Medium",
+        Tag8: "Low",
+      },
     };
   }
 };
 
 const Data = GetText();
 
-export const ExampleBoard1 = {
+export const ExampleBoard = {
   BoardId: ExampleBoardID,
   BoardName: Data?.Board?.Name,
   BoardColumnsQtd: 4,
@@ -675,7 +735,7 @@ export const ExampleBoard1 = {
           LastEditedAt: moment().valueOf(),
           Notes: "",
           TasksQtd: 2,
-          Tags: ["Tag3"],
+          Tags: ['Tag4'],
           Tasks: [
             {
               TaskId: v4(),
@@ -706,7 +766,7 @@ export const ExampleBoard1 = {
           LastEditedAt: moment().valueOf(),
           Notes: "",
           TasksQtd: 2,
-          Tags: ["Tag4"],
+          Tags: ["Tag3"],
           Tasks: [
             {
               TaskId: v4(),
@@ -883,42 +943,42 @@ export const ExampleBoard1 = {
   Tags: [
     {
       TagId: "Tag1",
-      TagName: "Design",
+      TagName: Data?.Tags.Tag1,
       TagColor: "slate",
     },
     {
       TagId: "Tag2",
-      TagName: "Development",
+      TagName: Data?.Tags.Tag2,
       TagColor: "red",
     },
     {
       TagId: "Tag3",
-      TagName: "Testing",
+      TagName: Data?.Tags.Tag3,
       TagColor: "blue",
     },
     {
       TagId: "Tag4",
-      TagName: "Review",
+      TagName: Data?.Tags.Tag4,
       TagColor: "slate",
     },
     {
       TagId: "Tag5",
-      TagName: "Content",
+      TagName: Data?.Tags.Tag5,
       TagColor: "sky",
     },
     {
       TagId: "Tag6",
-      TagName: "High",
+      TagName: Data?.Tags.Tag6,
       TagColor: "red",
     },
     {
       TagId: "Tag7",
-      TagName: "Medium",
+      TagName: Data?.Tags.Tag7,
       TagColor: "orange",
     },
     {
       TagId: "Tag8",
-      TagName: "Low",
+      TagName: Data?.Tags.Tag8,
       TagColor: "green",
     },
   ],

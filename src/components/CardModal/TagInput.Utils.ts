@@ -17,7 +17,7 @@ export const HandleCardTagToggle = (BorardTag: TagType) => {
 
   var NewCardTags = [...CurrentCardTags];
 
-  console.log(NewCards);
+  
 
   const Contain = NewCardTags.includes(BorardTag.TagId);
 

@@ -12,8 +12,7 @@ import { SetTheme } from "@/Config/Store/Theme/Theme";
 import { DefaultNewUserPreference, SetUserPreferences } from "@/Config/Store/UserPreferences/UserPreferences";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { Boards } from "@/Data/Boards";
-import { ExampleBoard1 } from "@/Data/ExampleBoard1";
-import { ExampleBoard1_PortugueseBr } from "@/Data/ExampleBoard1_PortugueseBr";
+import { ExampleBoard } from "@/Data/ExampleBoard";
 import moment from "moment";
 import { v4 } from "uuid";
 import { MIDDLEWARE_SetLoadingBoard, MIDDLEWARE_SetLoadingSidebar, MIDDLEWARE_SetTranslations } from "./SetData";
@@ -125,7 +124,7 @@ const SyncCurrentUserWork = async (Uid: string) => {
       FIREBASE_CreateBoardList(NewBoardListItem);
 
       if (localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`)) {
-        var NewBoard = { ...(JSON.parse(localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`) || "") || { ...ExampleBoard1 }), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+        var NewBoard = { ...(JSON.parse(localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`) || "") || { ...ExampleBoard }), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
 
         FIREBASE_CreateBoard(NewBoard);
       }
@@ -133,7 +132,7 @@ const SyncCurrentUserWork = async (Uid: string) => {
   } else {
     var NewId = v4();
     var NewBoardListItem: BoardListItemType = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
-    var NewBoard = { ...ExampleBoard1, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+    var NewBoard = { ...ExampleBoard, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
 
     FIREBASE_CreateBoard(NewBoard);
     FIREBASE_CreateBoardList(NewBoardListItem);
@@ -217,15 +216,5 @@ export const MIDDLEWARE_GetUserPreferences = async (Uid: string) => {
     store.dispatch(SetLanguage(Language));
 
     MIDDLEWARE_SetTranslations(Language);
-  }
-};
-
-export const MIDDLEWARE_GetExampleBoard = () => {
-  const CurrentLanguage = store.getState().Language;
-
-  if (CurrentLanguage === "English") {
-    return { ...ExampleBoard1 };
-  } else if (CurrentLanguage === "Portuguese-br") {
-    return { ...ExampleBoard1_PortugueseBr };
   }
 };

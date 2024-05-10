@@ -1,5 +1,6 @@
 import store from "@/Config/Store/Store";
-import { ColumnType } from "@/Data/Types";
+import { BoardType, ColumnType } from "@/Data/Types";
+import { moveObjectInArray } from "@/lib/utils";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
 import moment from "moment";
 import { DropResult } from "react-beautiful-dnd";
@@ -39,12 +40,12 @@ export const HandleAddColumn = (Setter: any, BoardColumns: any) => {
     Visible: true,
     CardsQtd: 0,
     Cards: [],
-  }; 
+  };
   Current.push(NewColum);
   Setter(Current);
 };
 
-export const HandleEditBoard = (BoardName: string, BoardColumns: any[], BoardDesc: string, setMessage: (message: string) => void, Board: any) => {
+export const HandleEditBoard = (BoardName: string, BoardColumns: ColumnType[], BoardDesc: string, setMessage: (message: string) => void, Board: any) => {
   if (!BoardName) {
     setMessage(store.getState().Translations.BoardModal.ErrorTitle);
     setTimeout(() => {
@@ -61,14 +62,14 @@ export const HandleEditBoard = (BoardName: string, BoardColumns: any[], BoardDes
     return;
   }
 
-  const NewColumns = BoardColumns.map((Column: ColumnType) => {
+  const NewColumns: ColumnType[] = BoardColumns.map((Column: ColumnType) => {
     return {
       ...Column,
       LastEditedAt: moment().valueOf(),
     };
   });
 
-  const NewBoard = {
+  const NewBoard: BoardType = {
     ...Board,
     BoardName: BoardName,
     BoardColumnsQtd: BoardColumns.length,
@@ -79,19 +80,6 @@ export const HandleEditBoard = (BoardName: string, BoardColumns: any[], BoardDes
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };
-
-function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: number) {
-  // Faz uma cópia profunda do array original para não modificar o original
-  const newArr = arr.map((obj: any) => ({ ...obj }));
-
-  // Remove o objeto do sourceIndex
-  const [removedObject] = newArr.splice(sourceIndex, 1);
-
-  // Insere o objeto no destinationIndex
-  newArr.splice(destinationIndex, 0, removedObject);
-
-  return newArr;
-}
 
 export const HandleDragColumns = (Result: DropResult, Columns: any, setBoardColumns: (Columns: any) => void) => {
   if (!Result.destination) return;

@@ -4,7 +4,7 @@ import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FI
 import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
-import { ExampleBoard1, GetText } from "@/Data/ExampleBoard1";
+import { ExampleBoard, GetText } from "@/Data/ExampleBoard";
 import moment from "moment";
 import { v4 } from "uuid";
 import { MIDDLEWARE_GetUser } from "./GetData";
@@ -158,7 +158,7 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
       } else {
         var NewId = v4();
         const Language = store.getState().Language;
-        var OriginalBoard = { ...JSON.parse(JSON.stringify(ExampleBoard1)), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+        var OriginalBoard = { ...JSON.parse(JSON.stringify(ExampleBoard)), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
         var NewBoard = { ...GetText(Language) };
 
         for (let i = 0; i < OriginalBoard.Columns.length; i++) {
