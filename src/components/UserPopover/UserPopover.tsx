@@ -35,19 +35,16 @@ export default function UserPopover({}: Props) {
               <CircleUserRound className="size-6" />
             </AvatarFallback>
           </Avatar>
-
           {GetName()}
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-56 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList className="flex flex-col items-stretch">
-          <Show if={!User.uid}>
-            <ManageAccount />
-          </Show>
+          <ManageAccount />
+          <LanguagePopover Mode="List" />
           <Show if={User.uid}>
             <Logout setOpen={setOpen} />
           </Show>
-          <LanguagePopover Mode="List" />
         </PopOverList>
       </PopoverContent>
     </Popover>

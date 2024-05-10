@@ -84,4 +84,34 @@ export const colors: any = {
     circle: "bg-slate-400 dark:bg-slate-500",
     bg: "bg-slate-200 dark:bg-slate-300",
   },
+  newcolor1: {
+    text: "text-[#66aaed] dark:text-[#66aaed]",
+    circle: "bg-[#66aaed] dark:bg-[#66aaed]",
+    bg: "bg-[#e8f3f8] dark:bg-[#e8f3f8]",
+  },
+  newcolor2: {
+    text: "text-[#ec9425] dark:text-[#ec9425]",
+    circle: "bg-[#ec9425] dark:bg-[#ec9425]",
+    bg: "bg-[#faf3dc] dark:bg-[#faf3dc]",
+  },
+  newcolor3: {
+    text: "text-[#7bb159] dark:text-[#7bb159]",
+    circle: "bg-[#7bb159] dark:bg-[#7bb159]",
+    bg: "bg-[#edf3ec] dark:bg-[#edf3ec]",
+  },
+  newcolor4: {
+    text: "text-[#bb6d52] dark:text-[#bb6d52]",
+    circle: "bg-[#bb6d52] dark:bg-[#bb6d52]",
+    bg: "bg-[#f3eeee] dark:bg-[#f3eeee]",
+  },
+  newcolor5: {
+    text: "text-[#d43d48] dark:text-[#d43d48]",
+    circle: "bg-[#d43d48] dark:bg-[#d43d48]",
+    bg: "bg-[#fbebec] dark:bg-[#fbebec]",
+  },
+  newcolor6: {
+    text: "text-[#ab8fd6] dark:text-[#ab8fd6]",
+    circle: "bg-[#ab8fd6] dark:bg-[#ab8fd6]",
+    bg: "bg-[#f6f3f8] dark:bg-[#f6f3f8]",
+  },
 };

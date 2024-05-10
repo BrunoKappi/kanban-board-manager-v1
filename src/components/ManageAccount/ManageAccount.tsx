@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { LogIn } from "lucide-react";
+import { LogIn, SquareUserRound } from "lucide-react";
 import { useState } from "react";
 import Login from "./Login";
 import Show from "@/lib/Show";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 export function ManageAccount() {
   const Translations = useSelector((state: any) => state.Translations);
+  const User = useSelector((state: any) => state.User);
   const [Mode, setMode] = useState("Login");
   const [open, setOpen] = useState(false);
 
@@ -29,8 +30,10 @@ export function ManageAccount() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <ListOption>
-          <LogIn className="size-5" />
-          <span>{Translations.Buttons.Login}</span>
+          {!User.uid && <LogIn className="size-5" />}
+          {User.uid && <SquareUserRound className="size-5" />}
+          {!User.uid && <span>{Translations.Buttons.Login}</span>}
+          {User.uid && <span>Change Account</span>}
         </ListOption>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[450px] md:max-w-[550px] bg-background dark:bg-card-foreground border dark:border-border-dark p-10">

@@ -14,7 +14,7 @@ function Updates() {
 
     const resetTimer = () => {
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => setInactive(true), 900000); //  15 minute
+      timeoutId = setTimeout(() => setInactive(true), 1800000); //  30 minute
     };
 
     const handleMouseMove = () => {
