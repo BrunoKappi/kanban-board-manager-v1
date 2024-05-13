@@ -9,7 +9,7 @@ export const CardModalSlice = createSlice({
     Card: {},
   },
   reducers: {
-    SetCardModal: (state, action: any) => {
+    SetCardModal: (state, action) => {
       return (state = { ...action.payload });
     },
 
@@ -17,25 +17,25 @@ export const CardModalSlice = createSlice({
       const value = action.payload;
       state.Mode = value; // action.payload.username
     },
-    SetCardModalCard: (state, action: any) => {
+    SetCardModalCard: (state, action) => {
       const value = action.payload;
       state.Card = { ...value };
     },
-    SetCardModalCardTags: (state, action: any) => {
+    SetCardModalCardTags: (state, action) => {
       const value = action.payload;
       //@ts-ignore
       state.Card = { ...state.Card, Tags: [...value] };
     },
-    SetCardModalCardTitle: (state, action: any) => {
+    SetCardModalCardTitle: (state, action) => {
       const value = action.payload;
       //@ts-ignore
       state.Card = { ...state.Card, CardTitle: value };
     },
-    SetCardModalColumnIndex: (state, action: any) => {
+    SetCardModalColumnIndex: (state, action) => {
       const value = action.payload;
       state.ColumnIndex = value;
     },
-    SetCardModalCardIndex: (state, action: any) => {
+    SetCardModalCardIndex: (state, action) => {
       const value = action.payload;
       state.CardIndex = value;
     },

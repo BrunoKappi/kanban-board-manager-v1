@@ -1,10 +1,9 @@
-import store from "@/Config/Store/Store";
 import { BoardType, ColumnType } from "@/Data/Types";
-import { Copy } from "@/lib/utils";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
+import { STORE_GET } from "@/Middleware/Store";
 
 export const DeleteColumnFn = (Column: ColumnType) => {
-  const NewBoard: BoardType = Copy(store.getState().Board);
+  const NewBoard: BoardType = STORE_GET("Board");
 
   NewBoard.Columns = NewBoard.Columns.filter((Col: ColumnType) => Col.ColumId !== Column.ColumId);
 

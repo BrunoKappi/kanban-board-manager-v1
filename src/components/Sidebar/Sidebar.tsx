@@ -1,43 +1,37 @@
 import { useSelector } from "react-redux";
 import ToggleSidebar from "../ToggleSidebar/ToggleSidebar";
-import { useDispatch } from "react-redux";
-import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { OrderBoards } from "./SidebarUtils";
 import Logo from "../Logo/Logo";
 import SidebarItem from "./SidebarItem";
-
-import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import { AddBoardItem } from "../BoardListPopover/AddBoardItem";
 import { useNavigate } from "react-router-dom";
 import { LoaderCircle } from "lucide-react";
-import { MIDDLEWARE_SetLoadingBoard } from "@/Middleware/SetData";
-
+import { STORE_SetCardModalCard, STORE_SetLoadingBoard, STORE_SetSelectedBoard } from "@/Middleware/Store";
 export default function Sidebar() {
+  const [ShowMyBoards, setShowMyBoards] = useState(true);
+  const [ShowSharedBoards, setShowSharedBoards] = useState(true);
   const BoardList = useSelector((state: any) => [...state.BoardList]);
   const SelectedBoard = useSelector((state: any) => state.SelectedBoard);
   const Translations = useSelector((state: any) => state.Translations);
   const LoadingSidebar = useSelector((state: any) => state.LoadingSidebar);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  if (!SelectedBoard && BoardList.length > 0) dispatch(SetSelectedBoard(BoardList?.sort(OrderBoards)[0]?.BoardId || ""));
+  if (!SelectedBoard && BoardList.length > 0) STORE_SetSelectedBoard(BoardList?.sort(OrderBoards)[0]?.BoardId || "");
 
   useEffect(() => {
-    //@ts-ignore
     if (!SelectedBoard && BoardList.length > 0) {
-      dispatch(SetSelectedBoard(BoardList?.sort(OrderBoards)[0]?.BoardId || ""));
+      STORE_SetSelectedBoard(BoardList?.sort(OrderBoards)[0]?.BoardId || "");
     }
   }, [SelectedBoard]);
 
   const HandleSelectBoard = (BoardId: string) => {
     //@ts-ignore
-    dispatch(SetSelectedBoard(BoardId));
-    //@ts-ignore
-    dispatch(SetCardModalCard({}));
+    STORE_SetSelectedBoard(BoardId);
+    STORE_SetCardModalCard({});
     navigate("../");
-    MIDDLEWARE_SetLoadingBoard(true);
+    STORE_SetLoadingBoard(true);
   };
 
   const FilterMyBoardList = (BoardListItem: any) => {
@@ -66,25 +60,29 @@ export default function Sidebar() {
             <Logo />
           </div>
 
-          <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center">
+          <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center cursor-pointer select-none" onClick={() => setShowMyBoards(!ShowMyBoards)}>
             <span className="truncate w-full flex flex-row justify-between">
               {Translations.Sidebar.AllBoards} ({BoardList?.filter(FilterMyBoardList).length})
             </span>
           </div>
 
           <div className=" flex flex-col gap-2  w-full ">
-            {[...BoardList]
-              .filter(FilterMyBoardList)
-              .sort(OrderBoards)
-              .map((BoardListItem: any) => {
-                return <SidebarItem BoardListItem={BoardListItem} Active={SelectedBoard !== BoardListItem?.BoardId} BoardId={BoardListItem?.BoardId} Text={BoardListItem?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
-              })}
+            {ShowMyBoards && (
+              <>
+                {[...BoardList]
+                  .filter(FilterMyBoardList)
+                  .sort(OrderBoards)
+                  .map((BoardListItem: any) => {
+                    return <SidebarItem BoardListItem={BoardListItem} Active={SelectedBoard !== BoardListItem?.BoardId} BoardId={BoardListItem?.BoardId} Text={BoardListItem?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
+                  })}
+              </>
+            )}
 
             <AddBoardItem className=" rounded-md" />
           </div>
 
           {BoardList?.filter(FilterBoardsSharedWithMe).length > 0 && (
-            <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center mt-5">
+            <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center mt-5 cursor-pointer select-none" onClick={() => setShowSharedBoards(!ShowSharedBoards)}>
               <span className="truncate w-full flex flex-row justify-between">
                 {Translations.Sidebar.SharedWithMe} ({BoardList?.filter(FilterBoardsSharedWithMe).length})
               </span>
@@ -92,12 +90,16 @@ export default function Sidebar() {
           )}
 
           <div className=" flex flex-col gap-2  w-full ">
-            {[...BoardList]
-              .filter(FilterBoardsSharedWithMe)
-              .sort(OrderBoards)
-              .map((BoardListItem: any) => {
-                return <SidebarItem BoardListItem={BoardListItem} Active={SelectedBoard !== BoardListItem?.BoardId} BoardId={BoardListItem?.BoardId} Text={BoardListItem?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
-              })}
+            {ShowSharedBoards && (
+              <>
+                {[...BoardList]
+                  .filter(FilterBoardsSharedWithMe)
+                  .sort(OrderBoards)
+                  .map((BoardListItem: any) => {
+                    return <SidebarItem BoardListItem={BoardListItem} Active={SelectedBoard !== BoardListItem?.BoardId} BoardId={BoardListItem?.BoardId} Text={BoardListItem?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
+                  })}
+              </>
+            )}
           </div>
         </>
       )}

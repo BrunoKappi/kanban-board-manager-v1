@@ -203,7 +203,7 @@ export const TRANSLATIONS_PORTUGUESE = {
     BoardNotFound: "Quadro não encontrado",
   },
   Sharing: {
-    NotLogged: "O compartilhamento está disponível apenas para usuários logados em uma conta.",
+    NotLogged: "O compartilhamento está disponível apenas para usuários logados.",
     ListOption: "Compartilhar Quadro",
     Title: "Opções de Compartilhamento",
     PublicUrl: "URL Pública",
@@ -227,5 +227,19 @@ export const TRANSLATIONS_PORTUGUESE = {
     ModalHeader: "Datas e prazos",
     StartDatePlaceholder: "Selecione uma data de início",
     EndDatePlaceholder: "Selecione uma data de término",
+  },
+  MyAccount: {
+    ModalTitle: "Minha Conta",
+    ChangeProfilePicture: "Alterar Foto de Perfil",
+    Username: "Nome de usuário",
+    UsernamePlaceholder: "Nome...",
+    Save: "Salvar Alterações",
+    ErrorFormat: "O arquivo deve ser uma imagem",
+    ErrorSize: "Tamanho máximo do arquivo é 10MB",
+    Error: "Algo deu errado, tente novamente mais tarde",
+    ErrorName: "O nome não pode estar vazio",
+    NoName: "Sem Nome Ainda",
+    SelectedFile: "Arquivo Selecionado",
+    Clear: "Limpar",
   },
 };

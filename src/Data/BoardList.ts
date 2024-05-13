@@ -10,5 +10,6 @@ export const DefaultBoardList: BoardListItemType[] = [
     LastEditedAt: 2,
     IsBoardShared: false,
     BoardListGroupId: "",
+    Collaborators: [],
   },
 ];

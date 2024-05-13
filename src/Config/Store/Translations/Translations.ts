@@ -7,7 +7,7 @@ export const TranslationsSlice = createSlice({
   initialState: TRANSLATIONS_ENGLISH,
 
   reducers: {
-    SetTranslations: (state, action: any) => {
+    SetTranslations: (state, action) => {
       return (state = { ...action.payload });
     },
   },

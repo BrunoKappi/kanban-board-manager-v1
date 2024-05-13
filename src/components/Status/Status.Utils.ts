@@ -1,24 +1,16 @@
-import store from "@/Config/Store/Store";
-import { ColumnType } from "@/Data/Types";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { BoardType, ColumnType } from "@/Data/Types";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
+import { STORE_GET } from "@/Middleware/Store";
 
 export const ChangeColumn = (ColorChoose: string, ColumnTitle: string, Column: ColumnType) => {
-  const NewBoard: any = { ...store.getState().Board };
+  const NewBoard: BoardType = STORE_GET("Board");
 
-  var NewColumns = [...NewBoard.Columns];
-
-  NewColumns = [...NewColumns].map((Col: ColumnType) => {
-    const NewColItem = { ...Col };
-
-    if (NewColItem.ColumId === Column.ColumId) {
-      NewColItem.ColumnTitle = ColumnTitle;
-      NewColItem.ColumnColor = ColorChoose;
+  NewBoard.Columns.map((Col: ColumnType) => {
+    if (Col.ColumId === Column.ColumId) {
+      Col.ColumnTitle = ColumnTitle;
+      Col.ColumnColor = ColorChoose;
     }
-
-    return NewColItem;
   });
-
-  NewBoard.Columns = [...NewColumns];
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };

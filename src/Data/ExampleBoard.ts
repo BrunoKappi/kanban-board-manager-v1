@@ -1,13 +1,15 @@
+import { LOCALSTORAGE_GetItem } from "@/Middleware/LocalStorage";
 import moment from "moment";
 import { v4 } from "uuid";
 
 export const ExampleBoardID = "7d892f4c-1f15-4ae0-aa28-923b8892ec6d";
 
 export const GetText = (Language?: string) => {
+  var Lang;
   if (!Language) {
-    var Lang = localStorage.getItem("Kanban-Language") || "English";
+    Lang = LOCALSTORAGE_GetItem("Kanban-Language") || "English";
   } else {
-    var Lang = Language;
+    Lang = Language;
   }
 
   if (Lang === "English") {
@@ -735,7 +737,7 @@ export const ExampleBoard = {
           LastEditedAt: moment().valueOf(),
           Notes: "",
           TasksQtd: 2,
-          Tags: ['Tag4'],
+          Tags: ["Tag4"],
           Tasks: [
             {
               TaskId: v4(),

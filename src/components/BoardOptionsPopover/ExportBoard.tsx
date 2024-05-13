@@ -8,11 +8,11 @@ import { useSelector } from "react-redux";
 import ExportCSV from "./ExportBoardToCsv";
 import ExcelExportComponent from "./ExportBoardToExcel";
 
-type Props = {
+type ExportBoardProps = {
   SetExternalOpen: (state: boolean) => void;
 };
 
-export default function ExportBoard({ SetExternalOpen }: Props) {
+export default function ExportBoard({ SetExternalOpen }: ExportBoardProps) {
   const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 

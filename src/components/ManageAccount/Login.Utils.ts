@@ -20,3 +20,4 @@ type LoginGoogleFnProps = {
 export const LoginWithGoogleFn = async ({ setOpen, setError }: LoginGoogleFnProps) => {
   MIDDLEWARE_LoginWithGoogle({ setOpen, setError });
 };
+ 

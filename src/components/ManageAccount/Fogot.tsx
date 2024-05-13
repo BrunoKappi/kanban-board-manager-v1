@@ -17,7 +17,7 @@ export default function Forgot({ setMode, setOpen }: ForgotProps) {
   const [Message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const handleForgot = async (e: any) => {
+  const handleForgot = async (e: any) => { 
     e.preventDefault();
     if (email) {
       ForgotFn({ email, setOpen, setError, setMessage });

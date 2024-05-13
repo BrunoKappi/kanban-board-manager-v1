@@ -2,15 +2,15 @@ import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MIDDLEWARE_ToggleSidebar } from "@/Middleware/SetData";
 import Tooltip from "../Tooltip/Tooltip";
+import { STORE_ToggleSidebar } from "@/Middleware/Store";
 
 export default function ToggleSidebar({ className }: any) {
   const Sidebar = useSelector((state: any) => state.Sidebar);
   const Translations = useSelector((state: any) => state.Translations);
 
   const ToggleSidebar = () => {
-    MIDDLEWARE_ToggleSidebar();
+    STORE_ToggleSidebar();
   };
 
   return (

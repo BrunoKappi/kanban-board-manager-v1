@@ -5,15 +5,15 @@ import moment from "moment";
 import { v4 } from "uuid";
 import { ListOption } from "../ListOption/ListOption";
 import { Plus } from "lucide-react";
-import { MIDDLEWARE_SetCardModal } from "@/Middleware/SetData";
 import { TaskType } from "@/Data/Types";
+import { STORE_SetCardModal } from "@/Middleware/Store";
 
-type Props = {
+type BoardAddCardProps = {
   ColumnIndex: number;
   Mode?: string;
 };
 
-export default function BoardAddCard({ ColumnIndex, Mode = "Button" }: Props) {
+export default function BoardAddCard({ ColumnIndex, Mode = "Button" }: BoardAddCardProps) {
   const Translations = useSelector((state: any) => state.Translations);
   const Board = useSelector((state: any) => state.Board);
 
@@ -36,15 +36,19 @@ export default function BoardAddCard({ ColumnIndex, Mode = "Button" }: Props) {
     },
   ];
 
-  const Func = () => {};
-
   const HandleAddCard = () => {
-    MIDDLEWARE_SetCardModal("View", NewIndex, ColumnIndex, {
+    STORE_SetCardModal("View", NewIndex, ColumnIndex, {
       ...DefaultCardToAdd,
       CardTitle: Translations.Text.NewCardTitle,
       Tasks: [...NewTasks],
     });
-    HandleCreateCard(Translations.Text.NewCardTitle, DefaultCardToAdd.CardDescription, NewTasks, Func, Func);
+    HandleCreateCard(
+      Translations.Text.NewCardTitle,
+      DefaultCardToAdd.CardDescription,
+      NewTasks,
+      () => {},
+      () => {}
+    );
   };
 
   return Mode === "Button" ? (

@@ -1,21 +1,16 @@
-import store from "@/Config/Store/Store";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { BoardType } from "@/Data/Types";
+import { Copy } from "@/lib/utils";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
+import { STORE_GET } from "@/Middleware/Store";
 
 export const HandleDeleteCard = () => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
+  const { CardModal, Board } = STORE_GET();
 
-  NewCards.splice(CardIndex, 1);
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  var NewBoard: BoardType = Copy(Board);
 
-  NewColumn.Cards = [...NewCards];
+  NewBoard.Columns[ColumnIndex].Cards.splice(CardIndex, 1);
 
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
-
-  MIDDLEWARE_UpdateBoard(NewBoard)
+  MIDDLEWARE_UpdateBoard(NewBoard);
 };

@@ -5,13 +5,10 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import { FIREBASE_GetDocBoards } from "./Config/Firebase/Firestore";
-import { useDispatch } from "react-redux";
-import { GetInitialState, SetBoards } from "./Config/Store/Boards/Boards";
-import { GetPanelSize } from "./lib/utils";
-import { GetBoardList } from "./Middleware/GetData";
+import { GetPanelSize, SetHTMLClassTheme } from "./lib/utils";
 import Lost from "./Assets/Lost.svg";
 import Updates from "./Updates";
+import { MIDDLEWARE_GetBoardList } from "./Middleware/BoardList";
 
 function App() {
   const User = useSelector((state: any) => state.User);
@@ -19,30 +16,12 @@ function App() {
   const [Screen, setScreen] = useState(window.innerWidth);
   const Theme = useSelector((state: any) => state.Theme);
 
-  if (Theme === "Dark") {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-
-  const dispatch = useDispatch();
+  SetHTMLClassTheme(Theme);
 
   useEffect(() => {
-    GetBoardList();
-  }, []);
-
-  useEffect(() => {
-    GetBoardList();
+    MIDDLEWARE_GetBoardList();
   }, [User]);
 
-  if (User.uid) {
-    FIREBASE_GetDocBoards(User.uid).then((Data) => {
-      if (Data.length > 0)
-        //@ts-ignore
-        dispatch(SetBoards(Data));
-      else dispatch(SetBoards(GetInitialState()));
-    });
-  }
   useEffect(() => {
     const handleResize = () => setScreen(window.innerWidth);
 

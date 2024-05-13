@@ -2,21 +2,20 @@ import Status from "../Status/Status";
 import BoardCard from "../BoardCard/BoardCard";
 import BoardAddCard from "../BoardAddCard/BoardAddCard";
 import { useEffect, useState } from "react";
-//@ts-ignore
-import { Draggable, Droppable } from "react-beautiful-dnd";
-//@ts-ignore
+import { Droppable } from "react-beautiful-dnd";
 import { v4 as uuid } from "uuid";
 import BoardColumnOptions from "./BoardColumnOptions";
 import Tooltip from "../Tooltip/Tooltip";
 import { useSelector } from "react-redux";
-import { CardType, TagType } from "@/Data/Types";
+import { FilterCards } from "./BoardColumn.Utils";
+import { CardType, ColumnType } from "@/Data/Types";
 
-type Props = {
-  Column: any;
+type BoardColumnProps = {
+  Column: ColumnType;
   ColumnIndex: number;
 };
 
-export default function BoardColumn({ Column, ColumnIndex }: Props) {
+export default function BoardColumn({ Column, ColumnIndex }: BoardColumnProps) {
   const [Cards, setCards] = useState([...Column.Cards]);
   const CardWidth = useSelector((state: any) => state.CardWidth);
   const TagsToFilter = useSelector((state: any) => state.TagsFilter);
@@ -28,56 +27,10 @@ export default function BoardColumn({ Column, ColumnIndex }: Props) {
     setCards(Column.Cards);
   }, [Column]);
 
-  const FilterCards = (Card: CardType) => {
-    var HasTag = false;
-    var TextFitlter = false;
-    var CardTitle = false;
-    var CardDesc = false;
-    var CardTags = false;
-
-    if (!SearchFilter) {
-      TextFitlter = true;
-    } else {
-      CardTitle = Card?.CardTitle.toLowerCase().includes(SearchFilter.toLowerCase());
-      CardDesc = Card?.CardDescription.toLowerCase().includes(SearchFilter.toLowerCase());
-
-      if (Card?.Tags?.length > 0) {
-        Card.Tags.map((CardTag) => {
-          let Tag: any = Board?.Tags?.find((BoardTag: TagType) => BoardTag.TagId === CardTag);
-          if (Tag) {
-            if (Tag?.TagName.toLowerCase().includes(SearchFilter.toLowerCase())) {
-              CardTags = true;
-            }
-          }
-        });
-      } else {
-        CardTags = false;
-      }
-
-      TextFitlter = CardTitle || CardDesc || CardTags;
-    }
-
-    //TAG FILTER
-    if (Card?.Tags?.length > 0) {
-      if (TagsToFilter.length > 0) {
-        TagsToFilter?.forEach((TagToFilter: string) => {
-          if (Card?.Tags?.indexOf(TagToFilter) !== -1) {
-            HasTag = true;
-          }
-        });
-      } else {
-        HasTag = true;
-      }
-    } else {
-      if (TagsToFilter.length > 0) {
-        HasTag = false;
-      } else {
-        HasTag = true;
-      }
-    }
-
-    return HasTag && TextFitlter;
+  const Filter = (Card: CardType) => {
+    return FilterCards(Card, SearchFilter, Board, TagsToFilter);
   };
+
   return (
     <Droppable droppableId={Column.ColumId} key={Column.ColumId}>
       {(provided: any) => {
@@ -89,12 +42,12 @@ export default function BoardColumn({ Column, ColumnIndex }: Props) {
                 <Tooltip text={Translations.Tooltips.QtdCards}>
                   <span>{Column.CardsQtd}</span>
                 </Tooltip>
-                <BoardColumnOptions Column={Column} ColumnIndex={ColumnIndex}/>
+                <BoardColumnOptions Column={Column} ColumnIndex={ColumnIndex} />
               </div>
             </div>
 
             <div className="flex flex-col gap-2 py-2">
-              {Cards.filter(FilterCards).map((Card: any, CardIndex) => {
+              {Cards.filter(Filter).map((Card: any, CardIndex) => {
                 return <BoardCard ColumnIndex={ColumnIndex} Column={Column} CardIndex={CardIndex} Card={Card} Index={CardIndex} key={uuid()} />;
               })}
 

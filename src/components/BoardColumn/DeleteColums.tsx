@@ -8,11 +8,11 @@ import { DeleteColumnFn } from "./DeleteColumns.Utils";
 import { ListOption } from "../ListOption/ListOption";
 import { useSelector } from "react-redux";
 
-type Props = {
+type DeleteColumProps = {
   Column: ColumnType;
 };
 
-export default function DeleteColum({ Column }: Props) {
+export default function DeleteColum({ Column }: DeleteColumProps) {
   const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 

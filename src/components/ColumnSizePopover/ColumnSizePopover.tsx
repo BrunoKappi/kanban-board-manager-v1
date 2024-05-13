@@ -5,37 +5,35 @@ import { PopOverList } from "../PopOverList/PopOverList";
 import Tooltip from "../Tooltip/Tooltip";
 import { ListOption } from "../ListOption/ListOption";
 import { Button } from "../ui/button";
-import { useDispatch } from "react-redux";
-import { SetCardWidth } from "@/Config/Store/CardWidth/CardWidth";
 import { useSelector } from "react-redux";
 import Show from "@/lib/Show";
 import { CardSizes } from "@/Data/Sizes";
-import store from "@/Config/Store/Store";
 import { DefaultNewUserPreference } from "@/Config/Store/UserPreferences/UserPreferences";
-import { FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
+import { MIDDLEWARE_UpdateUserPreferences } from "@/Middleware/UserPreferences";
+import { STORE_GET, STORE_SetCardWidth } from "@/Middleware/Store";
+import { LOCALSTORAGE_SetItem } from "@/Middleware/LocalStorage";
 
-type Props = {
+type ColumnSizePopoverProps = {
   Mode?: string;
 };
 
-export default function ColumnSizePopover({ Mode = "Default" }: Props) {
+export default function ColumnSizePopover({ Mode = "Default" }: ColumnSizePopoverProps) {
   const [open, setOpen] = useState(false);
   const CardWidth = useSelector((state: any) => state.CardWidth);
   const Translations = useSelector((state: any) => state.Translations);
   const Language = useSelector((state: any) => state.Language);
 
-  const dispatch = useDispatch();
-
   const HandleSetCardWidth = (Width: string) => {
-    localStorage.setItem("Kanban-CardWidth", Width);
-    dispatch(SetCardWidth(Width));
+    LOCALSTORAGE_SetItem("Kanban-CardWidth", Width);
 
-    const UserPreferences = { ...store.getState().UserPreferences } || { ...DefaultNewUserPreference };
+    STORE_SetCardWidth(Width);
+
+    const UserPreferences = { ...STORE_GET("UserPreferences") } || { ...DefaultNewUserPreference };
 
     UserPreferences.CardWidth = Width;
 
     if (UserPreferences.docID) {
-      FIREBASE_UpdateUserPreferences(UserPreferences);
+      MIDDLEWARE_UpdateUserPreferences(UserPreferences);
     }
   };
 

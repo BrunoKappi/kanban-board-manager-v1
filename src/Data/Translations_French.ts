@@ -228,4 +228,18 @@ export const TRANSLATIONS_FRENCH = {
     StartDatePlaceholder: "Sélectionnez une date de début",
     EndDatePlaceholder: "Sélectionnez une date de fin",
   },
+  MyAccount: {
+    ModalTitle: "Mon Compte",
+    ChangeProfilePicture: "Changer la Photo de Profil",
+    Username: "Nom d'utilisateur",
+    UsernamePlaceholder: "Nom...",
+    Save: "Enregistrer les Modifications",
+    ErrorFormat: "Le fichier doit être une image",
+    ErrorSize: "La taille maximale du fichier est de 10 Mo",
+    Error: "Quelque chose s'est mal passé, réessayez plus tard",
+    ErrorName: "Le nom ne peut pas être vide",
+    NoName: "Pas Encore de Nom",
+    SelectedFile: "Fichier Sélectionné",
+    Clear: "Effacer",
+  },
 };

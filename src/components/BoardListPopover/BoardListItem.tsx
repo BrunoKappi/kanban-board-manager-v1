@@ -1,9 +1,10 @@
-import { FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
 import { Columns3 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Tooltip from "../Tooltip/Tooltip";
 import { ListOption } from "../ListOption/ListOption";
+import { MIDDLEWARE_GetUser } from "@/Middleware/User";
+
 
 type Props = {
   setOpen: (BoardId: boolean) => void;
@@ -18,8 +19,7 @@ const BoardListItem = ({ setOpen, HandleSelectBoard, BoardListItem }: Props) => 
 
   useEffect(() => {
     if (BoardListItem.IsBoardShared) {
-      FIREBASE_GetUser(Board.OwnerUid).then((UsersFound) => {
-        //@ts-ignore
+      MIDDLEWARE_GetUser(Board.OwnerUid).then((UsersFound) => {
         setTooltipMessage(Translations.Text.SharedBy + " " + UsersFound[0].Email);
       });
     }

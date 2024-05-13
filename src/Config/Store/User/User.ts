@@ -3,27 +3,31 @@ import { createSlice } from "@reduxjs/toolkit";
 export type UserType = {
   docID: string;
   uid: string;
-  email: string;
+  Email: string;
   photoURL: string;
   displayName: string;
   loading: boolean;
+  CreatedAt: number;
+  LastEditedAt: number;
 };
 
 const InitialState: UserType = {
   displayName: "",
   docID: "",
-  email: "",
+  Email: "",
   uid: "",
   photoURL: "",
   loading: false,
+  CreatedAt: 0,
+  LastEditedAt: 0,
 };
 
 export const UserSlice = createSlice({
   name: "User",
   initialState: InitialState,
   reducers: {
-    SetUser: (state, action: any) => {
-      state.email = action.payload?.email || "";
+    SetUser: (state, action) => {
+      state.Email = action.payload?.Email || "";
       state.displayName = action.payload?.displayName || "";
       state.docID = action.payload?.docID || "";
       state.uid = action.payload?.uid || "";

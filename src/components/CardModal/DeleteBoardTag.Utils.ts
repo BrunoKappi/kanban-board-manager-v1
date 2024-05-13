@@ -1,16 +1,12 @@
-import store from "@/Config/Store/Store";
-import { TagType } from "@/Data/Types";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { BoardType, TagType } from "@/Data/Types";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
+import { STORE_GET } from "@/Middleware/Store";
 
 export const HandleDeleteBoardTag = (Tag: TagType) => {
   if (!Tag.TagId) return;
-  var NewBoard: any = { ...store.getState().Board };
+  var NewBoard: BoardType = STORE_GET("Board");
 
-  var NewBoardTags = [...NewBoard.Tags];
-
-  NewBoardTags = [...NewBoardTags].filter((BoardTag: TagType) => BoardTag.TagId !== Tag.TagId);
-
-  NewBoard.Tags = [...NewBoardTags];
+  NewBoard.Tags = NewBoard.Tags.filter((BoardTag: TagType) => BoardTag.TagId !== Tag.TagId);
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };

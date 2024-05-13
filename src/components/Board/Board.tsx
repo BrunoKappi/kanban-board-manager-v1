@@ -13,21 +13,19 @@ import CardModal from "../CardModal/CardModal";
 import { AddBoardItem } from "../Sidebar/AddBoardItem";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { SetIsBoardOwner } from "@/Config/Store/IsBoardOwner/IsBoardOwner";
 import { LoaderCircle } from "lucide-react";
+import { STORE_SetIsBoardOwner } from "@/Middleware/Store";
 
 export const Board = ({ Board, BoardError }: BoardProps) => {
   const Translations = useSelector((state: any) => state.Translations);
   const LoadingBoard = useSelector((state: any) => state.LoadingBoard);
   const User = useSelector((state: any) => state.User);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (Board.OwnerUid === User.uid) {
-      dispatch(SetIsBoardOwner(true));
+      STORE_SetIsBoardOwner(true);
     } else {
-      dispatch(SetIsBoardOwner(false));
+      STORE_SetIsBoardOwner(false);
     }
 
     if (Board.BoardName) {
@@ -69,7 +67,7 @@ export const Board = ({ Board, BoardError }: BoardProps) => {
                         <Tooltip text={Translations.Tooltips.QtdCards}>
                           <span>{Column.CardsQtd}</span>
                         </Tooltip>
-                        <BoardColumnOptions Column={Column} ColumnIndex={ColumnIndex}/>
+                        <BoardColumnOptions Column={Column} ColumnIndex={ColumnIndex} />
                       </div>
                     </div>
                   ))}

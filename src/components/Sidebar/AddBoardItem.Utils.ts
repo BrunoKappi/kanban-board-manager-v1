@@ -1,6 +1,6 @@
-import store from "@/Config/Store/Store";
 import { ColumnType } from "@/Data/Types";
-import { MIDDLEWARE_AddBoard } from "@/Middleware/AddData";
+import { MIDDLEWARE_CreateBoard } from "@/Middleware/Board";
+import { STORE_GET } from "@/Middleware/Store";
 import moment from "moment";
 import { DropResult } from "react-beautiful-dnd";
 import { v4 } from "uuid";
@@ -30,13 +30,13 @@ export const HandleDeleteColumn = (Index: number, Setter: any, BoardColumns: any
 
 export const HandleAddColumn = (Setter: any, BoardColumns: any) => {
   const Current = [...BoardColumns];
-  Current.push({ ColumnTitle: `${store.getState().Translations.Mocks.Column} ${Current.length + 1}`, ColumnColor: "slate" });
+  Current.push({ ColumnTitle: `${STORE_GET("Translations").Mocks.Column} ${Current.length + 1}`, ColumnColor: "slate" });
   Setter(Current);
 };
 
 export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardDesc: string, setMessage: (message: string) => void, setOpen: (open: boolean) => void) => {
   if (!BoardName) {
-    setMessage(store.getState().Translations.BoardModal.ErrorTitle);
+    setMessage(STORE_GET("Translations").BoardModal.ErrorTitle);
     setTimeout(() => {
       setMessage("");
     }, 3000);
@@ -44,14 +44,14 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
   }
 
   if (BoardColumns.length === 0) {
-    setMessage(store.getState().Translations.BoardModal.ErrorColumns);
+    setMessage(STORE_GET("Translations").BoardModal.ErrorColumns);
     setTimeout(() => {
       setMessage("");
     }, 3000);
     return;
   }
 
-  const UserUid = store.getState().User?.uid || "";
+  const UserUid = STORE_GET("User")?.uid || "";
 
   const NewColumns = BoardColumns.map((Column: ColumnType) => {
     return {
@@ -83,23 +83,23 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
     Tags: [
       {
         TagId: v4(),
-        TagName: store.getState().Translations.Mocks.Tag,
+        TagName: STORE_GET("Translations").Mocks.Tag,
         TagColor: "slate",
       },
       {
         TagId: v4(),
-        TagName: store.getState().Translations.Mocks.Tag + " 2",
+        TagName: STORE_GET("Translations").Mocks.Tag + " 2",
         TagColor: "red",
       },
       {
         TagId: v4(),
-        TagName: store.getState().Translations.Mocks.Tag + " 3",
+        TagName: STORE_GET("Translations").Mocks.Tag + " 3",
         TagColor: "blue",
       },
     ],
   };
 
-  MIDDLEWARE_AddBoard(NewBoard, setOpen);
+  MIDDLEWARE_CreateBoard(NewBoard, setOpen);
 };
 
 function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: number) {

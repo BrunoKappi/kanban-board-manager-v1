@@ -8,18 +8,17 @@ import { ChangeColumnVisibilityFn } from "./ChangeColumnVisibility.Utils";
 import { ListOption } from "../ListOption/ListOption";
 import { useSelector } from "react-redux";
 
-type Props = {
+type ChangeColumnVisibilityProps = {
   Column: ColumnType;
-  ColumnIndex: number;
 };
 
-export default function ChangeColumnVisibility({ Column, ColumnIndex }: Props) {
+export default function ChangeColumnVisibility({ Column }: ChangeColumnVisibilityProps) {
   const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 
   const HandleChangeColumnVisibility = () => {
     setOpen(false);
-    ChangeColumnVisibilityFn(Column, ColumnIndex);
+    ChangeColumnVisibilityFn(Column);
   };
 
   return (

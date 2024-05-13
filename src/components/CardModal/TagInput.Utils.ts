@@ -1,11 +1,10 @@
-import { SetCardModalCardTags } from "@/Config/Store/CardModal/CardModal";
-import store from "@/Config/Store/Store";
 import { BoardType, TagType } from "@/Data/Types";
 import { Copy } from "@/lib/utils";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
+import { STORE_GET, STORE_SetCardModalCardTags } from "@/Middleware/Store";
 
 export const HandleCardTagToggle = (BorardTag: TagType) => {
-  const { CardModal, Board } = store.getState();
+  const { CardModal, Board } = STORE_GET();
 
   const ColumnIndex = CardModal.ColumnIndex;
   const CardIndex = CardModal.CardIndex;
@@ -18,8 +17,7 @@ export const HandleCardTagToggle = (BorardTag: TagType) => {
     NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tags = NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tags.filter((TagId: string) => TagId !== BorardTag.TagId);
   }
 
-  //@ts-ignore
-  store.dispatch(SetCardModalCardTags(NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tags));
+  STORE_SetCardModalCardTags(NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tags);
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };

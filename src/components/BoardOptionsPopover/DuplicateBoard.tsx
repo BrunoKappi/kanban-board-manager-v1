@@ -4,11 +4,11 @@ import { DuplicateBoardFn } from "./DuplicateBoard.Utils";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-type Props = {
+type DuplicateBoardProps = {
   SetExternalOpen: (state: boolean) => void;
 };
 
-export default function DuplicateBoard({ SetExternalOpen }: Props) {
+export default function DuplicateBoard({ SetExternalOpen }: DuplicateBoardProps) {
   const Translations = useSelector((state: any) => state.Translations);
   const navigate = useNavigate();
   const HandleDuplicateBoard = () => {

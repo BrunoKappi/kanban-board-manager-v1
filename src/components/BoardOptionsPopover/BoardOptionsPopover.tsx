@@ -12,9 +12,9 @@ import { useSelector } from "react-redux";
 import BoardShareModal from "../BoardShareModal/BoardShareModal";
 import ExportBoard from "./ExportBoard";
 
-type Props = {};
+type BoardOptionsPopoverProps = {};
 
-export default function BoardOptionsPopover({}: Props) {
+export default function BoardOptionsPopover({}: BoardOptionsPopoverProps) {
   const Board = useSelector((state: any) => state.Board);
   const Translations = useSelector((state: any) => state.Translations);
   const CanEditBoard = useSelector((state: any) => state.CanEditBoard);

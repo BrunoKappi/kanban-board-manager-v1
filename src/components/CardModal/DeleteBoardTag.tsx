@@ -7,11 +7,11 @@ import { TagType } from "@/Data/Types";
 import { HandleDeleteBoardTag } from "./DeleteBoardTag.Utils";
 import { useSelector } from "react-redux";
 
-type Props = {
+type DeleteBoardTagProps = {
   Tag: TagType;
 };
 
-export default function DeleteBoardTag({ Tag }: Props) {
+export default function DeleteBoardTag({ Tag }: DeleteBoardTagProps) {
   const Translations = useSelector((state: any) => state.Translations);
   const [Open, setOpen] = useState(false);
 

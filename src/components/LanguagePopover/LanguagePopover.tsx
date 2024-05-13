@@ -3,44 +3,40 @@ import { Check, Languages as LanguageIcon } from "lucide-react";
 import { useState } from "react";
 import { PopOverList } from "../PopOverList/PopOverList";
 import { ListOption } from "../ListOption/ListOption";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import store from "@/Config/Store/Store";
 import { DefaultNewUserPreference } from "@/Config/Store/UserPreferences/UserPreferences";
-import { FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
 import { Languages } from "@/Data/Languages";
-import { SetLanguage } from "@/Config/Store/Language/Language";
 import { ChangeExampleBoardLanguage } from "./LanguagePopover.Utils";
-import { MIDDLEWARE_SetTranslations } from "@/Middleware/SetData";
+import { STORE_GET, STORE_SetLanguage, STORE_SetTranslations } from "@/Middleware/Store";
+import { MIDDLEWARE_UpdateUserPreferences } from "@/Middleware/UserPreferences";
+import { LOCALSTORAGE_SetItem } from "@/Middleware/LocalStorage";
 
-type Props = {
+type LanguagePopoverProps = {
   Mode?: string;
 };
 
 //@ts-ignore
-export default function LanguagePopover({ Mode = "Default" }: Props) {
+export default function LanguagePopover({ Mode = "Default" }: LanguagePopoverProps) {
   const [open, setOpen] = useState(false);
   const Translations = useSelector((state: any) => state.Translations);
 
   const Language = useSelector((state: any) => state.Language);
 
-  const dispatch = useDispatch();
-
   const HandleSetLanguage = (Value: string) => {
     if (Language === Value) return;
     ChangeExampleBoardLanguage(Value);
 
-    localStorage.setItem("Kanban-Language", Value);
-    dispatch(SetLanguage(Value));
+    LOCALSTORAGE_SetItem("Kanban-Language", Value);
+    STORE_SetLanguage(Value);
 
-    MIDDLEWARE_SetTranslations(Value);
+    STORE_SetTranslations(Value);
 
-    const UserPreferences = { ...store.getState().UserPreferences } || { ...DefaultNewUserPreference };
+    const UserPreferences = { ...STORE_GET("UserPreferences") } || { ...DefaultNewUserPreference };
 
     UserPreferences.Language = Value;
 
     if (UserPreferences.docID) {
-      FIREBASE_UpdateUserPreferences(UserPreferences);
+      MIDDLEWARE_UpdateUserPreferences(UserPreferences);
     }
   };
 

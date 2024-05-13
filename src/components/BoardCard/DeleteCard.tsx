@@ -1,26 +1,23 @@
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-
 import { Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
-
 import { ListOption } from "../ListOption/ListOption";
 import { HandleDeleteCard } from "./DeleteCard.Utils";
 import { useSelector } from "react-redux";
 
-type Props = {
+type DeleteCardProps = {
   CardIndex: number;
   ColumnIndex: number;
-  Column: any;
 };
 
-export default function DeleteCard({ CardIndex, ColumnIndex, Column }: Props) {
+export default function DeleteCard({ CardIndex, ColumnIndex }: DeleteCardProps) {
   const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 
   const HandleDeleteCardn = () => {
     setOpen(false);
-    HandleDeleteCard(ColumnIndex, CardIndex, Column);
+    HandleDeleteCard(ColumnIndex, CardIndex);
   };
 
   return (

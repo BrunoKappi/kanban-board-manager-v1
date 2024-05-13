@@ -1,12 +1,11 @@
+import { LOCALSTORAGE_GetItem } from "@/Middleware/LocalStorage";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const TagsFilterSlice = createSlice({
   name: "TagsFilter",
-  initialState: JSON.parse(localStorage.getItem("Kanban-TagsFilter") || "[]") || [],
+  initialState: JSON.parse(LOCALSTORAGE_GetItem("Kanban-TagsFilter") || "[]") || [],
   reducers: {
-    //@ts-ignore
-    SetTagsFilter: (state, action: any) => {
-      //@ts-ignore
+    SetTagsFilter: (state, action) => {
       return (state = [...action.payload]);
     },
   },

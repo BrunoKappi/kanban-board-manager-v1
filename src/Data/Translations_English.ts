@@ -228,4 +228,18 @@ export const TRANSLATIONS_ENGLISH = {
     StartDatePlaceholder: "Select a start date",
     EndDatePlaceholder: "Select an end date",
   },
+  MyAccount: {
+    ModalTitle: "My Account",
+    ChangeProfilePicture: "Change Profile Picture",
+    Username: "Username",
+    UsernamePlaceholder: "Name...",
+    Save: "Save Changes",
+    ErrorFormat: "File must be an Image",
+    ErrorSize: "File maximum size is 10MB",
+    Error: "Something went wrong, try again later",
+    ErrorName: "Name must not be empty",
+    NoName: "No Name Yet",
+    SelectedFile: "Selected File",
+    Clear: "Clear",
+  },
 };

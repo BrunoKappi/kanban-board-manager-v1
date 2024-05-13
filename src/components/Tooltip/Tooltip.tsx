@@ -17,7 +17,7 @@ const Tooltip = ({ text, children, enable = true }: TooltipProps) => {
           <TooltipContent>
             <p>{text}</p>
           </TooltipContent>
-        </TooltipShadcn>
+        </TooltipShadcn> 
       </TooltipProvider>
       {children}
     </Ternary>

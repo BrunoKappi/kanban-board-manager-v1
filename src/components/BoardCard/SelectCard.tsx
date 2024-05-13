@@ -1,27 +1,28 @@
 import { ListOption } from "../ListOption/ListOption";
 import { Pen } from "lucide-react";
 import { useSelector } from "react-redux";
-import { MIDDLEWARE_SetCardModal } from "@/Middleware/SetData";
+import { BoardType, CardType, ColumnType } from "@/Data/Types";
+import { STORE_SetCardModal } from "@/Middleware/Store";
 
 type Props = {
   CardIndex: number;
   ColumnIndex: number;
-  Card: any;
-  Column: any;
+  Card: CardType;
+  Column: ColumnType;
 };
 
 export default function SelectCard({ CardIndex, ColumnIndex, Card, Column }: Props) {
-  const Board = useSelector((state: any) => state.Board);
+  const Board: BoardType = useSelector((state: any) => state.Board);
   const Translations = useSelector((state: any) => state.Translations);
 
   const HandleSelectCard = () => {
     var NewColumnIndex = ColumnIndex;
 
-    Board?.Columns?.forEach((element: any, index: number) => {
+    Board?.Columns?.forEach((element: ColumnType, index: number) => {
       if (element.ColumId === Column.ColumId) NewColumnIndex = index;
     });
 
-    MIDDLEWARE_SetCardModal("View", CardIndex, NewColumnIndex, Card);
+    STORE_SetCardModal("View", CardIndex, NewColumnIndex, Card);
   };
   return (
     <ListOption className="flex flex-row items-center justify-start" onClick={() => HandleSelectCard()}>

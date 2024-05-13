@@ -5,14 +5,14 @@ import { EllipsisVertical } from "lucide-react";
 import { PopOverList } from "../PopOverList/PopOverList";
 import DeleteCard from "./DeleteCard";
 import DuplicateCard from "./DuplicateCard";
-
 import SelectCard from "./SelectCard";
+import { CardType, ColumnType } from "@/Data/Types";
 
 type Props = {
-  Card: any;
+  Card: CardType;
   CardIndex: number;
   ColumnIndex: number;
-  Column: any;
+  Column: ColumnType;
 };
 
 export default function BoardCardOptions({ Card, CardIndex, ColumnIndex, Column }: Props) {
@@ -34,8 +34,8 @@ export default function BoardCardOptions({ Card, CardIndex, ColumnIndex, Column 
       <PopoverContent className="w-56 p-0 bg-background  dark:bg-background-dark dark:border-border-dark select-none overflow-hidden" alignOffset={0} side="right" sideOffset={100}>
         <PopOverList className="flex flex-col justify-start items-start py-2 gap-0" onClick={(event) => event.stopPropagation()}>
           <SelectCard Column={Column} CardIndex={CardIndex} ColumnIndex={ColumnIndex} Card={Card} />
-          <DuplicateCard Column={Column} CardIndex={CardIndex} ColumnIndex={ColumnIndex} />
-          <DeleteCard Column={Column} CardIndex={CardIndex} ColumnIndex={ColumnIndex} />
+          <DuplicateCard CardIndex={CardIndex} ColumnIndex={ColumnIndex} />
+          <DeleteCard CardIndex={CardIndex} ColumnIndex={ColumnIndex} />
         </PopOverList>
       </PopoverContent>
     </Popover>

@@ -1,7 +1,8 @@
+import { UserPrefenceType } from "@/Data/Types";
 import { createSlice } from "@reduxjs/toolkit";
 
-export const DefaultNewUserPreference = {
-  Uid: "",
+export const DefaultNewUserPreference: UserPrefenceType = {
+  uid: "",
   Language: "English",
   Theme: "Light",
   CardWidth: "Medium",
@@ -14,7 +15,7 @@ export const UserPreferencesSlice = createSlice({
     ...DefaultNewUserPreference,
   },
   reducers: {
-    SetUserPreferences: (state, action: any) => {
+    SetUserPreferences: (state, action) => {
       return (state = { ...action.payload });
     },
 
@@ -22,19 +23,19 @@ export const UserPreferencesSlice = createSlice({
       const value = action.payload;
       state.Theme = value; // action.payload.username
     },
-    SetUserPreferencesLanguage: (state, action: any) => {
+    SetUserPreferencesLanguage: (state, action) => {
       const value = action.payload;
       state.Language = value;
     },
-    SetUserPreferencesCardWidth: (state, action: any) => {
+    SetUserPreferencesCardWidth: (state, action) => {
       const value = action.payload;
       state.CardWidth = value;
     },
-    SetUserPreferencesUid: (state, action: any) => {
+    SetUserPreferencesUid: (state, action) => {
       const value = action.payload;
-      state.Uid = value;
+      state.uid = value;
     },
-    SetUserPreferencesdocID: (state, action: any) => {
+    SetUserPreferencesdocID: (state, action) => {
       const value = action.payload;
       state.docID = value;
     },

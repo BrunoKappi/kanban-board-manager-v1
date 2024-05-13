@@ -1,65 +1,52 @@
 import store from "@/Config/Store/Store";
-import { TagType } from "@/Data/Types";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { BoardType, TagType } from "@/Data/Types";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
 import { v4 } from "uuid";
 import { HandleCardTagToggle } from "./TagInput.Utils";
+import { STORE_GET } from "@/Middleware/Store";
 
 export const HandleChangeBoardTagColor = (Tag: TagType, NewTagColor: string) => {
   if (!NewTagColor) return;
-  var NewBoard: any = { ...store.getState().Board };
+  var NewBoard: BoardType = STORE_GET("Board");
 
-  var NewBoardTags = [...NewBoard.Tags];
-
-  NewBoardTags = [...NewBoardTags].map((BoardTag: TagType) => {
+  NewBoard.Tags.map((BoardTag: TagType) => {
     if (BoardTag.TagId === Tag.TagId) {
-      return { ...BoardTag, TagColor: NewTagColor };
-    } else {
-      return { ...BoardTag };
+      BoardTag.TagColor = NewTagColor;
     }
   });
-
-  NewBoard.Tags = [...NewBoardTags];
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
 export const HandleChangeBoardTagName = (Tag: TagType, NewTagName: string) => {
   if (!NewTagName) return;
-  var NewBoard: any = { ...store.getState().Board };
+  var NewBoard: BoardType = STORE_GET("Board");
 
-  var NewBoardTags = [...NewBoard.Tags];
-
-  NewBoardTags = [...NewBoardTags].map((BoardTag: TagType) => {
+  NewBoard.Tags.map((BoardTag: TagType) => {
     if (BoardTag.TagId === Tag.TagId) {
-      return { ...BoardTag, TagName: NewTagName };
-    } else {
-      return { ...BoardTag };
+      BoardTag.TagName = NewTagName;
     }
   });
-
-  NewBoard.Tags = [...NewBoardTags];
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
 export const HandleAddBoardTag = () => {
-  var NewBoard: any = { ...store.getState().Board };
+  var NewBoard: BoardType = STORE_GET("Board");
 
   const NewTag: TagType = {
     TagId: v4(),
-    TagName: store.getState().Translations.Mocks.Tag,
+    TagName: STORE_GET("Translations").Mocks.Tag,
     TagColor: "green",
   };
 
-  var NewBoardTags = [...(NewBoard.Tags || []), NewTag];
-
-  NewBoard.Tags = [...NewBoardTags];
+  NewBoard.Tags.push(NewTag);
 
   MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
 export const HandleAddBoardTagWithValue = (Value: string, setTagSearch: any, setOpen: any) => {
-  var NewBoard: any = { ...store.getState().Board };
+  var NewBoard: BoardType = STORE_GET("Board");
 
   const NewTag: TagType = {
     TagId: v4(),
@@ -67,9 +54,7 @@ export const HandleAddBoardTagWithValue = (Value: string, setTagSearch: any, set
     TagColor: "slate",
   };
 
-  var NewBoardTags = [...(NewBoard.Tags || []), NewTag];
-
-  NewBoard.Tags = [...NewBoardTags];
+  NewBoard.Tags.push(NewTag);
 
   MIDDLEWARE_UpdateBoard(NewBoard);
   setTagSearch("");

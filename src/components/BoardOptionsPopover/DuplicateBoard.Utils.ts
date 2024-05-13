@@ -1,20 +1,18 @@
-import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
-import store from "@/Config/Store/Store";
+
 import { UserType } from "@/Config/Store/User/User";
 import { BoardType } from "@/Data/Types";
-import { Copy } from "@/lib/utils";
-import { MIDDLEWARE_AddBoard } from "@/Middleware/AddData";
+import { MIDDLEWARE_CreateBoard } from "@/Middleware/Board";
+import { STORE_GET, STORE_ResetCardModal } from "@/Middleware/Store";
 import { v4 } from "uuid";
 
 export const DuplicateBoardFn = () => {
-  var NewBoard: BoardType = Copy(store.getState().Board);
-  var User: UserType = Copy(store.getState().User);
+  var NewBoard: BoardType = STORE_GET("Board");
+  var User: UserType = STORE_GET("User");
 
   NewBoard.BoardId = v4();
   NewBoard.BoardName = NewBoard.BoardName + "_Copy";
   NewBoard.OwnerUid = User.uid;
 
-  //@ts-ignore
-  store.dispatch(SetCardModalCard({}));
-  MIDDLEWARE_AddBoard(NewBoard, () => {});
+  STORE_ResetCardModal();
+  MIDDLEWARE_CreateBoard(NewBoard, () => {});
 };

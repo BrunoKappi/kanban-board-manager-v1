@@ -228,4 +228,18 @@ export const TRANSLATIONS_GERMAN = {
     StartDatePlaceholder: "Wähle ein Startdatum",
     EndDatePlaceholder: "Wähle ein Enddatum",
   },
+  MyAccount: {
+    ModalTitle: "Mein Konto",
+    ChangeProfilePicture: "Profilbild ändern",
+    Username: "Benutzername",
+    UsernamePlaceholder: "Name...",
+    Save: "Änderungen speichern",
+    ErrorFormat: "Datei muss ein Bild sein",
+    ErrorSize: "Maximale Dateigröße beträgt 10 MB",
+    Error: "Etwas ist schief gelaufen, versuchen Sie es später erneut",
+    ErrorName: "Name darf nicht leer sein",
+    NoName: "Noch kein Name",
+    SelectedFile: "Ausgewählte Datei",
+    Clear: "Löschen",
+  },
 };

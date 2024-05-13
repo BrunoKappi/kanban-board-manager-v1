@@ -15,6 +15,11 @@ export type CardType = {
   TasksQtd: number;
   Tasks: TaskType[];
   Tags: string[];
+  ShowTasksOnCard: boolean;
+  ShowDatesOnCard: boolean;
+  StartAt: number;
+  EndAt: number;
+  CardNotes: string;
 };
 
 export type CollaboratorType = {
@@ -67,4 +72,13 @@ export type BoardListItemType = {
   LastEditedAt: number;
   IsBoardShared: boolean;
   BoardListGroupId: string;
+  Collaborators: CollaboratorType[];
+};
+
+export type UserPrefenceType = {
+  uid: string;
+  Language: string;
+  Theme: string;
+  CardWidth: string;
+  docID: string;
 };

@@ -1,18 +1,16 @@
 import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
 import { FIREBASE_LoginWithEmailPassword, FIREBASE_LoginWithGoogle, FIREBASE_RegisterUserEmailPassword, FIREBASE_SendEMailResetPassword } from "@/Config/Firebase/Auth";
-import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_CreateUserPreferences } from "@/Config/Firebase/Firestore";
-import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
-import store from "@/Config/Store/Store";
+import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_CreateUserPreferences, FIREBASE_GetBoardList } from "@/Config/Firebase/Firestore";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { ExampleBoard, GetText } from "@/Data/ExampleBoard";
 import moment from "moment";
 import { v4 } from "uuid";
-import { MIDDLEWARE_GetUser } from "./GetData";
-import { DefaultNewUserPreference, SetUserPreferences } from "@/Config/Store/UserPreferences/UserPreferences";
-import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
-import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
-import { SetBoard } from "@/Config/Store/Board/Boards";
+import { DefaultNewUserPreference } from "@/Config/Store/UserPreferences/UserPreferences";
 import { BoardListItemType } from "@/Data/Types";
+import { MIDDLEWARE_CheckUserOnLogin } from "./User";
+import { STORE_SetBoard, STORE_SetSelectedBoard, STORE_SetBoardList, STORE_SetCardModalCard, STORE_SetUserPreferences, STORE_GET } from "./Store";
+import { LOCALSTORAGE_GetItem, LOCALSTORAGE_SetItem } from "./LocalStorage";
+import { UserType } from "@/Config/Store/User/User";
 
 type MIDDLEWARE_LoginProps = {
   email: string;
@@ -22,16 +20,21 @@ type MIDDLEWARE_LoginProps = {
 };
 
 export const MIDDLEWARE_Login = ({ email, password, setOpen, setError }: MIDDLEWARE_LoginProps) => {
+  const Translations = STORE_GET("Translations");
+  const User: UserType = STORE_GET("User");
+  if (User.uid) {
+    localStorage.clear();
+  }
   FIREBASE_LoginWithEmailPassword(email, password)
     .then((Data) => {
       setOpen(false);
-      //@ts-ignore
-      store.dispatch(SetCardModalCard({}));
 
-      MIDDLEWARE_GetUser(Data.user.uid, Data.user.email || "");
+      STORE_SetCardModalCard({});
+
+      MIDDLEWARE_CheckUserOnLogin(Data.user.uid, Data.user.email || "");
     })
     .catch(() => {
-      setError("Email or password incorrect");
+      setError(Translations.Login.ErrorEmailOrPassword);
       setTimeout(() => {
         setError("");
       }, 3000);
@@ -44,17 +47,22 @@ type MIDDLEWARE_LoginGoogleProps = {
 };
 
 export const MIDDLEWARE_LoginWithGoogle = ({ setOpen, setError }: MIDDLEWARE_LoginGoogleProps) => {
+  const Translations = STORE_GET("Translations");
+  const User: UserType = STORE_GET("User");
+  if (User.uid) {
+    localStorage.clear();
+  }
   FIREBASE_LoginWithGoogle()
     .then((Data) => {
       setOpen(false);
       //@ts-ignore
-      store.dispatch(SetCardModalCard({}));
+      STORE_SetCardModalCard({});
 
-      MIDDLEWARE_GetUser(Data.user.uid, Data.user.email || "");
+      MIDDLEWARE_CheckUserOnLogin(Data.user.uid, Data.user.email || "");
     })
     .catch(() => {
       //console.log(error);
-      setError("Something went wrong, try with Email and Password");
+      setError(Translations.Login.PopupError);
       setTimeout(() => {
         setError("");
       }, 3000);
@@ -69,11 +77,12 @@ type MIDDLEWARE_ForgotProps = {
 };
 
 export const MIDDLEWARE_Forgot = ({ email, setOpen, setError, setMessage }: MIDDLEWARE_ForgotProps) => {
+  const Translations = STORE_GET("Translations");
   FIREBASE_SendEMailResetPassword(email.toLocaleLowerCase())
     .then(() => {
       //@ts-ignore
-      store.dispatch(SetCardModalCard({}));
-      setMessage(" An email was sent to your email account");
+      STORE_SetCardModalCard({});
+      setMessage(Translations.Forgot.SuccessMessage);
       setTimeout(() => {
         setOpen(false);
       }, 4000);
@@ -95,29 +104,40 @@ type MIDDLEWARE_RegisterProps = {
 };
 
 export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMessage }: MIDDLEWARE_RegisterProps) => {
+  const User: UserType = STORE_GET("User");
+  if (User.uid) {
+    localStorage.clear();
+  }
+  const Translations = STORE_GET("Translations");
   FIREBASE_RegisterUserEmailPassword(email.toLocaleLowerCase(), password)
     .then(async (Data) => {
       //@ts-ignore
-      store.dispatch(SetCardModalCard({}));
-      setMessage("User registered successfully");
+      STORE_SetCardModalCard({});
+      setMessage(Translations.Register.SuccessMessage);
       const UserUid = Data.user.uid;
+      setTimeout(() => {
+        setOpen(false);
+        MIDDLEWARE_CheckUserOnLogin(UserUid, Data.user.email || "");
+      }, 500);
+      return;
 
-      const NewUser = {
-        Uid: UserUid,
+      const NewUser: UserType = {
+        uid: UserUid,
         Email: email,
         CreatedAt: moment().valueOf(),
         LastEditedAt: moment().valueOf(),
         docID: "",
-        displayName: "",
-        photoURL: "",
+        displayName: Data.user.displayName || "",
+        photoURL: Data.user.photoURL || "",
+        loading: false,
       };
 
       const NewUserPreference = {
         ...DefaultNewUserPreference,
         Uid: UserUid,
-        Theme: store.getState().Theme,
-        CardWidth: store.getState().CardWidth,
-        Language: store.getState().Language,
+        Theme: STORE_GET("Theme"),
+        CardWidth: STORE_GET("CardWidth"),
+        Language: STORE_GET("Language"),
       };
 
       //@ts-ignore
@@ -129,35 +149,37 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
         Uid: UserPrefenceDoc.id,
       };
 
-      //@ts-ignore
-      store.dispatch(SetUserPreferences(UpdatedUserPreference));
+      STORE_SetUserPreferences(UpdatedUserPreference);
 
-      //FIREBASE_UpdateUserPreferences(UpdatedUserPreference);
-
-      if (localStorage.getItem(`Kanban-BoardList`)) {
+      if (LOCALSTORAGE_GetItem(`Kanban-BoardList`)) {
         const LocalStorageBoardList = getKeysWithSubstring("Kanban-BoardListItem-");
 
         LocalStorageBoardList.map((LocalBoardListString: string) => {
-          var BoardListItem = { ...JSON.parse(localStorage.getItem(LocalBoardListString) || "") };
+          var BoardListItem = { ...JSON.parse(LOCALSTORAGE_GetItem(LocalBoardListString) || "") };
           var NewId = v4();
 
           var NewBoardListItem: BoardListItemType = { ...BoardListItem, LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
 
           FIREBASE_CreateBoardList(NewBoardListItem);
 
-          if (localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`)) {
-            var NewBoard = { ...JSON.parse(localStorage.getItem(`Kanban-Board-${BoardListItem.BoardId}`) || ""), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
+          if (LOCALSTORAGE_GetItem(`Kanban-Board-${BoardListItem.BoardId}`)) {
+            var NewBoard = { ...JSON.parse(LOCALSTORAGE_GetItem(`Kanban-Board-${BoardListItem.BoardId}`) || ""), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
 
             FIREBASE_CreateBoard(NewBoard);
           }
 
           setTimeout(() => {
             setOpen(false);
-          }, 3000);
+            FIREBASE_GetBoardList(UserUid);
+          }, 1000);
+          setTimeout(() => {
+            setOpen(false);
+            FIREBASE_GetBoardList(UserUid);
+          }, 2000);
         });
       } else {
         var NewId = v4();
-        const Language = store.getState().Language;
+        const Language = STORE_GET("Language");
         var OriginalBoard = { ...JSON.parse(JSON.stringify(ExampleBoard)), LastEditedAt: moment().valueOf(), OwnerUid: UserUid, BoardId: NewId };
         var NewBoard = { ...GetText(Language) };
 
@@ -188,22 +210,22 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
           IsBoardShared: false,
         };
 
-        localStorage.setItem(`Kanban-Board-${OriginalBoard.BoardId}`, JSON.stringify(OriginalBoard));
-        localStorage.setItem(`Kanban-BoardListItem-${OriginalBoard.BoardId}`, JSON.stringify(NewBoardListItem));
-        localStorage.setItem(`Kanban-BoardList`, JSON.stringify([NewBoardListItem]));
+        LOCALSTORAGE_SetItem(`Kanban-Board-${OriginalBoard.BoardId}`, JSON.stringify(OriginalBoard));
+        LOCALSTORAGE_SetItem(`Kanban-BoardListItem-${OriginalBoard.BoardId}`, JSON.stringify(NewBoardListItem));
+        LOCALSTORAGE_SetItem(`Kanban-BoardList`, JSON.stringify([NewBoardListItem]));
 
         FIREBASE_CreateBoard(OriginalBoard);
         FIREBASE_CreateBoardList(NewBoardListItem);
         setTimeout(() => {
-          store.dispatch(SetBoardList([NewBoardListItem]));
-          store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
-          store.dispatch(SetBoard(OriginalBoard));
+          STORE_SetBoardList([NewBoardListItem]);
+          STORE_SetSelectedBoard(NewBoardListItem.BoardId);
+          STORE_SetBoard(OriginalBoard);
           setOpen(false);
         }, 1000);
         setTimeout(() => {
-          store.dispatch(SetBoardList([NewBoardListItem]));
-          store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
-          store.dispatch(SetBoard(OriginalBoard));
+          STORE_SetBoardList([NewBoardListItem]);
+          STORE_SetSelectedBoard(NewBoardListItem.BoardId);
+          STORE_SetBoard(OriginalBoard);
           setOpen(false);
         }, 3500);
       }

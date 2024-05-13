@@ -6,13 +6,12 @@ import { useSelector } from "react-redux";
 type Props = {
   CardIndex: number;
   ColumnIndex: number;
-  Column: any;
 };
 
-export default function DuplicateCard({ CardIndex, ColumnIndex, Column }: Props) {
+export default function DuplicateCard({ CardIndex, ColumnIndex }: Props) {
   const Translations = useSelector((state: any) => state.Translations);
   const DuplicateCard = () => {
-    HandleDuplicateCard(ColumnIndex, CardIndex, Column);
+    HandleDuplicateCard(ColumnIndex, CardIndex);
   };
   return (
     <ListOption className="flex flex-row items-center justify-start" onClick={DuplicateCard}>

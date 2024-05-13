@@ -1,12 +1,12 @@
-import store from "@/Config/Store/Store";
 import { BoardType, ColumnType } from "@/Data/Types";
 import { Copy } from "@/lib/utils";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
+import { STORE_GET } from "@/Middleware/Store";
 import moment from "moment";
 import { v4 } from "uuid";
 
 export const AddColumn = () => {
-  const { Board, Translations } = store.getState();
+  const { Board, Translations } = STORE_GET();
 
   const NewBoard: BoardType = Copy(Board);
 

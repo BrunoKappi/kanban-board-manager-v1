@@ -3,7 +3,6 @@ import { LoaderCircle, X } from "lucide-react";
 import Tooltip from "../Tooltip/Tooltip";
 import { useSelector } from "react-redux";
 import ToggleSidebar from "../ToggleSidebar/ToggleSidebar";
-import { NavbarProps } from "./NavBar.Types";
 import UserPopover from "../UserPopover/UserPopover";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
 import { useState } from "react";
@@ -16,6 +15,11 @@ import SearchBar from "../SearchBar/SearchBar";
 import BoardListPopover from "../BoardListPopover/BoardListPopover";
 
 import { MAX_BOARD_TITLE } from "@/Data/Limits";
+import { BoardType } from "@/Data/Types";
+
+export type NavbarProps = {
+  Board: BoardType;
+};
 
 const Navbar = ({ Board }: NavbarProps) => {
   const [BoardName, setBoardName] = useState(Board?.BoardName);

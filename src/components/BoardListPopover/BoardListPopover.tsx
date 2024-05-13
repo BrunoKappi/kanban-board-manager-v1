@@ -5,11 +5,9 @@ import { useState } from "react";
 import { PopOverList } from "../PopOverList/PopOverList";
 import { OrderBoards } from "../Sidebar/SidebarUtils";
 import { ListOption } from "../ListOption/ListOption";
-import { useDispatch } from "react-redux";
-import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
-import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import { AddBoardItem } from "../Sidebar/AddBoardItem";
 import BoardListItem from "./BoardListItem";
+import { STORE_SetCardModalCard, STORE_SetSelectedBoard } from "@/Middleware/Store";
 
 type Props = {};
 
@@ -19,13 +17,9 @@ export default function BoardListPopover({}: Props) {
   const Translations = useSelector((state: any) => state.Translations);
   const [open, setOpen] = useState(false);
 
-  const dispatch = useDispatch();
-
   const HandleSelectBoard = (BoardId: string) => {
-    //@ts-ignore
-    dispatch(SetSelectedBoard(BoardId));
-    //@ts-ignore
-    dispatch(SetCardModalCard({}));
+    STORE_SetSelectedBoard(BoardId);
+    STORE_SetCardModalCard({});
   };
 
   const FilterMyBoardList = (BoardListItem: any) => {

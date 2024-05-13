@@ -22,7 +22,7 @@ export default function Login({ setMode, setOpen }: LoginProps) {
     if (!email || !password) return;
     LoginFn({ email, password, setOpen, setError });
   };
-
+ 
   const handleLoginWithGoogle = () => {
     LoginWithGoogleFn({ setOpen, setError });
   };

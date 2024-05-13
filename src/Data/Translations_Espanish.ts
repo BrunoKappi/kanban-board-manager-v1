@@ -225,4 +225,18 @@ export const TRANSLATIONS_SPANISH = {
     StartDatePlaceholder: "Selecciona una fecha de inicio",
     EndDatePlaceholder: "Selecciona una fecha de fin",
   },
+  MyAccount: {
+    ModalTitle: "Mi Cuenta",
+    ChangeProfilePicture: "Cambiar Foto de Perfil",
+    Username: "Nombre de usuario",
+    UsernamePlaceholder: "Nombre...",
+    Save: "Guardar Cambios",
+    ErrorFormat: "El archivo debe ser una imagen",
+    ErrorSize: "El tamaño máximo del archivo es de 10MB",
+    Error: "Algo salió mal, inténtalo de nuevo más tarde",
+    ErrorName: "El nombre no puede estar vacío",
+    NoName: "Aún Sin Nombre",
+    SelectedFile: "Archivo Seleccionado",
+    Clear: "Limpiar",
+  },
 };

@@ -4,3 +4,4 @@ export type BoardProps = {
   Board: BoardType;
   BoardError: string;
 };
+ 

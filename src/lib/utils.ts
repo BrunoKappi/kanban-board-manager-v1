@@ -78,3 +78,11 @@ export function moveObjectInArray(arr: any, sourceIndex: number, destinationInde
 
   return newArr;
 }
+
+export const SetHTMLClassTheme = (Theme: string) => {
+  if (Theme === "Dark") {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+};

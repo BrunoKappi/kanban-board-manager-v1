@@ -13,9 +13,9 @@ import { Check } from "lucide-react";
 import Tooltip from "../Tooltip/Tooltip";
 import { MAX_TAGNAME } from "@/Data/Limits";
 
-type Props = {};
+type TagInputProps = {};
 
-export default function TagInput({}: Props) {
+export default function TagInput({}: TagInputProps) {
   const CardModal = useSelector((state: any) => state.CardModal);
   const Board = useSelector((state: any) => state.Board);
   const [open, setOpen] = useState(false);
@@ -42,7 +42,7 @@ export default function TagInput({}: Props) {
   };
 
   const HandleTagSubmit = (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); 
     
     if (FilteredTags.length > 0) {
       HandleTagClick(FilteredTags[0]);

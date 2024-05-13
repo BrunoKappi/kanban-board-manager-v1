@@ -1,4 +1,5 @@
 import { CardSizes } from "@/Data/Sizes";
+import { LOCALSTORAGE_GetItem } from "@/Middleware/LocalStorage";
 import { createSlice } from "@reduxjs/toolkit";
 
 const GetInitialWidth = () => {
@@ -15,7 +16,7 @@ const GetInitialWidth = () => {
 
 export const CardWidthSlice = createSlice({
   name: "CardWidth",
-  initialState: localStorage.getItem("Kanban-CardWidth") || GetInitialWidth(),
+  initialState: LOCALSTORAGE_GetItem("Kanban-CardWidth") || GetInitialWidth(),
   reducers: {
     SetCardWidth: (state, action) => {
       return (state = action.payload);

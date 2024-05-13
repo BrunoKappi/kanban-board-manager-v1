@@ -13,13 +13,13 @@ import { v4 } from "uuid";
 import { ListOption } from "../ListOption/ListOption";
 import { useSelector } from "react-redux";
 import { MAX_BOARD_TITLE, MAX_COLUMN_TITLE, MAX_DESC } from "@/Data/Limits";
-import { FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
+import { MIDDLEWARE_GetUser } from "@/Middleware/User";
 
-type Props = {
+type BoardModalProps = {
   SetExternalOpen: (state: boolean) => void;
 };
 
-export function BoardModal({ SetExternalOpen }: Props) {
+export function BoardModal({ SetExternalOpen }: BoardModalProps) {
   const textareaRef = useRef(null);
   const Board = useSelector((state: any) => state.Board);
   const [open, setOpen] = useState(false);
@@ -36,18 +36,14 @@ export function BoardModal({ SetExternalOpen }: Props) {
 
   const HandleInputHeight = (ref: any, state: any, defaultHeight: string) => {
     if (ref.current) {
-      //@ts-ignore
       ref.current.style.height = `${ref.current.scrollHeight}px`;
-      if (!state && defaultHeight)
-        //@ts-ignore
-        ref.current.style.height = defaultHeight;
+      if (!state && defaultHeight) ref.current.style.height = defaultHeight;
     }
   };
 
   useEffect(() => {
     if (!IsBoardOwner) {
-      FIREBASE_GetUser(Board.OwnerUid).then((UsersFound) => {
-        //@ts-ignore
+      MIDDLEWARE_GetUser(Board.OwnerUid).then((UsersFound) => {
         setOwnerEmail(Translations.Text.SharedBy + " " + UsersFound[0].Email);
       });
     }

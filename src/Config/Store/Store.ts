@@ -45,8 +45,10 @@ const store = configureStore({
   },
 });
 
+export type SliceName = "User" | "Theme" | "Language" | "Sidebar" | "SelectedBoard" | "Boards" | "Board" | "BoardList" | "CardModal" | "CardWidth" | "TagsFilter" | "SearchFilter" | "UserPreferences" | "Translations" | "CanEditBoard" | "CanDuplicateBoard" | "IsBoardOwner" | "LoadingSidebar" | "LoadingBoard" | "LoadingBoardName";
+
 const logChanges = () => {
-  //console.log("LOG STORE", store.getState());
+  //console.log("LOG STORE", STORE_GET());
 };
 
 export const unsubscribe = store.subscribe(logChanges);

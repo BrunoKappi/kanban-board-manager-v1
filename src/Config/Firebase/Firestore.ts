@@ -1,9 +1,11 @@
+import { UserType } from "@/Config/Store/User/User";
 import { collection, deleteDoc, DocumentReference, onSnapshot, Unsubscribe } from "firebase/firestore";
 import { getDocs, addDoc, updateDoc, doc, where, query } from "firebase/firestore";
 import { Firebase_DB } from "./Config";
-import { MIDDLEWARE_SyncBoard } from "@/Middleware/SetData";
+import { STORE_SyncBoard } from "@/Middleware/Store";
+import { BoardListItemType, BoardType } from "@/Data/Types";
 
-export const FIREBASE_CreateBoard = async (Payload: any) => {
+export const FIREBASE_CreateBoard = async (Payload: BoardType) => {
   var CollectionRef = collection(Firebase_DB, "Boards");
   return addDoc(CollectionRef, Payload);
 };
@@ -45,6 +47,13 @@ export const FIREBASE_UpdateBoard = async (Board: any) => {
 };
 
 //UPDATE
+export const FIREBASE_UpdateUser = async (User: any) => {
+  if (User?.docID) {
+    return updateDoc(doc(Firebase_DB, "Users", User?.docID), User);
+  }
+};
+
+//UPDATE
 export const FIREBASE_UpdateUserPreferences = async (UserPreference: any) => {
   if (UserPreference?.docID) {
     return updateDoc(doc(Firebase_DB, "UsersPreferences", UserPreference?.docID), UserPreference);
@@ -71,14 +80,15 @@ export const FIREBASE_GetDocBoards = async (uid: string) => {
 };
 
 //GET USER
-export const FIREBASE_GetUser = async (uid: string) => {
+export const FIREBASE_GetUser = async (uid: string): Promise<UserType[]> => {
   var CollectionRef = collection(Firebase_DB, "Users");
-  const Query = query(CollectionRef, where("Uid", "==", uid));
+  const Query = query(CollectionRef, where("uid", "==", uid));
   const querySnapshot = await getDocs(Query);
   const matchedDocs = querySnapshot.docs.map((doc) => ({
     ...doc.data(),
     docID: doc.id,
   }));
+  //@ts-ignore
   return matchedDocs;
 };
 
@@ -94,7 +104,7 @@ export const FIREBASE_GetAllUsers = async () => {
 };
 
 //GET USER BY EMAIL
-export const FIREBASE_GetUserByEmail = async (Email: string) => {
+export const FIREBASE_GetUserByEmail = async (Email: string): Promise<UserType | null> => {
   var CollectionRef = collection(Firebase_DB, "Users");
   const Query = query(CollectionRef, where("Email", "==", Email));
   const querySnapshot = await getDocs(Query);
@@ -102,6 +112,7 @@ export const FIREBASE_GetUserByEmail = async (Email: string) => {
     ...doc.data(),
     docID: doc.id,
   }));
+  //@ts-ignore
   return matchedDocs[0];
 };
 
@@ -122,10 +133,7 @@ let unsubscribe: Unsubscribe | null = null;
 export const setListeningBoard = (docID: string) => {
   console.log("STARTED LISTENING");
   const docRef: DocumentReference = doc(Firebase_DB, "Boards", docID);
-  unsubscribe = onSnapshot(docRef, (doc) => {
-    //@ts-ignore
-    MIDDLEWARE_SyncBoard(doc.data());
-  });
+  unsubscribe = onSnapshot(docRef, (doc) => STORE_SyncBoard(doc.data()));
 };
 
 export const stopListeningBoard = () => {
@@ -149,7 +157,7 @@ export const FIREBASE_GetBoardListByBoardId = async (BoardId: string) => {
 };
 
 //get
-export const FIREBASE_GetBoardListItem = async (uid: string, BoardId: string) => {
+export const FIREBASE_GetBoardListItem = async (uid: string, BoardId: string): Promise<BoardListItemType> => {
   var CollectionRef = collection(Firebase_DB, "BoardList");
   const Query = query(CollectionRef, where("OwnerUid", "==", uid), where("BoardId", "==", BoardId));
   const querySnapshot = await getDocs(Query);
@@ -157,6 +165,7 @@ export const FIREBASE_GetBoardListItem = async (uid: string, BoardId: string) =>
     ...doc.data(),
     docID: doc.id,
   }));
+  //@ts-ignore
   return matchedDocs[0];
 };
 
@@ -188,7 +197,7 @@ export const FIREBASE_GetPublicBoard = async (BoardId: string) => {
 //USER PREFERENCES
 export const FIREBASE_GetUserPreferences = async (uid: string) => {
   var CollectionRef = collection(Firebase_DB, "UsersPreferences");
-  const Query = query(CollectionRef, where("Uid", "==", uid));
+  const Query = query(CollectionRef, where("uid", "==", uid));
   const querySnapshot = await getDocs(Query);
   const matchedDocs = querySnapshot.docs.map((doc) => ({
     ...doc.data(),

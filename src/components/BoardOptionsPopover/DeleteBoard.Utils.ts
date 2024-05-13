@@ -1,4 +1,4 @@
-import { MIDDLEWARE_DeleteBoard } from "@/Middleware/DeleteData";
+import { MIDDLEWARE_DeleteBoard } from "@/Middleware/Board";
 
 export const DeleteBoardFn = (Board: any) => {
   MIDDLEWARE_DeleteBoard(Board);

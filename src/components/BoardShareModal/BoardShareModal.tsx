@@ -8,16 +8,16 @@ import { Switch } from "@/components/ui/switch";
 import Show from "@/lib/Show";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { MIDDLEWARE_GetAllUsers } from "@/Middleware/GetData";
 import { AddCollaborator, ChangeBoardSharingOptions, RemoveCollaborator } from "./BoardShareModal.Utils";
 import { useSelector } from "react-redux";
 import Tooltip from "../Tooltip/Tooltip";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
+import { MIDDLEWARE_GetAllUsers } from "@/Middleware/User";
 
-type Props = {};
+type BoardShareModalProps = {};
 
-const BoardShareModal = ({}: Props) => {
+const BoardShareModal = ({}: BoardShareModalProps) => {
   const Board = useSelector((state: any) => state.Board);
   const User = useSelector((state: any) => state.User);
   const [ShareBoard, setShareBoard] = useState(Board.Public);

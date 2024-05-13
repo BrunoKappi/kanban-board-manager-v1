@@ -6,11 +6,11 @@ import { ListOption } from "../ListOption/ListOption";
 import { useSelector } from "react-redux";
 import { DeleteBoardFn } from "./DeleteBoard.Utils";
 
-type Props = {
+type DeleteBoardProps = {
   SetExternalOpen: (state: boolean) => void;
 };
 
-export default function DeleteBoard({ SetExternalOpen }: Props) {
+export default function DeleteBoard({ SetExternalOpen }: DeleteBoardProps) {
   const [open, setOpen] = useState(false);
   const Board = useSelector((state: any) => state.Board);
   const Translations = useSelector((state: any) => state.Translations);

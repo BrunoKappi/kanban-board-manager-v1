@@ -3,10 +3,11 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Tooltip from "../Tooltip/Tooltip";
+import { LOCALSTORAGE_GetItem, LOCALSTORAGE_SetItem } from "@/Middleware/LocalStorage";
 
-type Props = { BoardId: string };
+type BoardMessageProps = {};
 
-export default function BoardMessage({ BoardId }: Props) {
+export default function BoardMessage({}: BoardMessageProps) {
   const [Message, setMessage] = useState("");
   const [DismissMessage, setDismissMessage] = useState(true);
   const [MessageType, setMessageType] = useState("alert");
@@ -35,7 +36,7 @@ export default function BoardMessage({ BoardId }: Props) {
       setMessage("");
       setDismissMessage(true);
     } else {
-      const DismissLocalstorage = localStorage.getItem(`Kanban-Dismiss-${Board.BoardId}`) || "NotDismiss";
+      const DismissLocalstorage = LOCALSTORAGE_GetItem(`Kanban-Dismiss-${Board.BoardId}`) || "NotDismiss";
 
       if (DismissLocalstorage === "Dismiss") {
         setDismissMessage(true);
@@ -67,7 +68,7 @@ export default function BoardMessage({ BoardId }: Props) {
   }, [IsBoardOwner, CanEditBoard, User, Board, Translations]);
 
   const handleDismissMessage = () => {
-    localStorage.setItem(`Kanban-Dismiss-${Board.BoardId}`, "Dismiss");
+    LOCALSTORAGE_SetItem(`Kanban-Dismiss-${Board.BoardId}`, "Dismiss");
     setDismissMessage(true);
   };
 

@@ -5,25 +5,22 @@ import { PopOverList } from "../PopOverList/PopOverList";
 import Tooltip from "../Tooltip/Tooltip";
 import { ListOption } from "../ListOption/ListOption";
 import { Button } from "../ui/button";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { TagType } from "@/Data/Types";
 import { colors } from "@/Data/Colors";
-import { SetTagsFilter } from "@/Config/Store/TagsFilter/TagsFilter";
 import { MinimalInput } from "../ui/minimalInput";
 import { MAX_TAGNAME } from "@/Data/Limits";
 import Show from "@/lib/Show";
+import { STORE_SetTagsFilter } from "@/Middleware/Store";
 
-type Props = {};
+type TagsFilterProps = {};
 
-export default function TagsFilter({}: Props) {
+export default function TagsFilter({}: TagsFilterProps) {
   const [open, setOpen] = useState(false);
   const Board = useSelector((state: any) => state.Board);
   const [TagSearch, setTagSearch] = useState("");
   const TagsToFilter = useSelector((state: any) => state.TagsFilter);
   const Translations = useSelector((state: any) => state.Translations);
-
-  const dispatch = useDispatch();
 
   const HandleToggleTagFilter = (Tag: string) => {
     var NewTagsToFilter = [...TagsToFilter];
@@ -33,8 +30,8 @@ export default function TagsFilter({}: Props) {
     } else {
       NewTagsToFilter.push(Tag);
     }
-    //@ts-ignore
-    dispatch(SetTagsFilter(NewTagsToFilter));
+
+    STORE_SetTagsFilter(NewTagsToFilter);
     setTagSearch("");
   };
 
@@ -51,8 +48,7 @@ export default function TagsFilter({}: Props) {
   };
 
   const handleClearFilter = () => {
-    //@ts-ignore
-    dispatch(SetTagsFilter([]));
+    STORE_SetTagsFilter([]);
   };
 
   const FilteredTags = Board?.Tags?.filter(FilterTags);

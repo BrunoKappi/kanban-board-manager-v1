@@ -1,5 +1,4 @@
 import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
-
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { MinimalInput } from "../ui/minimalInput";
@@ -20,14 +19,12 @@ import { colors } from "@/Data/Colors";
 import TagInput from "./TagInput";
 import { HandleCardTagToggle } from "./TagInput.Utils";
 import { MAX_CARD_TITLE, MAX_DESC, MAX_NOTES, MAX_TASK_TITLE } from "@/Data/Limits";
-import { useDispatch } from "react-redux";
-import { SetCardModalCard } from "@/Config/Store/CardModal/CardModal";
 import { DatePicker } from "../ui/DatePicker";
+import { STORE_SetCardModalCard } from "@/Middleware/Store";
 
-type Props = {};
+type CardModalProps = {};
 
-const CardModal = ({}: Props) => {
-  const dispatch = useDispatch();
+const CardModal = ({}: CardModalProps) => {
   const textareaRef = useRef(null);
   const NotesTextarea = useRef(null);
   const TitleTextarea = useRef(null);
@@ -65,8 +62,7 @@ const CardModal = ({}: Props) => {
       setFocusOn(0);
       setFocusWhat("");
       setMessage("");
-      //@ts-ignore
-      dispatch(SetCardModalCard({}));
+      STORE_SetCardModalCard({});
     }
   };
 
@@ -258,7 +254,7 @@ const CardModal = ({}: Props) => {
                                   id="terms"
                                   checked={Task.Completed}
                                   onClick={() => {
-                                    HandleToggleTask(Index, setCardTasks, CardTasks);
+                                    HandleToggleTask(Index, setCardTasks);
                                   }}
                                 />
                                 <MinimalInput
@@ -284,7 +280,7 @@ const CardModal = ({}: Props) => {
                                   <Trash2
                                     className="h-4 mr-3"
                                     onClick={() => {
-                                      HandleDeleteTask(Index, setCardTasks, CardTasks);
+                                      HandleDeleteTask(Index, setCardTasks);
                                     }}
                                   />
                                 </Tooltip>

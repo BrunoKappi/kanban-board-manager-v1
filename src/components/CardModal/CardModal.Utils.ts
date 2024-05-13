@@ -1,6 +1,7 @@
-import { SetCardModalCardTitle } from "@/Config/Store/CardModal/CardModal";
-import store from "@/Config/Store/Store";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { BoardType, CardType, ColumnType, TaskType } from "@/Data/Types";
+import { Copy } from "@/lib/utils";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
+import { STORE_GET, STORE_SetCardModalCardTitle } from "@/Middleware/Store";
 import moment from "moment";
 import { DropResult } from "react-beautiful-dnd";
 import { v4 } from "uuid";
@@ -10,61 +11,29 @@ export const DefaultBoardCardModals = [
   { CardModalTitle: "CardModal 2", CardModalColor: "slate" },
 ];
 
-export const HandleToggleTask = (Index: number, Setter: any, Tasks: any) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
-  const Current = Tasks.map((task: any) => ({ ...task })); // Cria uma cópia profunda de cada objeto dentro do array Tasks
+export const HandleToggleTask = (Index: number, Setter: any) => {
+  const { CardModal, Board } = STORE_GET();
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  var NewBoard: BoardType = Copy(Board);
 
-  Current[Index].Completed = !Current[Index].Completed;
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks[Index].Completed = !NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks[Index].Completed;
 
-  NewCard.Tasks = [...Current];
-
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
-
-  Setter(Current);
+  Setter(NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks);
   MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
-export const HandleDeleteTask = (Index: number, Setter: any, Tasks: any) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
-  var NewTasks = [...Tasks];
-  NewTasks.splice(Index, 1);
+export const HandleDeleteTask = (Index: number, Setter: any) => {
+  const { CardModal, Board } = STORE_GET();
 
-  const Current = [...NewTasks];
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  const CardMode: string = CardModal.Mode;
+  var NewBoard: BoardType = Copy(Board);
 
-  NewCard.Tasks = [...Current];
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks.splice(Index, 1);
 
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
-
-  Setter(Current);
+  Setter(NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks);
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
@@ -75,39 +44,24 @@ export const HandleChangeTaskTitle = (Value: string, Index: number, Setter: any,
 };
 
 export const HandleAddTask = (Setter: any, Tasks: any) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
+  const { CardModal, Board, Translations } = STORE_GET();
 
-  const Current = Tasks.map((task: any) => ({ ...task })); // Cria uma cópia profunda de cada objeto dentro do array Tasks
-  var NewTask = {
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  const CardMode: string = CardModal.Mode;
+  var NewBoard: BoardType = Copy(Board);
+
+  var NewTask: TaskType = {
     TaskId: v4(),
-    TaskTitle: `${store.getState().Translations.Mocks.Task} ${Tasks.length + 1}`,
+    TaskTitle: `${Translations.Mocks.Task} ${Tasks.length + 1}`,
     Completed: false,
     CreatedAt: moment().valueOf(),
     LastEditedAt: moment().valueOf(),
   };
 
-  Current.push(NewTask);
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks.push(NewTask);
 
-  NewCard.Tasks = [...Current];
-
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
-
-  Setter(Current);
+  Setter(NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks);
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
@@ -128,31 +82,19 @@ function moveObjectInArray(arr: any, sourceIndex: number, destinationIndex: numb
 export const HandleDragTasks = (Result: DropResult, Tasks: any, setCardTasks: (Tasks: any) => void) => {
   if (!Result.destination) return;
 
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  var NewBoard: any = { ...store.getState().Board };
-  let NewColumns: any = [...NewBoard.Columns];
-  let NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  let NewCards: any = [...NewColumn.Cards];
-  let NewCard: any = { ...NewCards[CardIndex] };
+  const { CardModal, Board } = STORE_GET();
+
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+
+  var NewBoard: BoardType = Copy(Board);
 
   const DestinationIndex = Result.destination.index;
   const SourceIndex = Result.source.index;
-  const NewTasks = moveObjectInArray(Tasks, SourceIndex, DestinationIndex);
 
-  NewCard.Tasks = [...NewTasks];
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks = moveObjectInArray(Tasks, SourceIndex, DestinationIndex);
 
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
-
-  setCardTasks(NewTasks);
+  setCardTasks(NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks);
   MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
@@ -162,156 +104,86 @@ export const HandleSaveBoard = (NewBoard: any) => {
 
 export const HandleChangeCardTitle = (Title: string) => {
   if (!Title) return;
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
+  const { CardModal, Board } = STORE_GET();
 
-  NewCard.CardTitle = Title;
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  const CardMode: string = CardModal.Mode;
+  var NewBoard: BoardType = Copy(Board);
 
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].CardTitle = Title;
 
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
-
-  //store.dispatch(SetCardModalCardTitle(Title))
 };
 
 export const HandleChangeShowTasksOnCard = (State: boolean) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
+  const { CardModal, Board } = STORE_GET();
 
-  NewCard.ShowTasksOnCard = State;
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  const CardMode: string = CardModal.Mode;
+  var NewBoard: BoardType = Copy(Board);
 
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].ShowTasksOnCard = State;
 
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
-
-  //store.dispatch(SetCardModalCardTitle(Title))
 };
 
 export const HandleChangeStartAt = (State: number) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
+  const { CardModal, Board } = STORE_GET();
 
-  NewCard.StartAt = State;
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  const CardMode: string = CardModal.Mode;
+  var NewBoard: BoardType = Copy(Board);
 
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].StartAt = State;
 
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
-
-  //store.dispatch(SetCardModalCardTitle(Title))
 };
+
 export const HandleChangeEndAt = (State: number) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
+  const { CardModal, Board } = STORE_GET();
 
-  NewCard.EndAt = State;
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  const CardMode: string = CardModal.Mode;
+  var NewBoard: BoardType = Copy(Board);
 
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].EndAt = State;
 
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
-
-  //store.dispatch(SetCardModalCardTitle(Title))
 };
 
 export const HandleChangeCardNotes = (Title: string) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
+  const { CardModal, Board } = STORE_GET();
 
-  NewCard.CardNotes = Title;
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  const CardMode: string = CardModal.Mode;
+  var NewBoard: BoardType = Copy(Board);
 
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].CardNotes = Title;
 
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
-
-  //store.dispatch(SetCardModalCardTitle(Title))
 };
 
 export const SetCardModalTitle = (Title: string) => {
-  //@ts-ignore
-  store.dispatch(SetCardModalCardTitle(Title));
+  STORE_SetCardModalCardTitle(Title);
 };
 
 export const HandleChangeCardColumn = (ColumnId: string) => {
   if (!ColumnId) return;
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
+  const ColumnIndex: number = STORE_GET("CardModal").ColumnIndex;
+  const CardIndex: number = STORE_GET("CardModal").CardIndex;
 
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
+  const CardMode: string = STORE_GET("CardModal").Mode;
+  var NewBoard: BoardType = STORE_GET("Board");
+  var NewColumns: ColumnType[] = [...NewBoard.Columns];
+  var NewColumn: ColumnType = { ...NewBoard.Columns[ColumnIndex] };
+  var NewCards: CardType[] = [...NewColumn.Cards];
 
-  var NewCard: any = { ...NewCards[CardIndex] };
+  var NewCard: CardType = { ...NewCards[CardIndex] };
 
   NewCards.splice(CardIndex, 1);
 
@@ -333,58 +205,34 @@ export const HandleChangeCardColumn = (ColumnId: string) => {
 };
 
 export const HandleChangeCardDesc = (Desc: string) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
+  const { CardModal, Board } = STORE_GET();
 
-  NewCard.CardDescription = Desc || "";
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  const CardMode: string = CardModal.Mode;
+  var NewBoard: BoardType = Copy(Board);
 
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
-
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].CardDescription = Desc;
 
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
 export const HandleSaveTasks = (Tasks: any) => {
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardIndex: number = store.getState().CardModal.CardIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = { ...NewCards[CardIndex] };
-  const NewTasks = [...Tasks];
-  NewCard.Tasks = [...NewTasks];
+  const { CardModal, Board } = STORE_GET();
 
-  NewCards = NewCards.map((Card: any) => {
-    return Card.CardId !== NewCard.CardId ? { ...Card } : { ...NewCard };
-  });
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardIndex: number = CardModal.CardIndex;
+  const CardMode: string = CardModal.Mode;
+  var NewBoard: BoardType = Copy(Board);
 
-  NewColumn.Cards = [...NewCards];
-
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
+  NewBoard.Columns[ColumnIndex].Cards[CardIndex].Tasks = Tasks;
 
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
 };
 
 export const HandleCreateCard = (CardTitle: string, CardDesc: string, Tasks: any, setOpen: (state: boolean) => void, setMessage: (message: string) => void) => {
   if (!CardTitle) {
-    setMessage(store.getState().Translations.CardModal.ErrorTitle);
+    setMessage(STORE_GET("Translations").CardModal.ErrorTitle);
     setTimeout(() => {
       setMessage("");
       return;
@@ -392,35 +240,30 @@ export const HandleCreateCard = (CardTitle: string, CardDesc: string, Tasks: any
     return;
   }
 
-  const ColumnIndex: number = store.getState().CardModal.ColumnIndex;
-  const CardMode: string = store.getState().CardModal.Mode;
-  //@ts-ignore
-  const CurrentCardTags: string[] = [...(store.getState().CardModal?.Card?.Tags || [])];
-  var NewBoard: any = { ...store.getState().Board };
-  var NewColumns: any = [...NewBoard.Columns];
-  var NewColumn: any = { ...NewBoard.Columns[ColumnIndex] };
-  var NewCards: any = [...NewColumn.Cards];
-  var NewCard: any = {};
+  const { CardModal, Board } = STORE_GET();
 
-  NewCard.CardId = v4();
-  NewCard.CardTitle = CardTitle;
-  NewCard.CardDescription = CardDesc;
-  NewCard.Tasks = [...Tasks];
-  NewCard.LastEditedAt = moment().valueOf();
-  NewCard.CreatedAt = moment().valueOf();
-  NewCard.Tags = [...CurrentCardTags];
-  NewCard.TasksQtd = Tasks.length;
-  NewCard.ShowTasksOnCard = false;
-  NewCard.StartAt = 0;
-  NewCard.EndAt = 0;
+  const ColumnIndex: number = CardModal.ColumnIndex;
+  const CardMode: string = CardModal.Mode;
 
-  NewCards.push(NewCard);
+  var NewBoard: BoardType = Copy(Board);
 
-  NewColumn.Cards = [...NewCards];
+  const NewCard: CardType = {
+    CardId: v4(),
+    CardTitle: CardTitle,
+    CardDescription: CardDesc,
+    Tasks: [...Tasks],
+    LastEditedAt: moment().valueOf(),
+    CreatedAt: moment().valueOf(),
+    Tags: [...(CardModal?.Card?.Tags || [])],
+    TasksQtd: Tasks.length,
+    ShowTasksOnCard: false,
+    StartAt: 0,
+    EndAt: 0,
+    ShowDatesOnCard: false,
+    CardNotes: "",
+  };
 
-  NewColumns[ColumnIndex] = { ...NewColumn };
-
-  NewBoard.Columns = [...NewColumns];
+  NewBoard.Columns[ColumnIndex].Cards.push(NewCard);
 
   if (CardMode === "View") MIDDLEWARE_UpdateBoard(NewBoard);
   if (CardMode === "Add") MIDDLEWARE_UpdateBoard(NewBoard);

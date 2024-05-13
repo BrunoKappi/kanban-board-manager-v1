@@ -1,4 +1,5 @@
 import { Boards } from "@/Data/Boards";
+import { LOCALSTORAGE_GetItem } from "@/Middleware/LocalStorage";
 
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -7,8 +8,8 @@ import moment from "moment";
 const InitialState = [...Boards];
 
 export const GetInitialState = () => {
-  if (localStorage.getItem("Kanban-Boards")) {
-    const BoardsLocal = JSON.parse(localStorage.getItem("Kanban-Boards") || "");
+  if (LOCALSTORAGE_GetItem("Kanban-Boards")) {
+    const BoardsLocal = JSON.parse(LOCALSTORAGE_GetItem("Kanban-Boards") || "");
     return BoardsLocal?.length > 0 ? BoardsLocal : InitialState;
   } else {
     return InitialState;

@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { SetSelectedBoard } from "./Config/Store/SelectedBoard/SelectedBoard";
-import store from "./Config/Store/Store";
-import { GetBoardList } from "./Middleware/GetData";
+import { MIDDLEWARE_GetBoardList } from "./Middleware/BoardList";
+import { STORE_GET, STORE_SetSelectedBoard } from "./Middleware/Store";
 
 function Updates() {
-  const dispatch = useDispatch();
-
   const [inactive, setInactive] = useState(false);
 
   useEffect(() => {
@@ -46,25 +42,22 @@ function Updates() {
   }, [inactive]);
 
   const UpdateBoard = async () => {
-    const CurrentSelectedBoard = store.getState().SelectedBoard;
+    const CurrentSelectedBoard = STORE_GET("SelectedBoard");
     if (!!CurrentSelectedBoard) {
-      //@ts-ignore
-      dispatch(SetSelectedBoard("NA"));
+      STORE_SetSelectedBoard("NA");
       setTimeout(() => {
-        //@ts-ignore
-        dispatch(SetSelectedBoard(CurrentSelectedBoard));
+        STORE_SetSelectedBoard(CurrentSelectedBoard);
       }, 100);
     }
   };
 
   useEffect(() => {
     if (!inactive) {
-      const CurrentSelectedBoard = store.getState().SelectedBoard;
+      const CurrentSelectedBoard = STORE_GET("SelectedBoard");
       UpdateBoard();
-      GetBoardList().then(() => {
+      MIDDLEWARE_GetBoardList().then(() => {
         setTimeout(() => {
-          //@ts-ignore
-          dispatch(SetSelectedBoard(CurrentSelectedBoard));
+          STORE_SetSelectedBoard(CurrentSelectedBoard);
         }, 100);
       });
     }

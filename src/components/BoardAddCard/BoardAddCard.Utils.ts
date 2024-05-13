@@ -1,7 +1,8 @@
+import { CardType } from "@/Data/Types";
 import moment from "moment";
 import { v4 } from "uuid";
 
-export const DefaultCardToAdd = {
+export const DefaultCardToAdd: CardType = {
   ShowTasksOnCard: false,
   ShowDatesOnCard: false,
   StartAt: 0,

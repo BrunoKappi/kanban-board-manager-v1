@@ -1,15 +1,13 @@
-import { SetBoard } from "@/Config/Store/Board/Boards";
-import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
-import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
-import store from "@/Config/Store/Store";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { ExampleBoard, ExampleBoardID, GetText } from "@/Data/ExampleBoard";
 import { BoardType } from "@/Data/Types";
 import { Copy } from "@/lib/utils";
+import { LOCALSTORAGE_SetItem } from "@/Middleware/LocalStorage";
+import { STORE_SetBoard, STORE_SetSelectedBoard, STORE_SetBoardList, STORE_GET } from "@/Middleware/Store";
 
 export const ChangeExampleBoardLanguage = (Language: string) => {
-  const CurrentlBoardList = Copy(store.getState().BoardList);
-  const CurrentlBoard = Copy(store.getState().Board);
+  const CurrentlBoardList = STORE_GET("BoardList");
+  const CurrentlBoard = STORE_GET("Board");
 
   var OriginalBoard: BoardType = Copy(ExampleBoard);
   var NewBoard = { ...GetText(Language) };
@@ -79,16 +77,14 @@ export const ChangeExampleBoardLanguage = (Language: string) => {
 
   CurrentlBoardList[BoardListIndex] = { ...NewBoardListItem };
 
-  localStorage.setItem(`Kanban-Board-${OriginalBoard.BoardId}`, JSON.stringify(OriginalBoard));
-  localStorage.setItem(`Kanban-BoardListItem-${OriginalBoard.BoardId}`, JSON.stringify(NewBoardListItem));
-  localStorage.setItem(`Kanban-BoardList`, JSON.stringify([...CurrentlBoardList]));
+  LOCALSTORAGE_SetItem(`Kanban-Board-${OriginalBoard.BoardId}`, JSON.stringify(OriginalBoard));
+  LOCALSTORAGE_SetItem(`Kanban-BoardListItem-${OriginalBoard.BoardId}`, JSON.stringify(NewBoardListItem));
+  LOCALSTORAGE_SetItem(`Kanban-BoardList`, JSON.stringify([...CurrentlBoardList]));
 
-  store.dispatch(SetBoardList([...CurrentlBoardList]));
+  STORE_SetBoardList([...CurrentlBoardList]);
 
   if (SameBoard) {
-    //@ts-ignore
-    store.dispatch(SetBoard(OriginalBoard));
-    //@ts-ignore
-    store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
+    STORE_SetBoard(OriginalBoard);
+    STORE_SetSelectedBoard(NewBoardListItem.BoardId);
   }
 };

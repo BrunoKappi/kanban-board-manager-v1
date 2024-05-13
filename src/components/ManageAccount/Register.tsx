@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 type RegisterProps = {
   setMode: (mode: string) => void;
   setOpen: (mode: boolean) => void;
-};
+}; 
 
 export default function Register({ setMode, setOpen }: RegisterProps) {
   const Translations = useSelector((state: any) => state.Translations);

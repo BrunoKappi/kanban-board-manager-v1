@@ -33,7 +33,7 @@ export function ManageAccount() {
           {!User.uid && <LogIn className="size-5" />}
           {User.uid && <SquareUserRound className="size-5" />}
           {!User.uid && <span>{Translations.Buttons.Login}</span>}
-          {User.uid && <span>Change Account</span>}
+          {User.uid && <span onClick={() => localStorage.clear()}>Change Account</span>}
         </ListOption>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[450px] md:max-w-[550px] bg-background dark:bg-card-foreground border dark:border-border-dark p-10">

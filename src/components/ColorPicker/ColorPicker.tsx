@@ -2,12 +2,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useState } from "react";
 import { colors } from "@/Data/Colors";
 
-type Props = {
+type ColorPickerProps = {
   onSelect: (Key: string) => void;
   color: string;
 };
 
-export default function ColorPicker({ onSelect, color }: Props) {
+export default function ColorPicker({ onSelect, color }: ColorPickerProps) {
   const [open, setOpen] = useState(false);
   const [Color, setColor] = useState(color);
 

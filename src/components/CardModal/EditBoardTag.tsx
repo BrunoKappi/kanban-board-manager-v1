@@ -8,11 +8,11 @@ import ColorPicker from "../ColorPicker/ColorPicker";
 import { HandleChangeBoardTagColor, HandleChangeBoardTagName } from "./EditBoardTag.Utils";
 import { MAX_TAGNAME } from "@/Data/Limits";
 
-type Props = {
+type EditBoardTagProps = {
   Tag: TagType;
 };
 
-export default function EditBoardTag({ Tag }: Props) {
+export default function EditBoardTag({ Tag }: EditBoardTagProps) {
   const [open, setOpen] = useState(false);
   const [NewTag, setNewTag] = useState(Tag?.TagName);
 

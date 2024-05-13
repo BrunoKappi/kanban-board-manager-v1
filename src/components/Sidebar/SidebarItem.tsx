@@ -3,13 +3,14 @@ import { Columns3 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Tooltip from "../Tooltip/Tooltip";
+import { BoardListItemType } from "@/Data/Types";
 
 type Props = {
   Active: boolean;
   Text: string;
   HandleSelectBoard: (BoardId: string) => void;
   BoardId: string;
-  BoardListItem: any;
+  BoardListItem: BoardListItemType;
 };
 
 const SidebarItem = ({ Active, Text = "", HandleSelectBoard, BoardId, BoardListItem }: Props) => {
@@ -20,7 +21,6 @@ const SidebarItem = ({ Active, Text = "", HandleSelectBoard, BoardId, BoardListI
   useEffect(() => {
     if (BoardListItem?.IsBoardShared) {
       FIREBASE_GetUser(Board?.OwnerUid).then((UsersFound) => {
-        //@ts-ignore
         setTooltipMessage(Translations.Text.SharedBy + " " + UsersFound[0].Email);
       });
     }

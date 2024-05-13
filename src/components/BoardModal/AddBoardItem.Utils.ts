@@ -1,7 +1,8 @@
 import store from "@/Config/Store/Store";
 import { BoardType, ColumnType } from "@/Data/Types";
 import { moveObjectInArray } from "@/lib/utils";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
+import { STORE_GET } from "@/Middleware/Store";
 import moment from "moment";
 import { DropResult } from "react-beautiful-dnd";
 import { v4 } from "uuid";
@@ -11,28 +12,28 @@ export const DefaultBoardColumns = [
   { ColumnTitle: "Column 2", ColumnColor: "slate" },
 ];
 
-export const HandleColumnTitle = (Value: string, Index: number, Setter: any, BoardColumns: any) => {
+export const HandleColumnTitle = (Value: string, Index: number, Setter: any, BoardColumns: ColumnType[]) => {
   const Current = BoardColumns.map((Item: any) => ({ ...Item }));
   Current[Index].ColumnTitle = Value;
   Setter(Current);
 };
 
-export const HandleColumnColor = (Value: string, Index: number, Setter: any, BoardColumns: any) => {
+export const HandleColumnColor = (Value: string, Index: number, Setter: any, BoardColumns: ColumnType[]) => {
   const Current = BoardColumns.map((Item: any) => ({ ...Item }));
   Current[Index].ColumnColor = Value;
   Setter(Current);
 };
 
-export const HandleDeleteColumn = (Index: number, Setter: any, BoardColumns: any) => {
+export const HandleDeleteColumn = (Index: number, Setter: any, BoardColumns: ColumnType[]) => {
   const Current = BoardColumns.map((Item: any) => ({ ...Item }));
   Current.splice(Index, 1);
   Setter(Current);
 };
 
-export const HandleAddColumn = (Setter: any, BoardColumns: any) => {
+export const HandleAddColumn = (Setter: any, BoardColumns: ColumnType[]) => {
   const Current = BoardColumns.map((Item: any) => ({ ...Item }));
   var NewColum = {
-    ColumnTitle: `${store.getState().Translations.Mocks.Column} ${Current.length + 1}`,
+    ColumnTitle: `${STORE_GET("Translations").Mocks.Column} ${Current.length + 1}`,
     ColumnColor: "slate",
     ColumId: v4(),
     CreatedAt: moment().valueOf(),
@@ -45,9 +46,9 @@ export const HandleAddColumn = (Setter: any, BoardColumns: any) => {
   Setter(Current);
 };
 
-export const HandleEditBoard = (BoardName: string, BoardColumns: ColumnType[], BoardDesc: string, setMessage: (message: string) => void, Board: any) => {
+export const HandleEditBoard = (BoardName: string, BoardColumns: ColumnType[], BoardDesc: string, setMessage: (message: string) => void, Board: BoardType) => {
   if (!BoardName) {
-    setMessage(store.getState().Translations.BoardModal.ErrorTitle);
+    setMessage(STORE_GET("Translations").BoardModal.ErrorTitle);
     setTimeout(() => {
       setMessage("");
     }, 3000);
@@ -55,7 +56,7 @@ export const HandleEditBoard = (BoardName: string, BoardColumns: ColumnType[], B
   }
 
   if (BoardColumns.length === 0) {
-    setMessage(store.getState().Translations.BoardModal.ErrorColumns);
+    setMessage(STORE_GET("Translations").BoardModal.ErrorColumns);
     setTimeout(() => {
       setMessage("");
     }, 3000);

@@ -2,19 +2,17 @@ import { Search } from "lucide-react";
 import { MinimalInput } from "../ui/minimalInput";
 import TagsFilter from "../TagsFilter/TagsFilter";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { SetSearchFilter } from "@/Config/Store/SearchFilter/CardWidth";
 import { MAX_SEARCH } from "@/Data/Limits";
+import { STORE_SetSearchFilter } from "@/Middleware/Store";
 
-type Props = {};
+type SearchBarProps = {};
 
-export default function SearchBar({}: Props) {
+export default function SearchBar({}: SearchBarProps) {
   const SearchFilter = useSelector((state: any) => state.SearchFilter);
   const Translations = useSelector((state: any) => state.Translations);
-  const dispatch = useDispatch();
 
   const HandleSearch = (Search: string) => {
-    dispatch(SetSearchFilter(Search));
+    STORE_SetSearchFilter(Search);
   };
 
   return (

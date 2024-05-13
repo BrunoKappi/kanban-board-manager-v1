@@ -4,61 +4,46 @@ import { ListOption } from "../ListOption/ListOption";
 import { DefaultBoardList } from "@/Data/BoardList";
 import { v4 } from "uuid";
 import moment from "moment";
-import store from "@/Config/Store/Store";
-import { SetBoardList } from "@/Config/Store/BoardList/BoardList";
-import { SetBoard } from "@/Config/Store/Board/Boards";
-import { SetSelectedBoard } from "@/Config/Store/SelectedBoard/SelectedBoard";
 import { useSelector } from "react-redux";
 import { ExampleBoard } from "@/Data/ExampleBoard";
-import { SetUserPreferencesdocID } from "@/Config/Store/UserPreferences/UserPreferences";
+import { STORE_SetSelectedBoard, STORE_SetBoardList, STORE_SetBoard, STORE_SetUserPreferencesdocID } from "@/Middleware/Store";
+import { LOCALSTORAGE_Clear, LOCALSTORAGE_GetItem, LOCALSTORAGE_SetItem } from "@/Middleware/LocalStorage";
 
-
-type Props = {
+type LogoutProps = {
   setOpen: (mode: boolean) => void;
 };
 
-export default function Logout({ setOpen }: Props) {
+export default function Logout({ setOpen }: LogoutProps) {
   const Translations = useSelector((state: any) => state.Translations);
   const handleLogout = () => {
-    const CurrentTheme = localStorage.getItem("Kanban-Theme");
-    const CurrentLanguage = localStorage.getItem("Kanban-Language");
+    const CurrentTheme = LOCALSTORAGE_GetItem("Kanban-Theme");
+    const CurrentLanguage = LOCALSTORAGE_GetItem("Kanban-Language");
 
-    localStorage.clear();
-   
+    LOCALSTORAGE_Clear();
 
-    if (CurrentTheme) localStorage.setItem("Kanban-Theme", CurrentTheme);
-    if (CurrentLanguage) localStorage.setItem("Kanban-Language", CurrentLanguage);
+    if (CurrentTheme) LOCALSTORAGE_SetItem("Kanban-Theme", CurrentTheme);
+    if (CurrentLanguage) LOCALSTORAGE_SetItem("Kanban-Language", CurrentLanguage);
     var NewId = v4();
     var NewBoardListItem = { ...DefaultBoardList[0], LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
     var NewBoard = { ...ExampleBoard, LastEditedAt: moment().valueOf(), OwnerUid: "", BoardId: NewId };
 
-    localStorage.setItem(`Kanban-Board-${NewBoard.BoardId}`, JSON.stringify(NewBoard));
-    localStorage.setItem(`Kanban-BoardListItem-${NewBoard.BoardId}`, JSON.stringify(NewBoardListItem));
-    localStorage.setItem(`Kanban-BoardList`, JSON.stringify([NewBoardListItem]));
+    LOCALSTORAGE_SetItem(`Kanban-Board-${NewBoard.BoardId}`, JSON.stringify(NewBoard));
+    LOCALSTORAGE_SetItem(`Kanban-BoardListItem-${NewBoard.BoardId}`, JSON.stringify(NewBoardListItem));
+    LOCALSTORAGE_SetItem(`Kanban-BoardList`, JSON.stringify([NewBoardListItem]));
 
-    store.dispatch(SetBoardList([NewBoardListItem]));
+    STORE_SetBoardList([NewBoardListItem]);
 
-    //@ts-ignore
-    store.dispatch(SetSelectedBoard(NewBoardListItem.BoardId));
+    STORE_SetSelectedBoard(NewBoardListItem.BoardId);
 
-    setTimeout(() => {
-      //@ts-ignore
-      store.dispatch(SetBoard(NewBoard));
-    }, 1500);
+    setTimeout(() => STORE_SetBoard(NewBoard), 1500);
 
-    setTimeout(() => {
-      //@ts-ignore
-      store.dispatch(SetBoard(NewBoard));
-    }, 5);
+    setTimeout(() => STORE_SetBoard(NewBoard), 5);
 
-    setTimeout(() => {
-      //@ts-ignore
-      store.dispatch(SetBoard(NewBoard));
-    }, 2000);
+    setTimeout(() => STORE_SetBoard(NewBoard), 2000);
 
     FIREBASE_Logout();
-    //@ts-ignore
-    store.dispatch(SetUserPreferencesdocID(""));
+
+    STORE_SetUserPreferencesdocID("");
     setOpen(false);
   };
 

@@ -4,7 +4,7 @@ export const BoardSlice = createSlice({
   name: "Board",
   initialState: {},
   reducers: {
-    SetBoard: (state, action: any) => {
+    SetBoard: (state, action) => {
       return (state = { ...action.payload });
     },
   },

@@ -1,6 +1,6 @@
 import { BoardType } from "@/Data/Types";
 import { Copy } from "@/lib/utils";
-import { MIDDLEWARE_UpdateBoard } from "@/Middleware/SetData";
+import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
 import { DropResult } from "react-beautiful-dnd";
 
 export const HandleDrag = (Resultado: DropResult, Board: any) => {
@@ -25,6 +25,5 @@ export const HandleDrag = (Resultado: DropResult, Board: any) => {
     }
   });
 
-  
   MIDDLEWARE_UpdateBoard(NewBoard);
 };

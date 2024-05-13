@@ -5,11 +5,11 @@ import { HandleDeleteCard } from "./DeleteCard.Utils";
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 
-type Props = {
+type DeleteCardProps = {
   setOpen: (state: boolean) => void;
 };
 
-export default function DeleteCard({ setOpen }: Props) {
+export default function DeleteCard({ setOpen }: DeleteCardProps) {
   const [Dialogopen, setDialogOpen] = useState(false);
   const CardModal = useSelector((state: any) => state.CardModal);
   const Translations = useSelector((state: any) => state.Translations);

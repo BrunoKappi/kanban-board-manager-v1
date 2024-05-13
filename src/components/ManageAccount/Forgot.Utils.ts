@@ -11,3 +11,4 @@ export const ForgotFn = async ({ email, setOpen, setError, setMessage }: ForgotF
   if (!email) return;
   MIDDLEWARE_Forgot({ email, setOpen, setError, setMessage });
 };
+ 

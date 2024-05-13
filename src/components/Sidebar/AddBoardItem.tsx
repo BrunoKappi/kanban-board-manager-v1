@@ -29,22 +29,16 @@ export function AddBoardItem({ className }: { className?: string }) {
 
   const HandleInputHeight = (ref: any, state: any, defaultHeight: string) => {
     if (ref.current) {
-      //@ts-ignore
       ref.current.style.height = `${ref.current.scrollHeight}px`;
-      if (!state && defaultHeight)
-        //@ts-ignore
-        ref.current.style.height = defaultHeight;
+      if (!state && defaultHeight) ref.current.style.height = defaultHeight;
     }
   };
 
-  
   HandleInputHeight(textareaRef, BoardDesc, "10px");
 
   const HandleModal = (state: boolean) => {
     setOpen(state);
-    alert(state)
     if (state === false) {
-      alert("Deveria Criar")
       HandleCreateBoard(BoardName, BoardColumns, BoardDesc, setMessage, setOpen);
     }
   };

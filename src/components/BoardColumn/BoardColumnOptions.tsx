@@ -10,12 +10,12 @@ import ColumnSizePopover from "../ColumnSizePopover/ColumnSizePopover";
 import ExportColumnToCsv from "./ExportColumnToCsv";
 import BoardAddCard from "../BoardAddCard/BoardAddCard";
 
-type Props = {
+type BoardColumnOptionsProps = {
   Column: ColumnType;
   ColumnIndex: number;
 };
 
-export default function BoardColumnOptions({ Column, ColumnIndex }: Props) {
+export default function BoardColumnOptions({ Column, ColumnIndex }: BoardColumnOptionsProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -29,7 +29,7 @@ export default function BoardColumnOptions({ Column, ColumnIndex }: Props) {
         <PopOverList className="flex flex-col justify-center items-stretch py-2 gap-0">
           <ColumnSizePopover Mode="List" />
           <DeleteColum Column={Column} />
-          <ChangeColumnVisibility Column={Column} ColumnIndex={ColumnIndex} />
+          <ChangeColumnVisibility Column={Column} />
           <ExportColumnToCsv Column={Column} />
           <BoardAddCard ColumnIndex={ColumnIndex} Mode="Teste" />
         </PopOverList>

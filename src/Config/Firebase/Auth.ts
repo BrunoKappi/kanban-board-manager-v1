@@ -1,35 +1,41 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, User, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Firease_Auth } from "./Config";
 import { sendPasswordResetEmail, updatePassword } from "firebase/auth";
-import store from "../Store/Store";
-import { SetUser, UserType } from "../Store/User/User";
-import { MIDDLEWARE_GetUserPreferences } from "@/Middleware/GetData";
-import { SetLanguage } from "../Store/Language/Language";
-
-import { MIDDLEWARE_SetTranslations } from "@/Middleware/SetData";
+import { UserType } from "../Store/User/User";
+import { STORE_SetLanguage, STORE_SetTranslations, STORE_SetUser } from "@/Middleware/Store";
+import { MIDDLEWARE_GetUserPreferences } from "@/Middleware/UserPreferences";
+import { LOCALSTORAGE_GetItem } from "@/Middleware/LocalStorage";
+import { MIDDLEWARE_GetUser } from "@/Middleware/User";
 
 const onAuthStateChangedHandler = (AuthCurrentUser: User) => {
   //console.log("FIREBASE AuthChanged", AuthCurrentUser ? AuthCurrentUser : "FIREBASE Auth Vazio");
 
   const User: UserType = {
-    displayName: AuthCurrentUser?.displayName || "Guest",
+    displayName: AuthCurrentUser?.displayName || "",
     docID: "",
-    email: AuthCurrentUser?.email || "",
+    Email: AuthCurrentUser?.email || "",
     uid: AuthCurrentUser?.uid || "",
     photoURL: AuthCurrentUser?.photoURL || "",
     loading: false,
+    CreatedAt: 0,
+    LastEditedAt: 0,
   };
 
-  //@ts-ignore
-  store.dispatch(SetUser(User));
+  STORE_SetUser(User);
 
   if (User?.uid) {
-    MIDDLEWARE_GetUserPreferences(User?.uid);
-  } else {
-    const Language = localStorage.getItem("Kanban-Language") || "English";
-    store.dispatch(SetLanguage(Language));
+    MIDDLEWARE_GetUserPreferences(User.uid);
+    MIDDLEWARE_GetUser(User.uid).then((UsersFound) => {
+      const CurrentUserData = UsersFound[0];
 
-    MIDDLEWARE_SetTranslations(Language);
+      if (CurrentUserData) {
+        STORE_SetUser(CurrentUserData);
+      }
+    });
+  } else {
+    const Language = LOCALSTORAGE_GetItem("Kanban-Language") || "English";
+    STORE_SetLanguage(Language);
+    STORE_SetTranslations(Language);
   }
 };
 

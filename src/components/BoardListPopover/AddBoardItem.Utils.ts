@@ -1,7 +1,7 @@
-import store from "@/Config/Store/Store";
 import { BoardType, ColumnType } from "@/Data/Types";
 import { moveObjectInArray } from "@/lib/utils";
-import { MIDDLEWARE_AddBoard } from "@/Middleware/AddData";
+import { MIDDLEWARE_CreateBoard } from "@/Middleware/Board";
+import { STORE_GET } from "@/Middleware/Store";
 import moment from "moment";
 import { DropResult } from "react-beautiful-dnd";
 import { v4 } from "uuid";
@@ -37,18 +37,18 @@ export const HandleAddColumn = (Setter: any, BoardColumns: any) => {
 
 export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardDesc: string, setMessage: (message: string) => void, setOpen: (open: boolean) => void) => {
   if (!BoardName) {
-    setMessage(store.getState().Translations.BoardModal.ErrorTitle);
+    setMessage(STORE_GET("Translations").BoardModal.ErrorTitle);
     setTimeout(() => setMessage(""), 3000);
     return;
   }
 
   if (BoardColumns.length === 0) {
-    setMessage(store.getState().Translations.BoardModal.ErrorColumns);
+    setMessage(STORE_GET("Translations").BoardModal.ErrorColumns);
     setTimeout(() => setMessage(""), 3000);
     return;
   }
 
-  const UserUid = store.getState().User?.uid || "";
+  const UserUid = STORE_GET("User")?.uid || "";
 
   const NewColumns: ColumnType[] = BoardColumns.map((Column: ColumnType) => {
     return {
@@ -99,7 +99,7 @@ export const HandleCreateBoard = (BoardName: string, BoardColumns: any[], BoardD
     ],
   };
 
-  MIDDLEWARE_AddBoard(NewBoard, setOpen);
+  MIDDLEWARE_CreateBoard(NewBoard, setOpen);
 };
 
 export const HandleDragColumns = (Result: DropResult, Columns: any, setBoardColumns: (Columns: any) => void) => {

@@ -1,12 +1,13 @@
+import { BoardListItemType } from "@/Data/Types";
 import { createSlice } from "@reduxjs/toolkit";
+
+const InitialState: BoardListItemType[] = [];
 
 export const BoardListSlice = createSlice({
   name: "BoardList",
-  initialState: [],
+  initialState: InitialState,
   reducers: {
-    //@ts-ignore
-    SetBoardList: (state, action: any) => {
-      //@ts-ignore
+    SetBoardList: (state, action) => {
       return (state = [...action.payload]);
     },
   },

@@ -6,11 +6,12 @@ import { ChangeColumn } from "./Status.Utils";
 import { Button } from "../ui/button";
 import { MAX_COLUMN_TITLE } from "@/Data/Limits";
 import { useSelector } from "react-redux";
+import { ColumnType } from "@/Data/Types";
 
 type StatusProps = {
   Color: string;
   Text: string;
-  Column: any;
+  Column: ColumnType;
 };
 
 export default function Status({ Color = "neutral", Text = "Status", Column }: StatusProps) {
