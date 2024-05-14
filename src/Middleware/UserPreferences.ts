@@ -31,6 +31,8 @@ export const MIDDLEWARE_ToggleTheme = () => {
 
   const NewTheme = Theme === "Dark" ? "Light" : "Dark";
 
+  UserPreferences.Theme = NewTheme
+
   STORE_HandleChageTheme(NewTheme);
 
   if (UserUid) {

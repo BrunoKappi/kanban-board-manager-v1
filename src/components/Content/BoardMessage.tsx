@@ -52,7 +52,7 @@ export default function BoardMessage({}: BoardMessageProps) {
               setDismissMessage(false);
               setMessageType("info");
               //@ts-ignore
-              setMessage(Translations.Text.SharedBoardMessage + " " + UsersFound[0].Email);
+              setMessage(Translations.Text.SharedBoardMessage + " " + UsersFound[0]?.Email);
             });
             setDismissMessage(false);
 
