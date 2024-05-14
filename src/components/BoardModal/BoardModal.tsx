@@ -44,7 +44,7 @@ export function BoardModal({ SetExternalOpen }: BoardModalProps) {
   useEffect(() => {
     if (!IsBoardOwner) {
       MIDDLEWARE_GetUser(Board.OwnerUid).then((UsersFound) => {
-        setOwnerEmail(Translations.Text.SharedBy + " " + UsersFound[0].Email);
+        setOwnerEmail(Translations.Text.SharedBy + " " + UsersFound[0]?.Email);
       });
     }
   }, [IsBoardOwner]);

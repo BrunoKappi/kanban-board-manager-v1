@@ -20,7 +20,7 @@ const BoardListItem = ({ setOpen, HandleSelectBoard, BoardListItem }: Props) => 
   useEffect(() => {
     if (BoardListItem.IsBoardShared) {
       MIDDLEWARE_GetUser(Board.OwnerUid).then((UsersFound) => {
-        setTooltipMessage(Translations.Text.SharedBy + " " + UsersFound[0].Email);
+        setTooltipMessage(Translations.Text.SharedBy + " " + UsersFound[0]?.Email);
       });
     }
   }, [BoardListItem.IsBoardShared]);

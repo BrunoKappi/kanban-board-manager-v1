@@ -34,7 +34,7 @@ export const AddCollaborator = async (Email: string, setCollabMessage: (message:
   var NewBoard: BoardType = STORE_GET("Board");
   var CurrentUser: UserType = STORE_GET("User");
 
-  if (CurrentUser.Email === Email) {
+  if (CurrentUser?.Email === Email) {
     setCollaboratorEmail("");
     setCollabMessage("");
     return;

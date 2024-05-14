@@ -21,7 +21,7 @@ const SidebarItem = ({ Active, Text = "", HandleSelectBoard, BoardId, BoardListI
   useEffect(() => {
     if (BoardListItem?.IsBoardShared) {
       FIREBASE_GetUser(Board?.OwnerUid).then((UsersFound) => {
-        setTooltipMessage(Translations.Text.SharedBy + " " + UsersFound[0].Email);
+        setTooltipMessage(Translations.Text.SharedBy + " " + UsersFound[0]?.Email);
       });
     }
   }, [BoardListItem, Board]);
