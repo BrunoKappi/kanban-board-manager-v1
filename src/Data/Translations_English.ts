@@ -66,6 +66,7 @@ export const TRANSLATIONS_ENGLISH = {
     NewTag: "+ New Tag",
     TagAction: "Create",
     ClearTagFilter: "Clear Filter",
+    ChangeAccount: 'Change Account'
   },
   Placeholders: {
     CardTitle: "Card Title",

@@ -66,6 +66,7 @@ export const TRANSLATIONS_GERMAN = {
     NewTag: "+ Neuer Tag",
     TagAction: "Erstellen",
     ClearTagFilter: "Filter löschen",
+    ChangeAccount: "Konto wechseln",
   },
   Placeholders: {
     CardTitle: "Kartentitel",
