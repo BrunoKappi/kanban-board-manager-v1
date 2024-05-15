@@ -75,10 +75,9 @@ export default function Sidebar() {
                   .map((BoardListItem: any) => {
                     return <SidebarItem BoardListItem={BoardListItem} Active={SelectedBoard !== BoardListItem?.BoardId} BoardId={BoardListItem?.BoardId} Text={BoardListItem?.BoardName} HandleSelectBoard={HandleSelectBoard} />;
                   })}
+                <AddBoardItem className=" rounded-md" />
               </>
             )}
-
-            <AddBoardItem className=" rounded-md" />
           </div>
 
           {BoardList?.filter(FilterBoardsSharedWithMe).length > 0 && (
