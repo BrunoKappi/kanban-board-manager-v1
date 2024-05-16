@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 import { CircleUserRound, Image, LoaderCircle, Mail, User2, UserRoundCog, X } from "lucide-react";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import Tooltip from "../Tooltip/Tooltip";
+import { MAX_USER_NAME } from "@/Data/Limits";
 
 export function MyAccount() {
   const User: UserType = useSelector((state: any) => state.User);
@@ -130,6 +131,7 @@ export function MyAccount() {
             <Input
               placeholder={Translations.MyAccount.UsernamePlaceholder}
               value={DisplayName}
+              maxLength={MAX_USER_NAME}
               onChange={(event) => {
                 setDisplayName(event.target.value);
               }}

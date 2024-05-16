@@ -14,6 +14,7 @@ import Tooltip from "../Tooltip/Tooltip";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { MIDDLEWARE_GetAllUsers } from "@/Middleware/User";
+import { MAX_CARD_EMAIL } from "@/Data/Limits";
 
 type BoardShareModalProps = {};
 
@@ -86,7 +87,7 @@ const BoardShareModal = ({}: BoardShareModalProps) => {
           {Translations.Sharing.Collaborators}
         </h1>
         <div className="flex flex-row  justify-between   py-0 rounded-sm w-full">
-          <Input placeholder={Translations.Sharing.CollaboratorPlaceholder} className="flex-grow py-2 border-r px-3 truncate rounded-r-none focus-visible:ring-0 focus-visible:ring-offset-0" disabled={!UserUid} value={CollaboratorEmail} onChange={(e) => setCollaboratorEmail(e.target.value)} />
+          <Input maxLength={MAX_CARD_EMAIL} placeholder={Translations.Sharing.CollaboratorPlaceholder} className="flex-grow py-2 border-r px-3 truncate rounded-r-none focus-visible:ring-0 focus-visible:ring-offset-0" disabled={!UserUid} value={CollaboratorEmail} onChange={(e) => setCollaboratorEmail(e.target.value)} />
           <Button className=" flex-shrink-0 flex flex-row gap-2 items-center  cursor-pointer bg-primary px-3 rounded-r-sm text-primary-foreground rounded-l-none" disabled={!UserUid} onClick={() => AddCollaborator(CollaboratorEmail, setCollabMessage, setCollaboratorEmail)}>
             <CirclePlus className="size-5" />
             <span> {Translations.Sharing.AddCollaborator}</span>

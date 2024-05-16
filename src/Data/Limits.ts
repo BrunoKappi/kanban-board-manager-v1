@@ -7,4 +7,5 @@ export const MAX_TAGNAME = 30;
 export const MAX_COLUMN_TITLE = 30;
 export const MAX_SEARCH = 30;
 export const MAX_CARD_EMAIL = 100;
+export const MAX_USER_NAME = 100;
 export const MAX_CARD_PASSWORD = 100;
