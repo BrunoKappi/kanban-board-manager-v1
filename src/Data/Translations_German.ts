@@ -67,6 +67,7 @@ export const TRANSLATIONS_GERMAN = {
     TagAction: "Erstellen",
     ClearTagFilter: "Filter löschen",
     ChangeAccount: "Konto wechseln",
+    LearnKanban: "Erfahren Sie mehr über Kanban",
   },
   Placeholders: {
     CardTitle: "Kartentitel",

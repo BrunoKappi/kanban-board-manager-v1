@@ -67,6 +67,7 @@ export const TRANSLATIONS_SPANISH = {
     TagAction: "Crear",
     ClearTagFilter: "Limpiar Filtro",
     ChangeAccount: "Cambiar Cuenta",
+    LearnKanban: "Aprende sobre Kanban",
   },
   Placeholders: {
     CardTitle: "Título de la Tarjeta",
