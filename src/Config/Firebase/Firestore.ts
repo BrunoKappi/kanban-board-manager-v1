@@ -169,7 +169,8 @@ export const setListeningBoard = (docID: string) => {
 };
 
 export const stopListeningBoard = () => {
-  if (unsubscribe) {
+  //ALWAYS LISTENING
+  if (unsubscribe && false) {
     console.log("STOPPED LISTENING");
     unsubscribe();
     unsubscribe = null;

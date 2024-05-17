@@ -6,8 +6,9 @@ import Logo from "../Logo/Logo";
 import SidebarItem from "./SidebarItem";
 import { AddBoardItem } from "../BoardListPopover/AddBoardItem";
 import { useNavigate } from "react-router-dom";
-import { LoaderCircle } from "lucide-react";
+import { ChevronRight, LoaderCircle } from "lucide-react";
 import { STORE_SetCardModalCard, STORE_SetLoadingBoard, STORE_SetSelectedBoard } from "@/Middleware/Store";
+import { setListeningBoard } from "@/Config/Firebase/Firestore";
 export default function Sidebar() {
   const [ShowMyBoards, setShowMyBoards] = useState(true);
   const [ShowSharedBoards, setShowSharedBoards] = useState(true);
@@ -60,7 +61,8 @@ export default function Sidebar() {
             <Logo />
           </div>
 
-          <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center cursor-pointer select-none" onClick={() => setShowMyBoards(!ShowMyBoards)}>
+          <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center cursor-pointer select-none flex flex-row items-center justify-start" onClick={() => setShowMyBoards(!ShowMyBoards)}>
+            <ChevronRight className={`size-3 mr-1 ${ShowMyBoards ? "rotate-90" : ""}`} />
             <span className="truncate w-full flex flex-row justify-between">
               {Translations.Sidebar.AllBoards} ({BoardList?.filter(FilterMyBoardList).length})
             </span>
@@ -81,7 +83,8 @@ export default function Sidebar() {
           </div>
 
           {BoardList?.filter(FilterBoardsSharedWithMe).length > 0 && (
-            <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center mt-5 cursor-pointer select-none" onClick={() => setShowSharedBoards(!ShowSharedBoards)}>
+            <div className="w-full text-xs py-1 px-1 truncate mb-2 rounded-md text-center mt-5 cursor-pointer select-none flex flex-row items-center justify-start" onClick={() => setShowSharedBoards(!ShowSharedBoards)}>
+              <ChevronRight className={`size-3 mr-1 ${ShowSharedBoards ? "rotate-90" : ""}`} />
               <span className="truncate w-full flex flex-row justify-between">
                 {Translations.Sidebar.SharedWithMe} ({BoardList?.filter(FilterBoardsSharedWithMe).length})
               </span>

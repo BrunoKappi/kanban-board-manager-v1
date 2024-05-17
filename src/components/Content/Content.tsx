@@ -26,6 +26,9 @@ export default function Content() {
     stopListeningBoard();
     if (!!BoardId) {
       MIDDLEWARE_GetPublicBoard(BoardId).then((Data) => {
+        //ALWAYS LISTENING
+        setListeningBoard(Data?.Board.docID);
+        //ALWAYS LISTENING
         if (Data.Error && Data.ErrorCode) {
           setBoardError(Translations.Text[Data.ErrorCode]);
         } else {
@@ -55,6 +58,10 @@ export default function Content() {
       if (SelectedBoard) {
         STORE_SetCanEditBoard(true);
         MIDDLEWARE_GetBoard(SelectedBoard).then((Data) => {
+          //ALWAYS LISTENING
+          setListeningBoard(Data?.docID);
+          //ALWAYS LISTENING
+
           STORE_SetBoard(Data);
           STORE_SetCanEditBoard(true);
           STORE_SetCanDuplicateBoard(true);
