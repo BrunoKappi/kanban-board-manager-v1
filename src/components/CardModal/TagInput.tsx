@@ -42,8 +42,8 @@ export default function TagInput({}: TagInputProps) {
   };
 
   const HandleTagSubmit = (e: FormEvent) => {
-    e.preventDefault(); 
-    
+    e.preventDefault();
+
     if (FilteredTags.length > 0) {
       HandleTagClick(FilteredTags[0]);
     } else {
@@ -54,7 +54,7 @@ export default function TagInput({}: TagInputProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
-        <span className=" text-xs hover:text-sm">{Translations.Buttons.EditTags}</span>
+        <span className="text-xs">{Translations.Buttons.EditTags}</span>
       </PopoverTrigger>
       <PopoverContent className="w-56 p-0 bg-background   dark:bg-background-dark-dialog dark:border-border-dark select-none overflow-hidden">
         <form onSubmit={HandleTagSubmit}>
