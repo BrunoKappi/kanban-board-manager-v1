@@ -7,8 +7,9 @@ import SidebarItem from "./SidebarItem";
 import { AddBoardItem } from "../BoardListPopover/AddBoardItem";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronRight, LoaderCircle } from "lucide-react";
-import { STORE_SetCardModalCard, STORE_SetLoadingBoard, STORE_SetSelectedBoard } from "@/Middleware/Store";
+import { STORE_SetCardModalCard, STORE_SetLanguage, STORE_SetLoadingBoard, STORE_SetSelectedBoard } from "@/Middleware/Store";
 import { updateQueryStringParameter } from "@/lib/utils";
+import { LOCALSTORAGE_SetItem } from "@/Middleware/LocalStorage";
 export default function Sidebar() {
   const [ShowMyBoards, setShowMyBoards] = useState(true);
   const [ShowSharedBoards, setShowSharedBoards] = useState(true);
@@ -24,10 +25,19 @@ export default function Sidebar() {
 
   useEffect(() => {
     const BoardParam = searchParams.get("Board");
+    const LangParam = searchParams.get("Lang");
     if (BoardParam) {
       STORE_SetSelectedBoard(BoardParam);
+    
       setTimeout(() => {
         STORE_SetSelectedBoard(BoardParam);
+      }, 1500);
+    }
+    if (LangParam) {
+      LOCALSTORAGE_SetItem("Kanban-Language", LangParam);
+      STORE_SetLanguage(LangParam);
+      setTimeout(() => {
+        STORE_SetLanguage(LangParam);
       }, 1500);
     }
   }, [location.search]);
@@ -41,7 +51,10 @@ export default function Sidebar() {
   const HandleSelectBoard = (BoardId: string) => {
     STORE_SetSelectedBoard(BoardId);
     STORE_SetCardModalCard({});
-    navigate("../");
+    navigate({
+      pathname: "../",
+      search: searchParams.toString(),
+    });
     updateQueryStringParameter("Board", BoardId);
     STORE_SetLoadingBoard(true);
   };

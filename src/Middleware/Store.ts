@@ -26,6 +26,7 @@ import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
 import { BoardListItemType, BoardType, CardType, UserPrefenceType } from "@/Data/Types";
 import { Copy, updateQueryStringParameter } from "@/lib/utils";
 import { LOCALSTORAGE_RemoveItem, LOCALSTORAGE_SetItem } from "./LocalStorage";
+import { ChangeExampleBoardLanguage } from "@/components/LanguagePopover/LanguagePopover.Utils";
 
 export const STORE_GET = (Slice?: SliceName): ReturnType<typeof store.getState> | ReturnType<typeof store.getState>[SliceName] => {
   if (Slice) {
@@ -206,5 +207,7 @@ export const STORE_SetUserPreferences = (UserPreferences: UserPrefenceType) => {
 
 export const STORE_SetLanguage = (Language: string) => {
   store.dispatch(SetLanguage(Language));
+  updateQueryStringParameter("Lang", Language);
   STORE_SetTranslations(Language);
+  ChangeExampleBoardLanguage(Language);
 };
