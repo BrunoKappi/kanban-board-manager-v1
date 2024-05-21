@@ -86,3 +86,11 @@ export const SetHTMLClassTheme = (Theme: string) => {
     document.documentElement.classList.remove("dark");
   }
 };
+
+// urlUtils.js
+export const updateQueryStringParameter = (key: string, value: string) => {
+  //@ts-ignore
+  const url = new URL(window.location);
+  url.searchParams.set(key, value);
+  window.history.pushState({}, "", url);
+};

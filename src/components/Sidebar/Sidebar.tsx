@@ -5,10 +5,10 @@ import { OrderBoards } from "./SidebarUtils";
 import Logo from "../Logo/Logo";
 import SidebarItem from "./SidebarItem";
 import { AddBoardItem } from "../BoardListPopover/AddBoardItem";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronRight, LoaderCircle } from "lucide-react";
 import { STORE_SetCardModalCard, STORE_SetLoadingBoard, STORE_SetSelectedBoard } from "@/Middleware/Store";
-import { setListeningBoard } from "@/Config/Firebase/Firestore";
+import { updateQueryStringParameter } from "@/lib/utils";
 export default function Sidebar() {
   const [ShowMyBoards, setShowMyBoards] = useState(true);
   const [ShowSharedBoards, setShowSharedBoards] = useState(true);
@@ -18,8 +18,19 @@ export default function Sidebar() {
   const LoadingSidebar = useSelector((state: any) => state.LoadingSidebar);
 
   const navigate = useNavigate();
+  let [searchParams] = useSearchParams();
 
-  if (!SelectedBoard && BoardList.length > 0) STORE_SetSelectedBoard(BoardList?.sort(OrderBoards)[0]?.BoardId || "");
+  const location = useLocation();
+
+  useEffect(() => {
+    const BoardParam = searchParams.get("Board");
+    if (BoardParam) {
+      STORE_SetSelectedBoard(BoardParam);
+      setTimeout(() => {
+        STORE_SetSelectedBoard(BoardParam);
+      }, 1500);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     if (!SelectedBoard && BoardList.length > 0) {
@@ -28,10 +39,10 @@ export default function Sidebar() {
   }, [SelectedBoard]);
 
   const HandleSelectBoard = (BoardId: string) => {
-    //@ts-ignore
     STORE_SetSelectedBoard(BoardId);
     STORE_SetCardModalCard({});
     navigate("../");
+    updateQueryStringParameter("Board", BoardId);
     STORE_SetLoadingBoard(true);
   };
 

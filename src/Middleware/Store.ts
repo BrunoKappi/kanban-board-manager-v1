@@ -24,7 +24,7 @@ import { TRANSLATIONS_FRENCH } from "@/Data/Translations_French";
 import { TRANSLATIONS_GERMAN } from "@/Data/Translations_German";
 import { TRANSLATIONS_PORTUGUESE } from "@/Data/Translations_PortugueseBr";
 import { BoardListItemType, BoardType, CardType, UserPrefenceType } from "@/Data/Types";
-import { Copy } from "@/lib/utils";
+import { Copy, updateQueryStringParameter } from "@/lib/utils";
 import { LOCALSTORAGE_RemoveItem, LOCALSTORAGE_SetItem } from "./LocalStorage";
 
 export const STORE_GET = (Slice?: SliceName): ReturnType<typeof store.getState> | ReturnType<typeof store.getState>[SliceName] => {
@@ -56,6 +56,7 @@ export const STORE_UpdateBoard = (BoardList: BoardListItemType[], NewBoardListIt
 
 export const STORE_SetSelectedBoard = (SelectedBoard: string = "NA") => {
   store.dispatch(SetSelectedBoard(SelectedBoard));
+  updateQueryStringParameter("Board", SelectedBoard);
 };
 
 export const STORE_SetIsBoardOwner = (Value: boolean) => {

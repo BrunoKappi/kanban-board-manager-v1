@@ -3,18 +3,22 @@ import { ListOption } from "../ListOption/ListOption";
 import { DuplicateBoardFn } from "./DuplicateBoard.Utils";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { updateQueryStringParameter } from "@/lib/utils";
+import { BoardType } from "@/Data/Types";
 
 type DuplicateBoardProps = {
   SetExternalOpen: (state: boolean) => void;
 };
 
 export default function DuplicateBoard({ SetExternalOpen }: DuplicateBoardProps) {
+  const Board: BoardType = useSelector((state: any) => state.Board);
   const Translations = useSelector((state: any) => state.Translations);
   const navigate = useNavigate();
   const HandleDuplicateBoard = () => {
     SetExternalOpen(false);
     DuplicateBoardFn();
     navigate("../");
+    updateQueryStringParameter("Board", Board.BoardId);
   };
 
   return (
