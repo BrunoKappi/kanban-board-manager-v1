@@ -6,15 +6,16 @@ import { STORE_SetLanguage, STORE_SetTranslations, STORE_SetUser } from "@/Middl
 import { MIDDLEWARE_GetUserPreferences } from "@/Middleware/UserPreferences";
 import { LOCALSTORAGE_GetItem } from "@/Middleware/LocalStorage";
 import { MIDDLEWARE_GetUser } from "@/Middleware/User";
+import { getQueryParams } from "@/lib/utils";
 
 const onAuthStateChangedHandler = (AuthCurrentUser: User) => {
   //console.log("FIREBASE AuthChanged", AuthCurrentUser ? AuthCurrentUser : "FIREBASE Auth Vazio");
 
   const User: UserType = {
-    displayName: AuthCurrentUser?.displayName || "",
+    displayName: AuthCurrentUser?.displayName || getQueryParams("displayName"),
     docID: "",
-    Email: AuthCurrentUser?.email || "",
-    uid: AuthCurrentUser?.uid || "",
+    Email: AuthCurrentUser?.email || getQueryParams("email"),
+    uid: AuthCurrentUser?.uid || getQueryParams("uid"),
     photoURL: AuthCurrentUser?.photoURL || "",
     loading: false,
     CreatedAt: 0,
@@ -26,6 +27,7 @@ const onAuthStateChangedHandler = (AuthCurrentUser: User) => {
   if (User?.uid) {
     MIDDLEWARE_GetUserPreferences(User.uid);
     MIDDLEWARE_GetUser(User.uid).then((UsersFound) => {
+      //@ts-ignore
       const CurrentUserData = UsersFound[0];
 
       if (CurrentUserData) {

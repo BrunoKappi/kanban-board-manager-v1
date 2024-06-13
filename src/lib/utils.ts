@@ -94,3 +94,9 @@ export const updateQueryStringParameter = (key: string, value: string) => {
   url.searchParams.set(key, value);
   window.history.pushState({}, "", url);
 };
+
+export const getQueryParams = (key: string): string => {
+  const params = new URLSearchParams(window.location.search);
+  //@ts-ignore
+  return params.get(key) ? params.get(key) : "";
+};
