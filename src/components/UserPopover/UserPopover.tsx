@@ -1,6 +1,6 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useSelector } from "react-redux";
-import { CircleHelp, CircleUserRound } from "lucide-react";
+import { CircleHelp, CircleUserRound, User2Icon } from "lucide-react";
 import { ManageAccount } from "../ManageAccount/ManageAccount";
 import getEmailPrefix from "@/lib/utils";
 import Show from "@/lib/Show";
@@ -54,6 +54,12 @@ export default function UserPopover({}: UserPopoverProps) {
           <CircleHelp className="size-4" />
           <a href="https://bkappi.com/gestao-de-projetos/eficiencia-empresarial-metodologia-kanban/" target="_blank">
             {Translations.Buttons.LearnKanban}
+          </a>
+        </ListOption>
+        <ListOption className="mt-2">
+          <User2Icon className="size-4" />
+          <a href="https://portfolio.bkappi.com/" target="_blank">
+            {Translations.Buttons.AboutTheDev}
           </a>
         </ListOption>
       </PopoverContent>
