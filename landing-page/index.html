@@ -1,557 +1,590 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="https://cdn.bkappi.com/ProjectsAssets/BkappiGeneral/bkappiIcon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kanban - Optimize Your Workflow</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Tailwind CSS Play CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Outfit', 'sans-serif'],
-            },
-            colors: {
-              primary: {
-                DEFAULT: '#6366f1',
-                dark: '#4f46e5',
-                light: '#818cf8',
-              },
-              background: {
-                light: '#f8fafc',
-                dark: '#0b0f19',
-              },
-              card: {
-                light: '#ffffff',
-                dark: '#111827',
-              },
-              border: {
-                light: '#e2e8f0',
-                dark: '#1f2937',
-              }
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: '#6366f1',
+                            dark: '#4f46e5',
+                            light: '#818cf8',
+                        },
+                        background: {
+                            light: '#f8fafc',
+                            dark: '#0b0f19',
+                        },
+                        card: {
+                            light: '#ffffff',
+                            dark: '#111827',
+                        },
+                        border: {
+                            light: '#e2e8f0',
+                            dark: '#1f2937',
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     </script>
-    
+
     <style>
-      /* Micro-animations and custom effects */
-      .gradient-text {
-        background: linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #f43f5e 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .gradient-bg {
-        background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 40%),
-                    radial-gradient(circle at bottom left, rgba(244, 63, 94, 0.1), transparent 40%);
-      }
-      .glass-card {
-        backdrop-filter: blur(12px);
-        background-color: rgba(255, 255, 255, 0.6);
-      }
-      .dark .glass-card {
-        background-color: rgba(17, 24, 39, 0.6);
-      }
+        /* Micro-animations and custom effects */
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #f43f5e 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .gradient-bg {
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 40%), radial-gradient(circle at bottom left, rgba(244, 63, 94, 0.1), transparent 40%);
+        }
+        
+        .glass-card {
+            backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .dark .glass-card {
+            background-color: rgba(17, 24, 39, 0.6);
+        }
     </style>
-  </head>
-  <body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 transition-colors duration-300 font-sans gradient-bg min-h-screen">
-    
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 transition-colors duration-300 font-sans gradient-bg min-h-screen">
+
     <!-- Navigation -->
     <nav class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between border-b border-border-light dark:border-border-dark glass-card sticky top-0 z-50 rounded-b-2xl">
-      <div class="flex items-center gap-3 select-none">
-        <img src="https://cdn.bkappi.com/ProjectsAssets/BkappiGeneral/bkappiIcon.ico" alt="Logo" class="w-8 h-8 rounded-lg shadow-md" />
-        <span class="font-extrabold text-2xl tracking-tight bg-gradient-to-r from-primary to-indigo-400 bg-clip-text text-transparent">Kanban</span>
-      </div>
-      
-      <div class="flex items-center gap-4">
-        <!-- Language Switcher -->
-        <div class="relative inline-block text-left">
-          <button id="langBtn" type="button" class="inline-flex items-center justify-center gap-2 rounded-full border border-border-light dark:border-border-dark px-4 py-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none transition-all">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5c-.006 1.583-.37 3.14-1.07 4.549m1.413-4.549a18.175 18.175 0 00-1.89-3.411L10.5 3" />
-            </svg>
-            <span id="activeLang">English</span>
-            <svg class="-mr-1 ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </button>
-          
-          <div id="langMenu" class="hidden absolute right-0 mt-2 w-48 rounded-xl shadow-lg border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark focus:outline-none overflow-hidden transition-all z-50">
-            <div class="py-1">
-              <button onclick="changeLanguage('English')" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between transition-colors">
-                English
-                <span id="check-English" class="text-primary hidden">✓</span>
-              </button>
-              <button onclick="changeLanguage('Portuguese-br')" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between transition-colors">
-                Português (Brasil)
-                <span id="check-Portuguese-br" class="text-primary hidden">✓</span>
-              </button>
-              <button onclick="changeLanguage('Spanish')" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between transition-colors">
-                Español
-                <span id="check-Spanish" class="text-primary hidden">✓</span>
-              </button>
-            </div>
-          </div>
+        <div class="flex items-center gap-3 select-none">
+            <img src="https://cdn.bkappi.com/ProjectsAssets/BkappiGeneral/bkappiIcon.ico" alt="Logo" class="w-8 h-8 rounded-lg shadow-md" />
+            <span class="font-extrabold text-2xl tracking-tight bg-gradient-to-r from-primary to-indigo-400 bg-clip-text text-transparent">Kanban
+        V1</span>
         </div>
 
-        <!-- Theme Toggle -->
-        <button id="themeToggle" type="button" class="p-2 rounded-full border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-all focus:outline-none">
-          <!-- Moon Icon -->
-          <svg id="theme-moon" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        <div class="flex items-center gap-4">
+            <!-- Language Switcher -->
+            <div class="relative inline-block text-left">
+                <button id="langBtn" type="button" class="inline-flex items-center justify-center gap-2 rounded-full border border-border-light dark:border-border-dark px-4 py-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none transition-all">
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5c-.006 1.583-.37 3.14-1.07 4.549m1.413-4.549a18.175 18.175 0 00-1.89-3.411L10.5 3" />
           </svg>
-          <!-- Sun Icon -->
-          <svg id="theme-sun" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z" />
+          <span id="activeLang">English</span>
+          <svg class="-mr-1 ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
           </svg>
         </button>
 
-        <!-- Access App Button -->
-        <a href="#about-developer" data-i18n="devNav" class="hidden sm:block text-sm font-semibold hover:text-primary transition-colors">
-          About the Developer
-        </a>
-        <!-- REPLACE THE href BELOW WITH YOUR DEPLOYED KANBAN APP WORKSPACE URL -->
-        <a href="/" data-i18n="workspaceBtn" class="bg-primary hover:bg-primary-dark text-white font-semibold px-5 py-2.5 rounded-full transition-all shadow-lg hover:shadow-primary/30 flex items-center gap-1.5 text-sm">
-          Open App
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </a>
-      </div>
+                <div id="langMenu" class="hidden absolute right-0 mt-2 w-48 rounded-xl shadow-lg border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark focus:outline-none overflow-hidden transition-all z-50">
+                    <div class="py-1">
+                        <button onclick="changeLanguage('English')" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between transition-colors">
+              English
+              <span id="check-English" class="text-primary hidden">✓</span>
+            </button>
+                        <button onclick="changeLanguage('Portuguese-br')" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between transition-colors">
+              Português (Brasil)
+              <span id="check-Portuguese-br" class="text-primary hidden">✓</span>
+            </button>
+                        <button onclick="changeLanguage('Spanish')" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between transition-colors">
+              Español
+              <span id="check-Spanish" class="text-primary hidden">✓</span>
+            </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button id="themeToggle" type="button" class="p-2 rounded-full border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-all focus:outline-none">
+        <!-- Moon Icon -->
+        <svg id="theme-moon" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+        <!-- Sun Icon -->
+        <svg id="theme-sun" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      </button>
+
+            <!-- Access App Button -->
+            <a href="#about-developer" data-i18n="devNav" class="hidden sm:block text-sm font-semibold hover:text-primary transition-colors">
+        About the Developer
+      </a>
+            <!-- REPLACE THE href BELOW WITH YOUR DEPLOYED KANBAN APP WORKSPACE URL -->
+            <a href="https://kanban.bkappi.com" class="bg-primary hover:bg-primary-dark text-white font-semibold px-5 py-2.5 rounded-full transition-all shadow-lg hover:shadow-primary/30 flex items-center gap-1.5 text-sm">
+        <span data-i18n="workspaceBtn">Open App</span>
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+        </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="max-w-7xl mx-auto px-6 py-16 md:py-24 text-center">
-      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
-        <span data-i18n="heroTitle" class="gradient-text">Organize your workflow. Simplify your life.</span>
-      </h1>
-      <p data-i18n="heroSubtitle" class="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-        A beautiful, minimalist, and responsive Kanban board designed for individuals and teams who value simplicity, efficiency, and elegant software.
-      </p>
-      
-      <div class="flex flex-wrap justify-center gap-4 mb-16">
-        <!-- REPLACE THE href BELOW WITH YOUR DEPLOYED KANBAN APP WORKSPACE URL -->
-        <a href="/" data-i18n="workspaceBtn" class="bg-primary hover:bg-primary-dark text-white text-base font-semibold px-8 py-4 rounded-full transition-all shadow-xl hover:shadow-primary/30 transform hover:-translate-y-0.5">
-          Open App
-        </a>
-        <a href="#features" class="border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800/60 font-semibold px-8 py-4 rounded-full transition-all">
-          Learn More
-        </a>
-      </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
+            <span data-i18n="heroTitle" class="gradient-text">Organize your workflow. Simplify your life.</span>
+        </h1>
+        <p data-i18n="heroSubtitle" class="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+            A beautiful, minimalist, and responsive Kanban board designed for individuals and teams who value simplicity, efficiency, and elegant software.
+        </p>
 
-      <!-- Main App Showcase Screenshot Card -->
-      <div class="relative max-w-5xl mx-auto rounded-2xl border border-border-light dark:border-border-dark overflow-hidden shadow-2xl bg-card-light dark:bg-card-dark p-2 transform hover:scale-[1.01] transition-transform duration-500 group">
-        <div class="absolute inset-0 bg-gradient-to-t from-background-dark/20 to-transparent pointer-events-none"></div>
-        <img id="mainMockup" src="https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/HomePageWithExampleBoardDarkTheme.png" alt="Kanban Board Showcase" class="w-full h-auto rounded-xl object-cover" />
-      </div>
+        <div class="flex flex-wrap justify-center gap-4 mb-16">
+            <!-- REPLACE THE href BELOW WITH YOUR DEPLOYED KANBAN APP WORKSPACE URL -->
+            <a href="https://kanban.bkappi.com" data-i18n="workspaceBtn" class="bg-primary hover:bg-primary-dark text-white text-base font-semibold px-8 py-4 rounded-full transition-all shadow-xl hover:shadow-primary/30 transform hover:-translate-y-0.5">
+        Open App
+      </a>
+            <a href="#features" class="border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800/60 font-semibold px-8 py-4 rounded-full transition-all">
+        Learn More
+      </a>
+        </div>
+
+        <!-- Main App Showcase Screenshot Card -->
+        <div class="relative max-w-5xl mx-auto rounded-2xl border border-border-light dark:border-border-dark overflow-hidden shadow-2xl bg-card-light dark:bg-card-dark p-2 transform hover:scale-[1.01] transition-transform duration-500 group">
+            <div class="absolute inset-0 bg-gradient-to-t from-background-dark/20 to-transparent pointer-events-none"></div>
+            <img id="mainMockup" src="https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/HomePageWithExampleBoardDarkTheme.png" alt="Kanban Board Showcase" class="w-full h-auto rounded-xl object-cover" />
+        </div>
     </header>
 
     <!-- Features Section -->
     <section id="features" class="max-w-7xl mx-auto px-6 py-20 border-t border-border-light dark:border-border-dark">
-      <div class="text-center mb-16">
-        <h2 data-i18n="featuresTitle" class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
-          Features Built to Optimize Your Productivity
-        </h2>
-        <div class="h-1.5 w-20 bg-primary rounded-full mx-auto"></div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- Feature 1 -->
-        <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
-          <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-            </svg>
-          </div>
-          <h3 data-i18n="dragDropTitle" class="text-xl font-bold mb-3">Intuitive Drag & Drop</h3>
-          <p data-i18n="dragDropDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-            Drag and drop cards and columns to organize your workflow easily.
-          </p>
+        <div class="text-center mb-16">
+            <h2 data-i18n="featuresTitle" class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
+                Features Built to Optimize Your Productivity
+            </h2>
+            <div class="h-1.5 w-20 bg-primary rounded-full mx-auto"></div>
         </div>
 
-        <!-- Feature 2 -->
-        <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
-          <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
-            </svg>
-          </div>
-          <h3 data-i18n="columnsTitle" class="text-xl font-bold mb-3">Flexible Columns</h3>
-          <p data-i18n="columnsDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-            Create, rename, reorder, and delete columns to fit your custom process.
-          </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Feature 1 -->
+            <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
+                <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+                </div>
+                <h3 data-i18n="dragDropTitle" class="text-xl font-bold mb-3">Intuitive Drag & Drop</h3>
+                <p data-i18n="dragDropDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Drag and drop cards and columns to organize your workflow easily.
+                </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
+                <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+          </svg>
+                </div>
+                <h3 data-i18n="columnsTitle" class="text-xl font-bold mb-3">Flexible Columns</h3>
+                <p data-i18n="columnsDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Create, rename, reorder, and delete columns to fit your custom process.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
+                <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+                </div>
+                <h3 data-i18n="cardsTitle" class="text-xl font-bold mb-3">Detailed Task Cards</h3>
+                <p data-i18n="cardsDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Add descriptions, subtasks (checklists), tags, notes, start dates, and deadlines.
+                </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
+                <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8.684 10.742l-2.072 1.937A2 2 0 006.837 16h9.638a2 2 0 001.62-.835l2.071-1.937a2 2 0 00.32-2.486l-2.07-1.938A2 2 0 0016.786 8H7.163a2 2 0 00-1.62.835l-2.07 1.938a2 2 0 00-.32 2.486z" />
+          </svg>
+                </div>
+                <h3 data-i18n="sharingTitle" class="text-xl font-bold mb-3">Public & Private Sharing</h3>
+                <p data-i18n="sharingDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Share boards with public view-only or public edit access, or invite collaborators.
+                </p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
+                <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+                </div>
+                <h3 data-i18n="exportTitle" class="text-xl font-bold mb-3">Data Exporting</h3>
+                <p data-i18n="exportDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Export columns or entire boards to CSV or Excel formats instantly.
+                </p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
+                <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+                </div>
+                <h3 data-i18n="themesTitle" class="text-xl font-bold mb-3">Light & Dark Modes</h3>
+                <p data-i18n="themesDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Automatically adapts to your system preferences, with full dark and light mode support.
+                </p>
+            </div>
+
+            <!-- Feature 7 -->
+            <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
+                <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+                </div>
+                <h3 data-i18n="complianceTitle" class="text-xl font-bold mb-3">GDPR & LGPD Compliance</h3>
+                <p data-i18n="complianceDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Manage cookie consents, export your account data, or permanently delete your account.
+                </p>
+            </div>
+
+            <!-- Feature 8 -->
+            <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
+                <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5c-.006 1.583-.37 3.14-1.07 4.549m1.413-4.549a18.175 18.175 0 00-1.89-3.411L10.5 3" />
+          </svg>
+                </div>
+                <h3 data-i18n="languageTitle" class="text-xl font-bold mb-3">Multi-language Support</h3>
+                <p data-i18n="languageDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Available in English, Portuguese, Spanish, German, and French.
+                </p>
+            </div>
         </div>
 
-        <!-- Feature 3 -->
-        <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
-          <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <h3 data-i18n="cardsTitle" class="text-xl font-bold mb-3">Detailed Task Cards</h3>
-          <p data-i18n="cardsDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-            Add descriptions, subtasks (checklists), tags, notes, start dates, and deadlines.
-          </p>
+        <!-- Additional Mockup card: Card details modal -->
+        <div class="mt-20 max-w-4xl mx-auto rounded-2xl border border-border-light dark:border-border-dark overflow-hidden shadow-2xl bg-card-light dark:bg-card-dark p-2 transform hover:scale-[1.01] transition-all group">
+            <img id="cardMockup" src="https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/CardModalOpenedDarkTheme.png" alt="Card Modal Showcase" class="w-full h-auto rounded-xl object-cover" />
         </div>
-
-        <!-- Feature 4 -->
-        <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
-          <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l-2.072 1.937A2 2 0 006.837 16h9.638a2 2 0 001.62-.835l2.071-1.937a2 2 0 00.32-2.486l-2.07-1.938A2 2 0 0016.786 8H7.163a2 2 0 00-1.62.835l-2.07 1.938a2 2 0 00-.32 2.486z" />
-            </svg>
-          </div>
-          <h3 data-i18n="sharingTitle" class="text-xl font-bold mb-3">Public & Private Sharing</h3>
-          <p data-i18n="sharingDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-            Share boards with public view-only or public edit access, or invite collaborators.
-          </p>
-        </div>
-
-        <!-- Feature 5 -->
-        <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
-          <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-          </div>
-          <h3 data-i18n="exportTitle" class="text-xl font-bold mb-3">Data Exporting</h3>
-          <p data-i18n="exportDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-            Export columns or entire boards to CSV or Excel formats instantly.
-          </p>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
-          <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-          </div>
-          <h3 data-i18n="themesTitle" class="text-xl font-bold mb-3">Light & Dark Modes</h3>
-          <p data-i18n="themesDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-            Automatically adapts to your system preferences, with full dark and light mode support.
-          </p>
-        </div>
-
-        <!-- Feature 7 -->
-        <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
-          <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <h3 data-i18n="complianceTitle" class="text-xl font-bold mb-3">GDPR & LGPD Compliance</h3>
-          <p data-i18n="complianceDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-            Manage cookie consents, export your account data, or permanently delete your account.
-          </p>
-        </div>
-
-        <!-- Feature 8 -->
-        <div class="p-8 rounded-2xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card hover:border-primary/40 dark:hover:border-primary/40 transition-all hover:shadow-xl group">
-          <div class="p-3 bg-indigo-500/10 text-primary rounded-xl w-fit mb-6 group-hover:scale-110 transition-transform">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5c-.006 1.583-.37 3.14-1.07 4.549m1.413-4.549a18.175 18.175 0 00-1.89-3.411L10.5 3" />
-            </svg>
-          </div>
-          <h3 data-i18n="languageTitle" class="text-xl font-bold mb-3">Multi-language Support</h3>
-          <p data-i18n="languageDesc" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-            Available in English, Portuguese, Spanish, German, and French.
-          </p>
-        </div>
-      </div>
-
-      <!-- Additional Mockup card: Card details modal -->
-      <div class="mt-20 max-w-4xl mx-auto rounded-2xl border border-border-light dark:border-border-dark overflow-hidden shadow-2xl bg-card-light dark:bg-card-dark p-2 transform hover:scale-[1.01] transition-all group">
-        <img id="cardMockup" src="https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/CardModalOpenedDarkTheme.png" alt="Card Modal Showcase" class="w-full h-auto rounded-xl object-cover" />
-      </div>
     </section>
 
     <!-- Developer Section -->
     <section id="about-developer" class="max-w-7xl mx-auto px-6 py-20 border-t border-border-light dark:border-border-dark">
-      <div class="text-center mb-16">
-        <h2 data-i18n="devTitle" class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">About the Developer</h2>
-        <div class="h-1.5 w-20 bg-primary rounded-full mx-auto"></div>
-      </div>
-
-      <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12 p-8 md:p-12 rounded-3xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card">
-        <!-- Profile Picture Container -->
-        <div class="relative group flex-shrink-0">
-          <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-300"></div>
-          <img src="https://cdn.bkappi.com/BrunoKappi/Images/ProfilePicture.jpg" alt="Bruno Kappi" class="relative w-48 h-48 rounded-2xl object-cover shadow-lg transform group-hover:scale-[1.02] transition-transform duration-300" />
+        <div class="text-center mb-16">
+            <h2 data-i18n="devTitle" class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">About the Developer</h2>
+            <div class="h-1.5 w-20 bg-primary rounded-full mx-auto"></div>
         </div>
 
-        <!-- Bio Content -->
-        <div class="flex-grow text-center md:text-left">
-          <h3 data-i18n="devName" class="text-3xl font-extrabold mb-1">Bruno Kappi</h3>
-          <p data-i18n="devSubtitle" class="text-primary font-semibold text-lg mb-3">Fullstack Developer & Systems Analyst</p>
-          <div class="flex items-center justify-center md:justify-start gap-1.5 text-sm text-slate-500 dark:text-slate-400 mb-6">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12 p-8 md:p-12 rounded-3xl border border-border-light dark:border-border-dark bg-card-light/40 dark:bg-card-dark/40 glass-card">
+            <!-- Profile Picture Container -->
+            <div class="relative group flex-shrink-0">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-300">
+                </div>
+                <img src="https://cdn.bkappi.com/BrunoKappi/Images/ProfilePicture.jpg" alt="Bruno Kappi" class="relative w-48 h-48 rounded-2xl object-cover shadow-lg transform group-hover:scale-[1.02] transition-transform duration-300" />
+            </div>
+
+            <!-- Bio Content -->
+            <div class="flex-grow text-center md:text-left">
+                <h3 data-i18n="devName" class="text-3xl font-extrabold mb-1">Bruno Kappi</h3>
+                <p data-i18n="devSubtitle" class="text-primary font-semibold text-lg mb-3">Fullstack Developer & Systems Analyst
+                </p>
+                <div class="flex items-center justify-center md:justify-start gap-1.5 text-sm text-slate-500 dark:text-slate-400 mb-6">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+                    <span data-i18n="devLocation">Novo Hamburgo, Rio Grande do Sul, Brazil</span>
+                </div>
+
+                <p data-i18n="devBio1" class="text-slate-600 dark:text-slate-350 mb-4 leading-relaxed font-light">
+                    With a background in both industrial automation and modern web development, Bruno brings a rare blend of technical depth and product vision to everything he builds.
+                </p>
+                <p data-i18n="devBio2" class="text-slate-600 dark:text-slate-350 mb-8 leading-relaxed font-light italic border-l-2 border-primary pl-4">
+                    He believes software should be elegant, efficient, and most of all, useful.
+                </p>
+
+                <!-- Links -->
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="https://myportfolio.bkappi.com/" target="_blank" class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-semibold px-4 py-2.5 rounded-full transition-all border border-border-light dark:border-border-dark">
+                        <span data-i18n="portfolio">Portfolio</span>
+                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
-            <span data-i18n="devLocation">Novo Hamburgo, Rio Grande do Sul, Brazil</span>
-          </div>
-
-          <p data-i18n="devBio1" class="text-slate-600 dark:text-slate-350 mb-4 leading-relaxed font-light">
-            With a background in both industrial automation and modern web development, Bruno brings a rare blend of technical depth and product vision to everything he builds.
-          </p>
-          <p data-i18n="devBio2" class="text-slate-600 dark:text-slate-350 mb-8 leading-relaxed font-light italic border-l-2 border-primary pl-4">
-            He believes software should be elegant, efficient, and most of all, useful.
-          </p>
-
-          <!-- Links -->
-          <div class="flex flex-wrap justify-center md:justify-start gap-4">
-            <a href="https://myportfolio.bkappi.com/" target="_blank" class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-semibold px-4 py-2.5 rounded-full transition-all border border-border-light dark:border-border-dark">
-              <span data-i18n="portfolio">Portfolio</span>
-              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </a>
-            <a href="https://www.linkedin.com/in/brunokappi/" target="_blank" class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-semibold px-4 py-2.5 rounded-full transition-all border border-border-light dark:border-border-dark">
-              <span data-i18n="linkedin">LinkedIn</span>
-              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </a>
-            <a href="https://blog.bkappi.com/" target="_blank" class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-semibold px-4 py-2.5 rounded-full transition-all border border-border-light dark:border-border-dark">
-              <span data-i18n="blog">Blog</span>
-              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </a>
-          </div>
+                    </a>
+                    <a href="https://www.linkedin.com/in/brunokappi/" target="_blank" class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-semibold px-4 py-2.5 rounded-full transition-all border border-border-light dark:border-border-dark">
+                        <span data-i18n="linkedin">LinkedIn</span>
+                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+                    </a>
+                    <a href="https://blog.bkappi.com/" target="_blank" class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-semibold px-4 py-2.5 rounded-full transition-all border border-border-light dark:border-border-dark">
+                        <span data-i18n="blog">Blog</span>
+                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- Footer -->
     <footer class="max-w-7xl mx-auto px-6 py-8 border-t border-border-light dark:border-border-dark text-center text-xs text-slate-500 dark:text-slate-400">
-      <p data-i18n="footerText">Decoupled Static Landing Page. Designed with passion by Bruno Kappi.</p>
-      <p class="mt-2">&copy; 2026 Kanban. All rights reserved.</p>
+        <p data-i18n="footerText">Decoupled Static Landing Page. Designed with passion by Bruno Kappi.</p>
+        <p class="mt-2">&copy; 2026 Kanban. All rights reserved.</p>
     </footer>
 
     <!-- Static Page JavaScript -->
     <script>
-      // Translations config
-      const translations = {
-        English: {
-          heroTitle: "Organize your workflow. Simplify your life.",
-          heroSubtitle: "A beautiful, minimalist, and responsive Kanban board designed for individuals and teams who value simplicity, efficiency, and elegant software.",
-          workspaceBtn: "Open App",
-          featuresTitle: "Features Built to Optimize Your Productivity",
-          dragDropTitle: "Intuitive Drag & Drop",
-          dragDropDesc: "Drag and drop cards and columns to organize your workflow easily.",
-          columnsTitle: "Flexible Columns",
-          columnsDesc: "Create, rename, reorder, and delete columns to fit your custom process.",
-          cardsTitle: "Detailed Task Cards",
-          cardsDesc: "Add descriptions, subtasks (checklists), tags, notes, start dates, and deadlines.",
-          sharingTitle: "Public & Private Sharing",
-          sharingDesc: "Share boards with public view-only or public edit access, or invite collaborators.",
-          exportTitle: "Data Exporting",
-          exportDesc: "Export columns or entire boards to CSV or Excel formats instantly.",
-          themesTitle: "Light & Dark Modes",
-          themesDesc: "Automatically adapts to your system preferences, with full dark and light mode support.",
-          complianceTitle: "GDPR & LGPD Compliance",
-          complianceDesc: "Manage cookie consents, export your account data, or permanently delete your account.",
-          languageTitle: "Multi-language Support",
-          languageDesc: "Available in English, Portuguese, Spanish, German, and French.",
-          devNav: "About the Developer",
-          devTitle: "About the Developer",
-          devName: "Bruno Kappi",
-          devSubtitle: "Fullstack Developer & Systems Analyst",
-          devLocation: "Novo Hamburgo, Rio Grande do Sul, Brazil",
-          devBio1: "With a background in both industrial automation and modern web development, Bruno brings a rare blend of technical depth and product vision to everything he builds.",
-          devBio2: "He believes software should be elegant, efficient, and most of all, useful.",
-          portfolio: "Portfolio",
-          linkedin: "LinkedIn",
-          blog: "Blog",
-          footerText: "Decoupled Static Landing Page. Designed with passion by Bruno Kappi."
-        },
-        "Portuguese-br": {
-          heroTitle: "Organize seu fluxo de trabalho. Simplifique sua vida.",
-          heroSubtitle: "Um quadro Kanban lindo, minimalista e responsivo projetado para indivíduos e equipes que valorizam a simplicidade, eficiência e software elegante.",
-          workspaceBtn: "Abrir Aplicativo",
-          featuresTitle: "Recursos Desenvolvidos para Otimizar sua Produtividade",
-          dragDropTitle: "Arrastar e Soltar Intuitivo",
-          dragDropDesc: "Arrastar e soltar cartões e colunas para organizar facilmente seu fluxo de trabalho.",
-          columnsTitle: "Colunas Flexíveis",
-          columnsDesc: "Crie, renomeie, reordene e exclua colunas para se adequar ao seu processo personalizado.",
-          cardsTitle: "Cartões de Tarefa Detalhados",
-          cardsDesc: "Adicione descrições, subtarefas (checklists), tags, anotações, datas de início e prazos.",
-          sharingTitle: "Compartilhamento Público e Privado",
-          sharingDesc: "Compartilhe quadros com visualização pública, edição pública ou convide colaboradores.",
-          exportTitle: "Exportação de Dados",
-          exportDesc: "Exporte colunas ou quadros inteiros para os formatos CSV ou Excel instantaneamente.",
-          themesTitle: "Modos Claro e Escuro",
-          themesDesc: "Adapta-se automaticamente às preferências do seu sistema, com suporte completo aos temas claro e escuro.",
-          complianceTitle: "Conformidade com LGPD e GDPR",
-          complianceDesc: "Gerencie consentimentos de cookies, exporte seus dados ou exclua permanentemente sua conta.",
-          languageTitle: "Suporte Multilíngue",
-          languageDesc: "Disponível em inglês, português, espanhol, alemão e francês.",
-          devNav: "Sobre o Desenvolvedor",
-          devTitle: "Sobre o Desenvolvedor",
-          devName: "Bruno Kappi",
-          devSubtitle: "Desenvolvedor Fullstack & Analista de Sistemas",
-          devLocation: "Novo Hamburgo, Rio Grande do Sul, Brasil",
-          devBio1: "Com formação em automação industrial e desenvolvimento web moderno, Bruno traz uma mistura rara de profundidade técnica e visão de produto para tudo o que constrói.",
-          devBio2: "Ele acredita que o software deve ser elegante, eficiente e, acima de tudo, útil.",
-          portfolio: "Portfólio",
-          linkedin: "LinkedIn",
-          blog: "Blog",
-          footerText: "Página Estática Desacoplada. Desenvolvido com paixão por Bruno Kappi."
-        },
-        Spanish: {
-          heroTitle: "Organiza tu flujo de trabajo. Simplifica tu vida.",
-          heroSubtitle: "Un tablero Kanban hermoso, mi­nimalista y responsivo diseñado para personas y equipos que valoran la sencillez, la eficiencia y el software elegante.",
-          workspaceBtn: "Abrir Aplicación",
-          featuresTitle: "Funcionalidades Diseñadas para Optimizar tu Productividad",
-          dragDropTitle: "Arrastrar y Soltar Intuitivo",
-          dragDropDesc: "Arrastra y suelta tarjetas y columnas para organizar fácilmente tu flujo de trabajo.",
-          columnsTitle: "Columnas Flexibles",
-          columnsDesc: "Crea, renombra, reordena y elimina columnas para adaptarlas a tu proceso personalizado.",
-          cardsTitle: "Tarjetas de Tareas Detalladas",
-          cardsDesc: "Agrega descripciones, subtareas (listas de control), etiquetas, notas, fechas de inicio y plazos.",
-          sharingTitle: "Compartir Público y Privado",
-          sharingDesc: "Comparte tableros con acceso público de solo lectura, edición pública o invita a colaboradores.",
-          exportTitle: "Exportación de Datos",
-          exportDesc: "Exporta columnas o tableros completos a formatos CSV o Excel al instante.",
-          themesTitle: "Modos Claro y Oscuro",
-          themesDesc: "Se adapta automáticamente a las preferencias de tu sistema, con soporte completo para temas claro y oscuro.",
-          complianceTitle: "Cumplimiento de GDPR y LGPD",
-          complianceDesc: "Administra el consentimiento de cookies, exporta tus datos o elimina tu cuenta de forma permanente.",
-          languageTitle: "Soporte Multilingüe",
-          languageDesc: "Disponible en inglés, portugués, español, alemán y francés.",
-          devNav: "Sobre el Desarrollador",
-          devTitle: "Sobre el Desarrollador",
-          devName: "Bruno Kappi",
-          devSubtitle: "Desarrollador Fullstack y Analista de Sistemas",
-          devLocation: "Novo Hamburgo, Rio Grande del Sur, Brasil",
-          devBio1: "Con experiencia tanto en automatización industrial como en desarrollo web moderno, Bruno aporta una combinación única de profundidad técnica y visión de producto a todo lo que construye.",
-          devBio2: "Él cree que el software debe ser elegante, eficiente y, sobre todo, útil.",
-          portfolio: "Portafolio",
-          linkedin: "LinkedIn",
-          blog: "Blog",
-          footerText: "Página Estática Desacoplada. Diseñado con pasión por Bruno Kappi."
-        }
-      };
-
-      // Language Switcher Logic
-      let currentLanguage = 'English';
-      
-      const langBtn = document.getElementById('langBtn');
-      const langMenu = document.getElementById('langMenu');
-      const activeLangLabel = document.getElementById('activeLang');
-      
-      langBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        langMenu.classList.toggle('hidden');
-      });
-      
-      document.addEventListener('click', () => {
-        langMenu.classList.add('hidden');
-      });
-
-      function getUrlParam(name) {
-        const params = new URLSearchParams(window.location.search);
-        return params.get(name);
-      }
-
-      function changeLanguage(lang) {
-        currentLanguage = lang;
-        localStorage.setItem("Kanban-Language", lang);
-        
-        // Update label
-        let displayLabel = 'English';
-        if (lang === 'Portuguese-br') displayLabel = 'Português';
-        else if (lang === 'Spanish') displayLabel = 'Español';
-        activeLangLabel.textContent = displayLabel;
-
-        // Check icon toggles
-        ['English', 'Portuguese-br', 'Spanish'].forEach(l => {
-          const checkIcon = document.getElementById(`check-${l}`);
-          if (l === lang) {
-            checkIcon.classList.remove('hidden');
-          } else {
-            checkIcon.classList.add('hidden');
-          }
-        });
-
-        // Translate strings
-        const textSet = translations[lang] || translations['English'];
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-          const key = el.getAttribute('data-i18n');
-          if (textSet[key]) {
-            // If it's a link with nested arrow SVGs or HTML structures, preserve them or replace text content
-            if (el.children.length > 0) {
-              // Iterate and replace only text node
-              Array.from(el.childNodes).forEach(node => {
-                if (node.nodeType === Node.TEXT_NODE) {
-                  node.textContent = textSet[key];
-                }
-              });
-            } else {
-              el.textContent = textSet[key];
+        // Translations config
+        const translations = {
+            English: {
+                heroTitle: "Organize your workflow. Simplify your life.",
+                heroSubtitle: "A beautiful, minimalist, and responsive Kanban board designed for individuals and teams who value simplicity, efficiency, and elegant software.",
+                workspaceBtn: "Open App",
+                featuresTitle: "Features Built to Optimize Your Productivity",
+                dragDropTitle: "Intuitive Drag & Drop",
+                dragDropDesc: "Drag and drop cards and columns to organize your workflow easily.",
+                columnsTitle: "Flexible Columns",
+                columnsDesc: "Create, rename, reorder, and delete columns to fit your custom process.",
+                cardsTitle: "Detailed Task Cards",
+                cardsDesc: "Add descriptions, subtasks (checklists), tags, notes, start dates, and deadlines.",
+                sharingTitle: "Public & Private Sharing",
+                sharingDesc: "Share boards with public view-only or public edit access, or invite collaborators.",
+                exportTitle: "Data Exporting",
+                exportDesc: "Export columns or entire boards to CSV or Excel formats instantly.",
+                themesTitle: "Light & Dark Modes",
+                themesDesc: "Automatically adapts to your system preferences, with full dark and light mode support.",
+                complianceTitle: "GDPR & LGPD Compliance",
+                complianceDesc: "Manage cookie consents, export your account data, or permanently delete your account.",
+                languageTitle: "Multi-language Support",
+                languageDesc: "Available in English, Portuguese, Spanish, German, and French.",
+                devNav: "About the Developer",
+                devTitle: "About the Developer",
+                devName: "Bruno Kappi",
+                devSubtitle: "Fullstack Developer & Systems Analyst",
+                devLocation: "Novo Hamburgo, Rio Grande do Sul, Brazil",
+                devBio1: "With a background in both industrial automation and modern web development, Bruno brings a rare blend of technical depth and product vision to everything he builds.",
+                devBio2: "He believes software should be elegant, efficient, and most of all, useful.",
+                portfolio: "Portfolio",
+                linkedin: "LinkedIn",
+                blog: "Blog",
+                footerText: "Decoupled Static Landing Page. Designed with passion by Bruno Kappi."
+            },
+            "Portuguese-br": {
+                heroTitle: "Organize seu fluxo de trabalho. Simplifique sua vida.",
+                heroSubtitle: "Um quadro Kanban lindo, minimalista e responsivo projetado para indivíduos e equipes que valorizam a simplicidade, eficiência e software elegante.",
+                workspaceBtn: "Abrir Aplicativo",
+                featuresTitle: "Recursos Desenvolvidos para Otimizar sua Produtividade",
+                dragDropTitle: "Arrastar e Soltar Intuitivo",
+                dragDropDesc: "Arrastar e soltar cartões e colunas para organizar facilmente seu fluxo de trabalho.",
+                columnsTitle: "Colunas Flexíveis",
+                columnsDesc: "Crie, renomeie, reordene e exclua colunas para se adequar ao seu processo personalizado.",
+                cardsTitle: "Cartões de Tarefa Detalhados",
+                cardsDesc: "Adicione descrições, subtarefas (checklists), tags, anotações, datas de início e prazos.",
+                sharingTitle: "Compartilhamento Público e Privado",
+                sharingDesc: "Compartilhe quadros com visualização pública, edição pública ou convide colaboradores.",
+                exportTitle: "Exportação de Dados",
+                exportDesc: "Exporte colunas ou quadros inteiros para os formatos CSV ou Excel instantaneamente.",
+                themesTitle: "Modos Claro e Escuro",
+                themesDesc: "Adapta-se automaticamente às preferências do seu sistema, com suporte completo aos temas claro e escuro.",
+                complianceTitle: "Conformidade com LGPD e GDPR",
+                complianceDesc: "Gerencie consentimentos de cookies, exporte seus dados ou exclua permanentemente sua conta.",
+                languageTitle: "Suporte Multilíngue",
+                languageDesc: "Disponível em inglês, português, espanhol, alemão e francês.",
+                devNav: "Sobre o Desenvolvedor",
+                devTitle: "Sobre o Desenvolvedor",
+                devName: "Bruno Kappi",
+                devSubtitle: "Desenvolvedor Fullstack & Analista de Sistemas",
+                devLocation: "Novo Hamburgo, Rio Grande do Sul, Brasil",
+                devBio1: "Com formação em automação industrial e desenvolvimento web moderno, Bruno traz uma mistura rara de profundidade técnica e visão de produto para tudo o que constrói.",
+                devBio2: "Ele acredita que o software deve ser elegante, eficiente e, acima de tudo, útil.",
+                portfolio: "Portfólio",
+                linkedin: "LinkedIn",
+                blog: "Blog",
+                footerText: "Página Estática Desacoplada. Desenvolvido com paixão por Bruno Kappi."
+            },
+            Spanish: {
+                heroTitle: "Organiza tu flujo de trabajo. Simplifica tu vida.",
+                heroSubtitle: "Un tablero Kanban hermoso, mi­nimalista y responsivo diseñado para personas y equipos que valoran la sencillez, la eficiencia y el software elegante.",
+                workspaceBtn: "Abrir Aplicación",
+                featuresTitle: "Funcionalidades Diseñadas para Optimizar tu Productividad",
+                dragDropTitle: "Arrastrar y Soltar Intuitivo",
+                dragDropDesc: "Arrastra y suelta tarjetas y columnas para organizar fácilmente tu flujo de trabajo.",
+                columnsTitle: "Columnas Flexibles",
+                columnsDesc: "Crea, renombra, reordena y elimina columnas para adaptarlas a tu proceso personalizado.",
+                cardsTitle: "Tarjetas de Tareas Detalladas",
+                cardsDesc: "Agrega descripciones, subtareas (listas de control), etiquetas, notas, fechas de inicio y plazos.",
+                sharingTitle: "Compartir Público y Privado",
+                sharingDesc: "Comparte tableros con acceso público de solo lectura, edición pública o invita a colaboradores.",
+                exportTitle: "Exportación de Datos",
+                exportDesc: "Exporta columnas o tableros completos a formatos CSV o Excel al instante.",
+                themesTitle: "Modos Claro y Oscuro",
+                themesDesc: "Se adapta automáticamente a las preferencias de tu sistema, con soporte completo para temas claro y oscuro.",
+                complianceTitle: "Cumplimiento de GDPR y LGPD",
+                complianceDesc: "Administra el consentimiento de cookies, exporta tus datos o elimina tu cuenta de forma permanente.",
+                languageTitle: "Soporte Multilingüe",
+                languageDesc: "Disponible en inglés, portugués, español, alemán y francés.",
+                devNav: "Sobre el Desarrollador",
+                devTitle: "Sobre el Desarrollador",
+                devName: "Bruno Kappi",
+                devSubtitle: "Desarrollador Fullstack y Analista de Sistemas",
+                devLocation: "Novo Hamburgo, Rio Grande del Sur, Brasil",
+                devBio1: "Con experiencia tanto en automatización industrial como en desarrollo web moderno, Bruno aporta una combinación única de profundidad técnica y visión de producto a todo lo que construye.",
+                devBio2: "Él cree que el software debe ser elegante, eficiente y, sobre todo, útil.",
+                portfolio: "Portafolio",
+                linkedin: "LinkedIn",
+                blog: "Blog",
+                footerText: "Página Estática Desacoplada. Diseñado con pasión por Bruno Kappi."
             }
-          }
+        };
+
+        // Language Switcher Logic
+        let currentLanguage = 'English';
+
+        const langBtn = document.getElementById('langBtn');
+        const langMenu = document.getElementById('langMenu');
+        const activeLangLabel = document.getElementById('activeLang');
+
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('hidden');
         });
-      }
 
-      // Initial Language Selection
-      const savedLang = localStorage.getItem("Kanban-Language") || getUrlParam("Lang") || 'English';
-      changeLanguage(savedLang);
+        document.addEventListener('click', () => {
+            langMenu.classList.add('hidden');
+        });
 
-      // Theme Logic
-      const themeToggle = document.getElementById('themeToggle');
-      const moonIcon = document.getElementById('theme-moon');
-      const sunIcon = document.getElementById('theme-sun');
-      const mainMockup = document.getElementById('mainMockup');
-      const cardMockup = document.getElementById('cardMockup');
-
-      function updateMockupImages(theme) {
-        if (theme === 'Dark') {
-          mainMockup.src = "https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/HomePageWithExampleBoardDarkTheme.png";
-          cardMockup.src = "https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/CardModalOpenedDarkTheme.png";
-        } else {
-          mainMockup.src = "https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/HomePageWithExampleBoard.png";
-          cardMockup.src = "https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/CardModalOpened.png";
+        function getUrlParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
         }
-      }
 
-      function setTheme(theme) {
-        if (theme === 'Dark') {
-          document.documentElement.classList.add('dark');
-          moonIcon.classList.add('hidden');
-          sunIcon.classList.remove('hidden');
-        } else {
-          document.documentElement.classList.remove('dark');
-          sunIcon.classList.add('hidden');
-          moonIcon.classList.remove('hidden');
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem("Kanban-Language", lang);
+
+            // Update label
+            let displayLabel = 'English';
+            if (lang === 'Portuguese-br') displayLabel = 'Português';
+            else if (lang === 'Spanish') displayLabel = 'Español';
+            activeLangLabel.textContent = displayLabel;
+
+            // Check icon toggles
+            ['English', 'Portuguese-br', 'Spanish'].forEach(l => {
+                const checkIcon = document.getElementById(`check-${l}`);
+                if (l === lang) {
+                    checkIcon.classList.remove('hidden');
+                } else {
+                    checkIcon.classList.add('hidden');
+                }
+            });
+
+            // Translate strings
+            const textSet = translations[lang] || translations['English'];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (textSet[key]) {
+                    // If it's a link with nested arrow SVGs or HTML structures, preserve them or replace text content
+                    if (el.children.length > 0) {
+                        // Iterate and replace only text node
+                        Array.from(el.childNodes).forEach(node => {
+                            if (node.nodeType === Node.TEXT_NODE) {
+                                node.textContent = textSet[key];
+                            }
+                        });
+                    } else {
+                        el.textContent = textSet[key];
+                    }
+                }
+            });
         }
-        localStorage.setItem("Kanban-Theme", theme);
-        updateMockupImages(theme);
-      }
 
-      // Initial Theme Check: Match browser preference, fallback to dark theme.
-      const savedTheme = localStorage.getItem("Kanban-Theme");
-      if (savedTheme) {
-        setTheme(savedTheme);
-      } else {
-        // System preference matching, if prefers light is true, set Light, otherwise default fallback to Dark.
-        const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-        setTheme(prefersLight ? 'Light' : 'Dark');
-      }
+        // Initial Language Selection
+        const savedLang = localStorage.getItem("Kanban-Language") || getUrlParam("Lang") || 'English';
+        changeLanguage(savedLang);
 
-      themeToggle.addEventListener('click', () => {
-        const isDark = document.documentElement.classList.contains('dark');
-        setTheme(isDark ? 'Light' : 'Dark');
-      });
+        // Theme Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('theme-moon');
+        const sunIcon = document.getElementById('theme-sun');
+        const mainMockup = document.getElementById('mainMockup');
+        const cardMockup = document.getElementById('cardMockup');
+
+        function updateMockupImages(theme) {
+            if (theme === 'Dark') {
+                mainMockup.src = "https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/HomePageWithExampleBoardDarkTheme.png";
+                cardMockup.src = "https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/CardModalOpenedDarkTheme.png";
+            } else {
+                mainMockup.src = "https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/HomePageWithExampleBoard.png";
+                cardMockup.src = "https://cdn.bkappi.com/ProjectsAssets/Kanban-v1/LandingPage/CardModalOpened.png";
+            }
+        }
+
+        function setTheme(theme) {
+            if (theme === 'Dark') {
+                document.documentElement.classList.add('dark');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+            localStorage.setItem("Kanban-Theme", theme);
+            updateMockupImages(theme);
+        }
+
+        // Initial Theme Check: Match browser preference, fallback to dark theme.
+        const savedTheme = localStorage.getItem("Kanban-Theme");
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else {
+            // System preference matching, if prefers light is true, set Light, otherwise default fallback to Dark.
+            const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            setTheme(prefersLight ? 'Light' : 'Dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(isDark ? 'Light' : 'Dark');
+        });
     </script>
-  </body>
+</body>
+
 </html>
