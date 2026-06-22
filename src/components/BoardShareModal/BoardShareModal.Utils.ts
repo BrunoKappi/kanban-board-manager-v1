@@ -1,4 +1,4 @@
-import { setListeningBoard, stopListeningBoard } from "@/Config/Firebase/Firestore";
+import { dbSetListeningBoard, dbStopListeningBoard } from "@/services/db";
 import { BoardListItemType, BoardType, CollaboratorType } from "@/Data/Types";
 import { MIDDLEWARE_CreateBoardListItem, MIDDLEWARE_DeleteBoardListItem, MIDDLEWARE_GetBoardListItem, MIDDLEWARE_UpdateBoardListItem } from "@/Middleware/BoardList";
 import { MIDDLEWARE_UpdateBoard } from "@/Middleware/Board";
@@ -20,12 +20,12 @@ export const ChangeBoardSharingOptions = (ShareBoard: boolean, AllowEdit: boolea
   MIDDLEWARE_UpdateBoard(NewBoard);
 
   if (AllowEdit) {
-    setListeningBoard(NewBoard.docID);
+    dbSetListeningBoard(NewBoard.docID);
   } else {
     if (NewBoard.Collaborators.length > 0) {
-      setListeningBoard(NewBoard.docID);
+      dbSetListeningBoard(NewBoard.docID);
     } else {
-      stopListeningBoard();
+      dbStopListeningBoard();
     }
   }
 };
@@ -100,15 +100,15 @@ export const AddCollaborator = async (Email: string, setCollabMessage: (message:
   MIDDLEWARE_CreateBoardListItem(NewBoardListItem);
 
   if (NewBoard.Collaborators.length === 0) {
-    stopListeningBoard();
+    dbStopListeningBoard();
   } else {
     if (NewBoard.PuclicEdit) {
-      setListeningBoard(NewBoard.docID);
+      dbSetListeningBoard(NewBoard.docID);
     } else {
       if (NewBoard.Collaborators.length > 0) {
-        setListeningBoard(NewBoard.docID);
+        dbSetListeningBoard(NewBoard.docID);
       } else {
-        stopListeningBoard();
+        dbStopListeningBoard();
       }
     }
   }
@@ -131,11 +131,13 @@ export const RemoveCollaborator = async (Collab: any) => {
   const BoardListItem = await MIDDLEWARE_GetBoardListItem(Collab.Uid, NewBoard.BoardId);
 
   //NEW WAY
-  var OriginalBoardListItem: BoardListItemType = await MIDDLEWARE_GetBoardListItem(NewBoard.OwnerUid, NewBoard.BoardId);
+  var OriginalBoardListItem = await MIDDLEWARE_GetBoardListItem(NewBoard.OwnerUid, NewBoard.BoardId);
 
-  OriginalBoardListItem.Collaborators = OriginalBoardListItem.Collaborators.filter((UserCollab: CollaboratorType) => UserCollab.Uid !== Collab.Uid);
+  if (OriginalBoardListItem) {
+    OriginalBoardListItem.Collaborators = OriginalBoardListItem.Collaborators.filter((UserCollab: CollaboratorType) => UserCollab.Uid !== Collab.Uid);
+    MIDDLEWARE_UpdateBoardListItem(OriginalBoardListItem);
+  }
 
   MIDDLEWARE_DeleteBoardListItem(BoardListItem);
   MIDDLEWARE_UpdateBoard(NewBoard);
-  MIDDLEWARE_UpdateBoardListItem(OriginalBoardListItem);
 };

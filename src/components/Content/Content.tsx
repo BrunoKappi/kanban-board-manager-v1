@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BoardMessage from "./BoardMessage";
-import { setListeningBoard, stopListeningBoard } from "@/Config/Firebase/Firestore";
+import { dbSetListeningBoard, dbStopListeningBoard } from "@/services/db";
 import { MIDDLEWARE_GetBoard, MIDDLEWARE_GetPublicBoard } from "@/Middleware/Board";
 import { STORE_SetBoard, STORE_SetCanDuplicateBoard, STORE_SetCanEditBoard, STORE_SetIsBoardOwner, STORE_SetSelectedBoard } from "@/Middleware/Store";
 
@@ -23,11 +23,11 @@ export default function Content() {
   useEffect(() => {
     HasCollab = false;
     IsPublic = false;
-    stopListeningBoard();
+    dbStopListeningBoard();
     if (!!BoardId) {
       MIDDLEWARE_GetPublicBoard(BoardId).then((Data) => {
         //ALWAYS LISTENING
-        setListeningBoard(Data?.Board.docID);
+        dbSetListeningBoard(Data?.Board.docID);
         //ALWAYS LISTENING
         if (Data.Error && Data.ErrorCode) {
           setBoardError(Translations.Text[Data.ErrorCode]);
@@ -41,12 +41,12 @@ export default function Content() {
           if (Data?.Board?.Collaborators.length > 0) HasCollab = true;
 
           if ((Data?.Board?.OwnerUid !== User.uid && !!User.uid) || IsPublic || HasCollab) {
-            setListeningBoard(Data?.Board.docID);
+            dbSetListeningBoard(Data?.Board.docID);
           } else {
-            stopListeningBoard();
+            dbStopListeningBoard();
           }
 
-          stopListeningBoard();
+          dbStopListeningBoard();
 
           if (Data?.Board.OwnerUid === User.uid) {
             STORE_SetCanEditBoard(true);
@@ -59,7 +59,7 @@ export default function Content() {
         STORE_SetCanEditBoard(true);
         MIDDLEWARE_GetBoard(SelectedBoard).then((Data) => {
           //ALWAYS LISTENING
-          setListeningBoard(Data?.docID);
+          dbSetListeningBoard(Data?.docID);
           //ALWAYS LISTENING
 
           STORE_SetBoard(Data);
@@ -70,13 +70,13 @@ export default function Content() {
           if (Data?.Collaborators?.length > 0) HasCollab = true;
 
           if ((Data?.OwnerUid !== User.uid && !!User.uid) || IsPublic || HasCollab) {
-            setListeningBoard(Data?.docID);
+            dbSetListeningBoard(Data?.docID);
           } else {
-            stopListeningBoard();
+            dbStopListeningBoard();
           }
         });
       } else {
-        stopListeningBoard();
+        dbStopListeningBoard();
       }
     }
   }, [SelectedBoard, BoardId, User, Translations]);

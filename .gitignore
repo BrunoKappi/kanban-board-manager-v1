@@ -25,3 +25,24 @@ dist-ssr
 *.env
 .env
 .env*
+
+.env.delopment
+.env.production
+
+graphify-out/
+
+.agents/
+
+configFiles
+# Custom ignores
+configFiles
+.graphifyignore
+.geminiignore
+.claudeignore
+.antigravityignore
+agentsIgnore
+git
+
+.env
+.env.production
+.env.development

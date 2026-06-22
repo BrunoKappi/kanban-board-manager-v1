@@ -1,4 +1,4 @@
-import { FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
+import { dbGetUser } from "@/services/db";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -48,11 +48,11 @@ export default function BoardMessage({}: BoardMessageProps) {
             setMessage(Translations.Text.NotLogged);
             setMessageType("alert");
           } else {
-            FIREBASE_GetUser(Board?.OwnerUid).then((UsersFound) => {
+            dbGetUser(Board?.OwnerUid).then((UsersFound) => {
               setDismissMessage(false);
               setMessageType("info");
               //@ts-ignore
-              setMessage(Translations.Text.SharedBoardMessage + " " + UsersFound[0]?.Email);
+              setMessage(Translations.Text.SharedBoardMessage + " " + UsersFound?.[0]?.Email);
             });
             setDismissMessage(false);
 

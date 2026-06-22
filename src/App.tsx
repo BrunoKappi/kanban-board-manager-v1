@@ -9,6 +9,7 @@ import { GetPanelSize, SetHTMLClassTheme } from "./lib/utils";
 import Lost from "./Assets/Lost.svg";
 import Updates from "./Updates";
 import { MIDDLEWARE_GetBoardList } from "./Middleware/BoardList";
+import CookieConsent from "./components/Legal/CookieConsent";
 
 function App() {
   const User = useSelector((state: any) => state.User);
@@ -63,6 +64,7 @@ function App() {
   return (
     <main className=" h-dvh w-dvw bg-background dark:bg-background-dark">
       <Updates />
+      <CookieConsent />
       <Routes>
         <Route path="/" element={GetElement()} />
         <Route path="/View/:BoardId" element={GetElement()} />

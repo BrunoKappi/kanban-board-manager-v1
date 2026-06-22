@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FIREBASE_LoginWithEmailPassword, FIREBASE_LoginWithGoogle } from "@/Config/Firebase/Auth";
+import { authLoginWithEmailPassword, authLoginWithGoogle } from "@/services/auth";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { MAX_CARD_EMAIL, MAX_CARD_PASSWORD } from "@/Data/Limits";
 
@@ -11,7 +11,7 @@ function Login() {
   const [error, setError] = useState<string | null>(null);
 
   const handleLogin = async () => {
-    FIREBASE_LoginWithEmailPassword(email, password)
+    authLoginWithEmailPassword(email, password)
       .then(() => {})
       .catch((Error) => {
         setError(Error.code);
@@ -19,7 +19,7 @@ function Login() {
   };
 
   const loginWithGoogle = async () => {
-    FIREBASE_LoginWithGoogle()
+    authLoginWithGoogle()
       .then(() => {})
       .catch(() => {
         setError("Email or password incorrect");

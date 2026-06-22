@@ -1,15 +1,6 @@
-import { getKeysWithSubstring } from "@/components/ManageAccount/Register.Utils";
-import { FIREBASE_LoginWithEmailPassword, FIREBASE_LoginWithGoogle, FIREBASE_RegisterUserEmailPassword, FIREBASE_SendEMailResetPassword } from "@/Config/Firebase/Auth";
-import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_CreateUserPreferences, FIREBASE_GetBoardList } from "@/Config/Firebase/Firestore";
-import { DefaultBoardList } from "@/Data/BoardList";
-import { ExampleBoard, GetText } from "@/Data/ExampleBoard";
-import moment from "moment";
-import { v4 } from "uuid";
-import { DefaultNewUserPreference } from "@/Config/Store/UserPreferences/UserPreferences";
-import { BoardListItemType } from "@/Data/Types";
+import { authLoginWithEmailPassword, authLoginWithGoogle, authRegisterUserEmailPassword, authSendEMailResetPassword } from "@/services/auth";
 import { MIDDLEWARE_CheckUserOnLogin } from "./User";
-import { STORE_SetBoard, STORE_SetSelectedBoard, STORE_SetBoardList, STORE_SetCardModalCard, STORE_SetUserPreferences, STORE_GET } from "./Store";
-import { LOCALSTORAGE_GetItem, LOCALSTORAGE_SetItem } from "./LocalStorage";
+import { STORE_SetCardModalCard, STORE_GET } from "./Store";
 import { UserType } from "@/Config/Store/User/User";
 
 type MIDDLEWARE_LoginProps = {
@@ -25,7 +16,7 @@ export const MIDDLEWARE_Login = ({ email, password, setOpen, setError }: MIDDLEW
   if (User.uid) {
     localStorage.clear();
   }
-  FIREBASE_LoginWithEmailPassword(email, password)
+  authLoginWithEmailPassword(email, password)
     .then((Data) => {
       setOpen(false);
 
@@ -52,7 +43,7 @@ export const MIDDLEWARE_LoginWithGoogle = ({ setOpen, setError }: MIDDLEWARE_Log
   if (User.uid) {
     localStorage.clear();
   }
-  FIREBASE_LoginWithGoogle()
+  authLoginWithGoogle()
     .then((Data) => {
       setOpen(false);
       //@ts-ignore
@@ -78,7 +69,7 @@ type MIDDLEWARE_ForgotProps = {
 
 export const MIDDLEWARE_Forgot = ({ email, setOpen, setError, setMessage }: MIDDLEWARE_ForgotProps) => {
   const Translations = STORE_GET("Translations");
-  FIREBASE_SendEMailResetPassword(email.toLocaleLowerCase())
+  authSendEMailResetPassword(email.toLocaleLowerCase())
     .then(() => {
       //@ts-ignore
       STORE_SetCardModalCard({});
@@ -109,7 +100,7 @@ export const MIDDLEWARE_Register = ({ email, password, setOpen, setError, setMes
     localStorage.clear();
   }
   const Translations = STORE_GET("Translations");
-  FIREBASE_RegisterUserEmailPassword(email.toLocaleLowerCase(), password)
+  authRegisterUserEmailPassword(email.toLocaleLowerCase(), password)
     .then(async (Data) => {
       //@ts-ignore
       STORE_SetCardModalCard({});

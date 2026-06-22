@@ -1,4 +1,4 @@
-import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_CreateUser, FIREBASE_GetAllUsers, FIREBASE_GetUser, FIREBASE_GetUserByEmail, FIREBASE_UpdateUser } from "@/Config/Firebase/Firestore";
+import { dbCreateBoard, dbCreateBoardList, dbCreateUser, dbGetAllUsers, dbGetUser, dbGetUserByEmail, dbUpdateUser } from "@/services/db";
 import { MIDDLEWARE_CreateUserPreferences, MIDDLEWARE_GetUserPreferences, MIDDLEWARE_UpdateUserPreferences } from "./UserPreferences";
 import moment from "moment";
 import { BoardListItemType, UserPrefenceType } from "@/Data/Types";
@@ -13,29 +13,29 @@ import { LOCALSTORAGE_GetItem } from "./LocalStorage";
 import { UserType } from "@/Config/Store/User/User";
 
 export const MIDDLEWARE_GetUserByEmail = async (Email: string) => {
-  return FIREBASE_GetUserByEmail(Email);
+  return dbGetUserByEmail(Email);
 };
 
 export const MIDDLEWARE_GetUser = async (Uid: string) => {
-  return FIREBASE_GetUser(Uid);
+  return dbGetUser(Uid);
 };
 
 export const MIDDLEWARE_GetAllUsers = async () => {
-  return FIREBASE_GetAllUsers();
+  return dbGetAllUsers();
 };
 
 export const MIDDLEWARE_CreateUser = (User: any) => {
-  return FIREBASE_CreateUser(User);
+  return dbCreateUser(User);
 };
 
 export const MIDDLEWARE_UpdateUser = (User: any) => {
-  return FIREBASE_UpdateUser(User);
+  return dbUpdateUser(User);
 };
 
 export const MIDDLEWARE_CheckUserOnLogin = async (Uid: string, Email: string) => {
   if (!Uid || !Email) return;
 
-  const Users = await FIREBASE_GetUser(Uid);
+  const Users = await dbGetUser(Uid);
 
   MIDDLEWARE_GetUserPreferences(Uid);
 
@@ -98,11 +98,11 @@ export const MIDDLEWARE_SyncCurrentUserWork = async (Uid: string) => {
         BoardId: NewId,
       };
 
-      FIREBASE_CreateBoardList(NewBoardListItem);
+      dbCreateBoardList(NewBoardListItem);
 
       if (LOCALSTORAGE_GetItem(`Kanban-Board-${BoardListItem.BoardId}`)) {
         var NewBoard = { ...(JSON.parse(LOCALSTORAGE_GetItem(`Kanban-Board-${BoardListItem.BoardId}`) || "") || { ...ExampleBoard }), LastEditedAt: Now, OwnerUid: UserUid, BoardId: NewId };
-        FIREBASE_CreateBoard(NewBoard);
+        dbCreateBoard(NewBoard);
       }
     });
   } else {
@@ -122,8 +122,8 @@ export const MIDDLEWARE_SyncCurrentUserWork = async (Uid: string) => {
       BoardId: NewId,
     };
 
-    FIREBASE_CreateBoard(NewBoard);
-    FIREBASE_CreateBoardList(NewBoardListItem);
+    dbCreateBoard(NewBoard);
+    dbCreateBoardList(NewBoardListItem);
   }
   MIDDLEWARE_GetBoardList();
 };

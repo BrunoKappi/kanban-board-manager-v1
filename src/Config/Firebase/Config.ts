@@ -3,15 +3,12 @@ import { getFirestore } from "@firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
-var firebaseConfig = {
-  apiKey: import.meta.env.VITE_REACT_APIKEY,
-  authDomain: import.meta.env.VITE_REACT_AUTHDOMAIN,
-  projectId: import.meta.env.VITE_REACT_PROJECTID,
-  storageBucket: import.meta.env.VITE_REACT_STORAGEBUCKET,
-  messagingSenderId: import.meta.env.VITE_REACT_MESSAGINGSENDERID,
-  appId: import.meta.env.VITE_REACT_APPID,
-  measurementId: import.meta.env.VITE_REACT_MEASUREMENTID,
-};
+const rawConfig = import.meta.env.VITE_FIREBASE_CONFIG;
+if (!rawConfig) {
+  throw new Error("Missing VITE_FIREBASE_CONFIG environment variable.");
+}
+
+const firebaseConfig = JSON.parse(rawConfig);
 
 const app = initializeApp(firebaseConfig);
 

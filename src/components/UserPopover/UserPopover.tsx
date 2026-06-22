@@ -1,6 +1,6 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useSelector } from "react-redux";
-import { CircleHelp, CircleUserRound, User2Icon } from "lucide-react";
+import { CircleHelp, CircleUserRound, User2Icon, ShieldCheck } from "lucide-react";
 import { ManageAccount } from "../ManageAccount/ManageAccount";
 import getEmailPrefix from "@/lib/utils";
 import Show from "@/lib/Show";
@@ -12,12 +12,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserType } from "@/Config/Store/User/User";
 import { MyAccount } from "../ManageAccount/MyAccount";
 import { ListOption } from "../ListOption/ListOption";
+import LegalModal from "../Legal/LegalModal";
 
 type UserPopoverProps = {};
 
 export default function UserPopover({}: UserPopoverProps) {
   const User: UserType = useSelector((state: any) => state.User);
   const [open, setOpen] = useState(false);
+  const [legalOpen, setLegalOpen] = useState(false);
   const Translations = useSelector((state: any) => state.Translations);
 
   const GetName = () => {
@@ -39,7 +41,7 @@ export default function UserPopover({}: UserPopoverProps) {
           <span className="truncate"> {GetName()}</span>
         </div>
       </PopoverTrigger>
-      <PopoverContent className="w-56 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
+      <PopoverContent className="w-64 mr-10 p-0 py-4 bg-background dark:bg-background-dark dark:border-border-dark select-none overflow-hidden">
         <PopOverList className="flex flex-col items-stretch">
           <ManageAccount />
           <LanguagePopover Mode="List" />
@@ -49,6 +51,10 @@ export default function UserPopover({}: UserPopoverProps) {
           <Show if={!!User.uid}>
             <Logout setOpen={setOpen} />
           </Show>
+          <ListOption onClick={() => { setLegalOpen(true); setOpen(false); }} className="whitespace-nowrap">
+            <ShieldCheck className="size-4 text-primary" />
+            <span>{Translations.Legal?.LegalTitle || "Termos e Políticas"}</span>
+          </ListOption>
         </PopOverList>
         <ListOption className="mt-2">
           <CircleHelp className="size-4" />
@@ -63,6 +69,7 @@ export default function UserPopover({}: UserPopoverProps) {
           </a>
         </ListOption>
       </PopoverContent>
+      <LegalModal open={legalOpen} onOpenChange={setLegalOpen} />
     </Popover>
   );
 }

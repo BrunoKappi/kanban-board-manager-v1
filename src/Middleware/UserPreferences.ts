@@ -1,19 +1,19 @@
-import { FIREBASE_CreateUserPreferences, FIREBASE_GetUserPreferences, FIREBASE_UpdateUserPreferences } from "@/Config/Firebase/Firestore";
+import { dbCreateUserPreferences, dbGetUserPreferences, dbUpdateUserPreferences } from "@/services/db";
 import { DefaultNewUserPreference } from "@/Config/Store/UserPreferences/UserPreferences";
 import { STORE_GET, STORE_HandleChageTheme, STORE_SetLanguage, STORE_SetTranslations, STORE_SetUserPreferences } from "./Store";
 import { UserPrefenceType } from "@/Data/Types";
 import { LOCALSTORAGE_GetItem } from "./LocalStorage";
 
 export const MIDDLEWARE_CreateUserPreferences = (NewUserPreference: UserPrefenceType) => {
-  return FIREBASE_CreateUserPreferences(NewUserPreference);
+  return dbCreateUserPreferences(NewUserPreference);
 };
 
 export const MIDDLEWARE_UpdateUserPreferences = (NewUserPreference: UserPrefenceType) => {
-  return FIREBASE_UpdateUserPreferences(NewUserPreference);
+  return dbUpdateUserPreferences(NewUserPreference);
 };
 
 export const MIDDLEWARE_GetUserPreferences = async (Uid: string) => {
-  const UserPreferences: any = await FIREBASE_GetUserPreferences(Uid);
+  const UserPreferences: any = await dbGetUserPreferences(Uid);
 
   if (!!UserPreferences?.docID) {
     STORE_SetUserPreferences(UserPreferences);

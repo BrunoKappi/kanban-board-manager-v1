@@ -1,4 +1,4 @@
-import { FIREBASE_CreateBoard, FIREBASE_CreateBoardList, FIREBASE_DeleteBoard, FIREBASE_GetBoard, FIREBASE_GetBoardListByBoardId, FIREBASE_GetPublicBoard, FIREBASE_UpdateBoard } from "@/Config/Firebase/Firestore";
+import { dbCreateBoard, dbCreateBoardList, dbDeleteBoard, dbGetBoard, dbGetBoardListByBoardId, dbGetPublicBoard, dbUpdateBoard } from "@/services/db";
 import { UserType } from "@/Config/Store/User/User";
 import { BoardListItemType, BoardType, ColumnType } from "@/Data/Types";
 import { Copy } from "@/lib/utils";
@@ -28,9 +28,9 @@ export const MIDDLEWARE_CreateBoard = async (BoardParam: any, setOpen: (open: bo
 
   if (User?.uid) {
     //LOGGED USER
-    const BoardData = await FIREBASE_CreateBoard(NewBoard);
+    const BoardData = await dbCreateBoard(NewBoard);
     NewBoard.docID = BoardData.id;
-    const BoardListItemData = await FIREBASE_CreateBoardList(NewBoardListItem);
+    const BoardListItemData = await dbCreateBoardList(NewBoardListItem);
     NewBoardListItem.docID = BoardListItemData.id;
     STORE_UpdateBoard(BoardList, NewBoardListItem, NewBoard);
   } else {
@@ -77,7 +77,7 @@ export const MIDDLEWARE_UpdateBoard = (BoardParam: any) => {
   STORE_UpdateBoard(NewBoardList, NewBoardListItem, NewBoard);
 
   if ((User?.uid && CanEditBoard) || IsBoardOwner || IsOneOfTheOwners) {
-    FIREBASE_UpdateBoard(NewBoard);
+    dbUpdateBoard(NewBoard);
     MIDDLEWARE_UpdateBoardListItem(NewBoardListItem);
   }
 };
@@ -98,7 +98,7 @@ export const MIDDLEWARE_DeleteBoard = async (Board: any) => {
     MIDDLEWARE_UpdateBoard(NewBoard);
   } else {
     //IF IS THE OWNER
-    const BoardListItemsOfTheBoard = await FIREBASE_GetBoardListByBoardId(NewBoard.BoardId);
+    const BoardListItemsOfTheBoard = await dbGetBoardListByBoardId(NewBoard.BoardId);
 
     BoardListItemsOfTheBoard.forEach((Item) => {
       MIDDLEWARE_DeleteBoardListItem(Item);
@@ -107,7 +107,7 @@ export const MIDDLEWARE_DeleteBoard = async (Board: any) => {
 
   if (UserUid && BoardListItem) {
     if (BoardListItem.IsBoardShared === false) {
-      FIREBASE_DeleteBoard(Board);
+      dbDeleteBoard(Board);
     }
 
     MIDDLEWARE_DeleteBoardListItem(BoardListItem);
@@ -123,7 +123,7 @@ export const MIDDLEWARE_GetBoard = async (BoardId: string) => {
 
   if (User.uid) {
     //USUSARIO LOGADO
-    const Board = await FIREBASE_GetBoard(User.uid, BoardId);
+    const Board = await dbGetBoard(User.uid, BoardId);
     return Board;
   } else {
     //USUSARIO DESLOGADO
@@ -140,7 +140,7 @@ export const MIDDLEWARE_GetBoard = async (BoardId: string) => {
 export const MIDDLEWARE_GetPublicBoard = async (BoardId: string) => {
   const User: UserType = STORE_GET("User");
   const Translations = STORE_GET("Translations");
-  const Board: any = await FIREBASE_GetPublicBoard(BoardId);
+  const Board: any = await dbGetPublicBoard(BoardId);
 
   var Error = "";
 

@@ -1,4 +1,4 @@
-import { FIREBASE_GetUser } from "@/Config/Firebase/Firestore";
+import { dbGetUser } from "@/services/db";
 import { Columns3 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -20,8 +20,8 @@ const SidebarItem = ({ Active, Text = "", HandleSelectBoard, BoardId, BoardListI
 
   useEffect(() => {
     if (BoardListItem?.IsBoardShared) {
-      FIREBASE_GetUser(Board?.OwnerUid).then((UsersFound) => {
-        setTooltipMessage(Translations.Text.SharedBy + " " + UsersFound[0]?.Email);
+      dbGetUser(Board?.OwnerUid).then((UsersFound) => {
+        setTooltipMessage(Translations.Text.SharedBy + " " + UsersFound?.[0]?.Email);
       });
     }
   }, [BoardListItem, Board]);

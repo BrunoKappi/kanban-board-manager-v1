@@ -1,4 +1,4 @@
-import { FIREBASE_Logout } from "@/Config/Firebase/Auth";
+import { authLogout } from "@/services/auth";
 import { LogOut } from "lucide-react";
 import { ListOption } from "../ListOption/ListOption";
 import { DefaultBoardList } from "@/Data/BoardList";
@@ -41,7 +41,7 @@ export default function Logout({ setOpen }: LogoutProps) {
 
     setTimeout(() => STORE_SetBoard(NewBoard), 2000);
 
-    FIREBASE_Logout();
+    authLogout();
 
     STORE_SetUserPreferencesdocID("");
     setOpen(false);
