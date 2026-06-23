@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const BackButton = () => {
+const BackButton2 = () => {
   let navigate = useNavigate();
   return (
     <Button size="icon" variant="link" onClick={() => navigate("..")}>
@@ -11,4 +11,4 @@ const BackButton = () => {
   );
 };
 
-export default BackButton;
+export default BackButton2;
