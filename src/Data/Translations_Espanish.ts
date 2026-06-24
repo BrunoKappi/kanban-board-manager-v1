@@ -259,6 +259,41 @@ export const TRANSLATIONS_SPANISH = {
     CookieAccept: "Aceptar todo",
     CookieDecline: "Rechazar",
     ReadMore: "Leer políticas",
+    TermsTabContent: {
+      Title1: "1. Términos y Condiciones Generales",
+      P1: "Bienvenido a Kanban App. Al acceder o utilizar nuestro servicio, usted acepta cumplir y estar sujeto a estos Términos de Uso. Kanban App es una herramienta diseñada para organizar y gestionar tareas personales y proyectos de equipo.",
+      Title2: "2. Cuentas de Usuario",
+      P2: "Para acceder a funciones avanzadas como la sincronización en la nube y la colaboración, es necesario crear una cuenta. Usted es responsable de mantener la seguridad de su cuenta y contraseña. La aplicación ofrece funciones para eliminar permanentemente su cuenta y datos en cualquier momento, según lo garantizado por la LGPD/GDPR.",
+      Title3: "3. Limitación de Responsabilidad",
+      P3: "La aplicación se proporciona 'tal cual'. Nos esforzamos por garantizar una alta disponibilidad y seguridad, pero no garantizamos que el servicio sea ininterrumpido o esté libre de errores. Se recomienda realizar copias de seguridad periódicas de sus datos si lo considera necesario.",
+      Title4: "4. Cambios en los Términos",
+      P4: "Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios significativos serán notificados a través de la propia aplicación."
+    },
+    PrivacyTabContent: {
+      Title1: "1. Introducción a LGPD/GDPR",
+      P1: "Esta Política de Privacidad describe cómo Kanban App recopila, utiliza, almacena y protege sus datos personales de acuerdo con el Reglamento General de Protección de Datos (GDPR) y la Ley General de Protección de Datos de Brasil (LGPD).",
+      Title2: "2. Datos Recopilados",
+      P2: "Solo recopilamos información esencial para el funcionamiento de la aplicación:",
+      Li2_1: "Datos de registro: Nombre, correo electrónico y foto de perfil (cuando lo proporciona el proveedor de Google o se ingresa en el formulario).",
+      Li2_2: "Datos de la aplicación: Tableros, listas, tarjetas, comentarios y preferencias que usted crea y administra dentro de la herramienta.",
+      Title3: "3. Sus Derechos bajo GDPR/LGPD",
+      P3: "Usted tiene los siguientes derechos garantizados por la ley:",
+      Li3_1: "Acceso y Portabilidad: Derecho a exportar todos sus datos generados (disponible en el menú Mi Cuenta).",
+      Li3_2: "Eliminación (Derecho al Olvido): Derecho a eliminar permanentemente su cuenta y todos los datos asociados a ella (disponible en el menú Mi Cuenta).",
+      Li3_3: "Rectificación: Derecho a cambiar su nombre de usuario y datos de registro en su perfil.",
+      Title4: "4. Intercambio de Datos",
+      P4: "No vendemos ni compartimos sus datos con terceros con fines publicitarios. Los datos se mantienen de forma segura en Firebase/Firestore. Si opta por compartir públicamente un tablero, la URL pública permitirá a terceros ver (y editar, si está configurado así) el contenido de ese tablero específico."
+    },
+    CookiesTabContent: {
+      Title1: "1. ¿Qué son las Cookies?",
+      P1: "Las cookies son pequeños archivos de texto almacenados en su navegador para retener información sobre sus preferencias, sesiones activas e interacciones con la aplicación.",
+      Title2: "2. Uso de Cookies en esta Aplicación",
+      P2: "Utilizamos cookies estrictamente necesarias y de preferencia:",
+      Li2_1: "Sesión y Autenticación: Utilizadas para mantenerle conectado a su cuenta de forma segura.",
+      Li2_2: "Preferencias del Usuario: Utilizadas para almacenar configuraciones locales como el idioma preferido, el tema seleccionado (claro/oscuro) y el estado de la barra lateral.",
+      Title3: "3. Gestión del Consentimiento",
+      P3: "Puede gestionar o rechazar las cookies a través del banner de consentimiento. Tenga en cuenta que rechazar las cookies esenciales de sesión impedirá el inicio de sesión persistente y la sincronización de datos en línea."
+    }
   },
   LandingPage: {
     HeroTitle: "Organiza tu flujo de trabajo. Simplifica tu vida.",

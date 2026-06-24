@@ -262,5 +262,40 @@ export const TRANSLATIONS_GERMAN = {
     CookieAccept: "Alle akzeptieren",
     CookieDecline: "Ablehnen",
     ReadMore: "Richtlinien lesen",
+    TermsTabContent: {
+      Title1: "1. Allgemeine Geschäftsbedingungen",
+      P1: "Willkommen in der Kanban App. Durch den Zugriff auf unseren Service oder dessen Nutzung erklären Sie sich mit diesen Nutzungsbedingungen einverstanden. Die Kanban App ist ein Tool zur Organisation und Verwaltung persönlicher und Team-Projektaufgaben.",
+      Title2: "2. Benutzerkonten",
+      P2: "Um auf erweiterte Funktionen wie Cloud-Synchronisierung und Zusammenarbeit zuzugreifen, ist die Erstellung eines Kontos erforderlich. Sie sind für die Sicherheit Ihres Kontos und Passworts verantwortlich. Die Anwendung bietet Funktionen, um Ihr Konto und Ihre Daten jederzeit dauerhaft zu löschen, wie durch DSGVO/LGPD garantiert.",
+      Title3: "3. Haftungsbeschränkung",
+      P3: "Die Anwendung wird 'wie besehen' zur Verfügung gestellt. Wir bemühen uns um eine hohe Verfügbarkeit und Sicherheit, garantieren jedoch nicht, dass der Service ununterbrochen oder fehlerfrei ist. Es wird empfohlen, regelmäßige Backups Ihrer Daten durchzuführen, falls Sie dies für notwendig erachten.",
+      Title4: "4. Änderungen der Bedingungen",
+      P4: "Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Wesentliche Änderungen werden über die Anwendung selbst mitgeteilt."
+    },
+    PrivacyTabContent: {
+      Title1: "1. Einführung in DSGVO/LGPD",
+      P1: "Diese Datenschutzerklärung beschreibt, wie die Kanban App Ihre personenbezogenen Daten in Übereinstimmung mit der Datenschutz-Grundverordnung (DSGVO) und dem brasilianischen Allgemeinen Datenschutzgesetz (LGPD) erhebt, verwendet, speichert und schützt.",
+      Title2: "2. Erhobene Daten",
+      P2: "Wir erheben nur Informationen, die für das Funktionieren der Anwendung unerlässlich sind:",
+      Li2_1: "Registrierungsdaten: Name, E-Mail und Profilbild (wenn vom Google-Anbieter bereitgestellt oder in das Formular eingegeben).",
+      Li2_2: "Anwendungsdaten: Boards, Listen, Karten, Kommentare und Einstellungen, die Sie in dem Tool erstellen und verwalten.",
+      Title3: "3. Ihre Rechte unter DSGVO/LGPD",
+      P3: "Sie haben die folgenden gesetzlich garantierten Rechte:",
+      Li3_1: "Zugang und Übertragbarkeit: Recht, alle Ihre generierten Daten zu exportieren (verfügbar im Menü 'Mein Konto').",
+      Li3_2: "Löschung (Recht auf Vergessenwerden): Recht, Ihr Konto und alle damit verbundenen Daten dauerhaft zu löschen (verfügbar im Menü 'Mein Konto').",
+      Li3_3: "Berichtigung: Recht, Ihren Benutzernamen und Ihre Registrierungsdaten in Ihrem Profil zu ändern.",
+      Title4: "4. Datenweitergabe",
+      P4: "Wir verkaufen oder teilen Ihre Daten nicht zu Werbezwecken an Dritte. Daten werden sicher in Firebase/Firestore aufbewahrt. Wenn Sie sich dafür entscheiden, ein Board öffentlich zu teilen, ermöglicht die öffentliche URL Dritten, den Inhalt dieses spezifischen Boards zu sehen (und zu bearbeiten, falls entsprechend konfiguriert)."
+    },
+    CookiesTabContent: {
+      Title1: "1. Was sind Cookies?",
+      P1: "Cookies sind kleine Textdateien, die in Ihrem Browser gespeichert werden, um Informationen über Ihre Präferenzen, aktive Sitzungen und Interaktionen mit der Anwendung zu behalten.",
+      Title2: "2. Verwendung von Cookies in dieser Anwendung",
+      P2: "Wir verwenden unbedingt erforderliche und Präferenz-Cookies:",
+      Li2_1: "Sitzung und Authentifizierung: Wird verwendet, um Sie sicher in Ihrem Konto angemeldet zu halten.",
+      Li2_2: "Benutzereinstellungen: Wird verwendet, um lokale Einstellungen wie bevorzugte Sprache, ausgewähltes Theme (hell/dunkel) und Seitenleistenstatus zu speichern.",
+      Title3: "3. Einwilligungsmanagement",
+      P3: "Sie können Cookies über den Zustimmungsbanner verwalten oder ablehnen. Beachten Sie, dass das Ablehnen wesentlicher Sitzungscookies die dauerhafte Anmeldung und die Online-Datensynchronisierung verhindert."
+    }
   },
 };

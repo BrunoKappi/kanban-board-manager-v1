@@ -262,5 +262,40 @@ export const TRANSLATIONS_FRENCH = {
     CookieAccept: "Tout Accepter",
     CookieDecline: "Refuser",
     ReadMore: "Lire les Politiques",
+    TermsTabContent: {
+      Title1: "1. Conditions Générales",
+      P1: "Bienvenue sur l'application Kanban. En accédant ou en utilisant notre service, vous acceptez de vous conformer à ces Conditions d'Utilisation. L'application Kanban est un outil conçu pour l'organisation et la gestion de tâches personnelles et de projets d'équipe.",
+      Title2: "2. Comptes d'Utilisateurs",
+      P2: "Pour accéder à des fonctionnalités avancées telles que la synchronisation cloud et la collaboration, la création d'un compte est requise. Vous êtes responsable de la sécurité de votre compte et de votre mot de passe. L'application offre des fonctionnalités pour supprimer définitivement votre compte et vos données à tout moment, tel que garanti par le RGPD/LGPD.",
+      Title3: "3. Limitation de Responsabilité",
+      P3: "L'application est fournie « telle quelle ». Nous nous efforçons de garantir une haute disponibilité et sécurité, mais ne garantissons pas que le service sera ininterrumpido ou sans erreur. Il est recommandé d'effectuer des sauvegardes régulières de vos données si vous le jugez nécessaire.",
+      Title4: "4. Modification des Conditions",
+      P4: "Nous nous réservons le droit de modifier ces conditions à tout moment. Les changements importants seront notifiés via l'application elle-même."
+    },
+    PrivacyTabContent: {
+      Title1: "1. Introduction au RGPD/LGPD",
+      P1: "Cette Politique de Confidentialité décrit comment l'application Kanban collecte, utilise, stocke et protège vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD) et à la Loi Générale sur la Protection des Données du Brésil (LGPD).",
+      Title2: "2. Données Collectées",
+      P2: "Nous collectons uniquement les informations essentielles au fonctionnement de l'application :",
+      Li2_1: "Données d'inscription : Nom, adresse e-mail et photo de profil (lorsqu'elles sont fournies par le fournisseur Google ou saisies dans le formulaire).",
+      Li2_2: "Données de l'application : Tableaux, listes, cartes, commentaires et préférences que vous créez et gérez dans l'outil.",
+      Title3: "3. Vos Droits en vertu du RGPD/LGPD",
+      P3: "Vous disposez des droits suivants garantis par la loi :",
+      Li3_1: "Accès et Portabilité : Droit d'exporter toutes vos données générées (disponible dans le menu Mon Compte).",
+      Li3_2: "Effacement (Droit à l'Oubli) : Droit de supprimer définitivement votre compte et toutes les données associées (disponible dans le menu Mon Compte).",
+      Li3_3: "Rectification : Droit de modifier votre nom d'utilisateur et vos données d'inscription dans votre profil.",
+      Title4: "4. Partage de Données",
+      P4: "Nous ne vendons ni ne partageons vos données avec des tiers à des fins publicitaires. Les données sont conservées en toute sécurité dans Firebase/Firestore. Si vous choisissez de partager publiquement un tableau, l'URL publique permettra à des tiers de voir (et de modifier, si configuré) le contenu de ce tableau spécifique."
+    },
+    CookiesTabContent: {
+      Title1: "1. Que sont les Cookies ?",
+      P1: "Les cookies sont de petits fichiers texte stockés dans votre navigateur pour conserver des informations sur vos préférences, sessions actives et interactions avec l'application.",
+      Title2: "2. Utilisation de Cookies dans cette Application",
+      P2: "Nous utilisons des cookies strictement nécessaires et de préférence :",
+      Li2_1: "Session et Authentification : Utilisés pour vous maintenir connecté à votre compte en toute sécurité.",
+      Li2_2: "Préférences de l'Utilisateur : Utilisés pour stocker des paramètres locaux tels que la langue préférée, le thème sélectionné (clair/sombre) et l'état de la barre latérale.",
+      Title3: "3. Gestion du Consentement",
+      P3: "Vous pouvez gérer ou refuser les cookies via la bannière de consentement. Notez que le refus des cookies de session essentiels empêchera la connexion persistante et la synchronisation des données en ligne."
+    }
   },
 };

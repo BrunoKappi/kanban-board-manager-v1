@@ -10,6 +10,7 @@ import Lost from "./Assets/Lost.svg";
 import Updates from "./Updates";
 import { MIDDLEWARE_GetBoardList } from "./Middleware/BoardList";
 import CookieConsent from "./components/Legal/CookieConsent";
+import OutdatedVersionModal from "./components/OutdatedVersionModal";
 
 function App() {
   const User = useSelector((state: any) => state.User);
@@ -65,6 +66,7 @@ function App() {
     <main className=" h-dvh w-dvw bg-background dark:bg-background-dark">
       <Updates />
       <CookieConsent />
+      <OutdatedVersionModal />
       <Routes>
         <Route path="/" element={GetElement()} />
         <Route path="/View/:BoardId" element={GetElement()} />

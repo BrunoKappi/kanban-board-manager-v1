@@ -262,6 +262,41 @@ export const TRANSLATIONS_PORTUGUESE = {
     CookieAccept: "Aceitar Todos",
     CookieDecline: "Recusar",
     ReadMore: "Ler Políticas",
+    TermsTabContent: {
+      Title1: "1. Termos e Condições Gerais",
+      P1: "Bem-vindo ao Kanban App. Ao acessar ou usar nosso serviço, você concorda em cumprir e ser regido por estes Termos de Uso. O Kanban App é uma ferramenta voltada para a organização e gestão de tarefas pessoais e de projetos em equipe.",
+      Title2: "2. Contas de Usuário",
+      P2: "Para acessar recursos avançados como sincronização na nuvem e colaboração, é necessária a criação de uma conta. Você é responsável por manter a segurança da sua conta e senha. O aplicativo oferece recursos para exclusão definitiva de sua conta e dados a qualquer momento, conforme garantido pela LGPD.",
+      Title3: "3. Limitação de Responsabilidade",
+      P3: "O aplicativo é fornecido \"como está\". Nos esforçamos para garantir alta disponibilidade e segurança, mas não garantimos que o serviço será ininterrupto ou livre de erros. Recomenda-se realizar backups periódicos de seus dados caso julgue necessário.",
+      Title4: "4. Alterações nos Termos",
+      P4: "Reservamo-nos o direito de modificar estes termos a qualquer momento. Mudanças significativas serão notificadas através do próprio aplicativo."
+    },
+    PrivacyTabContent: {
+      Title1: "1. Introdução à LGPD",
+      P1: "Esta Política de Privacidade descreve como o Kanban App coleta, utiliza, armazena e protege seus dados pessoais de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 - LGPD) no Brasil e diretrizes do GDPR internacional.",
+      Title2: "2. Dados Coletados",
+      P2: "Coletamos apenas informações essenciais para o funcionamento do aplicativo:",
+      Li2_1: "Dados de cadastro: Nome, e-mail e foto do perfil (quando fornecidos pelo provedor Google ou inseridos no formulário).",
+      Li2_2: "Dados do aplicativo: Quadros (boards), listas, cartões, comentários e preferências que você cria e gerencia dentro da ferramenta.",
+      Title3: "3. Seus Direitos sob a LGPD",
+      P3: "Você possui os seguintes direitos garantidos por lei:",
+      Li3_1: "Acesso e Portabilidade: Direito de exportar todos os seus dados gerados (disponível no menu Minha Conta).",
+      Li3_2: "Eliminação (Esquecimento): Direito de excluir permanentemente sua conta e todos os dados a ela associados (disponível no menu Minha Conta).",
+      Li3_3: "Correção: Direito de alterar seu nome de usuário e dados cadastrais no seu perfil.",
+      Title4: "4. Compartilhamento de Dados",
+      P4: "Não comercializamos nem compartilhamos seus dados com terceiros para fins publicitários. Os dados são mantidos de forma segura no Firebase/Firestore. Caso você opte por compartilhar publicamente um quadro, a URL pública permitirá que terceiros visualizem (e editem, se assim configurado) o conteúdo daquele quadro específico."
+    },
+    CookiesTabContent: {
+      Title1: "1. O que são Cookies?",
+      P1: "Cookies são pequenos arquivos de texto armazenados no seu navegador para reter informações sobre suas preferências, sessões ativas e interações com a aplicação.",
+      Title2: "2. Uso de Cookies neste Aplicativo",
+      P2: "Utilizamos cookies estritamente necessários e de preferência:",
+      Li2_1: "Sessão e Autenticação: Usados para mantê-lo logado em sua conta de forma segura.",
+      Li2_2: "Preferências do Usuário: Usados para armazenar configurações locais como idioma preferido, tema selecionado (claro/escuro) e status da barra lateral.",
+      Title3: "3. Gerenciamento de Consentimento",
+      P3: "Você pode gerenciar ou recusar os cookies através da barra de consentimento. Note que a recusa de cookies essenciais de sessão impedirá a permanência de login e sincronização de dados online."
+    }
   },
   LandingPage: {
     HeroTitle: "Organize seu fluxo de trabalho. Simplifique sua vida.",

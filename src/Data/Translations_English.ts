@@ -262,6 +262,41 @@ export const TRANSLATIONS_ENGLISH = {
     CookieAccept: "Accept All",
     CookieDecline: "Decline",
     ReadMore: "Read Policies",
+    TermsTabContent: {
+      Title1: "1. General Terms and Conditions",
+      P1: "Welcome to the Kanban App. By accessing or using our service, you agree to comply with and be bound by these Terms of Use. The Kanban App is a tool designed for organizing and managing personal and team project tasks.",
+      Title2: "2. User Accounts",
+      P2: "To access advanced features like cloud synchronization and collaboration, creating an account is required. You are responsible for maintaining the security of your account and password. The application offers features to permanently delete your account and data at any time, as guaranteed by LGPD/GDPR.",
+      Title3: "3. Limitation of Liability",
+      P3: "The application is provided 'as is'. We strive to ensure high availability and security, but do not guarantee that the service will be uninterrupted or error-free. It is recommended to perform periodic backups of your data if deemed necessary.",
+      Title4: "4. Changes to Terms",
+      P4: "We reserve the right to modify these terms at any time. Significant changes will be notified through the application itself."
+    },
+    PrivacyTabContent: {
+      Title1: "1. Introduction to GDPR/LGPD",
+      P1: "This Privacy Policy describes how the Kanban App collects, uses, stores, and protects your personal data in accordance with the General Data Protection Regulation (GDPR) and the Brazilian General Data Protection Law (LGPD).",
+      Title2: "2. Data Collected",
+      P2: "We only collect information essential for the functioning of the application:",
+      Li2_1: "Registration data: Name, email, and profile picture (when provided by the Google provider or entered in the form).",
+      Li2_2: "Application data: Boards, lists, cards, comments, and preferences that you create and manage within the tool.",
+      Title3: "3. Your Rights under GDPR/LGPD",
+      P3: "You have the following rights guaranteed by law:",
+      Li3_1: "Access and Portability: Right to export all your generated data (available in the My Account menu).",
+      Li3_2: "Erasure (Right to be Forgotten): Right to permanently delete your account and all associated data (available in the My Account menu).",
+      Li3_3: "Rectification: Right to change your username and registration data in your profile.",
+      Title4: "4. Data Sharing",
+      P4: "We do not sell or share your data with third parties for advertising purposes. Data is kept securely in Firebase/Firestore. If you choose to publicly share a board, the public URL will allow third parties to view (and edit, if configured to do so) the content of that specific board."
+    },
+    CookiesTabContent: {
+      Title1: "1. What are Cookies?",
+      P1: "Cookies are small text files stored in your browser to retain information about your preferences, active sessions, and interactions with the application.",
+      Title2: "2. Use of Cookies in this Application",
+      P2: "We use strictly necessary and preference cookies:",
+      Li2_1: "Session and Authentication: Used to keep you securely logged into your account.",
+      Li2_2: "User Preferences: Used to store local settings such as preferred language, selected theme (light/dark), and sidebar status.",
+      Title3: "3. Consent Management",
+      P3: "You can manage or refuse cookies through the consent banner. Note that refusing essential session cookies will prevent persistent login and online data synchronization."
+    }
   },
   LandingPage: {
     HeroTitle: "Organize your workflow. Simplify your life.",
